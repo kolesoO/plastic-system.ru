@@ -1,0 +1,32 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Заказы", 
+		"/personal/order-list/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Адреса", 
+		"/personal/address-list/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Учетная запись", 
+		"/personal/profile/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Выйти", 
+		"?logout=yes", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>
