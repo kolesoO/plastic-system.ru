@@ -13,7 +13,7 @@
 $this->setFrameMode(true);
 ?>
 
-<div class="catalog_filter js-aside">
+<div class="catalog_filter">
     <div class="title-3"><?=GetMessage("CT_BCSF_FILTER_TITLE")?></div>
     <form name="<?=$arResult["FILTER_NAME"]."_form"?>?>" action="<?=$arResult["FORM_ACTION"]?>" method="get">
         <?if ($arParams["COMPONENT_CONTAINER_ID"]) :?>
@@ -137,8 +137,10 @@ $this->setFrameMode(true);
                 }?>
             </div>
         <?endforeach?>
+        <div id="modef_del"<?if (!$arResult["IS_APPLIED"]) :?> style="display:none"<?endif?> class="catalog_filter-item">
+            <a href="<?=$arResult["SEF_DEL_FILTER_URL"]?>" class="col-lg-24 col-md-24 form_button"><?=GetMessage("CT_BCSF_DEL_FILTER")?></a>
+        </div>
         <div id="modef"<?if(!isset($arResult["ELEMENT_COUNT"])) echo ' style="display:none"';?> class="catalog_filter-item">
-            <p><a href="<?=$arResult["FILTER_URL"]?>" class="col-lg-24 col-md-24 form_button"><?=GetMessage("CT_BCSF_FILTER_SHOW")?></a></p>
             <span class="table_list-desc-item">
                 <span><?=GetMessage("CT_BCSF_FILTER_COUNT", array("#ELEMENT_COUNT#" => '<b id="modef_num">'.intval($arResult["ELEMENT_COUNT"]).'</b>'));?></span>
             </span>

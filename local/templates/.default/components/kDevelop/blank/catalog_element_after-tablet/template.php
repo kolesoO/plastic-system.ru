@@ -16,60 +16,37 @@
             </div>
         </div>
         <div class="cart_info-item col-md-12">
-            <div class="title-3">Наличие</div>
-            <div class="cart_info-wrap">
-                <div class="cart_info-wrap-item">
-                    <span>Санкт-Петербург</span>
-                    <div class="table_list-status red">Мало</div>
-                </div>
-                <div class="cart_info-wrap-item">
-                    <span>Москва</span>
-                    <div class="table_list-status green">Много</div>
-                </div>
-                <div class="cart_info-wrap-item">
-                    <span>Самара</span>
-                    <div class="table_list-status">Под заказ</div>
-                </div>
-                <div class="cart_info-wrap-item">
-                    <span>Санкт-Петербург</span>
-                    <div class="table_list-status red">Мало</div>
-                </div>
-                <div class="cart_info-wrap-item">
-                    <span>Москва</span>
-                    <div class="table_list-status green">Много</div>
-                </div>
-                <div class="cart_info-wrap-item">
-                    <span>Самара</span>
-                    <div class="table_list-status">Под заказ</div>
-                </div>
-            </div>
+            <?$APPLICATION->IncludeComponent(
+                'bitrix:catalog.store.amount',
+                '.default',
+                array(
+                    'ELEMENT_ID' => $arParams['ELEMENT_ID'],
+                    'STORE_PATH' => $arParams['STORE_PATH'],
+                    'CACHE_TYPE' => 'A',
+                    'CACHE_TIME' => '36000',
+                    'USE_MIN_AMOUNT' =>  $arParams['USE_MIN_AMOUNT'],
+                    'MIN_AMOUNT' => $arParams['MIN_AMOUNT'],
+                    'STORES' => $arParams['STORES'],
+                    'SHOW_EMPTY_STORE' => $arParams['SHOW_EMPTY_STORE'],
+                    'SHOW_GENERAL_STORE_INFORMATION' => $arParams['SHOW_GENERAL_STORE_INFORMATION'],
+                    'USER_FIELDS' => $arParams['USER_FIELDS'],
+                    'FIELDS' => $arParams['FIELDS']
+                ),
+                $component,
+                array('HIDE_ICONS' => 'Y')
+            );?>
         </div>
     </div>
 </div>
 <div class="block_wrapper">
     <div class="cart_info">
         <div class="cart_info-item col-md-24">
-            <div class="title-3">Доставка</div>
-            <div class="def_form">
-                <div class="animate_input js-animate_input">
-                    <label for="city">Город</label>
-                    <input id="city" type="text" value="Санкт-Петербург">
-                </div>
-                <div class="animate_input js-animate_input">
-                    <label for="address">Адрес</label>
-                    <input id="address" type="text" value="Авиаторов 17">
-                </div>
-                <button type="submit" class="form_button">Пересчитать</button>
-            </div>
-            <br>
-            <div class="title-3 text">600 ₽</div>
-            <a href="#" class="link">
-                <span>Подробнее о доставке и оплате</span>
-                <i class="icon arrow-right"></i>
-            </a>
-            <br><br>
-            <div class="title-3 text">Самовывоз</div>
-            <span>Сегодня: Старо-Паново, ул.Рабочая, д. 16Г</span>
+            <?$APPLICATION->IncludeComponent(
+                'kDevelop:catalog.delivery',
+                '.default',
+                array(),
+                null
+            );?>
         </div>
     </div>
 </div>

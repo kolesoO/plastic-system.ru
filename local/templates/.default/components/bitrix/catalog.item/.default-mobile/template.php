@@ -22,8 +22,11 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
     <?endif?>
     <div<?if (isset($arResult["AREA_ID"])) :?> id="<?=$arResult["AREA_ID"]?>"<?endif?> class="table_list-item-wrap">
         <div class="table_list-wrap">
-            <a href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>" class="table_list-img">
-                <img src="<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arResult["OFFER"]["NAME"]?>">
+            <a href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>" class="table_list-preview full">
+                <div class="table_list-img">
+                    <img src="<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arResult["OFFER"]["NAME"]?>">
+                </div>
+                <div class="table_list-title"><?=$arResult["OFFER"]["NAME"]?></div>
             </a>
             <?if ($arResult["OFFERS_COUNT"] > 0) :?>
                 <div
@@ -52,15 +55,6 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                     <?endforeach;?>
                 </div>
             <?endif?>
-        </div>
-        <div class="table_list-wrap">
-            <a href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>" class="table_list-title border full"><?=$arResult["OFFER"]["NAME"]?></a>
-            <div class="table_list-info show_in_list">
-                <?if (is_array($arResult["OFFER"]["QNT_INFO"])) :?>
-                    <div class="table_list-status <?=$arResult["OFFER"]["QNT_INFO"]["CLASS"]?>"><?=$arResult["OFFER"]["QNT_INFO"]["MSG_TEXT"]?></div>
-                <?endif?>
-                <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
-            </div>
             <div class="table_list-desc full">
                 <?foreach (["Color", "Size", "CML2_MANUFACTURER"] as $code) :?>
                     <?if (isset($arResult["OFFER"]["PROPERTIES"][$code]) && strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) > 0) :?>
@@ -68,8 +62,6 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                     <?endif?>
                 <?endforeach?>
             </div>
-        </div>
-        <div class="table_list-wrap">
             <div class="table_list-info border full">
                 <div class="table_list-price_wrap">
                     <?if ($arParams['SHOW_OLD_PRICE'] == "Y") :?>
@@ -111,6 +103,12 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                     </a>
                 </div>
             </div>
+        </div>
+        <div class="table_list-wrap">
+
+        </div>
+        <div class="table_list-wrap">
+
         </div>
     </div>
 <?endif?>

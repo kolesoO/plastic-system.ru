@@ -123,8 +123,8 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
                     </div>
                 <?endif?>
                 <div class="cart_links">
-                    <a href="#" class="cart_links-item">
-                        <i class="icon favorite"></i>
+                    <a href="#" class="cart_links-item" data-popup-open="#buy-one-click">
+                        <i class="icon buy_one_click"></i>
                         <span>Купить в 1 клик</span>
                     </a>
                     <a href="#" class="cart_links-item">
@@ -132,13 +132,13 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
                         <span>В избранное</span>
                     </a>
                     <a href="#" class="cart_links-item">
-                        <i class="icon favorite"></i>
+                        <i class="icon compare"></i>
                         <span>Сравнить</span>
                     </a>
-                    <a href="#" class="cart_links-item">
+                    <!--a href="#" class="cart_links-item">
                         <i class="icon favorite"></i>
                         <span>Распечатать</span>
-                    </a>
+                    </a-->
                 </div>
             </div>
         </div>

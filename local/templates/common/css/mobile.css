@@ -280,6 +280,12 @@
     .cart_buy{
         justify-content: space-between;
     }
+    .cart_links-item{
+        display: block;
+    }
+    .cart_links-item + .cart_links-item{
+        margin-top: 20px;
+    }
     .inline_list{
         margin-bottom: -35px;
     }

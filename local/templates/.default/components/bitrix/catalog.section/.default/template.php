@@ -133,7 +133,7 @@ $arCatalogItemsParams = [
         <div id="catalog-item-<?=$arItem["ID"]?>" class="table_list-item">
             <?$APPLICATION->IncludeComponent(
                 "bitrix:catalog.item",
-                ".default",
+                $arResult["INNER_TEMPLATE"],
                 [
                     "RESULT" => [
                         "ITEM" => $arItem,

@@ -803,6 +803,10 @@ a:hover > .burger > hr:last-child{
 .table_list:not(.list) .table_list-info{
     justify-content: space-between;
 }
+.table_list-info .icon,
+.cart_links-item .icon{
+    min-width: 23px;
+}
 .table_list:not(.list) .table_list-info > *{
     width: 50%!important;
 }
@@ -1322,10 +1326,6 @@ a:hover > .burger > hr:last-child{
 }
 .cart_links{
 
-}
-.cart_links-item{
-    display: inline-block;
-    margin-right: 20px;
 }
 .cart_info{
     display: flex;

@@ -70,14 +70,20 @@ foreach ($arResult["ITEMS"] as &$arItem) {
 }
 unset($arItem);
 
+//шаблон для элемента каталога
 $arResult["INNER_TEMPLATE"] = ".default";
 if ($arParams["DEVICE_TYPE"] == "DESKTOP") {
     $arResult["SET_AREA"] = true;
 } elseif ($arParams["DEVICE_TYPE"] == "MOBILE") {
-    //$arResult["INNER_TEMPLATE"] = ".default-mobile";
+    $arResult["INNER_TEMPLATE"] = ".default-mobile";
 }
+//end
+
+//идентификация слайдера
+$arResult["IS_SLIDER"] = $arResult["ITEMS_COUNT"] > $arParams["LINE_ELEMENT_COUNT"];
+//end
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["ITEMS_COUNT", "SET_AREA", "INNER_TEMPLATE"]);
+    $cp->SetResultCacheKeys(["ITEMS_COUNT", "SET_AREA", "INNER_TEMPLATE", "IS_SLIDER"]);
 }

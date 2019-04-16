@@ -6,7 +6,7 @@
  */
 
 $component = $this->getComponent();
-$arParams = $component->applyTemplateModifications();
+//$arParams = $component->applyTemplateModifications();
 $hasResizeImage = is_array($arParams["IMAGE_SIZE"]);
 $arResult["ITEMS_COUNT"] = count($arResult["ITEMS"]);
 
@@ -63,6 +63,8 @@ foreach ($arResult["ITEMS"] as &$arItem) {
     }
 }
 unset($arItem);
+
+$arResult["INNER_TEMPLATE"] = ($arParams["DEVICE_TYPE"] == "MOBILE" ? ".default-mobile" : ".default");
 
 $cp = $this->__component;
 if (is_object($cp)) {

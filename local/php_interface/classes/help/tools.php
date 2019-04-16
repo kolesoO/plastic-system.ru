@@ -71,6 +71,9 @@ class Tools
         if ($qnt > $defValue) {
             $arReturn["CLASS"] = "green";
             $arReturn["MSG_CODE"] = $msgPrefix."_MANY";
+        } else if ($qnt == 0) {
+            $arReturn["CLASS"] = "white";
+            $arReturn["MSG_CODE"] = $msgPrefix."_FOR_ORDER";
         }
 
         return $arReturn;

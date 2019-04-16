@@ -179,14 +179,15 @@ $arCatalogTopParams = [
         "WIDTH" => "",
         "HEIGHT" => ""
     ],
-    "ITEMS_COUNT" => 5
+    "ITEMS_COUNT" => 10,
+    "LINE_ELEMENT_COUNT" => 5
 ];
 if (DEVICE_TYPE == "TABLET") {
-    $arCatalogTopParams["ITEMS_COUNT"] = 3;
+    $arCatalogTopParams["LINE_ELEMENT_COUNT"] = 3;
 } elseif (DEVICE_TYPE == "MOBILE") {
-    $arCatalogTopParams["ITEMS_COUNT"] = 1;
+    $arCatalogTopParams["LINE_ELEMENT_COUNT"] = 1;
 }
-$GLOBALS["arCatalogTopFilter"] = array("PROPERTY_STATUS_VALUE" => "Акция");
+$GLOBALS["arCatalogTopFilter"] = ["OFFERS" => ["PROPERTY_STATUS_VALUE" => "Акция"]];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog.top",
     "",
@@ -225,7 +226,7 @@ $APPLICATION->IncludeComponent(
         "LABEL_PROP" => array("SALELEADER"),
         "LABEL_PROP_MOBILE" => array(),
         "LABEL_PROP_POSITION" => "top-left",
-        "LINE_ELEMENT_COUNT" => "",
+        "LINE_ELEMENT_COUNT" => $arCatalogTopParams["LINE_ELEMENT_COUNT"],
         "MESS_BTN_ADD_TO_BASKET" => "В корзину",
         "MESS_BTN_BUY" => "Купить",
         "MESS_BTN_COMPARE" => "Сравнить",
@@ -278,7 +279,8 @@ $APPLICATION->IncludeComponent(
         "VIEW_MODE" => "SECTION",
         "SHOW_PRODUCTS_".IBLOCK_CATALOG_CATALOGSKU => "Y",
         "DEVICE_TYPE" => DEVICE_TYPE,
-        "IMAGE_SIZE" => $arCatalogTopParams["IMAGE_SIZE"]
+        "IMAGE_SIZE" => $arCatalogTopParams["IMAGE_SIZE"],
+        "ALL_LINK" => "/actions/"
     )
 );
 //end

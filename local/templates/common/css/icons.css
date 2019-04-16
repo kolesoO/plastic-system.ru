@@ -66,6 +66,18 @@ a:hover > .icon:before{
     background-size: contain;
     /*margin-right: 5px;*/
 }
+.icon.buy_one_click:before{
+    width: 17px;
+    height: 15px;
+    background-image: url(../images/icons/buy_one_click.svg);
+    background-size: contain;
+}
+.icon.compare:before{
+    width: 21px;
+    height: 12px;
+    background-image: url(../images/icons/compare.svg);
+    background-size: contain;
+}
 .icon.personal:before{
     width: 18px;
     height: 17px;

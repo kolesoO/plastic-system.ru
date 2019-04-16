@@ -94,7 +94,7 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
             <div class="show_in_list">
                 <div class="table_list-info">
                     <a href="#">
-                        <i class="icon favorite"></i>
+                        <i class="icon buy_one_click"></i>
                         <span>Купить в 1 клик</span>
                     </a>
                 </div>
@@ -106,7 +106,7 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                 </div>
                 <div class="table_list-info">
                     <a href="#">
-                        <i class="icon favorite"></i>
+                        <i class="icon compare"></i>
                         <span>Сравнить</span>
                     </a>
                 </div>

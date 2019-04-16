@@ -10,15 +10,18 @@ if (DEVICE_TYPE == "DESKTOP") {
     $itemsInRow = 5;
     $itemsInRowInner = 4;
     $elemsInRow = 4;
+    $pageElemCount = 12;
     $pagerTmp = ".default";
 } elseif (DEVICE_TYPE == "TABLET") {
     $itemsInRow = 3;
     $itemsInRowInner = 2;
     $elemsInRow = 2;
+    $pageElemCount = 12;
     $pagerTmp = ".default-mobile";
 } else {
     $itemsInRow = $itemsInRowInner = $elemsInRow = 1;
-    $pagerTmp = ".default";
+    $pageElemCount = 10;
+    $pagerTmp = ".default-mobile";
 }
 $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
 $sefUrlTpl = [
@@ -34,6 +37,7 @@ if (strpos(end($arCurPage), \kDevelop\Help\Tools::getOfferPrefixInUrl()) !== fal
 unset($arCurPage);
 //end
 
+$GLOBALS["arCatalogFilter"] = ["!OFFERS" => null];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog",
     "",
@@ -71,7 +75,7 @@ $APPLICATION->IncludeComponent(
         "COMPARE_POSITION_FIXED" => "Y",
         "COMPARE_POSITION" => "top left",
         "USE_FILTER" => "Y",
-        "FILTER_NAME" => "",
+        "FILTER_NAME" => "arCatalogFilter",
         "FILTER_FIELD_CODE" => array(
             0 => "",
             1 => "",
@@ -130,9 +134,9 @@ $APPLICATION->IncludeComponent(
         "SECTION_TOP_DEPTH" => "1",
         "SECTIONS_VIEW_MODE" => "TEXT",
         "SECTIONS_SHOW_PARENT_NAME" => "Y",
-        "PAGE_ELEMENT_COUNT" => "12",
+        "PAGE_ELEMENT_COUNT" => $pageElemCount,
         "LINE_ELEMENT_COUNT" => $elemsInRow,
-        "ELEMENT_SORT_FIELD" => (isset($_GET["sort_by"]) ? $_GET["sort_by"] : "sort"),
+        "ELEMENT_SORT_FIELD" => (isset($_GET["sort_by"]) ? $_GET["sort_by"] : "PROPERTY_CML2_ARTICLE"),
         "ELEMENT_SORT_ORDER" => (isset($_GET["sort_by"]) ? $_GET["sort_order"] : "asc"),
         "ELEMENT_SORT_FIELD2" => "id",
         "ELEMENT_SORT_ORDER2" => "desc",
@@ -218,10 +222,10 @@ $APPLICATION->IncludeComponent(
         "MAIN_TITLE" => "Наличие на складах",
         "USE_BIG_DATA" => "Y",
         "BIG_DATA_RCM_TYPE" => "bestsell",
-        "OFFERS_SORT_FIELD" => "sort",
+        "OFFERS_SORT_FIELD" => "PROPERTY_CML2_ARTICLE",
         "OFFERS_SORT_ORDER" => "asc",
-        "OFFERS_SORT_FIELD2" => "id",
-        "OFFERS_SORT_ORDER2" => "desc",
+        "OFFERS_SORT_FIELD2" => "sort",
+        "OFFERS_SORT_ORDER2" => "asc",
         "PAGER_TEMPLATE" => $pagerTmp,
         "DISPLAY_TOP_PAGER" => "N",
         "DISPLAY_BOTTOM_PAGER" => "Y",

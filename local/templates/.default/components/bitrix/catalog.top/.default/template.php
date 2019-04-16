@@ -18,7 +18,19 @@ $this->setFrameMode(true);
     <section class="section">
         <div class="container">
             <div class="title-2">Акции</div>
-            <div class="table_list catalog" items-count="<?=$arParams["ELEMENT_COUNT"]?>">
+            <div
+                    class="table_list catalog clearfix<?if ($arResult["IS_SLIDER"]) :?> js-slider js-main_slider<?endif?>"
+                    <?if ($arResult["IS_SLIDER"]) :?>
+                        data-autoplay="true"
+                        data-autoplaySpeed="5000"
+                        data-infinite="true"
+                        data-speed="1000"
+                        data-arrows="false"
+                        data-dots="false"
+                        data-slidesToShow="<?=$arParams["LINE_ELEMENT_COUNT"]?>"
+                        data-slidesToScroll="1"
+                    <?endif?>
+            >
                 <?foreach ($arResult["ITEMS"] as $arItem) :
                     if ($arResult["SET_AREA"]) {
                         $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
@@ -46,6 +58,12 @@ $this->setFrameMode(true);
                     </div>
                 <?endforeach?>
             </div>
+            <?if (isset($arParams["ALL_LINK"]) && strlen($arParams["ALL_LINK"]) > 0) :?>
+                <br>
+                <a href="<?=$arParams["ALL_LINK"]?>" class="link">
+                    <span>Все акции</span><i class="icon arrow-right"></i>
+                </a>
+            <?endif?>
         </div>
     </section>
 <?endif?>

@@ -166,3 +166,75 @@ $APPLICATION->IncludeComponent(
     )
 );
 //end
+
+//форма "Запрос цены"
+?>
+<div id="price-order" class="popup">
+    <div class="popup_wrapper">
+        <div class="popup_content js-popup_content">
+            <a href="#" class="popup_content-close" data-popup-close><i class="icon close"></i></a>
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:form.result.new",
+                "get-price",
+                [
+                    "SEF_MODE" => "N",
+                    "WEB_FORM_ID" => WEB_FORM_GET_PRICE,
+                    "LIST_URL" => "",
+                    "EDIT_URL" => "",
+                    "SUCCESS_URL" => "",
+                    "CHAIN_ITEM_TEXT" => "",
+                    "CHAIN_ITEM_LINK" => "",
+                    "IGNORE_CUSTOM_TEMPLATE" => "Y",
+                    "USE_EXTENDED_ERRORS" => "Y",
+                    "CACHE_TYPE" => "A",
+                    "CACHE_TIME" => "3600",
+                    "AJAX_MODE" => "Y",
+                    "AJAX_OPTION_SHADOW" => "N",
+                    "AJAX_OPTION_JUMP" => "N",
+                    "AJAX_OPTION_STYLE" => "Y",
+                    "AJAX_OPTION_HISTORY" => "N",
+                    "FIELD_VALUES" => [
+                        "product" => $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["NAME"]
+                    ]
+                ]
+            );?>
+        </div>
+    </div>
+</div>
+<?//end
+
+//форма "Купить в 1 клик"
+?>
+<div id="buy-one-click" class="popup">
+    <div class="popup_wrapper">
+        <div class="popup_content js-popup_content">
+            <a href="#" class="popup_content-close" data-popup-close><i class="icon close"></i></a>
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:form.result.new",
+                "buy-one-click",
+                [
+                    "SEF_MODE" => "N",
+                    "WEB_FORM_ID" => WEB_FORM_BUY_ONE_CLICK,
+                    "LIST_URL" => "",
+                    "EDIT_URL" => "",
+                    "SUCCESS_URL" => "",
+                    "CHAIN_ITEM_TEXT" => "",
+                    "CHAIN_ITEM_LINK" => "",
+                    "IGNORE_CUSTOM_TEMPLATE" => "Y",
+                    "USE_EXTENDED_ERRORS" => "Y",
+                    "CACHE_TYPE" => "A",
+                    "CACHE_TIME" => "3600",
+                    "AJAX_MODE" => "Y",
+                    "AJAX_OPTION_SHADOW" => "N",
+                    "AJAX_OPTION_JUMP" => "N",
+                    "AJAX_OPTION_STYLE" => "Y",
+                    "AJAX_OPTION_HISTORY" => "N",
+                    "FIELD_VALUES" => [
+                        "product_id" => $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["ID"]
+                    ]
+                ]
+            );?>
+        </div>
+    </div>
+</div>
+<?//end?>

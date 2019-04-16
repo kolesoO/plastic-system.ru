@@ -241,6 +241,10 @@
         margin-right: -40px;
         padding: 25px 35px;
     }
+    .cart_links-item{
+        display: inline-block;
+        margin-right: 20px;
+    }
     .block_wrapper .cart_info{
         margin: -40px -35px;
     }
