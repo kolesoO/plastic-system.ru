@@ -15,6 +15,7 @@ BX.storeNav = {
     setStore: function(id, event) {
         event.preventDefault();
         BX.setCookie(this.cookieName, id, this.cookieOptions);
+        location.reload();
     }
 
 };

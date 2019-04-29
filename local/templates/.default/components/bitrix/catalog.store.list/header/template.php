@@ -10,7 +10,7 @@
         <div class="header-location-content js-drop_down-content">
             <div class="header-location-inner">
                 <?foreach ($arResult["STORES"] as $arItem) :?>
-                    <a href="#" class="header-location-link link" onclick="BX.storeNav('<?=$arItem["ID"]?>', event)"><?=$arItem["STORE_TITLE"]?></a>
+                    <a href="#" class="header-location-link link" onclick="BX.storeNav.setStore('<?=$arItem["ID"]?>', event)"><?=$arItem["STORE_TITLE"]?></a>
                 <?endforeach?>
             </div>
         </div>

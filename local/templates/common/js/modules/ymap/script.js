@@ -24,27 +24,26 @@ obMap.prototype.showMessage = function(strMsg){
 /**
  *
  * @param arCoords
+ * @param key
  * @returns {ymaps.Placemark}
  */
-obMap.prototype.getGeoPlaceMark = function(arCoords){
+obMap.prototype.getGeoPlaceMark = function(arCoords, key){
 
     var ctx = this;
 
-    return new ymaps.Placemark(arCoords, ctx.obPlacemarkProperties, ctx.obPlacemarkOptions);
+    return new ymaps.Placemark(arCoords, ctx.obPlacemarkProperties[key], ctx.obPlacemarkOptions);
 
 };
 
 /**
  *
- * @param obProps
+ * @param arProps
  */
-obMap.prototype.setPlacemarkProperties = function(obProps){
+obMap.prototype.setPlacemarkProperties = function(arProps){
 
     var ctx = this;
 
-    for(var key in obProps){
-        ctx.obPlacemarkProperties[key] = obProps[key];
-    }
+    ctx.obPlacemarkProperties = arProps;
 
 };
 
@@ -108,8 +107,7 @@ obMap.prototype.setPolygon = function(arCoords, arCoordsInner, obProps, obOption
  */
 obMap.prototype.initMap = function(){
 
-    var ctx = this,
-        obGeoObject = null;
+    var ctx = this;
 
     if(ctx.arMarkerInfo.length > 0){
         if(!ctx.obMap){
@@ -118,10 +116,9 @@ obMap.prototype.initMap = function(){
                 zoom: ctx.obParams.mapZoom
             });
         }
-        ctx.arMarkerInfo.forEach(function(obMarkerInfo){
-            obGeoObject = ctx.getGeoPlaceMark(obMarkerInfo.coords);
-        })
-        ctx.obMap.geoObjects.add(obGeoObject);
+        for (var key in ctx.arMarkerInfo) {
+            ctx.obMap.geoObjects.add(ctx.getGeoPlaceMark(ctx.arMarkerInfo[key].coords, key));
+        }
     }
 
 };

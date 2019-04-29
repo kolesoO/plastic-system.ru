@@ -160,6 +160,8 @@
     }
     .table_list:not(.list) .table_list-title{
         text-align: center;
+        /*height:90px;
+        overflow-y:auto;*/
     }
     .banner-item{
         font-size: 150%;

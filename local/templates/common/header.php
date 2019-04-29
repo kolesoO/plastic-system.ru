@@ -196,17 +196,20 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                     </a>
                 </div>
                 <div class="header-col header-search col-lg-6 col-md-2 col-xs-3">
-                    <form class="header-search-form hidden-md hidden-xs">
-                        <input class="header-search-input" type="text" palceholder="Поиск продукции">
-                        <button type="submit">
-                            <i class="icon search"></i>
-                        </button>
-                    </form>
-                    <div class="hidden-lg header-search-wrap">
-                        <a href="#" data-popup-open="#header-search-popup">
-                            <i class="icon search"></i>
-                        </a>
-                    </div>
+                    <?if (DEVICE_TYPE == "DESKTOP") :?>
+                        <form method="get" action="/search/" class="header-search-form">
+                            <input class="header-search-input" type="text" placeholder="Поиск продукции" name="q">
+                            <button type="submit">
+                                <i class="icon search"></i>
+                            </button>
+                        </form>
+                    <?else:?>
+                        <div class="header-search-wrap">
+                            <a href="#" data-popup-open="#header-search-popup">
+                                <i class="icon search"></i>
+                            </a>
+                        </div>
+                    <?endif?>
                 </div>
                 <?if (!CSite::InDir("/cart") && !CSite::InDir("/checkout")) :?>
                     <div class="header-col col-lg-2 col-md-2 col-xs-3">
@@ -239,7 +242,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                     </div>
                 <?endif?>
                 <div class="header-col col-lg-2 col-md-2 col-xs-3">
-                    <a href="#">
+                    <a href="/favorite/">
                         <i class="icon favorite"></i>
                     </a>
                 </div>

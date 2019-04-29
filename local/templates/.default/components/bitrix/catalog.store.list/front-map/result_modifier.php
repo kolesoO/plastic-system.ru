@@ -18,10 +18,12 @@ global $USER_FIELD_MANAGER;
 $arResult["STORES_COUNT"] = count($arResult["STORES"]);
 
 foreach ($arResult["STORES"] as &$arItem) {
+    //пользовательские свойства
     $arFields = $USER_FIELD_MANAGER->GetUserFields("CAT_STORE", $arItem["ID"]);
     if (isset($arFields["UF_CUSTOM_COORDS"])) {
         $arItem["UF_CUSTOM_COORDS"] = explode(",", $arFields["UF_CUSTOM_COORDS"]["VALUE"]);
     }
+    //end
 }
 unset($arItem);
 

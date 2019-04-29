@@ -28,6 +28,13 @@ class CatalogDelivery extends CBitrixComponent
      */
     public function executeComponent()
     {
+        $arLocation = LocationTable::getList(array(
+            'select' => array('CODE'),
+            'filter' => array('NAME.NAME_UPPER' => $cityName),
+        ))->fetch();
+
+        $deliveryId = CSaleLocation::getLocationIDbyCODE(current($arProperty['VALUE']));
+
         $this->includeComponentTemplate();
     }
 }

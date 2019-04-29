@@ -62,7 +62,7 @@
                     $APPLICATION->IncludeComponent(
                         "bitrix:catalog.store.list",
                         "footer",
-                        Array(
+                        [
                             "PHONE" => "Y",
                             "EMAIL" => "Y",
                             "SCHEDULE" => "Y",
@@ -71,7 +71,7 @@
                             "SET_TITLE" => "N",
                             "CACHE_TYPE" => "A",
                             "CACHE_TIME" => "36000000"
-                        )
+                        ]
                     );
                     //end
                 }?>
@@ -134,12 +134,12 @@
     );
     //end
 
-    //всплывающее основное меню для планшетов и моб усройств
     if (DEVICE_TYPE != "DESKTOP") {
+        //всплывающее основное меню для планшетов и моб усройств
         $APPLICATION->IncludeComponent(
             "bitrix:menu",
             "top-popup",
-            Array(
+            [
                 "ROOT_MENU_TYPE" => "top",
                 "MAX_LEVEL" => "1",
                 "CHILD_MENU_TYPE" => "top",
@@ -150,17 +150,25 @@
                 "MENU_CACHE_TIME" => "3600",
                 "MENU_CACHE_USE_GROUPS" => "Y",
                 "MENU_CACHE_GET_VARS" => ""
-            )
+            ]
         );
+        //end
+
+        //поиск
+        $APPLICATION->IncludeComponent(
+            "kDevelop:blank",
+            "search-popup",
+            []
+        );
+        //end
     }
-    //end
 
     //регистрация/авторизация
     if (!$USER->IsAuthorized()) {
         $APPLICATION->IncludeComponent(
             "kDevelop:blank",
             "auth-reg",
-            array()
+            []
         );
     }
     //end

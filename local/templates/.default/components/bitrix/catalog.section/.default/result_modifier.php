@@ -40,8 +40,8 @@ foreach ($arResult["ITEMS"] as &$arItem) {
                 $arOfferKeys[$arOffer["ID"]] = $key;
             }
         }
-        //Доп. свойства торг предложений
         if (count($arOfferKeys) > 0 && isset($arResult["CATALOGS"][$arParams["IBLOCK_ID"]]) && count($arParams["OFFERS_PROPERTY_CODE"]) > 0) {
+            //Доп. свойства торг предложений
             $rsElems = \CIBlockElement::GetList(
                 [],
                 ["IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"], "ID" => array_keys($arOfferKeys)],
@@ -58,8 +58,23 @@ foreach ($arResult["ITEMS"] as &$arItem) {
                     }
                 }
             }
+            //end
+            //обновление остатков на складе
+            $rsStoreProduct = \CCatalogStore::GetList(
+                [],
+                ["ID" => STORE_ID, "PRODUCT_ID" => array_keys($arOfferKeys)],
+                false,
+                false,
+                ["ID", "PRODUCT_AMOUNT"]
+            );
+            while ($arStoreProduct = $rsStoreProduct->fetch()) {
+                $arItem["OFFERS"][$arOfferKeys[$arFields["ID"]]]["CATALOG_QUANTITY"] = $arStoreProduct["PRODUCT_AMOUNT"];
+                if (intval($arStoreProduct["PRODUCT_AMOUNT"]) == 0) {
+                    $arItem["OFFERS"][$arOfferKeys[$arFields["ID"]]]["CAN_BUY"] = false;
+                }
+            }
+            //end
         }
-        //end
     }
 }
 unset($arItem);

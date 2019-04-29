@@ -37,7 +37,8 @@
             );?>
         </div>
         <div class="cart_info-item col-lg-8">
-            <?$APPLICATION->IncludeComponent(
+            <?
+            $APPLICATION->IncludeComponent(
                 'kDevelop:catalog.delivery',
                 '.default',
                 array(),

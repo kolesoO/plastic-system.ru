@@ -172,9 +172,13 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                 //end
 
                 //сортировка и внешний вид
+                $tmp = "catalog_controls";
+                if ($arParams["DEVICE_TYPE"] != "DESKTOP") {
+                    $tmp .= "-".strtolower($arParams["DEVICE_TYPE"]);
+                }
                 $APPLICATION->IncludeComponent(
                     "kDevelop:blank",
-                    "catalog_controls".($arParams["DEVICE_TYPE"] == "MOBILE" ? "-mobile" : ""),
+                    $tmp,
                     array(
                         "SORT" => $arSort
                     )

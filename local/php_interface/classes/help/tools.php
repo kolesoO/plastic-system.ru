@@ -63,6 +63,7 @@ class Tools
      */
     public static function getQntInfo($qnt, $msgPrefix)
     {
+        $qnt = intval($qnt);
         $defValue = 10;
         $arReturn = [
             "CLASS" => "red",

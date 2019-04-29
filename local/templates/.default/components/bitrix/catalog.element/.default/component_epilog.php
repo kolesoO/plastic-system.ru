@@ -204,7 +204,7 @@ $APPLICATION->IncludeComponent(
 <?//end
 
 //форма "Купить в 1 клик"
-?>
+if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) :?>
 <div id="buy-one-click" class="popup">
     <div class="popup_wrapper">
         <div class="popup_content js-popup_content">
@@ -237,4 +237,5 @@ $APPLICATION->IncludeComponent(
         </div>
     </div>
 </div>
-<?//end?>
+<?endif
+//end?>

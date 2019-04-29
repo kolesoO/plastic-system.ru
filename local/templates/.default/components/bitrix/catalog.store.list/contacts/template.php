@@ -27,7 +27,9 @@
                             <br><span><?=$arItem["SCHEDULE"]?></span>
                         <?endif?>
                     </div>
-                    <a href="#" class="link dashed">Схема проезда, pdf</a>
+                    <?if (is_array($arItem["UF_SCHEME"])) :?>
+                        <a href="<?=$arItem["UF_SCHEME"]["SRC"]?>" target="_blank" class="link dashed">Схема проезда, <?=$arItem["UF_SCHEME"]["EXTENSION"]?></a>
+                    <?endif?>
                 </div>
             <?endforeach?>
         </div>

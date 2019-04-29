@@ -230,8 +230,10 @@ var obAjax = {
      */
     addToBasketCallBack: function(data)
     {
+        if (!!data.msg) {
+            this.addPopupMessage("basket-white", data.msg);
+        }
         BX.onCustomEvent('OnBasketChange');
-        this.addPopupMessage("basket-white", "Товар добавлен в корзину");
     },
 
     /**

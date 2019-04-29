@@ -10,6 +10,7 @@ trait MsgHandBook
         "ITEMS_NOT_FOUND" => "Товары не найдены",
         "PRICE_TYPE_NOT_FOUND" => "Не найден тип цены",
         "ITEMS_NOT_AVAILABLE" => "Товар доступен только под заказ",
+        "ADD_TO_BASKET_SUCCESS" => "Товар добавлен в корзину",
         "ADD_TO_BASKET_ERROR" => "Ошибка при добавлении в корзину",
         "MODULE_SALE_NOT_INSTALLED" => "Модуль \"Sale\" не установлен",
         "REG_FIELDS_EMPTY" => "Необходимо заполнить все обязательные поля",

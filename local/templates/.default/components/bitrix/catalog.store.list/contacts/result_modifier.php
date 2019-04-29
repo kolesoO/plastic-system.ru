@@ -13,25 +13,34 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 
+global $USER_FIELD_MANAGER;
+
 $arResult["STORES_COUNT"] = count($arResult["STORES"]);
-if (is_array($arParams["IMAGE_SIZE"])) {
+$hasResizeImg = is_array($arParams["IMAGE_SIZE"]);
+
+foreach ($arResult["STORES"] as &$arItem) {
+    //пользовательские свойства
+    $arFields = $USER_FIELD_MANAGER->GetUserFields("CAT_STORE", $arItem["ID"]);
+    if (intval($arFields["UF_SCHEME"]["VALUE"]) > 0) {
+        $arItem["UF_SCHEME"] = \CFile::GetFileArray($arFields["UF_SCHEME"]["VALUE"]);
+        $arItem["UF_SCHEME"]["EXTENSION"] = pathinfo($arItem["UF_SCHEME"]["ORIGINAL_NAME"], PATHINFO_EXTENSION);
+    }
+    //end
     //кеширование изображений
-    foreach ($arResult["STORES"] as &$arItem) {
-        if (is_array($arItem["DETAIL_IMG"])) {
-            $thumb = \CFile::ResizeImageGet(
-                $arItem["DETAIL_IMG"],
-                ["width" => $arParams["IMAGE_SIZE"]["WIDTH"], "height" => $arParams["IMAGE_SIZE"]["HEIGHT"]],
-                BX_RESIZE_IMAGE_PROPORTIONAL,
-                true
-            );
-            if ($thumb["src"]) {
-                $arItem["DETAIL_IMG"]["SRC"] = $thumb["src"];
-            }
+    if (is_array($arItem["DETAIL_IMG"]) && $hasResizeImg) {
+        $thumb = \CFile::ResizeImageGet(
+            $arItem["DETAIL_IMG"],
+            ["width" => $arParams["IMAGE_SIZE"]["WIDTH"], "height" => $arParams["IMAGE_SIZE"]["HEIGHT"]],
+            BX_RESIZE_IMAGE_PROPORTIONAL,
+            true
+        );
+        if ($thumb["src"]) {
+            $arItem["DETAIL_IMG"]["SRC"] = $thumb["src"];
         }
     }
-    unset($arItem);
     //end
 }
+unset($arItem);
 
 $cp = $this->__component;
 if (is_object($cp)) {

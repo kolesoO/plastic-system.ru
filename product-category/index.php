@@ -85,7 +85,7 @@ $APPLICATION->IncludeComponent(
             1 => "",
         ),
         "FILTER_PRICE_CODE" => array(
-            0 => "Продажи СПб",
+            0 => PRICE_CODE,
         ),
         "FILTER_OFFERS_FIELD_CODE" => array(
             0 => "PREVIEW_PICTURE",
@@ -113,7 +113,7 @@ $APPLICATION->IncludeComponent(
         "POST_FIRST_MESSAGE" => "N",
         "USE_COMPARE" => "N",
         "PRICE_CODE" => array(
-            0 => "Продажи СПб",
+            0 => PRICE_CODE,
         ),
         "USE_PRICE_COUNT" => "N",
         "SHOW_PRICE_COUNT" => "1",
@@ -212,7 +212,7 @@ $APPLICATION->IncludeComponent(
         "GIFTS_SHOW_NAME" => "Y",
         "GIFTS_SHOW_OLD_PRICE" => "Y",
         "USE_STORE" => "Y",
-        "STORES" => array("1"),
+        "STORES" => array(STORE_ID),
         "USE_MIN_AMOUNT" => "N",
         "USER_FIELDS" => array(""),
         "FIELDS" => array("ADDRESS", "PHONE"),

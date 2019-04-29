@@ -432,6 +432,7 @@ h4, .title-4{
     -ms-transform: translate(100%, 0);
     transform: translate(100%, 0);
     transition-delay: .3s;
+    z-index: 9;
 }
 .system-popup.active{
     -ms-transform: translate(0, 0);
@@ -711,6 +712,10 @@ a:hover > .burger > hr:last-child{
     margin-top: 8px;
     margin-bottom: 8px;
 }
+.table_list:not(.list) .table_list-item .margin{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
 .table_list-item .label,
 .label.absolute{
     position:absolute;
@@ -808,7 +813,7 @@ a:hover > .burger > hr:last-child{
     min-width: 23px;
 }
 .table_list:not(.list) .table_list-info > *{
-    width: 50%!important;
+    width: 100%!important;
 }
 .table_list.list .table_list-info > * + *{
     margin-left: 50px;
@@ -833,6 +838,9 @@ a:hover > .burger > hr:last-child{
 .table_list-status.red:before{
     background-color:#FF2429;
     border-color:#FF2429;
+}
+.table_list:not(.list) .table_list-desc-item + .table_list-status{
+    margin-top: 8px;
 }
 .table_list-desc{
     display: flex;
