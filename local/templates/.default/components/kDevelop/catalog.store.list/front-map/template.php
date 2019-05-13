@@ -5,10 +5,10 @@
         <div class="banner_map-map-wrap">
             <div class="banner_map-map" style="background-image: url('<?=SITE_TEMPLATE_PATH?>/images/map-bg.svg');width:1500px;height:453px">
                 <?foreach ($arResult["STORES"] as $arItem) :
-                    if (!is_array($arItem["UF_CUSTOM_COORDS"]) || count(UF_CUSTOM_COORDS) == 0) continue;
+                    if (!is_array($arItem["UF_CUSTOM_COORDS"]) || count($arItem["UF_CUSTOM_COORDS"]) == 0) continue;
                     ?>
-                    <a href="#" class="banner_map-marker js-tool_tip" data-target="#tool_tip-1" style="left:<?=$arItem["UF_CUSTOM_COORDS"][0]?>px;top:<?=$arItem["UF_CUSTOM_COORDS"][1]?>px;"><?=$arItem["STORE_TITLE"]?></a>
-                    <div id="tool_tip-1" class="banner_map-balloon js-tool_tip-content">
+                    <a href="#" class="banner_map-marker js-tool_tip" data-target="#tool_tip-<?=$arItem["ID"]?>" style="left:<?=$arItem["UF_CUSTOM_COORDS"][0]?>px;top:<?=$arItem["UF_CUSTOM_COORDS"][1]?>px;"><?=$arItem["STORE_TITLE"]?></a>
+                    <div id="tool_tip-<?=$arItem["ID"]?>" class="banner_map-balloon js-tool_tip-content">
                         <div class="banner_map-balloon_title"><?=$arItem["STORE_TITLE"]?></div>
                         <p>
                             <?if (strlen($arItem["ADDRESS"]) > 0) :?>

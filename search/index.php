@@ -25,18 +25,8 @@ if (DEVICE_TYPE == "DESKTOP") {
     $pagerTmp = ".default-mobile";
 }
 $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
-$sefUrlTpl = [
-    "sections" => "",
-    "section" => "#SECTION_CODE_PATH#/",
-    "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
-    "compare" => "compare/"
-];
-$arCurPage = explode("/", trim($strCurPage, "/"));
-if (strpos(end($arCurPage), \kDevelop\Help\Tools::getOfferPrefixInUrl()) !== false) {
-    $sefUrlTpl["element"] = "#SECTION_CODE_PATH#/#ELEMENT_CODE#/".\kDevelop\Help\Tools::getOfferSefUrlTmp()."/";
-}
-unset($arCurPage);
 //end
+
 $APPLICATION->IncludeComponent (
     "bitrix:catalog.search",
     "",

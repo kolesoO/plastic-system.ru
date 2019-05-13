@@ -103,7 +103,7 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                 </a>
             </div>
             <div class="table_list-info">
-                <a href="#">
+                <a href="#" onclick="obAjax.addToFavorite('<?=$arResult["ITEM"]["ID"]?>', event)">
                     <i class="icon favorite"></i>
                     <span>В избранное</span>
                 </a>

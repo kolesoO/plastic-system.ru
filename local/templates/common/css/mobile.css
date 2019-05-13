@@ -310,7 +310,7 @@
         width: 100%;
     }
     .title_wrap-img{
-        margin: 0 -10px 30px;
+        margin: -20px -10px 30px;
         width: calc(100% + 20px);
     }
     .contacts_list{
@@ -441,6 +441,12 @@
     .personal_content{
         width: 100%;
         padding: 20px 10px;
+    }
+    .order_address .address_list-item{
+        width: 100%;
+    }
+    .order_address .address_list-item + .address_list-item{
+        border-top: 0;
     }
 
 }

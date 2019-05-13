@@ -1903,3 +1903,20 @@ a.catalog_menu-item-title{
 .popup_menu-item + .popup_menu-item{
     margin-top: 20px;
 }
+.address_list{
+    border-bottom: 1px solid #EBEBEB;
+    border-top: 1px solid #EBEBEB;
+    margin-bottom: 20px;
+}
+.order_address .address_list{
+    display: flex;
+    align-items: flex-start;
+    border: 0;
+    margin: 0;
+}
+.address_list-item{
+    padding: 20px 0;
+}
+.address_list-item + .address_list-item{
+    border-top: 1px solid #EBEBEB;
+}

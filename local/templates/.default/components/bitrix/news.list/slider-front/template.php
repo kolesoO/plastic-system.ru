@@ -14,11 +14,19 @@
             $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
             $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
             ?>
-            <div id="<?=$this->GetEditAreaId($arItem['ID']);?>" class="main_slider-item" style="background-image:url('<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>')">
-                <div class="container">
-                    <div class="main_slider-desc"><?=($arItem["PREVIEW_TEXT_TYPE"] == "text" ? $arItem["PREVIEW_TEXT"] : htmlspecialcharsback($arItem["PREVIEW_TEXT"]))?></div>
+            <?if (strlen($arItem["PROPERTIES"]["LINK"]["VALUE"]) > 0) :?>
+                <a id="<?=$this->GetEditAreaId($arItem['ID']);?>" href="<?=$arItem["PROPERTIES"]["LINK"]["VALUE"]?>" class="main_slider-item" style="background-image:url('<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>')">
+                    <div class="container">
+                        <div class="main_slider-desc"><?=($arItem["PREVIEW_TEXT_TYPE"] == "text" ? $arItem["PREVIEW_TEXT"] : htmlspecialcharsback($arItem["PREVIEW_TEXT"]))?></div>
+                    </div>
+                </a>
+            <?else:?>
+                <div id="<?=$this->GetEditAreaId($arItem['ID']);?>" class="main_slider-item" style="background-image:url('<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>')">
+                    <div class="container">
+                        <div class="main_slider-desc"><?=($arItem["PREVIEW_TEXT_TYPE"] == "text" ? $arItem["PREVIEW_TEXT"] : htmlspecialcharsback($arItem["PREVIEW_TEXT"]))?></div>
+                    </div>
                 </div>
-            </div>
+            <?endif?>
         <?endforeach;?>
     </section>
 <?endif?>

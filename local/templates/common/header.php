@@ -66,7 +66,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
     <link rel="apple-touch-icon" sizes="144x144" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-180x180.png">
-    <link rel="manifest" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/manifest.json">
+    <link rel="manifest" href="<?=SITE_TEMPLATE_PATH?>/manifest.json">
     <link name="msapplication-TileColor" content="#fff">
     <link name="theme-color" content="#fff">
     <!--end-->
@@ -99,13 +99,16 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                     );?>
                     <div>
                         <?$APPLICATION->IncludeComponent(
-                            "bitrix:main.include",
-                            ".default",
-                            [
-                                "AREA_FILE_SHOW" => "file",
-                                "PATH" => SITE_TEMPLATE_PATH . "/include/header/mail.php"
-                            ],
-                            false
+                            "kDevelop:catalog.store.detail",
+                            "email",
+                            Array(
+                                "STORE" => STORE_ID,
+                                "MAP_TYPE" => "0",
+                                "CACHE_TYPE" => "A",
+                                "CACHE_TIME" => "3600",
+                                "CACHE_NOTES" => "",
+                                "SET_TITLE" => "N"
+                            )
                         );?>
                     </div>
                 <?else:?>
@@ -121,7 +124,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                 <?
                 //Список складов
                 $APPLICATION->IncludeComponent(
-                    "bitrix:catalog.store.list",
+                    "kDevelop:catalog.store.list",
                     "header",
                     Array(
                         "PHONE" => "Y",
@@ -139,13 +142,16 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                 ?>
                 <div class="header-contacts">
                     <?$APPLICATION->IncludeComponent(
-                        "bitrix:main.include",
-                        ".default",
-                        [
-                            "AREA_FILE_SHOW" => "file",
-                            "PATH" => SITE_TEMPLATE_PATH . "/include/header/contacts.php"
-                        ],
-                        false
+                        "kDevelop:catalog.store.detail",
+                        "header",
+                        Array(
+                            "STORE" => STORE_ID,
+                            "MAP_TYPE" => "0",
+                            "CACHE_TYPE" => "A",
+                            "CACHE_TIME" => "3600",
+                            "CACHE_NOTES" => "",
+                            "SET_TITLE" => "N"
+                        )
                     );?>
                 </div>
             </div>

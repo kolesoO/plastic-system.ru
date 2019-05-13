@@ -27,7 +27,7 @@ if (!empty($arResult['ERRORS']['FATAL']))
 else
 {
 	?>
-    <div class="title-3"><?$APPLICATION->ShowTitle(false)?></div>
+    <div class="title-3">Мои заказы</div>
     <?if (count($arResult['ORDERS']) > 0) :?>
         <div class="personal_order_list table">
             <div class="table-row">

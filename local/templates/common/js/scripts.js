@@ -95,7 +95,7 @@ $(document).ready(function(){
             top: $(this).position().top - $target.outerHeight() - 10,
             left: $(this).position().left + ($(this).outerWidth() - $target.outerWidth())/2,
             opacity: 1,
-            zIndex: 2
+            zIndex: 3
         });
     })
     $(document).on("click", function(e){

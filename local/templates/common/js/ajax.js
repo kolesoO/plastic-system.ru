@@ -16,11 +16,16 @@ var obAjax = {
      * @param obData
      * @returns {string}
      */
-    serializeData: function(obData)
+    serializeData: function(obData, prefixKey)
     {
-        var return_str = "";
+        var return_str = "",
+            hasPrefix = !!prefixKey;
+
         if(Object.keys(obData).length > 0){
             for(var i in obData){
+                if (hasPrefix) {
+                    i = prefixKey + "[" + i + "]";
+                }
                 if(typeof obData[i] == "object"){
                     for(var j in obData[i]){
                         if(typeof obData[i][j] == "object"){
@@ -68,7 +73,9 @@ var obAjax = {
             inputs = form.elements;
 
         for (var i = 0; i < inputs.length; i++) {
-            values[inputs[i].name] = inputs[i].value;
+            if (inputs[i].name.length > 0) {
+                values[inputs[i].name] = inputs[i].value;
+            }
         }
 
         return values;
@@ -275,6 +282,282 @@ var obAjax = {
             location.reload();
         }
     },
+
+    /**
+     *
+     * @param id
+     * @param target_id
+     * @param evt
+     */
+    getUserAddressForm: function(id, target_id, evt)
+    {
+        evt.preventDefault();
+
+        this.params.target_id = target_id;
+        this.doRequest(
+            "POST",
+            location.href,
+            this.serializeData({
+                class: "Component",
+                method: "includeClass",
+                params: {
+                    comp_name: "kDevelop:user.address",
+                    method_name: "getUserAddressForm",
+                    id: id,
+                    target_id: target_id
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    getUserAddressFormCallBack: function(data)
+    {
+        if (!!data.html) {
+            var elem = document.getElementById(this.params.target_id);
+            if (elem) {
+                elem.innerHTML = data.html;
+                if(typeof obAnimateInput == "object"){
+                    obAnimateInput.init();
+                }
+            }
+        }
+    },
+
+    /**
+     *
+     * @param form
+     * @param target_id
+     * @param evt
+     */
+    createUserAddress: function(form, target_id, evt)
+    {
+        evt.preventDefault();
+
+        this.params.target_id = target_id;
+        this.doRequest(
+            "POST",
+            location.href,
+            $(form).serialize(), //TODO: отказаться от jQuery и перейти на native js
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    createUserAddressCallBack: function(data)
+    {
+        if (!!data.msg) {
+            var errElem = document.getElementById(this.params.target_id + "-error");
+            if (!!errElem) {
+                errElem.innerText = data.msg;
+            }
+        } else if (!!data.id) {
+            document.getElementById(this.params.target_id).innerHTML = "";
+            if (!!data.new_item) {
+                var listWrapper = document.querySelector(".address_list"),
+                    elem = null;
+                if (!!listWrapper) {
+                    elem = document.createElement("div");
+                    elem.id = this.params.target_id = "address-" + data.id;
+                    elem.classList.add("address_list-item");
+                    listWrapper.appendChild(elem);
+                }
+            }
+            this.getUserAddressData(data.id, this.params.target_id);
+        }
+    },
+
+    /**
+     *
+     * @param id
+     * @param target_id
+     * @param evt
+     */
+    getUserAddressData: function(id, target_id, evt)
+    {
+        if (!!evt) {
+            evt.preventDefault();
+        }
+
+        this.params.target_id = target_id;
+        this.doRequest(
+            "POST",
+            location.href,
+            this.serializeData({
+                class: "Component",
+                method: "getUserAddressData",
+                params: {
+                    id: id,
+                    target_id: target_id
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    getUserAddressDataCallBack: function(data)
+    {
+        if (!!data.html) {
+            var elem = document.getElementById(this.params.target_id);
+            if (elem) {
+                elem.innerHTML = data.html;
+            }
+        }
+    },
+
+    /**
+     *
+     * @param target_id
+     * @param evt
+     */
+    getUserAddressList: function(target_id, evt)
+    {
+        evt.preventDefault();
+
+        this.params.target_id = target_id;
+        this.doRequest(
+            "POST",
+            location.href,
+            this.serializeData({
+                class: "Component",
+                method: "getUserAddressList",
+                params: {}
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    getUserAddressListCallBack: function(data)
+    {
+        if (!!data.html) {
+            var elem = document.getElementById(this.params.target_id);
+            if (elem) {
+                elem.innerHTML = data.html;
+            }
+        }
+    },
+
+    /**
+     *
+     * @param id
+     * @param evt
+     */
+    setUserAddress: function(id, evt)
+    {
+        evt.preventDefault();
+
+        this.doRequest(
+            "POST",
+            location.href,
+            this.serializeData({
+                class: "Component",
+                method: "getUserAddressData",
+                params: {
+                    id: id,
+                    js_callback: "setUserAddressCallback",
+                    is_json: true
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    setUserAddressCallback: function(data)
+    {
+        var elem = null;
+        if (!!data.NAME) {
+            elem = document.getElementById("ORDER_PROP_NAME");
+            if (!!elem) {
+                elem.value = data.NAME;
+                $("#ORDER_PROP_NAME").keyup();
+            }
+        }
+        if (typeof data.PROPERTIES == "object") {
+            if (!!data.PROPERTIES.ADDRESS) {
+                var addressElemCollection = [
+                        document.getElementById("city"),
+                        document.getElementById("street"),
+                        document.getElementById("house"),
+                        document.getElementById("korp")
+                    ];
+                for (var counter = 0; counter < data.PROPERTIES.ADDRESS.VALUE.length; counter ++) {
+                    if (!!addressElemCollection[counter]) {
+                        addressElemCollection[counter].value = data.PROPERTIES.ADDRESS.VALUE[counter];
+                        $("#" + addressElemCollection[counter].id).keyup();
+                    }
+                }
+                delete data.PROPERTIES.ADDRESS;
+            }
+            for (var propCode in data.PROPERTIES) {
+                elem = document.getElementById("ORDER_PROP_" + propCode);
+                if (!!elem) {
+                    elem.value = data.PROPERTIES[propCode].VALUE;
+                    $("#" + elem.id).keyup();
+                }
+            }
+        }
+    },
+
+    addToFavorite: function(id, evt)
+    {
+        evt.preventDefault();
+
+        this.doRequest(
+            "POST",
+            location.href,
+            this.serializeData({
+                class: "Favorite",
+                method: "add",
+                params: {
+                    id: id
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    addToFavoriteCallBack: function(data)
+    {
+        if (!!data.msg) {
+            this.addPopupMessage("favorite-white", data.msg);
+        }
+    },
+
 
     /**
      *

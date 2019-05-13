@@ -31,28 +31,18 @@
                         );?>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <?$APPLICATION->IncludeComponent(
-                        "bitrix:main.include",
-                        ".default",
-                        [
-                            "AREA_FILE_SHOW" => "file",
-                            "PATH" => SITE_TEMPLATE_PATH . "/include/footer/mail.php"
-                        ],
-                        false
-                    );?>
-                </div>
-                <div class="col-md-9">
-                    <?$APPLICATION->IncludeComponent(
-                        "bitrix:main.include",
-                        ".default",
-                        [
-                            "AREA_FILE_SHOW" => "file",
-                            "PATH" => SITE_TEMPLATE_PATH . "/include/footer/phone.php"
-                        ],
-                        false
-                    );?>
-                </div>
+                <?$APPLICATION->IncludeComponent(
+                    "kDevelop:catalog.store.detail",
+                    "footer",
+                    Array(
+                        "STORE" => STORE_ID,
+                        "MAP_TYPE" => "0",
+                        "CACHE_TYPE" => "A",
+                        "CACHE_TIME" => "3600",
+                        "CACHE_NOTES" => "",
+                        "SET_TITLE" => "N"
+                    )
+                );?>
             </div>
         </div>
         <div class="footer-part">
@@ -60,7 +50,7 @@
                 <?if (DEVICE_TYPE != "MOBILE") {
                     //Список складов
                     $APPLICATION->IncludeComponent(
-                        "bitrix:catalog.store.list",
+                        "kDevelop:catalog.store.list",
                         "footer",
                         [
                             "PHONE" => "Y",

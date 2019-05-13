@@ -7,7 +7,6 @@
         //name
         $name = $arProp["NAME"].($arProp["REQUIRED"] == "Y" ? "*" : "");
         //end
-
         //type
         $type = "text";
         if ($arProp["IS_PHONE"]) {
@@ -20,10 +19,14 @@
         <? if ($counter % 3 == 0 && $counter > 0) :?>
             </div><div flex-align="center" class="order_form-item-input">
         <?endif?>
-        <div class="col-lg-6 col-md-9 animate_input js-animate_input">
-            <label for="PROPERTY_<?=$arProp["CODE"]?>"><?=$name?></label>
-            <input id="PROPERTY_<?=$arProp["CODE"]?>" type="<?=$type?>" name="<?=$arProp["FIELD_NAME"]?>" value="<?=$arProp["VALUE"]?>">
-        </div>
+        <?if ($arProp["IS_LOCATION"] == "Y") :?>
+            <input type="hidden" name="<?=$arProp["FIELD_NAME"]?>" value="<?=$arProp["VALUE"]?>">
+        <?else:?>
+            <div class="col-lg-6 col-md-9 animate_input js-animate_input">
+                <label for="<?=$arProp["FIELD_ID"]?>"><?=$name?></label>
+                <input id="<?=$arProp["FIELD_ID"]?>" type="<?=$type?>" name="<?=$arProp["FIELD_NAME"]?>" value="<?=$arProp["VALUE"]?>">
+            </div>
+        <?endif?>
         <?
         $counter ++;
     endforeach?>

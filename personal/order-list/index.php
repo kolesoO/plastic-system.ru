@@ -4,7 +4,7 @@ if (!$USER->isAuthorized()) {
     LocalRedirect("/", true, 301);
 }
 $APPLICATION->SetPageProperty("header_section-class", "section");
-$APPLICATION->SetTitle("Мои заказы");
+$APPLICATION->SetTitle("Личный кабинет");
 ?>
 
     <div class="block_wrapper">
@@ -41,7 +41,7 @@ $APPLICATION->SetTitle("Мои заказы");
                         "PATH_TO_PAYMENT" => "payment.php",
                         "ORDERS_PER_PAGE" => 20,
                         "ID" => "",
-                        "SET_TITLE" => "Y",
+                        "SET_TITLE" => "N",
                         "SAVE_IN_SESSION" => "Y",
                         "NAV_TEMPLATE" => "",
                         "CACHE_TYPE" => "A",

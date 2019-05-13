@@ -270,15 +270,15 @@
         margin-bottom: 50px;
     }
     .title_wrap{
-        flex-wrap: wrap;
+        flex-wrap: wrap-reverse;
         margin-bottom: 50px;
     }
     .title_wrap [class*="title-"]{
-        width: 80%;
+        width: 100%;
     }
     .title_wrap-img{
-        width: calc(20% + 200px);
-        margin-left: -200px;
+        margin: -40px -35px 30px;
+        width: calc(100% + 70px);
     }
     .block_wrapper .compare_list{
         margin:0 -35px;
@@ -395,6 +395,15 @@
     }
     .personal_content{
         padding: 40px 35px;
+    }
+    .order_address .address_list-item{
+        width: 50%;
+        padding-right: 20px;
+    }
+    .order_address .address_list-item + .address_list-item{
+        border-top: 0;
+        border-left: 1px solid #EBEBEB;
+        padding-left: 40px;
     }
 
 }

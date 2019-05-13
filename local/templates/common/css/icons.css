@@ -59,12 +59,18 @@ a:hover > .icon:before{
 .table_list.list .icon.basket-white:before{
     margin-right: 5px;
 }
-.icon.favorite:before{
+.icon.favorite:before,
+.icon.favorite-white:before{
     width: 17px;
     height: 15px;
-    background-image: url(../images/icons/favorite.svg);
     background-size: contain;
     /*margin-right: 5px;*/
+}
+.icon.favorite:before{
+    background-image: url(../images/icons/favorite.svg);
+}
+.icon.favorite-white:before{
+    background-image: url(../images/icons/favorite-white.svg);
 }
 .icon.buy_one_click:before{
     width: 17px;

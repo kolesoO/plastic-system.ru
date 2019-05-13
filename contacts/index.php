@@ -8,7 +8,7 @@ $APPLICATION->SetTitle("Контакты");
 
 //Список складов
 $APPLICATION->IncludeComponent(
-    "bitrix:catalog.store.list",
+    "kDevelop:catalog.store.list",
     "contacts",
     Array(
         "PHONE" => "Y",

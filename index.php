@@ -25,7 +25,7 @@ $APPLICATION->IncludeComponent(
         "SORT_ORDER2" => "ASC",
         "FILTER_NAME" => "arSliderFilter",
         "FIELD_CODE" => Array("ID", "NAME", "PREVIEW_PICTURE", "PREVIEW_TEXT"),
-        "PROPERTY_CODE" => Array(),
+        "PROPERTY_CODE" => Array("*"),
         "CHECK_DATES" => "Y",
         "DETAIL_URL" => "",
         "PREVIEW_TRUNCATE_LEN" => "",
@@ -301,7 +301,7 @@ $APPLICATION->IncludeComponent(
         </div>
         <?if (DEVICE_TYPE != "MOBILE") {
             $APPLICATION->IncludeComponent(
-                "bitrix:catalog.store.list",
+                "kDevelop:catalog.store.list",
                 "front-map",
                 Array(
                     "PHONE" => "Y",

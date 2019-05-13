@@ -22,7 +22,7 @@ class Store
                 ["ACTIVE"=>"Y"],
                 false,
                 false,
-                ["ID", "UF_PRICE_ID"]
+                ["ID", "UF_PRICE_ID", "ADDRESS"]
             );
             while ($arStore = $rsStore->fetch()) {
                 $arStoreIdList[] = $arStore["ID"];
@@ -44,6 +44,9 @@ class Store
         }
     }
 
+    /**
+     * @param $id
+     */
     public static function setPrice($id)
     {
         if ($arPrice = \CCatalogGroup::GetList(

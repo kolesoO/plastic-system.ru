@@ -14,7 +14,12 @@ trait MsgHandBook
         "ADD_TO_BASKET_ERROR" => "Ошибка при добавлении в корзину",
         "MODULE_SALE_NOT_INSTALLED" => "Модуль \"Sale\" не установлен",
         "REG_FIELDS_EMPTY" => "Необходимо заполнить все обязательные поля",
-        "PAS_AND_CONF_PAS_NOT_EQ" => "Подтверждение пароля не совпадает с основным паролем"
+        "PAS_AND_CONF_PAS_NOT_EQ" => "Подтверждение пароля не совпадает с основным паролем",
+        "ADD_TO_IBLOCK_ERROR" => "Ошибка при добавлении записи",
+        "UPDATE_IN_IBLOCK_ERROR" => "Ошибка при обновлении записи",
+        "IBLOCK_NOT_FOUND" => "Не найден инфоблок для записи",
+        "ADD_TO_FAVORITE_ERROR" => "Ошибка при добавлении в избранное",
+        "ADD_TO_FAVORITE_SUCCESS" => "Товар добавлен в избранное",
     ];
 
     /**
