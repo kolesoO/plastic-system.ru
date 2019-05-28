@@ -20,6 +20,8 @@ trait MsgHandBook
         "IBLOCK_NOT_FOUND" => "Не найден инфоблок для записи",
         "ADD_TO_FAVORITE_ERROR" => "Ошибка при добавлении в избранное",
         "ADD_TO_FAVORITE_SUCCESS" => "Товар добавлен в избранное",
+        "DELETE_FROM_FAVORITE_ERROR" => "Ошибка при удалении из избранного",
+        "DELETE_FROM_FAVORITE_SUCCESS" => "Товар удален из избранного"
     ];
 
     /**

@@ -6,51 +6,25 @@
  * @var array $templateData
  */
 
+include_once $_SERVER["DOCUMENT_ROOT"]."/local/php_interface/classes/ajax/msgHandBook.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/local/php_interface/classes/ajax/lib/favorite.php";
+
 // check compared state
-if ($arParams['DISPLAY_COMPARE'])
-{
-	$compared = false;
-	$comparedIds = array();
-	$item = $templateData['ITEM'];
+if ($arParams['DISPLAY_COMPARE']) :?>
+    <script>
+        if (typeof window.catalogElement == "function") {
+            obCatalogElement_<?=$arResult["OFFER"]["ID"]?>.initCompare(<?=array_key_exists($arResult["OFFER"]['ID'], $_SESSION[$arParams['COMPARE_NAME']][$arParams['IBLOCK_ID']]['ITEMS']) ? "true" : "false"?>);
+        }
+    </script>
+<?endif;
+//end
 
-	if (!empty($_SESSION[$arParams['COMPARE_NAME']][$item['IBLOCK_ID']]))
-	{
-		if (!empty($item['JS_OFFERS']))
-		{
-			foreach ($item['JS_OFFERS'] as $key => $offer)
-			{
-				if (array_key_exists($offer['ID'], $_SESSION[$arParams['COMPARE_NAME']][$item['IBLOCK_ID']]['ITEMS']))
-				{
-					if ($key == $item['OFFERS_SELECTED'])
-					{
-						$compared = true;
-					}
-
-					$comparedIds[] = $offer['ID'];
-				}
-			}
-		}
-		elseif (array_key_exists($item['ID'], $_SESSION[$arParams['COMPARE_NAME']][$item['IBLOCK_ID']]['ITEMS']))
-		{
-			$compared = true;
-		}
-	}
-
-	if ($templateData['JS_OBJ'])
-	{
-		?>
-		<script>
-			BX.ready(BX.defer(function(){
-				if (!!window.<?=$templateData['JS_OBJ']?>)
-				{
-					window.<?=$templateData['JS_OBJ']?>.setCompared('<?=$compared?>');
-
-					<? if (!empty($comparedIds)): ?>
-						window.<?=$templateData['JS_OBJ']?>.setCompareInfo(<?=CUtil::PhpToJSObject($comparedIds, false, true)?>);
-					<? endif ?>
-				}
-			}));
-		</script>
-		<?
-	}
-}
+// check favorite
+?>
+    <script>
+        if (typeof window.catalogElement == "function") {
+            obCatalogElement_<?=$arResult["OFFER"]["ID"]?>.initFavorite(<?=\kDevelop\Ajax\Favorite::isAdded($arResult["ITEM"]["ID"]) ? "true" : "false"?>);
+        }
+    </script>
+<?
+//end

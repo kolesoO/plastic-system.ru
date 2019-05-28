@@ -132,19 +132,20 @@ var obAjax = {
 
         evt.preventDefault();
 
+        var ctx = this;
         if (typeof obCatalogItemsParams == "object") {
             obCatalogItemsParams.offer_id = offerId;
             obCatalogItemsParams.target_id = wrapId;
-            this.setParams(obCatalogItemsParams);
+            ctx.setParams(obCatalogItemsParams);
         }
 
-        this.doRequest(
+        ctx.doRequest(
             "GET",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Catalog",
                 method: "getCatalogItem",
-                params: this.params
+                params: ctx.params
             }),
             [
                 ["Content-type", "application/x-www-form-urlencoded"]
@@ -178,24 +179,25 @@ var obAjax = {
          */
 
         var form = formItem.closest("form"),
-            subForm = document.getElementById(dopFormId);
+            subForm = document.getElementById(dopFormId),
+            ctx = this;
 
         if (!!form && !!subForm) {
 
         }
 
         if (typeof obCatalogCalcItemsParams == "object") {
-            obCatalogCalcItemsParams.FILTER_VALUES = Object.assign(this.getFormObject(form), this.getFormObject(subForm));
-            this.setParams(obCatalogCalcItemsParams);
+            obCatalogCalcItemsParams.FILTER_VALUES = Object.assign(ctx.getFormObject(form), ctx.getFormObject(subForm));
+            ctx.setParams(obCatalogCalcItemsParams);
         }
 
-        this.doRequest(
+        ctx.doRequest(
             "GET",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Catalog",
                 method: "getCatalogCalcItems",
-                params: this.params
+                params: ctx.params
             }),
             [
                 ["Content-type", "application/x-www-form-urlencoded"]
@@ -213,17 +215,18 @@ var obAjax = {
     {
         evt.preventDefault();
 
-        this.setParams({
+        var ctx = this;
+        ctx.setParams({
             offer_id: [offerId],
             price_id: priceId
         });
-        this.doRequest(
+        ctx.doRequest(
             "POST",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Basket",
                 method: "add",
-                params: this.params
+                params: ctx.params
             }),
             [
                 ["Content-type", "application/x-www-form-urlencoded"]
@@ -252,14 +255,15 @@ var obAjax = {
     {
         evt.preventDefault();
 
-        this.params.target_id = form.id;
-        this.doRequest(
+        var ctx = this;
+        ctx.params.target_id = form.id;
+        ctx.doRequest(
             "POST",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "User",
                 method: "userRegister",
-                params: this.getFormObject(form)
+                params: ctx.getFormObject(form)
             }),
             [
                 ["Content-type", "application/x-www-form-urlencoded"]
@@ -293,11 +297,12 @@ var obAjax = {
     {
         evt.preventDefault();
 
-        this.params.target_id = target_id;
-        this.doRequest(
+        var ctx = this;
+        ctx.params.target_id = target_id;
+        ctx.doRequest(
             "POST",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Component",
                 method: "includeClass",
                 params: {
@@ -390,11 +395,12 @@ var obAjax = {
             evt.preventDefault();
         }
 
-        this.params.target_id = target_id;
-        this.doRequest(
+        var ctx = this;
+        ctx.params.target_id = target_id;
+        ctx.doRequest(
             "POST",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Component",
                 method: "getUserAddressData",
                 params: {
@@ -431,11 +437,12 @@ var obAjax = {
     {
         evt.preventDefault();
 
-        this.params.target_id = target_id;
-        this.doRequest(
+        var ctx = this;
+        ctx.params.target_id = target_id;
+        ctx.doRequest(
             "POST",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Component",
                 method: "getUserAddressList",
                 params: {}
@@ -469,10 +476,11 @@ var obAjax = {
     {
         evt.preventDefault();
 
-        this.doRequest(
+        var ctx = this;
+        ctx.doRequest(
             "POST",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Component",
                 method: "getUserAddressData",
                 params: {
@@ -527,14 +535,20 @@ var obAjax = {
         }
     },
 
+    /**
+     *
+     * @param id
+     * @param evt
+     */
     addToFavorite: function(id, evt)
     {
         evt.preventDefault();
 
-        this.doRequest(
+        var ctx = this;
+        ctx.doRequest(
             "POST",
             location.href,
-            this.serializeData({
+            ctx.serializeData({
                 class: "Favorite",
                 method: "add",
                 params: {
@@ -558,6 +572,41 @@ var obAjax = {
         }
     },
 
+    /**
+     *
+     * @param id
+     * @param evt
+     */
+    deleteFromFavorite: function(id, evt)
+    {
+        evt.preventDefault();
+
+        this.doRequest(
+            "POST",
+            location.href,
+            this.serializeData({
+                class: "Favorite",
+                method: "delete",
+                params: {
+                    id: id
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    deleteFromFavoriteCallBack: function(data)
+    {
+        if (!!data.msg) {
+            this.addPopupMessage("favorite-white", data.msg);
+        }
+    },
 
     /**
      *

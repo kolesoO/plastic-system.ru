@@ -14,6 +14,16 @@
 $this->setFrameMode(true);
 
 $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELECTED"]];
+
+//параметры для js
+$jsParams = [
+    "OFFER_ID" => $arResult["OFFER"]["ID"],
+    "ITEM_ID" => $arResult["ITEM"]["ID"]
+];
+if ($arParams['DISPLAY_COMPARE']) {
+    $jsParams['compare'] = $arParams["COMPARE"];
+}
+//end
 ?>
 
 <?if ($arStatus = \kDevelop\Help\Tools::getOfferStatusInfo($arResult["OFFER"]["PROPERTIES"]["STATUS"]["VALUE_XML_ID"])) :?>
@@ -111,18 +121,25 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                     <span>Купить в 1 клик</span>
                 </a>
             </div>
-            <div class="table_list-info">
-                <a href="#" onclick="obAjax.addToFavorite('<?=$arResult["ITEM"]["ID"]?>', event)">
-                    <i class="icon favorite"></i>
-                    <span>В избранное</span>
-                </a>
-            </div>
-            <div class="table_list-info">
-                <a href="#">
-                    <i class="icon compare"></i>
-                    <span>Сравнить</span>
-                </a>
-            </div>
+            <?if ($arParams["DISPLAY_COMPARE"] == "Y") :?>
+                <div class="table_list-info">
+                    <a href="#" data-entity="favorite" data-id="<?=$arResult["ITEM"]["ID"]?>">
+                        <i class="icon favorite"></i>
+                        <span>В избранное</span>
+                    </a>
+                </div>
+                <div class="table_list-info">
+                    <a href="#" data-entity="compare" data-id="<?=$arResult["OFFER"]["ID"]?>">
+                        <i class="icon compare"></i>
+                        <span>Сравнить</span>
+                    </a>
+                </div>
+            <?endif?>
         </div>
     </div>
 </div>
+<script>
+    if (typeof window.catalogElement == "function") {
+        var obCatalogElement_<?=$arResult["OFFER"]["ID"]?> = new window.catalogElement(<?=CUtil::PhpToJSObject($jsParams, false, true)?>);
+    }
+</script>

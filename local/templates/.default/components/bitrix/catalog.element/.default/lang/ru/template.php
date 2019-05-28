@@ -17,7 +17,7 @@ $MESS["CT_BCE_CATALOG_BTN_MESSAGE_CLOSE_POPUP"] = "Продолжить поку
 $MESS["CT_BCE_CATALOG_BTN_MESSAGE_BASKET_REDIRECT"] = "Перейти в корзину";
 $MESS["CT_BCE_CATALOG_ADD_TO_BASKET_OK"] = "Товар добавлен в корзину";
 $MESS["CT_BCE_CATALOG_MESS_COMPARE_OK"] = "Товар добавлен в список сравнения";
-$MESS["CT_BCE_CATALOG_MESS_COMPARE_TITLE"] = "Сравнение товаров";
+$MESS["CT_BCE_CATALOG_MESS_COMPARE_TITLE"] = "Сравнить";
 $MESS["CT_BCE_CATALOG_MESS_COMPARE_UNKNOWN_ERROR"] = "При добавлении товара в список сравнения произошла ошибка";
 $MESS["CT_BCE_CATALOG_BTN_MESSAGE_COMPARE_REDIRECT"] = "Перейти в список сравнения";
 $MESS["CT_BCE_CATALOG_PRODUCT_GIFT_LABEL"] = "Подарок";
@@ -35,4 +35,5 @@ $MESS["CT_BCE_CATALOG_RANGE_MORE"] = "и более";
 $MESS["CT_BCE_CATALOG_RATIO_PRICE"] = "цена за #RATIO#";
 $MESS["CT_BCE_CATALOG_GIFT_BLOCK_TITLE_DEFAULT"] = "Выберите один из подарков к этому товару";
 $MESS["CT_BCE_CATALOG_GIFTS_MAIN_BLOCK_TITLE_DEFAULT"] = "Выберите один из товаров, чтобы получить подарок";
-?>
+$MESS["CT_BCE_CATALOG_BTN_MESSAGE_FAVORITE_REDIRECT"] = "Перейти в список избранного";
+$MESS["CT_BCE_CATALOG_MESS_FAVORITE_TITLE"] = "В избранное";

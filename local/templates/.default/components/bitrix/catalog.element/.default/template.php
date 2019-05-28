@@ -18,6 +18,19 @@ if (!$arOffer) {
     $arOffer = $arResult;
 }
 $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
+
+//параметры для js
+$jsParams = [
+    "OFFER_ID" => $arOffer["ID"]
+];
+if ($arParams['DISPLAY_COMPARE']) {
+    $jsParams['compare'] = array(
+        'COMPARE_URL_TEMPLATE' => $arResult['~COMPARE_URL_TEMPLATE'],
+        'COMPARE_DELETE_URL_TEMPLATE' => $arResult['~COMPARE_DELETE_URL_TEMPLATE'],
+        'COMPARE_PATH' => $arParams['COMPARE_PATH']
+    );
+}
+///end
 ?>
 
 <div class="block_wrapper">
@@ -134,14 +147,16 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
                             <span>Купить в 1 клик</span>
                         </a>
                     <?endif?>
-                    <a href="#" class="cart_links-item">
+                    <a href="#" class="cart_links-item" data-entity="favorite" data-id="<?=$arResult["ID"]?>">
                         <i class="icon favorite"></i>
-                        <span>В избранное</span>
+                        <span><?=GetMessage("CT_BCE_CATALOG_MESS_FAVORITE_TITLE")?></span>
                     </a>
-                    <a href="#" class="cart_links-item">
-                        <i class="icon compare"></i>
-                        <span>Сравнить</span>
-                    </a>
+                    <?if ($arParams['DISPLAY_COMPARE']) :?>
+                        <a href="#" class="cart_links-item" data-entity="compare" data-id="<?=$arResult["ID"]?>">
+                            <i class="icon compare"></i>
+                            <span><?=GetMessage("CT_BCE_CATALOG_MESS_COMPARE_TITLE")?></span>
+                        </a>
+                    <?endif?>
                     <!--a href="#" class="cart_links-item">
                         <i class="icon favorite"></i>
                         <span>Распечатать</span>
@@ -151,3 +166,28 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
         </div>
     </div>
 </div>
+<script>
+    BX.message({
+        ECONOMY_INFO_MESSAGE: '<?=GetMessageJS('CT_BCE_CATALOG_ECONOMY_INFO2')?>',
+        TITLE_ERROR: '<?=GetMessageJS('CT_BCE_CATALOG_TITLE_ERROR')?>',
+        TITLE_BASKET_PROPS: '<?=GetMessageJS('CT_BCE_CATALOG_TITLE_BASKET_PROPS')?>',
+        BASKET_UNKNOWN_ERROR: '<?=GetMessageJS('CT_BCE_CATALOG_BASKET_UNKNOWN_ERROR')?>',
+        BTN_SEND_PROPS: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_SEND_PROPS')?>',
+        BTN_MESSAGE_BASKET_REDIRECT: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_BASKET_REDIRECT')?>',
+        BTN_MESSAGE_CLOSE: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_CLOSE')?>',
+        BTN_MESSAGE_CLOSE_POPUP: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_CLOSE_POPUP')?>',
+        TITLE_SUCCESSFUL: '<?=GetMessageJS('CT_BCE_CATALOG_ADD_TO_BASKET_OK')?>',
+        COMPARE_MESSAGE_OK: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_OK')?>',
+        COMPARE_UNKNOWN_ERROR: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_UNKNOWN_ERROR')?>',
+        COMPARE_TITLE: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_TITLE')?>',
+        BTN_MESSAGE_COMPARE_REDIRECT: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_COMPARE_REDIRECT')?>',
+        PRODUCT_GIFT_LABEL: '<?=GetMessageJS('CT_BCE_CATALOG_PRODUCT_GIFT_LABEL')?>',
+        PRICE_TOTAL_PREFIX: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_PRICE_TOTAL_PREFIX')?>',
+        RELATIVE_QUANTITY_MANY: '<?=CUtil::JSEscape($arParams['MESS_RELATIVE_QUANTITY_MANY'])?>',
+        RELATIVE_QUANTITY_FEW: '<?=CUtil::JSEscape($arParams['MESS_RELATIVE_QUANTITY_FEW'])?>',
+        SITE_ID: '<?=CUtil::JSEscape($component->getSiteId())?>',
+        BTN_MESSAGE_FAVORITE_REDIRECT: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_FAVORITE_REDIRECT')?>',
+        FAVORITE_TITLE: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_FAVORITE_TITLE')?>'
+    });
+    var obCatalogElement = new window.catalogElement(<?=CUtil::PhpToJSObject($jsParams, false, true)?>);
+</script>

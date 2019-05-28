@@ -16,7 +16,7 @@ $MESS["CT_BCS_CATALOG_BTN_MESSAGE_CLOSE"] = "Закрыть";
 $MESS["CT_BCS_CATALOG_BTN_MESSAGE_CLOSE_POPUP"] = "Продолжить покупки";
 $MESS["CT_BCS_CATALOG_BTN_MESSAGE_BASKET_REDIRECT"] = "Перейти в корзину";
 $MESS["CT_BCS_CATALOG_MESS_COMPARE_OK"] = "Товар добавлен в список сравнения";
-$MESS["CT_BCS_CATALOG_MESS_COMPARE_TITLE"] = "Сравнение товаров";
+$MESS["CT_BCS_CATALOG_MESS_COMPARE_TITLE"] = "Сравнить";
 $MESS["CT_BCS_CATALOG_MESS_COMPARE_UNKNOWN_ERROR"] = "При добавлении товара в список сравнения произошла ошибка";
 $MESS["CT_BCS_CATALOG_BTN_MESSAGE_COMPARE_REDIRECT"] = "Перейти в список сравнения";
 $MESS["CT_BCS_CATALOG_BTN_MESSAGE_LAZY_LOAD_WAITER"] = "Загрузка";
@@ -25,4 +25,6 @@ $MESS["CT_BCS_CATALOG_SHOW_MAX_QUANTITY"] = "Наличие";
 $MESS["CT_BCS_CATALOG_RELATIVE_QUANTITY_MANY"] = "много";
 $MESS["CT_BCS_CATALOG_RELATIVE_QUANTITY_FEW"] = "мало";
 $MESS["CT_BCS_CATALOG_MESS_BTN_LAZY_LOAD"] = "Показать ещё";
+$MESS["CT_BCS_CATALOG_BTN_MESSAGE_FAVORITE_REDIRECT"] = "Перейти в список избранного";
+$MESS["CT_BCS_CATALOG_MESS_FAVORITE_TITLE"] = "В избранное";
 ?>

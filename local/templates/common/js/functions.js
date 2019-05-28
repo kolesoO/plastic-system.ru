@@ -33,5 +33,24 @@ var obTools = {
         }
 
         return s.join(dec);
+    },
+
+    /**
+     *
+     * @param element
+     * @param event
+     * @param func
+     */
+    addEvent: function(element, event, func)
+    {
+        if (element.addEventListener) {
+            element.addEventListener(event, func);
+        } else {
+            var oldFunc = element['on' + event];
+            element['on' + event] = function() {
+                oldFunc.apply(this, arguments);
+                func.apply(this, arguments);
+            };
+        }
     }
 };

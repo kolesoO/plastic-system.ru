@@ -2,6 +2,9 @@
 
 use Bitrix\Main\Loader;
 
+include_once $_SERVER["DOCUMENT_ROOT"]."/local/php_interface/classes/ajax/msgHandBook.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/local/php_interface/classes/ajax/lib/favorite.php";
+
 /**
  * @var array $templateData
  * @var array $arParams
@@ -10,6 +13,8 @@ use Bitrix\Main\Loader;
  */
 
 global $APPLICATION;
+
+$arOffer = $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]];
 
 //seo fields
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($arParams["LINK_IBLOCK_ID"],$arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["ID"]);
@@ -48,97 +53,17 @@ if (!empty($templateData['TEMPLATE_LIBRARY']))
 	}
 }
 
-if (isset($templateData['JS_OBJ']))
-{
-	?>
-	<script>
-		BX.ready(BX.defer(function(){
-			if (!!window.<?=$templateData['JS_OBJ']?>)
-			{
-				window.<?=$templateData['JS_OBJ']?>.allowViewedCount(true);
-			}
-		}));
-	</script>
+// check compared state
+if ($arParams['DISPLAY_COMPARE']) :?>
+    <script>obCatalogElement.initCompare(<?=array_key_exists($arOffer['ID'], $_SESSION[$arParams['COMPARE_NAME']][$arParams['IBLOCK_ID']]['ITEMS']) ? "true" : "false"?>);</script>
+<?endif;
+//end
 
-	<?
-	// check compared state
-	if ($arParams['DISPLAY_COMPARE'])
-	{
-		$compared = false;
-		$comparedIds = array();
-		$item = $templateData['ITEM'];
-
-		if (!empty($_SESSION[$arParams['COMPARE_NAME']][$item['IBLOCK_ID']]))
-		{
-			if (!empty($item['JS_OFFERS']))
-			{
-				foreach ($item['JS_OFFERS'] as $key => $offer)
-				{
-					if (array_key_exists($offer['ID'], $_SESSION[$arParams['COMPARE_NAME']][$item['IBLOCK_ID']]['ITEMS']))
-					{
-						if ($key == $item['OFFERS_SELECTED'])
-						{
-							$compared = true;
-						}
-
-						$comparedIds[] = $offer['ID'];
-					}
-				}
-			}
-			elseif (array_key_exists($item['ID'], $_SESSION[$arParams['COMPARE_NAME']][$item['IBLOCK_ID']]['ITEMS']))
-			{
-				$compared = true;
-			}
-		}
-
-		if ($templateData['JS_OBJ'])
-		{
-			?>
-			<script>
-				BX.ready(BX.defer(function(){
-					if (!!window.<?=$templateData['JS_OBJ']?>)
-					{
-						window.<?=$templateData['JS_OBJ']?>.setCompared('<?=$compared?>');
-
-						<? if (!empty($comparedIds)): ?>
-						window.<?=$templateData['JS_OBJ']?>.setCompareInfo(<?=CUtil::PhpToJSObject($comparedIds, false, true)?>);
-						<? endif ?>
-					}
-				}));
-			</script>
-			<?
-		}
-	}
-
-	// select target offer
-	$request = Bitrix\Main\Application::getInstance()->getContext()->getRequest();
-	$offerNum = false;
-	$offerId = (int)$this->request->get('OFFER_ID');
-	$offerCode = $this->request->get('OFFER_CODE');
-
-	if ($offerId > 0 && !empty($templateData['OFFER_IDS']) && is_array($templateData['OFFER_IDS']))
-	{
-		$offerNum = array_search($offerId, $templateData['OFFER_IDS']);
-	}
-	elseif (!empty($offerCode) && !empty($templateData['OFFER_CODES']) && is_array($templateData['OFFER_CODES']))
-	{
-		$offerNum = array_search($offerCode, $templateData['OFFER_CODES']);
-	}
-
-	if (!empty($offerNum))
-	{
-		?>
-		<script>
-			BX.ready(function(){
-				if (!!window.<?=$templateData['JS_OBJ']?>)
-				{
-					window.<?=$templateData['JS_OBJ']?>.setOffer(<?=$offerNum?>);
-				}
-			});
-		</script>
-		<?
-	}
-}
+// check favorite
+?>
+<script>obCatalogElement.initFavorite(<?=\kDevelop\Ajax\Favorite::isAdded($arResult["ID"]) ? "true" : "false"?>);</script>
+<?
+//end
 
 //Характеристики, наличие, доставка
 $afterTmp = "catalog_element_after";

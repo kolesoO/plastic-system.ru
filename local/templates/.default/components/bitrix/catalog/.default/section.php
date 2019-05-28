@@ -13,28 +13,84 @@
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
 
-define("NOT_CLOSE_SECTION_IN_FOOTER", "Y");
-
 $this->setFrameMode(true);
 
+define("NOT_CLOSE_SECTION_IN_FOOTER", "Y");
+
+global $CACHE_MANAGER;
+
+$obCache = new CPHPCache();
+
+//даныне по текущему раделу
+$arSectionFilter = [
+    "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+    "CODE" => $arResult["VARIABLES"]["SECTION_CODE"]
+];
+if ($obCache->InitCache($arParams["CACHE_TIME"], serialize($arSectionFilter), "/iblock/catalog")) {
+    extract($obCache->GetVars(), EXTR_OVERWRITE);
+} elseif ($obCache->StartDataCache()) {
+    $arSection = \CIBlockSection::GetList(
+        [],
+        $arSectionFilter
+    )->fetch();
+    if ($arSection) {
+        $rsChildSections = \CIBlockSection::GetList(
+            [],
+            [
+                "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+                "SECTION_ID" => $arSection["ID"],
+                //"HAS_ELEMENT" => "Y",
+                "CNT_ACTIVE" => "Y"
+            ],
+            true
+        );
+        $hasChildSections = $rsChildSections->SelectedRowsCount() > 0;
+        $picturePath = \CFile::GetPath($arSection["DETAIL_PICTURE"]);
+        if(defined("BX_COMP_MANAGED_CACHE")) {
+            $CACHE_MANAGER->StartTagCache("/iblock/catalog");
+            $CACHE_MANAGER->RegisterTag("iblock_id_".$arParams["IBLOCK_ID"]);
+            $CACHE_MANAGER->EndTagCache();
+        }
+    }
+    if (\Bitrix\Main\Loader::includeModule('catalog')) {
+        $arPrice = \CCatalogGroup::GetList(
+            [],
+            ["NAME" => $arParams["PRICE_CODE"][0]]
+        )->fetch();
+    }
+    //$obCache->EndDataCache(compact($arSection, $picturePath, $hasChildSections, $arPrice));
+    $obCache->EndDataCache([
+        "arSection" => $arSection,
+        "picturePath" => $picturePath,
+        "hasChildSections" => $hasChildSections,
+        "arPrice" => $arPrice
+    ]);
+}
+if (!isset($arSection)) {
+    $arSection = [];
+}
+if (!isset($hasChildSections)) {
+    $hasChildSections = false;
+}
+if (isset($picturePath) && $picturePath) {
+    $APPLICATION->SetPageProperty("header_section-style", "background-image:url('".$picturePath."')");
+} else {
+    $APPLICATION->SetPageProperty("header_section-style", "color:inherit");
+}
+$APPLICATION->SetPageProperty("header_section-class", "catalog_section");
+//end
+
 //данные для сортировки
-$arSort = array(
-    array(
+$arSort = [
+    [
         "CODE" => "show_counter",
         "TITLE" => "По полулярности"
-    )
-);
-if (\Bitrix\Main\Loader::includeModule('catalog')) {
-    if ($arPrice = \CCatalogGroup::GetList(
-        [],
-        ["NAME" => $arParams["PRICE_CODE"][0]]
-    )->fetch()) {
-        $arSort[] = array(
-            "CODE" => "catalog_PRICE_".$arPrice["ID"],
-            "TITLE" => "По цене"
-        );
-    }
-}
+    ]
+];
+$arSort[] = [
+    "CODE" => "catalog_PRICE_".$arPrice["ID"],
+    "TITLE" => "По цене"
+];
 foreach ($arSort as &$arSortItem) {
     if (isset($_GET[$arSortItem["CODE"]])){
         $arSortItem["VALUE"] = ($_GET[$arSortItem["CODE"]] == "asc" ? "desc" : "asc");
@@ -42,23 +98,9 @@ foreach ($arSort as &$arSortItem) {
         $arSortItem["VALUE"] = "desc";
         $arSortItem["NO_LAST_SORT"] = "Y";
     }
-    $arSortItem["URL"] = $APPLICATION->GetCurPageParam($arSortItem["CODE"]."=".$arSortItem["VALUE"], array($arSortItem["CODE"]));
+    $arSortItem["URL"] = $APPLICATION->GetCurPageParam($arSortItem["CODE"]."=".$arSortItem["VALUE"], [$arSortItem["CODE"]]);
 }
 unset($arSortItem);
-//end
-
-//даныне по текущему раделу
-$arSection = \CIBlockSection::GetList(
-    [],
-    ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "CODE" => $arResult["VARIABLES"]["SECTION_CODE"]]
-)->fetch();
-
-if ($picturePath = \CFile::GetPath($arSection["DETAIL_PICTURE"])) {
-    $APPLICATION->SetPageProperty("header_section-style", "background-image:url('".$picturePath."')");
-} else {
-    $APPLICATION->SetPageProperty("header_section-style", "color:inherit");
-}
-$APPLICATION->SetPageProperty("header_section-class", "catalog_section");
 //end
 ?>
 
@@ -72,7 +114,7 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
     <?$APPLICATION->IncludeComponent(
         "bitrix:catalog.smart.filter",
         "popup",
-        array(
+        [
             "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
             "IBLOCK_ID" => $arParams["IBLOCK_ID"],
             "SECTION_ID" => $arSection['ID'],
@@ -97,13 +139,13 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
             "INSTANT_RELOAD" => $arParams["INSTANT_RELOAD"],
             "DISPLAY_ELEMENT_COUNT" => "Y",
             "COMPONENT_CONTAINER_ID" => "catalog-list-wrap"
-        ),
+        ],
         $component,
-        array('HIDE_ICONS' => 'Y')
+        ['HIDE_ICONS' => 'Y']
     );?>
 <?endif?>
 
-<section class="section relative">
+<section class="section<?if ($hasChildSections) :?> relative<?endif?>">
     <div class="container">
         <div class="aside-wrap">
             <?if ($arParams["DEVICE_TYPE"] != "MOBILE") :?>
@@ -111,7 +153,7 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                     <?$APPLICATION->IncludeComponent(
                         "bitrix:catalog.smart.filter",
                         "",
-                        array(
+                        [
                             "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
                             "IBLOCK_ID" => $arParams["IBLOCK_ID"],
                             "SECTION_ID" => $arSection['ID'],
@@ -136,9 +178,9 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                             "INSTANT_RELOAD" => $arParams["INSTANT_RELOAD"],
                             "DISPLAY_ELEMENT_COUNT" => "Y",
                             "COMPONENT_CONTAINER_ID" => "catalog-list-wrap"
-                        ),
+                        ],
                         $component,
-                        array('HIDE_ICONS' => 'Y')
+                        ['HIDE_ICONS' => 'Y']
                     );?>
                 </div>
             <?endif?>
@@ -148,26 +190,26 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                 $APPLICATION->IncludeComponent(
                     "bitrix:catalog.section.list",
                     "",
-                    array(
+                    [
                         "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
-						"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-						"SECTION_ID" => $arSection["ID"],
-						"SECTION_CODE" => $arSection["CODE"],
-						"CACHE_TYPE" => $arParams["CACHE_TYPE"],
-						"CACHE_TIME" => $arParams["CACHE_TIME"],
-						"CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
-						"COUNT_ELEMENTS" => $arParams["SECTION_COUNT_ELEMENTS"],
-						"TOP_DEPTH" => $arParams["SECTION_TOP_DEPTH"],
-						"SECTION_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["section"],
-						"VIEW_MODE" => $arParams["SECTIONS_VIEW_MODE"],
-						"SHOW_PARENT_NAME" => $arParams["SECTIONS_SHOW_PARENT_NAME"],
-						"HIDE_SECTION_NAME" => (isset($arParams["SECTIONS_HIDE_SECTION_NAME"]) ? $arParams["SECTIONS_HIDE_SECTION_NAME"] : "N"),
-						"ADD_SECTIONS_CHAIN" => (isset($arParams["ADD_SECTIONS_CHAIN"]) ? $arParams["ADD_SECTIONS_CHAIN"] : ''),
+                        "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+                        "SECTION_ID" => $arSection["ID"],
+                        "SECTION_CODE" => $arSection["CODE"],
+                        "CACHE_TYPE" => $arParams["CACHE_TYPE"],
+                        "CACHE_TIME" => $arParams["CACHE_TIME"],
+                        "CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
+                        "COUNT_ELEMENTS" => $arParams["SECTION_COUNT_ELEMENTS"],
+                        "TOP_DEPTH" => $arParams["SECTION_TOP_DEPTH"],
+                        "SECTION_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["section"],
+                        "VIEW_MODE" => $arParams["SECTIONS_VIEW_MODE"],
+                        "SHOW_PARENT_NAME" => $arParams["SECTIONS_SHOW_PARENT_NAME"],
+                        "HIDE_SECTION_NAME" => (isset($arParams["SECTIONS_HIDE_SECTION_NAME"]) ? $arParams["SECTIONS_HIDE_SECTION_NAME"] : "N"),
+                        "ADD_SECTIONS_CHAIN" => (isset($arParams["ADD_SECTIONS_CHAIN"]) ? $arParams["ADD_SECTIONS_CHAIN"] : ''),
                         "ITEMS_IN_ROW" => $arParams["SECTION_ITEMS_IN_ROW"],
                         "IMAGE_SIZE" => $arParams["SECTIONS_IMAGE_SIZE"]
-                    ),
+                    ],
                     $component,
-                    array("HIDE_ICONS" => "Y")
+                    ["HIDE_ICONS" => "Y"]
                 );
                 //end
 
@@ -179,9 +221,9 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                 $APPLICATION->IncludeComponent(
                     "kDevelop:blank",
                     $tmp,
-                    array(
+                    [
                         "SORT" => $arSort
-                    )
+                    ]
                 );
                 //end
                 ?>
@@ -194,7 +236,7 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                     $APPLICATION->IncludeComponent(
                         "bitrix:catalog.section",
                         "",
-                        array(
+                        [
                             "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
                             "IBLOCK_ID" => $arParams["IBLOCK_ID"],
                             "ELEMENT_SORT_FIELD" => $arParams["ELEMENT_SORT_FIELD"],
@@ -310,7 +352,7 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                             "ADD_SECTIONS_CHAIN" => "N",
                             'ADD_TO_BASKET_ACTION' => $basketAction,
                             'SHOW_CLOSE_POPUP' => isset($arParams['COMMON_SHOW_CLOSE_POPUP']) ? $arParams['COMMON_SHOW_CLOSE_POPUP'] : '',
-                            'COMPARE_PATH' => $arResult['FOLDER'].$arResult['URL_TEMPLATES']['compare'],
+                            'COMPARE_PATH' => $arResult['URL_TEMPLATES']['compare'],
                             'COMPARE_NAME' => $arParams['COMPARE_NAME'],
                             'USE_COMPARE_LIST' => 'Y',
                             'BACKGROUND_IMAGE' => (isset($arParams['SECTION_BACKGROUND_IMAGE']) ? $arParams['SECTION_BACKGROUND_IMAGE'] : ''),
@@ -318,7 +360,7 @@ $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
                             'DISABLE_INIT_JS_IN_COMPONENT' => (isset($arParams['DISABLE_INIT_JS_IN_COMPONENT']) ? $arParams['DISABLE_INIT_JS_IN_COMPONENT'] : ''),
                             "IMAGE_SIZE" => $arParams["ELEMENT_IMAGE_SIZE"],
                             "DEVICE_TYPE" => $arParams["DEVICE_TYPE"]
-                        ),
+                        ],
                         $component
                     );
                     //end

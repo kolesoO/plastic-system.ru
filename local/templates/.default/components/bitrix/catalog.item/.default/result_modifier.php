@@ -37,5 +37,5 @@ if (!isset($arResult["AREA_ID"]) && strlen($arResult["AREA_ID"]) == 0) {
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFER", "AREA_ID"]);
+    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFER", "AREA_ID", "ITEM"]);
 }

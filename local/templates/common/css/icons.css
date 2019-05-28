@@ -84,6 +84,12 @@ a:hover > .icon:before{
     background-image: url(../images/icons/compare.svg);
     background-size: contain;
 }
+.icon.compare-white:before{
+    width: 21px;
+    height: 12px;
+    background-image: url(../images/icons/compare-white.svg);
+    background-size: contain;
+}
 .icon.personal:before{
     width: 18px;
     height: 17px;

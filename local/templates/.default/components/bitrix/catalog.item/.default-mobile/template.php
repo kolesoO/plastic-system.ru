@@ -102,18 +102,20 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                     <span>Купить в 1 клик</span>
                 </a>
             </div>
-            <div class="table_list-info">
-                <a href="#" onclick="obAjax.addToFavorite('<?=$arResult["ITEM"]["ID"]?>', event)">
-                    <i class="icon favorite"></i>
-                    <span>В избранное</span>
-                </a>
-            </div>
-            <div class="table_list-info">
-                <a href="#">
-                    <i class="icon favorite"></i>
-                    <span>Сравнить</span>
-                </a>
-            </div>
+            <?if ($arParams["DISPLAY_COMPARE"] == "Y") :?>
+                <div class="table_list-info">
+                    <a href="#" onclick="obAjax.addToFavorite('<?=$arResult["ITEM"]["ID"]?>', event)">
+                        <i class="icon favorite"></i>
+                        <span>В избранное</span>
+                    </a>
+                </div>
+                <div class="table_list-info">
+                    <a href="#">
+                        <i class="icon favorite"></i>
+                        <span>Сравнить</span>
+                    </a>
+                </div>
+            <?endif?>
         </div>
     </div>
 </div>

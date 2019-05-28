@@ -10,7 +10,7 @@ $APPLICATION->SetPageProperty("header_section-class", "section");
 if (DEVICE_TYPE == "DESKTOP") {
     $itemsInRow = 5;
     $itemsInRowInner = 4;
-    $elemsInRow = 4;
+    $elemsInRow = 5;
     $pageElemCount = 12;
     $pagerTmp = ".default";
 } elseif (DEVICE_TYPE == "TABLET") {
@@ -27,9 +27,25 @@ if (DEVICE_TYPE == "DESKTOP") {
 $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
 //end
 
-var_dump($_SESSION["FAVORITE"]);
+//сортировка и внешний вид
+$tmp = "catalog_controls";
+if (DEVICE_TYPE != "DESKTOP") {
+    $tmp .= "-".strtolower($arParams["DEVICE_TYPE"]);
+}
+$APPLICATION->IncludeComponent(
+    "kDevelop:blank",
+    $tmp,
+    array(
+        "SORT" => $arSort
+    )
+);
+//end
+
+//каталог
+$_SESSION["FAVORITE"] = ["814"];
+unset($_SESSION["FAVORITE"]);
 $GLOBALS["arrFilter"] = [
-    "ID" => 769
+    "ID" => $_SESSION["FAVORITE"]
 ];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog.section",
@@ -140,7 +156,7 @@ $APPLICATION->IncludeComponent(
         "SET_STATUS_404" => "N",
         "SET_TITLE" => "N",
         "SHOW_404" => "N",
-        "SHOW_ALL_WO_SECTION" => "N",
+        "SHOW_ALL_WO_SECTION" => "Y",
         "SHOW_CLOSE_POPUP" => "N",
         "SHOW_DISCOUNT_PERCENT" => "Y",
         "SHOW_FROM_SECTION" => "N",
@@ -156,8 +172,10 @@ $APPLICATION->IncludeComponent(
         "USE_PRICE_COUNT" => "N",
         "USE_PRODUCT_QUANTITY" => "N",
         "IMAGE_SIZE" => $arImageSize,
-        "DEVICE_TYPE" => DEVICE_TYPE
+        "DEVICE_TYPE" => DEVICE_TYPE,
+        "DISPLAY_COMPARE" => "N"
     )
 );
+//end
 
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');

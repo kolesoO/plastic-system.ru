@@ -28,7 +28,7 @@ $sefUrlTpl = [
     "sections" => "",
     "section" => "#SECTION_CODE_PATH#/",
     "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
-    "compare" => "compare/"
+    "compare" => "/compare/"
 ];
 $arCurPage = explode("/", trim($strCurPage, "/"));
 if (strpos(end($arCurPage), \kDevelop\Help\Tools::getOfferPrefixInUrl()) !== false) {
@@ -111,7 +111,7 @@ $APPLICATION->IncludeComponent(
         "URL_TEMPLATES_READ" => "",
         "SHOW_LINK_TO_FORUM" => "Y",
         "POST_FIRST_MESSAGE" => "N",
-        "USE_COMPARE" => "N",
+        "USE_COMPARE" => "Y",
         "PRICE_CODE" => array(
             0 => PRICE_CODE,
         ),
