@@ -27,6 +27,7 @@ gitignore/*
 *.sql
 *.psd
 *.orig
+*.pdf
 /*.xml
 /*.txt
 /*.csv
