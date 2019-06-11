@@ -37,6 +37,9 @@ BX.Iblock.Catalog.CompareClass = (function()
 	{
 		BX.closeWait();
 		BX(this.wrapObjId).innerHTML = result;
+		if (typeof window.obSlider == "object") {
+			window.obSlider.reInit("#" + this.wrapObjId);
+		}
 	};
 
 	CompareClass.prototype.delete = function(url)
@@ -56,6 +59,9 @@ BX.Iblock.Catalog.CompareClass = (function()
 		BX.closeWait();
 		BX.onCustomEvent('OnCompareChange');
 		BX(this.wrapObjId).innerHTML = result;
+		if (typeof window.obSlider == "object") {
+			window.obSlider.init("#" + this.wrapObjId);
+		}
 	};
 
 	return CompareClass;

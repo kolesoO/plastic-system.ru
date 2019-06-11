@@ -264,6 +264,10 @@
     .block_wrapper .cart{
         margin: -20px -10px;
     }
+    .block_wrapper.compare_list{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
     .cart_img,
     .cart_desc{
         width: 100%;

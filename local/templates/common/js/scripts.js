@@ -25,7 +25,8 @@ $(document).ready(function(){
     })
     $("body").on("click", ".js-drop_down-btn", function(e){
         e.preventDefault();
-        var $parent = $(this).parents(".js-drop_down").first();
+        var $parent = $(this).parents(".js-drop_down").first(),
+            text;
         if($parent.length > 0){
             if($(this).hasClass("active")){
                 $parent.find(".js-drop_down-content").removeClass("active");
@@ -38,9 +39,14 @@ $(document).ready(function(){
         }
         if($(this).hasClass("active")){
             $(this).removeClass("active");
+            text = $(this).attr("data-content");
         }
         else{
+            text = $(this).attr("data-active_content");
             $(this).addClass("active");
+        }
+        if (!!text && text.length > 0) {
+            $(this).text(text);
         }
     })
     $(document).on("click", function(e){
@@ -52,10 +58,10 @@ $(document).ready(function(){
     })
     //end
 
-    //popup
-    $("body").on("click", "[data-popup-open]", function(e){
-        e.preventDefault();
-        var $target = $($(this).attr("data-popup-open"));
+    //popup TODO: вынести в отдельный модуль
+    var popupOpen = function(self, event, popupSelectorProp) {
+        event.preventDefault();
+        var $target = $($(self).attr(popupSelectorProp));
         if($target.length > 0){
             $(".popup").hide();
             $("body").css("overflow", "hidden");
@@ -64,6 +70,12 @@ $(document).ready(function(){
                 $target.find(".js-popup_content").addClass("animate");
             }
         }
+    }
+    $("body").on("click", "[data-popup-open]", function(e){
+        popupOpen(this, e, "data-popup-open")
+    })
+    $("body").on("mouseover", "[data-popup-hover]", function(e){
+        popupOpen(this, e, "data-popup-hover")
     })
     $("body").on("click", "[data-popup-close]", function(e){
         e.preventDefault();

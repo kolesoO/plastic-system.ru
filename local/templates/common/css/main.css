@@ -407,7 +407,7 @@ h4, .title-4{
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 2;
     background-color: rgba(255,255,255,0.7);
     background-image: url("../images/icons/loading.gif");
     background-repeat: no-repeat;
@@ -1179,6 +1179,10 @@ a:hover > .burger > hr:last-child{
     background-repeat: no-repeat;
     color: #fff;
 }
+.dynamic-text{
+    overflow: hidden;
+    transition: height .3s;
+}
 .aside-wrap .aside{
     padding: 0 0 0 8px;
 }
@@ -1570,7 +1574,7 @@ a.catalog_menu-item-title{
     right:-24px;
 }
 .compare_list-item{
-
+    position: relative;
 }
 .compare_list-img{
     height: 130px;
@@ -1596,6 +1600,7 @@ a.catalog_menu-item-title{
 }
 .compare_list-title{
     font-weight: bold;
+    height: 79px;
 }
 .compare_list-price{
     font-size: 143%;
@@ -1645,7 +1650,8 @@ a.catalog_menu-item-title{
     height:55px;
     margin-right: 20px;
 }
-.table_list-item .close_wrap{
+.table_list-item .close_wrap,
+.compare_list-item .close_wrap{
     position:absolute;
     top: 5px;
     right: 5px;

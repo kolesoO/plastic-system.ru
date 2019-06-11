@@ -4,6 +4,17 @@ $APPLICATION->SetPageProperty("keywords", "");
 $APPLICATION->SetPageProperty("description", "");
 $APPLICATION->SetPageProperty("title", "Сравнение - Складские лотки и пластиковая тара от компании ООО «Пластик Система»");
 $APPLICATION->SetTitle("Сравнение");
+$APPLICATION->SetPageProperty("header_section-class", "section");
+
+//подготовка парметров компонента
+if (DEVICE_TYPE == "DESKTOP") {
+    $elemsInRow = 5;
+} elseif (DEVICE_TYPE == "TABLET") {
+    $elemsInRow = 3;
+} else {
+    $elemsInRow = 1;
+}
+//end
 
 $APPLICATION->IncludeComponent (
     "bitrix:catalog.compare.result",
@@ -13,10 +24,21 @@ $APPLICATION->IncludeComponent (
         "NAME" => "CATALOG_COMPARE_LIST",
         "IBLOCK_TYPE" => "catalog",
         "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
-        "FIELD_CODE" => array(),
-        "PROPERTY_CODE" => array(),
-        "OFFERS_FIELD_CODE" => array(),
-        "OFFERS_PROPERTY_CODE" => array(),
+        "FIELD_CODE" => array("NAME", "PREVIEW_PICTURE"),
+        "PROPERTY_CODE" => array(
+            "Thickness",
+            "Color",
+            "Lengh",
+            "Width",
+            "Height",
+            "Volume"
+        ),
+        "OFFERS_FIELD_CODE" => array("NAME", "PREVIEW_PICTURE", "CODE"),
+        "OFFERS_PROPERTY_CODE" => array(
+            "Size",
+            "Color",
+
+        ),
         "ELEMENT_SORT_FIELD" => "sort",
         "ELEMENT_SORT_ORDER" => "asc",
         "DETAIL_URL" => "",
@@ -41,6 +63,8 @@ $APPLICATION->IncludeComponent (
         "CONVERT_CURRENCY" => "Y",
         "CURRENCY_ID" => "RUB",
         "TEMPLATE_THEME" => "blue",
+        "LINE_ELEMENT_COUNT" => $elemsInRow,
+        "DEVICE_TYPE" => DEVICE_TYPE
     ]
 );
 

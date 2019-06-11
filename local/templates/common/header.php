@@ -186,20 +186,32 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                     </a>
                 <?endif?>
                 <div class="header-col col-lg-3 col-md-4 col-xs-6">
-                    <a href="#" data-popup-open=".js-catalog-menu" flex-align="center">
-                        <?if (DEVICE_TYPE == "DESKTOP") :?>
+                    <?if (DEVICE_TYPE == "DESKTOP") :?>
+                        <a href="#" data-popup-hover=".js-catalog-menu" flex-align="center">
                             <div class="burger"><hr><hr><hr></div>
-                        <?endif?>
-                        <?$APPLICATION->IncludeComponent(
-                            "bitrix:main.include",
-                            ".default",
-                            [
-                                "AREA_FILE_SHOW" => "file",
-                                "PATH" => SITE_TEMPLATE_PATH . "/include/header/catalog-title.php"
-                            ],
-                            false
-                        );?>
-                    </a>
+                            <?$APPLICATION->IncludeComponent(
+                                "bitrix:main.include",
+                                ".default",
+                                [
+                                    "AREA_FILE_SHOW" => "file",
+                                    "PATH" => SITE_TEMPLATE_PATH . "/include/header/catalog-title.php"
+                                ],
+                                false
+                            );?>
+                        </a>
+                    <?else:?>
+                        <a href="#" data-popup-open=".js-catalog-menu" flex-align="center">
+                            <?$APPLICATION->IncludeComponent(
+                                "bitrix:main.include",
+                                ".default",
+                                [
+                                    "AREA_FILE_SHOW" => "file",
+                                    "PATH" => SITE_TEMPLATE_PATH . "/include/header/catalog-title.php"
+                                ],
+                                false
+                            );?>
+                        </a>
+                    <?endif?>
                 </div>
                 <div class="header-col header-search col-lg-6 col-md-2 col-xs-3">
                     <?if (DEVICE_TYPE == "DESKTOP") :?>
