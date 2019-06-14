@@ -15,3 +15,11 @@ $curPage = $APPLICATION->GetCurPage(false);
 if (strpos($curPage, "filter") !== false && strpos($curPage, "clear") === false) {
     $arResult["IS_APPLIED"] = true;
 }
+
+foreach($arResult["ITEMS"] as $PID => $arItem) {
+    if ($arItem["DISPLAY_TYPE"] == "F") {
+        uasort($arResult["ITEMS"][$PID]["VALUES"], function($item1, $item2) {
+            return $item1["VALUE"] > $item2["VALUE"];
+        });
+    }
+}

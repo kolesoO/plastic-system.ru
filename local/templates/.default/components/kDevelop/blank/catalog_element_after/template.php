@@ -1,15 +1,15 @@
-<?if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
+<?if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();var_dump($arParams["PROPERTY_CODE"]);?>
 
 <div class="block_wrapper">
     <div class="cart_info">
         <div class="cart_info-item col-lg-8">
             <div class="title-3">Технические характеристики</div>
             <div class="cart_info-wrap">
-                <?foreach ($arParams["PROPERTY_CODE"] as $code) :?>
-                    <?if (isset($arParams["ELEMENT_PROPERTIES"][$code]) && strlen($arParams["ELEMENT_PROPERTIES"][$code]["VALUE"]) > 0) :?>
+                <?foreach ($arParams["ELEMENT_PROPERTIES"] as $arProp) :?>
+                    <?if (is_string($arProp["VALUE"]) && strlen($arProp["VALUE"]) > 0) :?>
                         <div class="cart_info-wrap-item">
-                            <span><?=$arParams["ELEMENT_PROPERTIES"][$code]["NAME"]?></span>
-                            <span><?=$arParams["ELEMENT_PROPERTIES"][$code]["VALUE"]?></span>
+                            <span><?=$arProp["NAME"]?></span>
+                            <span><?=$arProp["VALUE"]?></span>
                         </div>
                     <?endif?>
                 <?endforeach?>

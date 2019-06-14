@@ -161,14 +161,7 @@ $APPLICATION->IncludeComponent(
         "DETAIL_DETAIL_PICTURE_MODE" => "IMG",
         "DETAIL_ADD_DETAIL_TO_SLIDER" => "N",
         "DETAIL_DISPLAY_PREVIEW_TEXT_MODE" => "E",
-        "DETAIL_PROPERTY_CODE" => array(
-            "Thickness",
-            "Brand",
-            "Lengh",
-            "Width",
-            "Height",
-            "Volume"
-        ),
+        "DETAIL_PROPERTY_CODE" => array("*"),
         "DETAIL_META_KEYWORDS" => "KEYWORDS",
         "DETAIL_META_DESCRIPTION" => "META_DESCRIPTION",
         "DETAIL_BROWSER_TITLE" => "TITLE",
@@ -180,7 +173,7 @@ $APPLICATION->IncludeComponent(
             1 => "DETAIL_PICTURE",
             2 => "CODE"
         ),
-        "DETAIL_OFFERS_PROPERTY_CODE" => array("Size", "Color", "CML2_ARTICLE", "STATUS"),
+        "DETAIL_OFFERS_PROPERTY_CODE" => array("*"),
         "DETAIL_BACKGROUND_IMAGE" => "-",
         "DETAIL_STRICT_SECTION_CHECK" => "Y",
         "LINK_IBLOCK_TYPE" => "catalog",
