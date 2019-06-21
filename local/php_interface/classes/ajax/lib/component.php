@@ -145,4 +145,30 @@ class Component
             "html" => $return
         ];
     }
+
+    /**
+     * @param array $arParams
+     * @return array
+     */
+    public static function getDelivery(array $arParams)
+    {
+        global $APPLICATION;
+
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "kDevelop:catalog.delivery",
+            "",
+            [
+                "LOCATION_NAME" => $arParams["form_data"]["city"],
+                "LOCATION_ADDRESS" => $arParams["form_data"]["address"]
+            ]
+        );
+        $return = ob_get_contents();
+        ob_end_clean();
+
+        return [
+            "js_callback" => "getDeliveryCallBack",
+            "html" => $return
+        ];
+    }
 }

@@ -610,6 +610,56 @@ var obAjax = {
 
     /**
      *
+     * @param form
+     * @param evt
+     */
+    getDelivery: function(form, evt)
+    {
+        evt.preventDefault();
+
+        var ctx = this;
+        ctx.params.target_id = form.id;
+        ctx.doRequest(
+            "POST",
+            location.href,
+            ctx.serializeData({
+                class: "Component",
+                method: "includeClass",
+                params: {
+                    comp_name: "kDevelop:catalog.delivery",
+                    method_name: "getDelivery",
+                    //id: id,
+                    target_id: ctx.params.target_id,
+                    form_data: ctx.getFormObject(form)
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    getDeliveryCallBack: function(data)
+    {
+        if (!!data.html) {
+            var elem = document.getElementById(this.params.target_id);
+            if (elem) {
+                elem.innerHTML = data.html;
+                //animate input
+                if(typeof obAnimateInput == "object"){
+                    obAnimateInput.init();
+                }
+                //end
+            }
+        }
+    },
+
+    /**
+     *
      * @param method
      * @param url
      * @param sendData
