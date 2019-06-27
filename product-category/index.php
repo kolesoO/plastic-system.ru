@@ -24,6 +24,7 @@ if (DEVICE_TYPE == "DESKTOP") {
     $pagerTmp = ".default-mobile";
 }
 $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
+$arDetailSize = ["WIDTH" => 557, "HEIGHT" => 366];
 $sefUrlTpl = [
     "sections" => "",
     "section" => "#SECTION_CODE_PATH#/",
@@ -261,6 +262,7 @@ $APPLICATION->IncludeComponent(
         "SECTION_ITEMS_IN_ROW" => $itemsInRowInner,
         "SECTIONS_IMAGE_SIZE" => $arImageSize,
         "ELEMENT_IMAGE_SIZE" => $arImageSize,
+        "DETAIL_IMAGE_SIZE" => $arDetailSize,
         "DEVICE_TYPE" => DEVICE_TYPE,
         "INSTANT_RELOAD" => true
     ),
