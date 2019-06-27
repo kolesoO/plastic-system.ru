@@ -26,6 +26,9 @@ $arParams['MAP_TYPE'] = (int)(isset($arParams['MAP_TYPE']) ? $arParams['MAP_TYPE
 $arParams['SET_TITLE'] = (isset($arParams['SET_TITLE']) && $arParams['SET_TITLE'] == 'Y' ? 'Y' : 'N');
 $arParams['TITLE'] = (isset($arParams['TITLE']) ? trim($arParams['TITLE']) : '');
 
+$arParams["SORT_BY"] = isset($arParams["SORT_BY"]) ? $arParams["SORT_BY"] : "ID";
+$arParams["SORT_ORDER"] = isset($arParams["SORT_ORDER"]) ? $arParams["SORT_ORDER"] : "ASC";
+
 if (!isset($arParams['CACHE_TIME']))
 	$arParams['CACHE_TIME'] = 3600;
 
@@ -54,7 +57,13 @@ if ($this->startResultCache())
 		"SCHEDULE",
 		"SITE_ID"
 	);
-	$dbStoreProps = CCatalogStore::GetList(array('TITLE' => 'ASC', 'ID' => 'ASC'), array("ACTIVE"=>"Y"), false, false, $arSelect);
+	$dbStoreProps = CCatalogStore::GetList(
+	    array($arParams["SORT_BY"] => $arParams["SORT_ORDER"]),
+        array("ACTIVE"=>"Y"),
+        false,
+        false,
+        $arSelect
+    );
 	$arResult["PROFILES"] = array();
 	$viewMap = false;
 	while ($arProp = $dbStoreProps->GetNext())

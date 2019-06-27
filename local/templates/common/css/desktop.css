@@ -213,6 +213,10 @@
     .table_list.list .table_list-info{
         margin-bottom:15px;
     }
+    .table_list-item:hover .table_list-footer{
+        display: block;
+        box-shadow: 0px 11px 10px #414b79;
+    }
     .catalog_section{
         padding: 35px 0 100px;
     }

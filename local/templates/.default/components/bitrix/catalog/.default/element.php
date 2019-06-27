@@ -32,7 +32,7 @@ $componentElementParams = array(
     'CACHE_TYPE' => $arParams['CACHE_TYPE'],
     'CACHE_TIME' => $arParams['CACHE_TIME'],
     'CACHE_GROUPS' => $arParams['CACHE_GROUPS'],
-    'SET_TITLE' => "N",
+    'SET_TITLE' => $arParams["SET_TITLE"],
     'SET_LAST_MODIFIED' => $arParams['SET_LAST_MODIFIED'],
     'MESSAGE_404' => $arParams['~MESSAGE_404'],
     'SET_STATUS_404' => $arParams['SET_STATUS_404'],
@@ -161,7 +161,10 @@ $componentElementParams = array(
     'GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE' => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE'],
 
     "DEVICE_TYPE" => $arParams["DEVICE_TYPE"],
-    "OFFER_CODE_SELECTED" => (strlen($arResult["VARIABLES"]["SKU_CODE"]) > 0 ? str_replace(\kDevelop\Help\Tools::getOfferPrefixInUrl(), "", $arResult["VARIABLES"]["SKU_CODE"]) : "")
+    "OFFER_CODE_SELECTED" => (strlen($arResult["VARIABLES"]["SKU_CODE"]) > 0 ? str_replace(\kDevelop\Help\Tools::getOfferPrefixInUrl(), "", $arResult["VARIABLES"]["SKU_CODE"]) : ""),
+
+    "IMAGE_SIZE" => $arParams["ELEMENT_IMAGE_SIZE"],
+    "DEVICE_TYPE" => $arParams["DEVICE_TYPE"]
 );
 
 if (isset($arParams['USER_CONSENT']))

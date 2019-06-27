@@ -238,7 +238,7 @@ $APPLICATION->IncludeComponent(
         "OFFERS_CART_PROPERTIES" => array("COLOR_REF","SIZES_SHOES","SIZES_CLOTHES"),
         "OFFERS_FIELD_CODE" => array("ID", "NAME", "PREVIEW_PICTURE", "CODE"),
         "OFFERS_LIMIT" => "0",
-        "OFFERS_PROPERTY_CODE" => array("Size", "Color", "CML2_ARTICLE", "STATUS"),
+        "OFFERS_PROPERTY_CODE" => array("RAZMER", "TSVET", "CML2_ARTICLE", "STATUS"),
         "OFFERS_SORT_FIELD" => "sort",
         "OFFERS_SORT_FIELD2" => "id",
         "OFFERS_SORT_ORDER" => "asc",

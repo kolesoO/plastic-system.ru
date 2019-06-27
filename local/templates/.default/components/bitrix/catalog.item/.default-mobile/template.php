@@ -30,7 +30,7 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
         <?if ($arResult["OFFERS_COUNT"] > 0) :
             $wrapAttrs = "";
             $className = "";
-            if ($arResult["OFFERS_COUNT"] > 8) {
+            if ($arResult["OFFERS_COUNT"] > 7) {
                 $className .= " js-slider";
                 $wrapAttrs .= ' 
                     data-autoplay="false"
@@ -46,13 +46,15 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
             }
             ?>
             <div class="table_list-color clearfix <?=$className?>"<?=$wrapAttrs?>>
-                <?foreach ($arResult["OFFERS_LIST"] as $offerKey => $arOffer) :?>
+                <?foreach ($arResult["OFFERS_LIST"] as $offerKey => $arOffer) :
+                    if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0) continue;
+                    ?>
                     <div>
                         <a
                                 href="<?=$arOffer["DETAIL_PAGE_URL"]?>"
                                 class="table_list-color-item"
-                                title="<?=$arOffer["PROPERTIES"]["Color"]["VALUE"]?>"
-                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["Color"]["VALUE"])?>"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
                         ></a>
                     </div>
                 <?endforeach;?>
@@ -61,7 +63,7 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
             <div class="table_list-color">&nbsp;</div>
         <?endif?>
         <div class="table_list-desc full">
-            <?foreach (["Color", "Size", "CML2_MANUFACTURER"] as $code) :
+            <?foreach (["TSVET", "RAZMER", "CML2_MANUFACTURER"] as $code) :
                 $value = $arResult["OFFER"]["PROPERTIES"][$code]["VALUE"];
                 if (!isset($arResult["OFFER"]["PROPERTIES"][$code]) || strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) == 0) {
                     $value = "-";
@@ -73,7 +75,7 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
         <?if ($arPrice) :?>
             <div class="table_list-info border full">
                 <div class="table_list-price_wrap">
-                    <?if ($arParams['SHOW_OLD_PRICE'] == "Y") :?>
+                    <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                         <s><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                     <?endif?>
                     <div class="table_list-price text-line"><?=$arPrice["PRINT_RATIO_PRICE"]?></div>
@@ -96,22 +98,24 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
             <?endif?>
         </div>
         <div class="show_in_list">
-            <div class="table_list-info">
-                <a href="#">
-                    <i class="icon favorite"></i>
-                    <span>Купить в 1 клик</span>
-                </a>
-            </div>
+            <?if ($arResult["OFFER"]["CAN_BUY"]) :?>
+                <div class="table_list-info">
+                    <a href="#" data-popup-open="#buy-one-click">
+                        <i class="icon favorite"></i>
+                        <span>Купить в 1 клик</span>
+                    </a>
+                </div>
+            <?endif?>
             <?if ($arParams["DISPLAY_COMPARE"] == "Y") :?>
                 <div class="table_list-info">
-                    <a href="#" onclick="obAjax.addToFavorite('<?=$arResult["ITEM"]["ID"]?>', event)">
+                    <a href="#" data-entity="favorite" data-id="<?=$arResult["ITEM"]["ID"]?>">
                         <i class="icon favorite"></i>
                         <span>В избранное</span>
                     </a>
                 </div>
                 <div class="table_list-info">
-                    <a href="#">
-                        <i class="icon favorite"></i>
+                    <a href="#" data-entity="compare" data-id="<?=$arResult["OFFER"]["ID"]?>">
+                        <i class="icon compare"></i>
                         <span>Сравнить</span>
                     </a>
                 </div>

@@ -60,7 +60,9 @@
                             "MAP_TYPE" => "0",
                             "SET_TITLE" => "N",
                             "CACHE_TYPE" => "A",
-                            "CACHE_TIME" => "36000000"
+                            "CACHE_TIME" => "36000000",
+                            "SORT_BY" => "SORT",
+                            "SORT_ORDER" => "ASC"
                         ]
                     );
                     //end

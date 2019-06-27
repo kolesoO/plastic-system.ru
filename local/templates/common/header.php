@@ -135,7 +135,9 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         "SET_TITLE" => "N",
                         "CACHE_TYPE" => "A",
                         "CACHE_TIME" => "36000000",
-                        "CUR_ID" => STORE_ID
+                        "CUR_ID" => STORE_ID,
+                        "SORT_BY" => "SORT",
+                        "SORT_ORDER" => "ASC"
                     )
                 );
                 //end

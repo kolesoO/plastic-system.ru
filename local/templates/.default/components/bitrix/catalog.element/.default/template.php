@@ -66,28 +66,30 @@ if ($arParams['DISPLAY_COMPARE']) {
             <?endif?>
         </div>
         <div class="cart_desc">
-            <div class="cart_desc-item">
-                <?if (isset($arOffer["PROPERTIES"]["CML2_ARTICLE"]) && strlen($arOffer["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) > 0) :?>
-                    <div class="table_list-desc-item"><span><?=$arOffer["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arOffer["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
-                <?endif?>
-                <?if ($arPrice) :?>
-                    <br>
-                    <div class="table_list-price_wrap">
-                        <?if ($arParams['SHOW_OLD_PRICE'] == "Y") :?>
-                            <s class="table_list-price_small"><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
-                        <?endif?>
-                        <div class="table_list-price text-line"><?=$arPrice["PRINT_PRICE"]?></div>
-                        <span>c НДС</span>
-                    </div>
-                    <br>
-                    <span><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</span>
-                <?endif?>
-            </div>
-            <?if ($arResult["OFFERS_COUNT"] > 0) :
+            <?if ((isset($arOffer["PROPERTIES"]["CML2_ARTICLE"]) && strlen($arOffer["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) > 0) || $arPrice) :?>
+                <div class="cart_desc-item">
+                    <?if (isset($arOffer["PROPERTIES"]["CML2_ARTICLE"]) && strlen($arOffer["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) > 0) :?>
+                        <div class="table_list-desc-item"><span><?=$arOffer["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arOffer["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
+                    <?endif?>
+                    <?if ($arPrice) :?>
+                        <br>
+                        <div class="table_list-price_wrap">
+                            <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
+                                <s class="table_list-price_small"><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
+                            <?endif?>
+                            <div class="table_list-price text-line"><?=$arPrice["PRINT_PRICE"]?></div>
+                            <span>c НДС</span>
+                        </div>
+                        <br>
+                        <span><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</span>
+                    <?endif?>
+                </div>
+            <?endif?>
+            <?if ($arResult["OFFERS_WITH_COLOR_COUNT"] > 0) :
                 $wrapClass = "table_list-color clearfix";
                 $wrapData = "";
                 $isSlider = false;
-                if ($arResult["OFFERS_COUNT"] > $offerSlidesToShow) {
+                if ($arResult["OFFERS_WITH_COLOR_COUNT"] > $offerSlidesToShow) {
                     $wrapClass .= " js-slider";
                     $wrapData .= ' 
                             data-autoplay="false"
@@ -105,24 +107,42 @@ if ($arParams['DISPLAY_COMPARE']) {
                 ?>
                 <div class="cart_desc-item">
                     <div class="<?=$wrapClass?>"<?=$wrapData?>>
-                        <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :?>
+                        <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :
+                            if (!in_array($arOffer["ID"], $arResult["OFFERS_WITH_COLOR"])) continue;
+                            ?>
                             <?if ($isSlider) :?><div><?endif?>
                             <?if ($arResult["OFFER_ID_SELECTED"] == $offerKey) :?>
                                 <div
                                         class="table_list-color-item slick-current"
-                                        title="<?=$arOffer["PROPERTIES"]["Color"]["VALUE"]?>"
-                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["Color"]["VALUE"])?>"
+                                        title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
                                 ></div>
                             <?else:?>
                                 <a
                                         href="<?=$arOffer["DETAIL_PAGE_URL"]?>"
                                         class="table_list-color-item"
-                                        title="<?=$arOffer["PROPERTIES"]["Color"]["VALUE"]?>"
-                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["Color"]["VALUE"])?>"
+                                        title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
                                 ></a>
                             <?endif?>
                             <?if ($isSlider) :?></div><?endif?>
                         <?endforeach?>
+                    </div>
+                </div>
+            <?endif?>
+            <?if ($arResult["OFFERS_WITH_SIZE_COUNT"] > 0) :?>
+                <div class="cart_desc-item">
+                    <div class="dropdown header-location js-drop_down">
+                        <a href="#" class="dropdown-btn link js-drop_down-btn">По размеру</a>
+                        <div class="header-location-content js-drop_down-content">
+                            <div class="header-location-inner">
+                                <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :
+                                    if (!in_array($arOffer["ID"], $arResult["OFFERS_WITH_SIZE"])) continue;
+                                    ?>
+                                    <a href="<?=$arOffer["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOffer["NAME"]?></a>
+                                <?endforeach?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <?endif?>

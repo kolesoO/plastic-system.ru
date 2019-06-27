@@ -41,9 +41,94 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/ymap/script.js');
             false
         );?>
     </div>
+    <hr>
+    <div class="js-tabs">
+        <div class="content_tab">
+            <a href="#" class="content_tab-item" data-tab_target="#delivery_region-spb">
+                <?$APPLICATION->IncludeComponent(
+                    "bitrix:main.include",
+                    ".default",
+                    [
+                        "AREA_FILE_SHOW" => "file",
+                        "PATH" => SITE_TEMPLATE_PATH . "/include/shipping/tabs/spb-title.php"
+                    ],
+                    false
+                );?>
+            </a>
+            <a href="#" class="content_tab-item" data-tab_target="#delivery_region-msk">
+                <?$APPLICATION->IncludeComponent(
+                    "bitrix:main.include",
+                    ".default",
+                    [
+                        "AREA_FILE_SHOW" => "file",
+                        "PATH" => SITE_TEMPLATE_PATH . "/include/shipping/tabs/msk-title.php"
+                    ],
+                    false
+                );?>
+            </a>
+            <a href="#" class="content_tab-item" data-tab_target="#delivery_region-other">
+                <?$APPLICATION->IncludeComponent(
+                    "bitrix:main.include",
+                    ".default",
+                    [
+                        "AREA_FILE_SHOW" => "file",
+                        "PATH" => SITE_TEMPLATE_PATH . "/include/shipping/tabs/other-title.php"
+                    ],
+                    false
+                );?>
+            </a>
+        </div>
+        <div data-tab_content>
+            <div id="delivery_region-spb" data-tab_item>
+                <div flex-align="start">
+                    <?$APPLICATION->IncludeComponent(
+                        "bitrix:main.include",
+                        ".default",
+                        [
+                            "AREA_FILE_SHOW" => "file",
+                            "PATH" => SITE_TEMPLATE_PATH . "/include/shipping/tabs/spb-content.php"
+                        ],
+                        false
+                    );?>
+                </div>
+                <div style="overflow-x:auto">
+                    <img src="/upload/content/delivery/spb.svg" style="width: 1209px;max-width: none;">
+                </div>
+            </div>
+            <div id="delivery_region-msk" data-tab_item>
+                <div flex-align="start">
+                    <?$APPLICATION->IncludeComponent(
+                        "bitrix:main.include",
+                        ".default",
+                        [
+                            "AREA_FILE_SHOW" => "file",
+                            "PATH" => SITE_TEMPLATE_PATH . "/include/shipping/tabs/msk-content.php"
+                        ],
+                        false
+                    );?>
+                </div>
+                <div style="overflow-x:auto">
+                    <img src="/upload/content/delivery/msk.svg" style="width: 1209px;max-width: none;">
+                </div>
+            </div>
+            <div id="delivery_region-other" data-tab_item>
+                <div flex-align="start">
+                    <?$APPLICATION->IncludeComponent(
+                        "bitrix:main.include",
+                        ".default",
+                        [
+                            "AREA_FILE_SHOW" => "file",
+                            "PATH" => SITE_TEMPLATE_PATH . "/include/shipping/tabs/other-content.php"
+                        ],
+                        false
+                    );?>
+                </div>
+            </div>
+        </div>
+    </div>
     <?
     //Список регионов доставки
-    $APPLICATION->IncludeComponent(
+    /*$APPLICATION->IncludeComponent(
         "bitrix:news.list",
         (DEVICE_TYPE == "DESKTOP" ? "delivery_region-list-desktop" : "delivery_region-list-mobile"),
         [
@@ -100,7 +185,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/ymap/script.js');
             "AJAX_OPTION_HISTORY" => "N",
             "AJAX_OPTION_ADDITIONAL" => ""
         ]
-    );
+    );*/
     //end
     $APPLICATION->IncludeComponent(
         "bitrix:main.include",

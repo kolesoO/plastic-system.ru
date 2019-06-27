@@ -9,8 +9,12 @@ $component = $this->getComponent();
 //$arParams = $component->applyTemplateModifications();
 $hasResizeImage = is_array($arParams["IMAGE_SIZE"]);
 $arResult["ITEMS_COUNT"] = count($arResult["ITEMS"]);
+$arItemsRelations = [];
+$arOfferKeys = [];
+$arOfferKeysForAmount = [];
 
-foreach ($arResult["ITEMS"] as &$arItem) {
+foreach ($arResult["ITEMS"] as $itemKey => &$arItem) {
+    $arItemsRelations[$arItem["ID"]] = $itemKey;
     //ресайз и кеширование изображений
     if (is_array($arItem["PREVIEW_PICTURE"]) && $hasResizeImage) {
         $thumb = \CFile::ResizeImageGet(
@@ -23,7 +27,6 @@ foreach ($arResult["ITEMS"] as &$arItem) {
     }
     //end
     if (is_array($arItem["OFFERS"]) && count($arItem["OFFERS"]) > 0) {
-        $arOfferKeys = [];
         foreach ($arItem["OFFERS"] as $key => $arOffer) {
             //ресайз и кеширование изображений
             if (is_array($arOffer["PREVIEW_PICTURE"]) && $hasResizeImage) {
@@ -37,47 +40,84 @@ foreach ($arResult["ITEMS"] as &$arItem) {
             }
             //end
             if (!is_array($arOffer["PROPERTIES"]) || count($arOffer["PROPERTIES"]) == 0) {
-                $arOfferKeys[$arOffer["ID"]] = $key;
+                $arOfferKeys[$arOffer["ID"]] = [
+                    "KEY" => $key,
+                    "ITEM_KEY" => $itemKey
+                ];
             }
-        }
-        if (count($arOfferKeys) > 0 && isset($arResult["CATALOGS"][$arParams["IBLOCK_ID"]]) && count($arParams["OFFERS_PROPERTY_CODE"]) > 0) {
-            //Доп. свойства торг предложений
-            $rsElems = \CIBlockElement::GetList(
-                [],
-                ["IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"], "ID" => array_keys($arOfferKeys)],
-                false,
-                false,
-                ["ID", "IBLOCK_ID"]
-            );
-            while ($rsIblockItem = $rsElems->GetNextElement()) {
-                $arFields = $rsIblockItem->getFields();
-                $arProps = $rsIblockItem->getProperties();
-                foreach($arProps as $code => $value) {
-                    if (in_array($code, $arParams["OFFERS_PROPERTY_CODE"]) && isset($arItem["OFFERS"][$arOfferKeys[$arFields["ID"]]])) {
-                        $arItem["OFFERS"][$arOfferKeys[$arFields["ID"]]]["PROPERTIES"][$code] = $value;
-                    }
-                }
-            }
-            //end
-            //обновление остатков на складе
-            $rsStoreProduct = \CCatalogStore::GetList(
-                [],
-                ["ID" => STORE_ID, "PRODUCT_ID" => array_keys($arOfferKeys)],
-                false,
-                false,
-                ["ID", "PRODUCT_AMOUNT"]
-            );
-            while ($arStoreProduct = $rsStoreProduct->fetch()) {
-                $arItem["OFFERS"][$arOfferKeys[$arFields["ID"]]]["CATALOG_QUANTITY"] = $arStoreProduct["PRODUCT_AMOUNT"];
-                if (intval($arStoreProduct["PRODUCT_AMOUNT"]) == 0) {
-                    $arItem["OFFERS"][$arOfferKeys[$arFields["ID"]]]["CAN_BUY"] = false;
-                }
-            }
-            //end
+            $arOfferKeysForAmount[$arOffer["ID"]] = [
+                "KEY" => $key,
+                "ITEM_KEY" => $itemKey
+            ];
         }
     }
 }
 unset($arItem);
+
+if (count($arItemsRelations) > 0 && count($arParams["PROPERTY_CODE"]) > 0) {
+    //Доп. свойства основных товаров
+    $addAllProps = in_array("*", $arParams["PROPERTY_CODE"]);
+    $rsElems = \CIBlockElement::GetList(
+        [],
+        ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "ID" => array_keys($arItemsRelations)],
+        false,
+        false,
+        ["ID", "IBLOCK_ID"]
+    );
+    while ($rsIblockItem = $rsElems->GetNextElement()) {
+        $arFields = $rsIblockItem->getFields();
+        $arProps = $rsIblockItem->getProperties();
+        foreach($arProps as $code => $value) {
+            if (in_array($code, $arParams["PROPERTY_CODE"]) || $addAllProps) {
+                $arResult["ITEMS"][$arItemsRelations[$arFields["ID"]]]["PROPERTIES"][$code] = $value;
+            }
+        }
+    }
+    //end
+}
+
+if (count($arOfferKeys) > 0 && isset($arResult["CATALOGS"][$arParams["IBLOCK_ID"]]) && count($arParams["OFFERS_PROPERTY_CODE"]) > 0) {
+    //Доп. свойства торг предложений
+    $rsElems = \CIBlockElement::GetList(
+        [],
+        ["IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"], "ID" => array_keys($arOfferKeys)],
+        false,
+        false,
+        ["ID", "IBLOCK_ID"]
+    );
+    while ($rsIblockItem = $rsElems->GetNextElement()) {
+        $arFields = $rsIblockItem->getFields();
+        $arProps = $rsIblockItem->getProperties();
+        $itemKey = $arOfferKeys[$arFields["ID"]]["ITEM_KEY"];
+        $offerKey = $arOfferKeys[$arFields["ID"]]["KEY"];
+        foreach ($arProps as $code => $value) {
+            if (in_array($code, $arParams["OFFERS_PROPERTY_CODE"]) && isset($arResult["ITEMS"][$itemKey]["OFFERS"][$offerKey])) {
+                $arResult["ITEMS"][$itemKey]["OFFERS"][$offerKey]["PROPERTIES"][$code] = $value;
+            }
+        }
+    }
+    //end
+}
+
+if (count($arOfferKeysForAmount) > 0) {
+    //обновление остатков на складе
+    $rsStoreProduct = \CCatalogStore::GetList(
+        [],
+        ["ID" => STORE_ID, "PRODUCT_ID" => array_keys($arOfferKeysForAmount)],
+        false,
+        false,
+        ["*"]
+    );
+    while ($arStoreProduct = $rsStoreProduct->fetch()) {
+        $itemKey = $arOfferKeysForAmount[$arStoreProduct["ELEMENT_ID"]]["ITEM_KEY"];
+        $offerKey = $arOfferKeysForAmount[$arStoreProduct["ELEMENT_ID"]]["KEY"];
+        $arResult["ITEMS"][$itemKey]["OFFERS"][$offerKey]["CATALOG_QUANTITY"] = $arStoreProduct["PRODUCT_AMOUNT"];
+        if (intval($arStoreProduct["PRODUCT_AMOUNT"]) == 0) {
+            $arResult["ITEMS"][$itemKey]["OFFERS"][$offerKey]["CAN_BUY"] = false;
+        }
+    }
+    //end
+}
 
 $arResult["INNER_TEMPLATE"] = ($arParams["DEVICE_TYPE"] == "MOBILE" ? ".default-mobile" : ".default");
 

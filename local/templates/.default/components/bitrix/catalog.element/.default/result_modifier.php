@@ -50,6 +50,7 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
     //end
     //Доп. свойства торг предложений
     if (count($arOfferKeys) > 0) {
+        $addAllProps = in_array("*", $arParams["OFFERS_PROPERTY_CODE"]);
         $rsElem = \CIBlockElement::GetList(
             [],
             ["IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"], "ID" => array_keys($arOfferKeys)],
@@ -61,7 +62,10 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
             $arFields = $rsIblockItem->getFields();
             $arProps = $rsIblockItem->getProperties();
             foreach($arProps as $code => $value) {
-                if (in_array($code, $arParams["OFFERS_PROPERTY_CODE"]) && isset($arResult["OFFERS"][$arOfferKeys[$arFields["ID"]]])) {
+                if (
+                        isset($arResult["OFFERS"][$arOfferKeys[$arFields["ID"]]]) &&
+                        (in_array($code, $arParams["OFFERS_PROPERTY_CODE"]) || $addAllProps)
+                ) {
                     $arResult["OFFERS"][$arOfferKeys[$arFields["ID"]]]["PROPERTIES"][$code] = $value;
                 }
             }
@@ -105,9 +109,26 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
         //end
     }
     //end
+
+    //разбивка торг предложений на 'с цветом' и 'с размером'
+    $arResult["OFFERS_WITH_COLOR"] = [];
+    $arResult["OFFERS_WITH_SIZE"] = [];
+    $arResult["OFFERS_WITH_COLOR_COUNT"] = 0;
+    $arResult["OFFERS_WITH_SIZE_COUNT"] = 0;
+    foreach ($arResult["OFFERS"] as $key => &$arOffer) {
+        if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
+            $arResult["OFFERS_WITH_COLOR"][] = $arOffer["ID"];
+            $arResult["OFFERS_WITH_COLOR_COUNT"] ++;
+        }
+        if (strlen($arOffer["PROPERTIES"]["RAZMER"]["VALUE"]) > 0 && $arOffer["ID"] != $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["ID"]){
+            $arResult["OFFERS_WITH_SIZE"][] = $arOffer["ID"];
+            $arResult["OFFERS_WITH_SIZE_COUNT"] ++;
+        }
+    }
+    //end
 }
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFERS", "OFFER_ID_SELECTED", "PROPERTIES"]);
+    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFERS", "OFFER_ID_SELECTED", "PROPERTIES", "OFFERS_WITH_COLOR", "OFFERS_WITH_SIZE", "OFFERS_WITH_COLOR_COUNT", "OFFERS_WITH_SIZE_COUNT"]);
 }

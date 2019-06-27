@@ -37,7 +37,7 @@ if ($arParams['DISPLAY_COMPARE']) {
         <?if ($arResult["OFFERS_COUNT"] > 0) :
             $wrapAttrs = "";
             $className = "";
-            if ($arResult["OFFERS_COUNT"] > 8) {
+            if ($arResult["OFFERS_COUNT"] > 7) {
                 $isSlider = true;
                 $className .= " js-slider";
                 $wrapAttrs .= ' 
@@ -54,13 +54,15 @@ if ($arParams['DISPLAY_COMPARE']) {
             }
             ?>
             <div class="table_list-color clearfix<?=$className?>"<?=$wrapAttrs?>>
-                <?foreach ($arResult["OFFERS_LIST"] as $offerKey => $arOffer) :?>
+                <?foreach ($arResult["OFFERS_LIST"] as $offerKey => $arOffer) :
+                    if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0) continue;
+                    ?>
                     <?if ($isSlider) :?><div><?endif?>
                         <a
                                 href="<?=$arOffer["DETAIL_PAGE_URL"]?>"
                                 class="table_list-color-item"
-                                title="<?=$arOffer["PROPERTIES"]["Color"]["VALUE"]?>"
-                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["Color"]["VALUE"])?>"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
                         ></a>
                     <?if ($isSlider) :?></div><?endif?>
                 <?endforeach;?>
@@ -78,11 +80,9 @@ if ($arParams['DISPLAY_COMPARE']) {
             <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
         </div>
         <div class="table_list-desc full">
-            <?foreach (["Color", "Size", "CML2_MANUFACTURER"] as $code) :
-                $value = $arResult["OFFER"]["PROPERTIES"][$code]["VALUE"];
-                if (!isset($arResult["OFFER"]["PROPERTIES"][$code]) || strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) == 0) {
-                    $value = "-";
-                }
+            <?foreach (["TSVET", "RAZMER", "CML2_MANUFACTURER"] as $code) :
+                if (!isset($arResult["OFFER"]["PROPERTIES"][$code])) continue;
+                $value = strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["OFFER"]["PROPERTIES"][$code]["VALUE"];
                 ?>
                 <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$value?></div>
             <?endforeach?>
@@ -92,7 +92,7 @@ if ($arParams['DISPLAY_COMPARE']) {
         <?if ($arPrice) :?>
             <div class="table_list-info border full">
                 <div class="table_list-price_wrap">
-                    <?if ($arParams['SHOW_OLD_PRICE'] == "Y") :?>
+                    <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                         <s><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                     <?endif?>
                     <div class="table_list-price text-line"><?=$arPrice["PRINT_RATIO_PRICE"]?></div>
@@ -115,12 +115,14 @@ if ($arParams['DISPLAY_COMPARE']) {
             <?endif?>
         </div>
         <div class="show_in_list">
-            <div class="table_list-info">
-                <a href="#">
-                    <i class="icon buy_one_click"></i>
-                    <span>Купить в 1 клик</span>
-                </a>
-            </div>
+            <?if ($arResult["OFFER"]["CAN_BUY"]) :?>
+                <div class="table_list-info">
+                    <a href="#" data-popup-open="#buy-one-click">
+                        <i class="icon buy_one_click"></i>
+                        <span>Купить в 1 клик</span>
+                    </a>
+                </div>
+            <?endif?>
             <?if ($arParams["DISPLAY_COMPARE"] == "Y") :?>
                 <div class="table_list-info">
                     <a href="#" data-entity="favorite" data-id="<?=$arResult["ITEM"]["ID"]?>">
@@ -136,6 +138,43 @@ if ($arParams['DISPLAY_COMPARE']) {
                 </div>
             <?endif?>
         </div>
+    </div>
+</div>
+<div class="hide_in_list table_list-footer">
+    <div class="full">
+        <?
+        $hasActiveProps = false;
+        foreach (["TSVET", "RAZMER", "CML2_MANUFACTURER"] as $code) :
+            if (!isset($arResult["OFFER"]["PROPERTIES"][$code])) continue;
+            $value = strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["OFFER"]["PROPERTIES"][$code]["VALUE"];
+            $hasActiveProps = true;
+            ?>
+            <div><small><?=$arResult["OFFER"]["PROPERTIES"][$code]["NAME"]?>:</small> <?=$value?></div>
+        <?endforeach?>
+    </div>
+    <div class="<?if ($hasActiveProps) :?>border-top <?endif?>full">
+        <?if ($arResult["OFFER"]["CAN_BUY"]) :?>
+            <div class="table_list-info">
+                <a href="#" data-popup-open="#buy-one-click">
+                    <i class="icon buy_one_click"></i>
+                    <span>Купить в 1 клик</span>
+                </a>
+            </div>
+        <?endif?>
+        <?if ($arParams["DISPLAY_COMPARE"] == "Y") :?>
+            <div class="table_list-info">
+                <a href="#" data-entity="favorite" data-id="<?=$arResult["ITEM"]["ID"]?>">
+                    <i class="icon favorite"></i>
+                    <span>В избранное</span>
+                </a>
+            </div>
+            <div class="table_list-info">
+                <a href="#" data-entity="compare" data-id="<?=$arResult["OFFER"]["ID"]?>">
+                    <i class="icon compare"></i>
+                    <span>Сравнить</span>
+                </a>
+            </div>
+        <?endif?>
     </div>
 </div>
 <script>

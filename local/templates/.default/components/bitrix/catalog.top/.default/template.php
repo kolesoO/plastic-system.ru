@@ -30,6 +30,7 @@ $this->setFrameMode(true);
                         data-slidesToShow="<?=$arParams["LINE_ELEMENT_COUNT"]?>"
                         data-slidesToScroll="1"
                     <?endif?>
+                    items-count="<?=$arParams["LINE_ELEMENT_COUNT"]?>"
             >
                 <?foreach ($arResult["ITEMS"] as $arItem) :
                     if ($arResult["SET_AREA"]) {
