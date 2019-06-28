@@ -63,13 +63,29 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
             <div class="table_list-color">&nbsp;</div>
         <?endif?>
         <div class="table_list-desc full">
-            <?foreach (["TSVET", "RAZMER", "CML2_MANUFACTURER"] as $code) :
-                $value = $arResult["OFFER"]["PROPERTIES"][$code]["VALUE"];
-                if (!isset($arResult["OFFER"]["PROPERTIES"][$code]) || strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) == 0) {
+            <?
+            $propValue = "";
+            foreach (["DLINA_MM", "SHIRINA_MM", "VYSOTA_MM"] as $code) :
+                if (strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0) {
+                    $propValue = "";
+                    break;
+                }
+                if (strlen($propValue) > 0) {
+                    $propValue .= " x ";
+                }
+                $propValue .= $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
+                ?>
+            <?endforeach?>
+            <?if (strlen($propValue) > 0) :?>
+                <div class="table_list-desc-item"><span>ДхШхВ (мм):</span> <?=$propValue?></div>
+            <?endif?>
+            <?foreach (["VES_KG", "OBEM_L"] as $code) :
+                $value = $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
+                if (!isset($arResult["ITEM"]["PROPERTIES"][$code]) || strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0) {
                     $value = "-";
                 }
                 ?>
-                <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$value?></div>
+                <div class="table_list-desc-item"><span><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$value?></div>
             <?endforeach?>
         </div>
         <?if ($arPrice) :?>

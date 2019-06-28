@@ -80,11 +80,27 @@ if ($arParams['DISPLAY_COMPARE']) {
             <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
         </div>
         <div class="table_list-desc full">
-            <?foreach (["TSVET", "RAZMER", "CML2_MANUFACTURER"] as $code) :
-                if (!isset($arResult["OFFER"]["PROPERTIES"][$code])) continue;
-                $value = strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["OFFER"]["PROPERTIES"][$code]["VALUE"];
+            <?
+            $propValue = "";
+            foreach (["DLINA_MM", "SHIRINA_MM", "VYSOTA_MM"] as $code) :
+                if (strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0) {
+                    $propValue = "";
+                    break;
+                }
+                if (strlen($propValue) > 0) {
+                    $propValue .= " x ";
+                }
+                $propValue .= $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
                 ?>
-                <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$value?></div>
+            <?endforeach?>
+            <?if (strlen($propValue) > 0) :?>
+                <div class="table_list-desc-item"><span>ДхШхВ (мм):</span> <?=$propValue?></div>
+            <?endif?>
+            <?foreach (["VES_KG", "OBEM_L"] as $code) :
+                if (!isset($arResult["ITEM"]["PROPERTIES"][$code])) continue;
+                $value = strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
+                ?>
+                <div class="table_list-desc-item"><span><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$value?></div>
             <?endforeach?>
         </div>
     </div>
@@ -144,12 +160,12 @@ if ($arParams['DISPLAY_COMPARE']) {
     <div class="full">
         <?
         $hasActiveProps = false;
-        foreach (["TSVET", "RAZMER", "CML2_MANUFACTURER"] as $code) :
-            if (!isset($arResult["OFFER"]["PROPERTIES"][$code])) continue;
-            $value = strlen($arResult["OFFER"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["OFFER"]["PROPERTIES"][$code]["VALUE"];
+        foreach (["VES_KG", "OBEM_L"] as $code) :
+            if (!isset($arResult["ITEM"]["PROPERTIES"][$code])) continue;
+            $value = strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
             $hasActiveProps = true;
             ?>
-            <div><small><?=$arResult["OFFER"]["PROPERTIES"][$code]["NAME"]?>:</small> <?=$value?></div>
+            <div><small><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</small> <?=$value?></div>
         <?endforeach?>
     </div>
     <div class="<?if ($hasActiveProps) :?>border-top <?endif?>full">
