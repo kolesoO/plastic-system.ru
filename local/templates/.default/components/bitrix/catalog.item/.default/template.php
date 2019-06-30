@@ -84,8 +84,9 @@ if ($arParams['DISPLAY_COMPARE']) {
             $propValue = "";
             $propTitle = "";
             foreach (["DLINA_MM", "SHIRINA_MM", "VYSOTA_MM"] as $code) :
+                if (strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0) continue;
                 if (strlen($propValue) > 0) {
-                    $propTitle .= " x ";
+                    $propTitle .= "x";
                     $propValue .= " x ";
                 }
                 $propTitle .= strtoupper(substr($arResult["ITEM"]["PROPERTIES"][$code]["NAME"], 0, 1));
