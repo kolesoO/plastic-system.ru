@@ -17,7 +17,7 @@ global $APPLICATION;
 $arOffer = $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]];
 
 //seo fields
-$rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($arParams["LINK_IBLOCK_ID"],$arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["ID"]);
+$rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($arParams["LINK_IBLOCK_ID"], $arOffer["ID"]);
 $arIPropValues = $rsIProps->getValues();
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
     $APPLICATION->SetPageProperty("title", $arIPropValues["ELEMENT_META_TITLE"]);
@@ -88,6 +88,7 @@ $APPLICATION->IncludeComponent(
         'SHOW_GENERAL_STORE_INFORMATION' => $arParams['SHOW_GENERAL_STORE_INFORMATION'],
         'USER_FIELDS' => $arParams['USER_FIELDS'],
         'FIELDS' => $arParams['FIELDS'],
+        'EXCLUDE_PROPS' => ["CML2_BASE_UNIT", "CML2_TAXES", "STATUS", "is_main"]
     )
 );
 //end
@@ -162,5 +163,5 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) :?>
         </div>
     </div>
 </div>
-<?endif
+<?endif;
 //end?>

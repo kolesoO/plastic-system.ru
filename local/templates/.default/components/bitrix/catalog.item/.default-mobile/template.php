@@ -65,19 +65,18 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
         <div class="table_list-desc full">
             <?
             $propValue = "";
+            $propTitle = "";
             foreach (["DLINA_MM", "SHIRINA_MM", "VYSOTA_MM"] as $code) :
-                if (strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0) {
-                    $propValue = "";
-                    break;
-                }
                 if (strlen($propValue) > 0) {
+                    $propTitle .= " x ";
                     $propValue .= " x ";
                 }
+                $propTitle .= strtoupper(substr($arResult["ITEM"]["PROPERTIES"][$code]["NAME"], 0, 1));
                 $propValue .= $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
                 ?>
             <?endforeach?>
             <?if (strlen($propValue) > 0) :?>
-                <div class="table_list-desc-item"><span>ДхШхВ (мм):</span> <?=$propValue?></div>
+                <div class="table_list-desc-item"><span><?=$propTitle?> (мм):</span> <?=$propValue?></div>
             <?endif?>
             <?foreach (["VES_KG", "OBEM_L"] as $code) :
                 $value = $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];

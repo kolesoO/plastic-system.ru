@@ -5,7 +5,17 @@
         <div class="cart_info-item col-lg-8">
             <div class="title-3">Технические характеристики</div>
             <div class="cart_info-wrap">
-                <?foreach ($arParams["ELEMENT_PROPERTIES"] as $arProp) :?>
+                <?foreach ($arParams["ELEMENT_PROPERTIES"] as $arProp) :
+                    if (in_array($arProp["CODE"], $arParams["EXCLUDE_PROPS"])) continue;
+                    ?>
+                    <?if (is_string($arProp["VALUE"]) && strlen($arProp["VALUE"]) > 0) :?>
+                        <div class="cart_info-wrap-item">
+                            <span><?=$arProp["NAME"]?></span>
+                            <span><?=$arProp["VALUE"]?></span>
+                        </div>
+                    <?endif?>
+                <?endforeach?>
+                <?foreach ($arParams["OFFER"]["PROPERTIES"] as $arProp) :?>
                     <?if (is_string($arProp["VALUE"]) && strlen($arProp["VALUE"]) > 0) :?>
                         <div class="cart_info-wrap-item">
                             <span><?=$arProp["NAME"]?></span>

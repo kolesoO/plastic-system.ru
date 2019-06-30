@@ -233,7 +233,7 @@ unset($arSortItem);
                         $APPLICATION->RestartBuffer();
                     }
                     //раздел
-                    $APPLICATION->IncludeComponent(
+                    $sectionId = $APPLICATION->IncludeComponent(
                         "bitrix:catalog.section",
                         "",
                         [
@@ -373,3 +373,21 @@ unset($arSortItem);
         </div>
     </div>
 </section>
+
+<?
+//seo fields
+$rsIProps = new \Bitrix\Iblock\InheritedProperty\SectionValues($arParams["IBLOCK_ID"], $sectionId);
+$arIPropValues = $rsIProps->getValues();
+if ($arIPropValues["SECTION_META_TITLE"]) {
+    $APPLICATION->SetPageProperty("title", $arIPropValues["SECTION_META_TITLE"]);
+}
+if ($arIPropValues["SECTION_META_KEYWORDS"]) {
+    $APPLICATION->SetPageProperty("keywords", $arIPropValues["SECTION_META_KEYWORDS"]);
+}
+if ($arIPropValues["SECTION_META_DESCRIPTION"]) {
+    $APPLICATION->SetPageProperty("description", $arIPropValues["SECTION_META_DESCRIPTION"]);
+}
+if ($arIPropValues["SECTION_PAGE_TITLE"]) {
+    $APPLICATION->SetTitle($arIPropValues["SECTION_PAGE_TITLE"]);
+}
+//end

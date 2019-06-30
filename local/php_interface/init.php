@@ -3,10 +3,6 @@ use \Bitrix\Main;
 
 $rsManager = Main\EventManager::getInstance();
 
-//Модули
-//Main\Loader::includeModule('b2broker.maininclude');
-//end
-
 //Классы
 Main\Loader::registerAutoLoadClasses(null, [
     "\kDevelop\Help\Hload" => "/local/php_interface/classes/help/hload.php",
