@@ -115,14 +115,14 @@ if ($arParams['DISPLAY_COMPARE']) {
                                 <div
                                         class="table_list-color-item slick-current"
                                         title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"])?>"
                                 ></div>
                             <?else:?>
                                 <a
                                         href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>"
                                         class="table_list-color-item"
                                         title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"])?>"
                                 ></a>
                             <?endif?>
                             <?if ($isSlider) :?></div><?endif?>
