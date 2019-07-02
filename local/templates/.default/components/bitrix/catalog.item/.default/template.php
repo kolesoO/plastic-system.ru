@@ -54,8 +54,11 @@ if ($arParams['DISPLAY_COMPARE']) {
             }
             ?>
             <div class="table_list-color clearfix<?=$className?>"<?=$wrapAttrs?>>
-                <?foreach ($arResult["OFFERS_LIST"] as $offerKey => $arOffer) :
-                    if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0) continue;
+                <?
+                $arColorCache = [];
+                foreach ($arResult["OFFERS_LIST"] as $offerKey => $arOffer) :
+                    if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0 || in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arColorCache)) continue;
+                    $arColorCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
                     ?>
                     <?if ($isSlider) :?><div><?endif?>
                         <a

@@ -85,11 +85,11 @@ if ($arParams['DISPLAY_COMPARE']) {
                     <?endif?>
                 </div>
             <?endif?>
-            <?if ($arResult["OFFERS_WITH_COLOR_COUNT"] > 0) :
+            <?if ($arResult["TSVET"]["COUNT"] > 0) :
                 $wrapClass = "table_list-color clearfix";
                 $wrapData = "";
                 $isSlider = false;
-                if ($arResult["OFFERS_WITH_COLOR_COUNT"] > $offerSlidesToShow) {
+                if ($arResult["TSVET"]["COUNT"] > $offerSlidesToShow) {
                     $wrapClass .= " js-slider";
                     $wrapData .= ' 
                             data-autoplay="false"
@@ -108,7 +108,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                 <div class="cart_desc-item">
                     <div class="<?=$wrapClass?>"<?=$wrapData?>>
                         <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :
-                            if (!in_array($arOffer["ID"], $arResult["OFFERS_WITH_COLOR"])) continue;
+                            if (!in_array($arOffer["ID"], $arResult["TSVET"]["ID"])) continue;
                             ?>
                             <?if ($isSlider) :?><div><?endif?>
                             <?if ($arResult["OFFER_ID_SELECTED"] == $offerKey) :?>
@@ -130,22 +130,28 @@ if ($arParams['DISPLAY_COMPARE']) {
                     </div>
                 </div>
             <?endif?>
-            <?if ($arResult["OFFERS_WITH_SIZE_COUNT"] > 0) :?>
-                <div class="cart_desc-item">
-                    <div class="dropdown header-location js-drop_down">
-                        <a href="#" class="dropdown-btn link js-drop_down-btn">По размеру</a>
-                        <div class="header-location-content js-drop_down-content">
-                            <div class="header-location-inner">
-                                <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :
-                                    if (!in_array($arOffer["ID"], $arResult["OFFERS_WITH_SIZE"])) continue;
-                                    ?>
-                                    <a href="<?=$arOffer["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOffer["NAME"]?></a>
-                                <?endforeach?>
+            <?foreach (["RAZMER", "OPTSII_IBOX", "DNO"] as $code) :?>
+                <?if ($arResult[$code]["COUNT"] > 0) :?>
+                    <div class="cart_desc-item">
+                        <div class="dropdown header-location js-drop_down">
+                            <a href="#" class="dropdown-btn link js-drop_down-btn"><?=$arResult[$code]["TITLE"]?></a>
+                            <div class="header-location-content js-drop_down-content">
+                                <div class="header-location-inner">
+                                    <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :
+                                        if (!in_array($arOffer["ID"], $arResult[$code]["ID"])) continue;
+                                        ?>
+                                        <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
+                                            <span class="header-location-link"><?=$arOffer["PROPERTIES"][$code]["VALUE"]?></span>
+                                        <?else:?>
+                                            <a href="<?=$arOffer["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOffer["PROPERTIES"][$code]["VALUE"]?></a>
+                                        <?endif?>
+                                    <?endforeach?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?endif?>
+                <?endif?>
+            <?endforeach?>
             <div class="cart_desc-item">
                 <?if ($arOffer["CAN_BUY"]) :?>
                     <div class="cart_buy">

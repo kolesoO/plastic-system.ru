@@ -154,37 +154,43 @@ $arCatalogItemsParams = [
 </script>
 
 <div id="catalog-list" class="table_list catalog" items-count="<?=$arParams["LINE_ELEMENT_COUNT"]?>">
-    <?foreach ($arResult["ITEMS"] as $arItem) :
-        $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
-        $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
-        ?>
-        <div id="catalog-item-<?=$arItem["ID"]?>" class="table_list-item<?if ($arItem["PROPERTIES"]["is_main"]["VALUE"] == "Y"):?> big<?endif?>">
-            <?$APPLICATION->IncludeComponent(
-                "bitrix:catalog.item",
-                $arResult["INNER_TEMPLATE"],
-                [
-                    "RESULT" => [
-                        "ITEM" => $arItem,
-                        "OFFER_KEY" => 0,
-                        "OFFERS_LIST" => $arItem["OFFERS"],
-                        "WRAP_ID" => "catalog-item-".$arItem["ID"],
-                        "AREA_ID" => $this->GetEditAreaId($arItem["ID"])
-                    ],
-                    "PARAMS" => array_merge($arResult["ORIGINAL_PARAMETERS"], [
-                        "PRICES" => $arResult["PRICES"],
-                        "COMPARE" => [
-                            'COMPARE_URL_TEMPLATE' => $arResult['~COMPARE_URL_TEMPLATE'],
-                            'COMPARE_DELETE_URL_TEMPLATE' => $arResult['~COMPARE_DELETE_URL_TEMPLATE'],
-                            'COMPARE_PATH' => $arParams['COMPARE_PATH']
+    <?
+    if ($arResult["ITEMS_COUNT"] > 0) :
+        foreach ($arResult["ITEMS"] as $arItem) :
+            $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
+            $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
+            ?>
+            <div id="catalog-item-<?=$arItem["ID"]?>" class="table_list-item<?if ($arItem["PROPERTIES"]["is_main"]["VALUE"] == "Y"):?> big<?endif?>">
+                <?$APPLICATION->IncludeComponent(
+                    "bitrix:catalog.item",
+                    $arResult["INNER_TEMPLATE"],
+                    [
+                        "RESULT" => [
+                            "ITEM" => $arItem,
+                            "OFFER_KEY" => 0,
+                            "OFFERS_LIST" => $arItem["OFFERS"],
+                            "WRAP_ID" => "catalog-item-".$arItem["ID"],
+                            "AREA_ID" => $this->GetEditAreaId($arItem["ID"])
                         ],
-                        "COMPARE_NAME" => $arParams['COMPARE_NAME'],
-                    ])
-                ],
-                $component,
-                ['HIDE_ICONS' => 'Y']
-            );?>
-        </div>
-    <?endforeach?>
+                        "PARAMS" => array_merge($arResult["ORIGINAL_PARAMETERS"], [
+                            "PRICES" => $arResult["PRICES"],
+                            "COMPARE" => [
+                                'COMPARE_URL_TEMPLATE' => $arResult['~COMPARE_URL_TEMPLATE'],
+                                'COMPARE_DELETE_URL_TEMPLATE' => $arResult['~COMPARE_DELETE_URL_TEMPLATE'],
+                                'COMPARE_PATH' => $arParams['COMPARE_PATH']
+                            ],
+                            "COMPARE_NAME" => $arParams['COMPARE_NAME'],
+                        ])
+                    ],
+                    $component,
+                    ['HIDE_ICONS' => 'Y']
+                );?>
+            </div>
+        <?endforeach;
+    else:
+        echo '<p>Список товаров пуст</p>';
+    endif;
+    ?>
 </div>
 
 <?if ($showBottomPager) :?>

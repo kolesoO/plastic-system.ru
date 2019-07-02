@@ -106,7 +106,7 @@ $this->setFrameMode(true);
                                 }
                                 ?>
                                 <div class="catalog_filter-value">
-                                    <div class="catalog_filter-value-item">
+                                    <!--div class="catalog_filter-value-item">
                                         <input
                                                 id="all_<?=$arCur["CONTROL_ID"]?>"
                                                 type="checkbox"
@@ -116,7 +116,7 @@ $this->setFrameMode(true);
                                                 onclick="smartFilter.click(this)"
                                         >
                                         <label for="all_<?=$arCur["CONTROL_ID"]?>">Любой</label>
-                                    </div>
+                                    </div-->
                                     <?foreach ($arItem["VALUES"] as $val => $ar) :?>
                                         <div class="catalog_filter-value-item">
                                             <input
@@ -130,7 +130,7 @@ $this->setFrameMode(true);
                                             <label for="<?=$ar["CONTROL_ID"]?>">
                                                 <span><?=$ar["VALUE"]?></span>
                                                 <?if (isset($ar["ELEMENT_COUNT"])) :?>
-                                                    <sup><?=$ar["ELEMENT_COUNT"]?></sup>
+                                                    <!--sup><?=$ar["ELEMENT_COUNT"]?></sup-->
                                                 <?endif?>
                                             </label>
                                         </div>
