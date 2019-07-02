@@ -14,6 +14,9 @@ class General
 
     }
 
+    /**
+     * @param array $arFilePath
+     */
     public function load(array $arFilePath)
     {
         $arCache = [];
@@ -23,12 +26,9 @@ class General
             foreach ($rsXml->shop->offers as $offers) {
                 foreach ($offers as $offer) {
                     $offer->name = (string)$offer->name;
-                    if (in_array($offer->name, $arCache)) {
-                        echo "continue<br>";
-                        continue;
-                    }
+                    if (in_array($offer->name, $arCache)) continue;
                     fputcsv($fHandle, [
-                        $offer->name,
+                        $offer->vendorCode,
                         implode($this->implodeSymbol, (array)$offer->picture)
                     ]);
                     $arCache[] = $offer->name;
@@ -38,6 +38,9 @@ class General
         fclose($fHandle);
     }
 
+    /**
+     *
+     */
     public function update()
     {
         global $DB;
@@ -46,8 +49,14 @@ class General
         while (($data = fgetcsv($fHandle, 1000)) !== false) {
             $arImg = explode($this->implodeSymbol, $data[1]);
             if (count($arImg) > 0 && strlen($arImg[0]) > 0) {
-                $rsQuery = $DB->Query("select * from b_iblock_element where name='".$data[0]."'");
-                if ($arResultQuery = $rsQuery->fetch()) {
+                //$rsQuery = $DB->Query("select * from b_iblock_element where name='".$data[0]."'");
+                if ($element = \CIBlockElement::GetList(
+                    [],
+                    ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROPERTY_CML2_ARTICLE" => $data[0]],
+                    false,
+                    false,
+                    ["ID", "IBLOCK_ID"]
+                )->fetch()) {
                     $arImgToSave = [
                         "PREVIEW_PICTURE" => $this->loadFile($arImg[0]),
                         "DETAIL_PICTURE" => $this->loadFile($arImg[0])
@@ -56,7 +65,7 @@ class General
                         if ($key < 1) continue;
                         $arImgToSave["MORE_PHOTO"][] = [
                             "VALUE" => $this->loadFile($file, false),
-                            "DESCRIPTION" => "test"
+                            "DESCRIPTION" => "default description"
                         ];
                     }
                     $DB->Update(
@@ -65,13 +74,13 @@ class General
                             "PREVIEW_PICTURE" => $arImgToSave["PREVIEW_PICTURE"],
                             "DETAIL_PICTURE" => $arImgToSave["DETAIL_PICTURE"]
                         ],
-                        "WHERE ID='".$arResultQuery["ID"]."'"
+                        "WHERE ID='".$element["ID"]."'"
                     );
                     if (is_array($arImgToSave["MORE_PHOTO"]) && count($arImgToSave["MORE_PHOTO"]) > 0) {
                         echo "update MORE_PHOTO<br>";
-                        \CIBlockElement::SetPropertyValuesEx($arResultQuery["ID"], $arResultQuery["IBLOCK_ID"], ["MORE_PHOTO" => $arImgToSave["MORE_PHOTO"]]);
+                        \CIBlockElement::SetPropertyValuesEx($element["ID"], $element["IBLOCK_ID"], ["MORE_PHOTO" => $arImgToSave["MORE_PHOTO"]]);
                     }
-                    echo "updated - ".$arResultQuery["ID"]."<br>";
+                    echo "updated - ".$element["ID"]."<br>";
                 }
             }
         }
