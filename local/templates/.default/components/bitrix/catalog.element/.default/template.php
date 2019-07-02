@@ -107,21 +107,21 @@ if ($arParams['DISPLAY_COMPARE']) {
                 ?>
                 <div class="cart_desc-item">
                     <div class="<?=$wrapClass?>"<?=$wrapData?>>
-                        <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :
-                            if (!in_array($arOffer["ID"], $arResult["TSVET"]["ID"])) continue;
+                        <?foreach ($arResult["OFFERS"] as $offerKey => $arOfferItem) :
+                            if (!in_array($arOfferItem["ID"], $arResult["TSVET"]["ID"])) continue;
                             ?>
                             <?if ($isSlider) :?><div><?endif?>
                             <?if ($arResult["OFFER_ID_SELECTED"] == $offerKey) :?>
                                 <div
                                         class="table_list-color-item slick-current"
-                                        title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                        title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
                                         style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
                                 ></div>
                             <?else:?>
                                 <a
-                                        href="<?=$arOffer["DETAIL_PAGE_URL"]?>"
+                                        href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>"
                                         class="table_list-color-item"
-                                        title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                        title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
                                         style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
                                 ></a>
                             <?endif?>
@@ -134,16 +134,21 @@ if ($arParams['DISPLAY_COMPARE']) {
                 <?if ($arResult[$code]["COUNT"] > 0) :?>
                     <div class="cart_desc-item">
                         <div class="dropdown header-location js-drop_down">
-                            <a href="#" class="dropdown-btn link js-drop_down-btn"><?=$arResult[$code]["TITLE"]?></a>
+                            <a href="#" class="dropdown-btn link js-drop_down-btn">
+                                <span><?=$arResult[$code]["TITLE"]?></span>
+                                <?if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) :?>
+                                    <small>(<?=$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
+                                <?endif?>
+                            </a>
                             <div class="header-location-content js-drop_down-content">
                                 <div class="header-location-inner">
-                                    <?foreach ($arResult["OFFERS"] as $offerKey => $arOffer) :
-                                        if (!in_array($arOffer["ID"], $arResult[$code]["ID"])) continue;
+                                    <?foreach ($arResult["OFFERS"] as $offerKey => $arOfferItem) :
+                                        if (!in_array($arOfferItem["ID"], $arResult[$code]["ID"])) continue;
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
-                                            <span class="header-location-link"><?=$arOffer["PROPERTIES"][$code]["VALUE"]?></span>
+                                            <span class="header-location-link"><?=$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
                                         <?else:?>
-                                            <a href="<?=$arOffer["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOffer["PROPERTIES"][$code]["VALUE"]?></a>
+                                            <a href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
                                         <?endif?>
                                     <?endforeach?>
                                 </div>
