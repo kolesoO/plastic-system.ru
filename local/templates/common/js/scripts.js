@@ -155,6 +155,15 @@ $(document).ready(function(){
             }
         }
     })
+    $("body").on("mouseover", ".js-toggle-hover", function(e) {
+        e.preventDefault();
+        if(!!$(this).attr("data-class")){
+            var strClass = $(this).attr("data-class"),
+                $target = $($(this).attr("data-target"));
+            if($target.length == 0) $target = $(this);
+            $target.addClass(strClass)
+        }
+    })
     //end
 
     //fixed aside

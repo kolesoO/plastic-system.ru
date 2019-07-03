@@ -31,6 +31,7 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
             $wrapAttrs = "";
             $className = "";
             if ($arResult["OFFERS_COUNT"] > 7) {
+                $isSlider = true;
                 $className .= " js-slider";
                 $wrapAttrs .= ' 
                     data-autoplay="false"
@@ -52,14 +53,14 @@ $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELE
                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0 || in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arColorCache)) continue;
                     $arColorCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
                     ?>
-                    <div>
+                    <?if ($isSlider) :?><div><?endif?>
                         <a
                                 href="<?=$arOffer["DETAIL_PAGE_URL"]?>"
                                 class="table_list-color-item"
                                 title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
                                 style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
                         ></a>
-                    </div>
+                    <?if ($isSlider) :?></div><?endif?>
                 <?endforeach;?>
             </div>
         <?else:?>

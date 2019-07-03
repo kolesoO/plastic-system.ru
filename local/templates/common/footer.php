@@ -94,39 +94,66 @@
     </footer>
     <?
     //Всплывающее меню - "Каталог продукции"
-    if (DEVICE_TYPE != "MOBILE") {
-        $tmp = "popup";
-        $arImageSize = ["WIDTH" => "", "HEIGHT" => ""];
-    } else {
-        $tmp = "popup-mobile";
-        $arImageSize = ["WIDTH" => "", "HEIGHT" => ""];
-    }
-    $APPLICATION->IncludeComponent(
-        "bitrix:catalog.section.list",
-        $tmp,
-        [
-            "VIEW_MODE" => "TEXT",
-            "SHOW_PARENT_NAME" => "Y",
-            "IBLOCK_TYPE" => "catalog",
-            "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
-            "SECTION_ID" => "",
-            "SECTION_CODE" => "",
-            "SECTION_URL" => "",
-            "COUNT_ELEMENTS" => "Y",
-            "TOP_DEPTH" => "2",
-            "SECTION_FIELDS" => "",
-            "SECTION_USER_FIELDS" => "",
-            "ADD_SECTIONS_CHAIN" => "Y",
-            "CACHE_TYPE" => "A",
-            "CACHE_TIME" => "36000000",
-            "CACHE_NOTES" => "",
-            "CACHE_GROUPS" => "Y",
-            "IMAGE_SIZE" => $arImageSize
-        ]
-    );
+    if (DEVICE_TYPE == "MOBILE") :?>
+        <?$APPLICATION->IncludeComponent(
+            "bitrix:catalog.section.list",
+            "popup-mobile",
+            [
+                "VIEW_MODE" => "TEXT",
+                "SHOW_PARENT_NAME" => "Y",
+                "IBLOCK_TYPE" => "catalog",
+                "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
+                "SECTION_ID" => "",
+                "SECTION_CODE" => "",
+                "SECTION_URL" => "",
+                "COUNT_ELEMENTS" => "Y",
+                "TOP_DEPTH" => "2",
+                "SECTION_FIELDS" => "",
+                "SECTION_USER_FIELDS" => "",
+                "ADD_SECTIONS_CHAIN" => "Y",
+                "CACHE_TYPE" => "A",
+                "CACHE_TIME" => "36000000",
+                "CACHE_NOTES" => "",
+                "CACHE_GROUPS" => "Y",
+                "IMAGE_SIZE" => ["WIDTH" => "", "HEIGHT" => ""]
+            ]
+        );?>
+    <?elseif (DEVICE_TYPE == "TABLET") :?>
+        <div class="popup full_popup js-catalog-menu" data-animate>
+            <div class="popup_wrapper">
+                <div class="popup_content full_popup animate-start js-popup_content">
+                    <a href="#" class="popup_content-close" data-popup-close><i class="icon close"></i></a>
+                    <?$APPLICATION->IncludeComponent(
+                        "bitrix:catalog.section.list",
+                        "popup-tablet",
+                        [
+                            "VIEW_MODE" => "TEXT",
+                            "SHOW_PARENT_NAME" => "Y",
+                            "IBLOCK_TYPE" => "catalog",
+                            "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
+                            "SECTION_ID" => "",
+                            "SECTION_CODE" => "",
+                            "SECTION_URL" => "",
+                            "COUNT_ELEMENTS" => "Y",
+                            "TOP_DEPTH" => "2",
+                            "SECTION_FIELDS" => "",
+                            "SECTION_USER_FIELDS" => "",
+                            "ADD_SECTIONS_CHAIN" => "Y",
+                            "CACHE_TYPE" => "A",
+                            "CACHE_TIME" => "36000000",
+                            "CACHE_NOTES" => "",
+                            "CACHE_GROUPS" => "Y",
+                            "IMAGE_SIZE" => ["WIDTH" => "", "HEIGHT" => ""]
+                        ]
+                    );?>
+                </div>
+            </div>
+        </div>
+    <?
     //end
+    endif?>
 
-    if (DEVICE_TYPE != "DESKTOP") {
+    <?if (DEVICE_TYPE != "DESKTOP") {
         //всплывающее основное меню для планшетов и моб усройств
         $APPLICATION->IncludeComponent(
             "bitrix:menu",

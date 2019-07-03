@@ -182,17 +182,13 @@ var obAjax = {
             subForm = document.getElementById(dopFormId),
             ctx = this;
 
-        if (!!form && !!subForm) {
-
-        }
-
-        if (typeof obCatalogCalcItemsParams == "object") {
+        if (!!form && !!subForm && typeof obCatalogCalcItemsParams == "object") {
             obCatalogCalcItemsParams.FILTER_VALUES = Object.assign(ctx.getFormObject(form), ctx.getFormObject(subForm));
             ctx.setParams(obCatalogCalcItemsParams);
         }
 
         ctx.doRequest(
-            "GET",
+            "POST",
             location.href,
             ctx.serializeData({
                 class: "Catalog",
@@ -207,6 +203,64 @@ var obAjax = {
 
     /**
      *
+     * @param data
+     */
+    getCatalogCalcItemsCallBack: function(data)
+    {
+        var targetBlock = document.getElementById(this.params.target_id);
+        if (!!targetBlock) {
+            targetBlock.innerHTML = data.html;
+        }
+    },
+
+    /**
+     *
+     * @param offerId
+     * @param priceId
+     * @param evt
+     */
+    toPreBasketList: function(offerId, priceId, self, evt)
+    {
+        evt.preventDefault();
+
+        if (!window.offerIdToBasket) {
+            window.offerIdToBasket = {};
+        }
+        if (!!window.offerIdToBasket["OFFER_" + offerId]) {
+            delete(window.offerIdToBasket["OFFER_" + offerId]);
+            self.classList.remove("active");
+        } else {
+            window.offerIdToBasket["OFFER_" + offerId] = {
+                "OFFER_ID": offerId,
+                "PRICE_ID": priceId
+            };
+            self.classList.add("active");
+        }
+    },
+
+    /**
+     *
+     * @param priceId
+     * @param evt
+     */
+    addToBasketMany: function(evt)
+    {
+        /**
+         * global offerIdToBasket
+         */
+        var priceId = 0,
+            arOfferId = [];
+        for (var key in window.offerIdToBasket) {
+            priceId = window.offerIdToBasket[key].PRICE_ID;
+            arOfferId.push(window.offerIdToBasket[key].OFFER_ID);
+        }
+        if (arOfferId.length > 0) {
+            this.addToBasket(arOfferId, priceId, evt);
+        }
+    },
+
+    /**
+     *
      * @param offerId
      * @param priceId
      * @param evt
@@ -217,7 +271,7 @@ var obAjax = {
 
         var ctx = this;
         ctx.setParams({
-            offer_id: [offerId],
+            offer_id: typeof offerId != "object" ? [offerId] : offerId,
             price_id: priceId
         });
         ctx.doRequest(

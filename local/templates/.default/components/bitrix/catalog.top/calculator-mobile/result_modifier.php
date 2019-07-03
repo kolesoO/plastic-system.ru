@@ -84,5 +84,5 @@ unset($arItem);
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["ITEMS_COUNT"]);
+    $cp->SetResultCacheKeys(["ITEMS_COUNT", "SECTIONS"]);
 }

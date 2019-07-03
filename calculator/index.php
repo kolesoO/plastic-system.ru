@@ -67,7 +67,7 @@ $APPLICATION->IncludeComponent(
         "OFFER_ADD_PICT_PROP" => "MORE_PHOTO",
         "OFFER_TREE_PROPS" => array("COLOR_REF","SIZES_SHOES"),
         "PARTIAL_PRODUCT_PROPERTIES" => "N",
-        "PRICE_CODE" => array("Продажи СПб"),
+        "PRICE_CODE" => array(PRICE_CODE),
         "PRICE_VAT_INCLUDE" => "Y",
         "PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons,compare",
         "PRODUCT_DISPLAY_MODE" => "Y",

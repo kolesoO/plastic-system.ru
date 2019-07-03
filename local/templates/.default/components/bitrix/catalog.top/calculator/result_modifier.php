@@ -28,6 +28,17 @@ while ($arSection = $rsSection->fetch()) {
 }
 //end
 
+//свойства для фильтрации
+$arResult["FILTER_PROPS"] = [];
+$rsPropValue = \CIBlockPropertyEnum::GetList(
+    [],
+    ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "ACTIVE" => "Y", "CODE" => ["SHIRINA_MM", "VYSOTA_MM", "OBEM_L"]]
+);
+while ($arValueInfo = $rsPropValue->fetch()) {
+    $arResult["FILTER_PROPS"][$arValueInfo["PROPERTY_CODE"]][] = $arValueInfo;
+}
+//end
+
 foreach ($arResult["ITEMS"] as &$arItem) {
     //ресайз и кеширование изображений
     if (is_array($arItem["PREVIEW_PICTURE"]) && $hasResizeImage) {
@@ -84,5 +95,5 @@ unset($arItem);
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["ITEMS_COUNT"]);
+    $cp->SetResultCacheKeys(["ITEMS_COUNT", "SECTIONS", "SECTIONS_COUNT"]);
 }

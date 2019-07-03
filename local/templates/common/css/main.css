@@ -42,7 +42,8 @@ input, textarea, select{
 input.error, textarea.error, select.error{
     border: 1px solid red;
 }
-input.small{
+input.small,
+select.small{
     width: 104px;
 }
 table{
@@ -295,10 +296,11 @@ small{
     transform: translate(0, 0);
 }
 .header{
-
+    position: relative;
 }
 .header-part{
     background-color:#fff;
+    border-bottom: 1px solid #EBEBEB;
 }
 .header-part.fixed{
     position: fixed;
@@ -309,7 +311,6 @@ small{
     box-shadow: 0px 0px 10px #eee;
 }
 .header-part + .header-part{
-    border-top:1px solid #EBEBEB;
     padding:0;
 }
 .header-part .container{
@@ -1482,6 +1483,9 @@ a:hover > .burger > hr:last-child{
 .calculator_list-item + .calculator_list-item{
     margin-top: 10px;
 }
+.calculator_list-item.active{
+    border-color: #4195EA;
+}
 .calculator_list-img{
     width: 20%;
 }
@@ -1509,7 +1513,7 @@ a:hover > .burger > hr:last-child{
 }
 .news_list-img{
     background-position: 50% 50%;
-    background-size: cover;
+    background-size: auto;
     background-repeat: no-repeat;
 }
 .news_list-desc{
@@ -1923,9 +1927,13 @@ a.catalog_menu-item-title{
 }
 .popup_liener.header_menu-popup{
     top: 0;
-    transition: left .3s;
 }
-.popup_liener.header_menu-popup.active{
+.popup_liener.header_menu-popup,
+.popup_liener.header_catalog-popup{
+    transition: left .5s;
+}
+.popup_liener.header_menu-popup.active,
+.popup_liener.header_catalog-popup.active{
     left: 0;
 }
 .popup_menu{

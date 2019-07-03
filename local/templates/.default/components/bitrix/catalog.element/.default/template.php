@@ -137,7 +137,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <a href="#" class="dropdown-btn link js-drop_down-btn">
                                 <span><?=$arResult[$code]["TITLE"]?></span>
                                 <?if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) :?>
-                                    <small>(<?=$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
+                                    <small>(<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"].", ".$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
                                 <?endif?>
                             </a>
                             <div class="header-location-content js-drop_down-content">
@@ -146,9 +146,9 @@ if ($arParams['DISPLAY_COMPARE']) {
                                         if (!in_array($arOfferItem["ID"], $arResult[$code]["ID"])) continue;
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
-                                            <span class="header-location-link"><?=$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
+                                            <span class="header-location-link"><?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", ".$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
                                         <?else:?>
-                                            <a href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
+                                            <a href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", ".$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
                                         <?endif?>
                                     <?endforeach?>
                                 </div>

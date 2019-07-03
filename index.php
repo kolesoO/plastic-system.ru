@@ -333,7 +333,7 @@ $APPLICATION->IncludeComponent(
         "IBLOCK_ID" => IBLOCK_CONTENT_NEWS,
         "NEWS_COUNT" => "3",
         "SORT_BY1" => "ACTIVE_DATE",
-        "SORT_ORDER1" => "ASC",
+        "SORT_ORDER1" => "DESC",
         "SORT_BY2" => "SORT",
         "SORT_ORDER2" => "ASC",
         "FILTER_NAME" => "",

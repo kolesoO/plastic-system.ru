@@ -5,6 +5,9 @@ use \Bitrix\Main\Localization\Loc;
 
 <?if ($arResult["SECTION_COUNT"] > 0) :?>
     <div class="catalog_menu">
+        <div class="catalog_menu-title">
+            <div class="title-3"><?=Loc::getMessage("CSL_P_TITLE")?></div>
+        </div>
         <div class="catalog_menu-list">
             <?foreach ($arResult["SECTIONS"] as $arSection) :?>
                 <div class="catalog_menu-item">

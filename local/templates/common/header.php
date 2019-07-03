@@ -189,7 +189,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                 <?endif?>
                 <div class="header-col col-lg-3 col-md-4 col-xs-6">
                     <?if (DEVICE_TYPE == "DESKTOP") :?>
-                        <a href="#" data-popup-hover=".js-catalog-menu" flex-align="center">
+                        <a href="#" flex-align="center" class="js-toggle-hover" data-target=".js-catalog-menu" data-class="active">
                             <div class="burger"><hr><hr><hr></div>
                             <?$APPLICATION->IncludeComponent(
                                 "bitrix:main.include",
@@ -284,6 +284,40 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                     <?endif?>
                 </div>
             </div>
+            <?
+            //Всплывающее меню - "Каталог продукции"
+            if (DEVICE_TYPE == "DESKTOP") :?>
+                <div class="popup_liener header_catalog-popup col-lg-24 js-catalog-menu">
+                    <div class="popup_content full_popup js-popup_content">
+                        <a href="#" class="popup_content-close js-toggle" data-target=".js-catalog-menu" data-class="active"><i class="icon close"></i></a>
+                        <?$APPLICATION->IncludeComponent(
+                            "bitrix:catalog.section.list",
+                            "popup",
+                            [
+                                "VIEW_MODE" => "TEXT",
+                                "SHOW_PARENT_NAME" => "Y",
+                                "IBLOCK_TYPE" => "catalog",
+                                "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
+                                "SECTION_ID" => "",
+                                "SECTION_CODE" => "",
+                                "SECTION_URL" => "",
+                                "COUNT_ELEMENTS" => "Y",
+                                "TOP_DEPTH" => "2",
+                                "SECTION_FIELDS" => "",
+                                "SECTION_USER_FIELDS" => "",
+                                "ADD_SECTIONS_CHAIN" => "Y",
+                                "CACHE_TYPE" => "A",
+                                "CACHE_TIME" => "36000000",
+                                "CACHE_NOTES" => "",
+                                "CACHE_GROUPS" => "Y",
+                                "IMAGE_SIZE" => ["WIDTH" => "", "HEIGHT" => ""]
+                            ]
+                        );?>
+                    </div>
+                </div>
+            <?
+                //end
+            endif?>
         </div>
     </header>
     <?if (!$isMainPage) :?>

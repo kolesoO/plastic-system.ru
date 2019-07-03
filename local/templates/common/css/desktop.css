@@ -324,6 +324,10 @@
     .popup_liener.header_menu-popup{
         left: -336px;
     }
+    .header_catalog-popup{
+        left: -100%;
+        top: calc(100% + 1px);
+    }
     .block_wrapper{
         padding: 40px 35px;
     }

@@ -139,6 +139,9 @@ class Catalog
 
         $return = "";
         if (isset($arParams["AJAX_TEMPLATE"]) && strlen($arParams["AJAX_TEMPLATE"]) > 0) {
+            foreach ($arParams["FILTER_VALUES"] as $key => $filterValue) {
+                if(strlen($filterValue) == 0) unset($arParams["FILTER_VALUES"][$key]);
+            }
             $arCatalogTopFilter = (is_array($arParams["FILTER_VALUES"]) ? $arParams["FILTER_VALUES"] : []);
             $arParams["FILTER_NAME"] = "arCatalogTopFilter";
             ob_start();
@@ -148,6 +151,6 @@ class Catalog
         }
 
 
-        return ["html" => $return];
+        return ["js_callback" => "getCatalogCalcItemsCallBack", "html" => $return];
     }
 }

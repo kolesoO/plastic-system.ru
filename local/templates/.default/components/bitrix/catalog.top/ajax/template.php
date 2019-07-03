@@ -5,7 +5,7 @@
         <span>SK 315019 шт.</span><br>
         <span>Стоимость выбранных лотков/контейнеров: 2242 руб.</span>
     </p-->
-    <a href="#" class="table_list-basket full">
+    <a href="#" class="table_list-basket full" onclick="obAjax.addToBasketMany(event)">
         <i class="icon basket-white"></i>
         <span>В корзину</span>
     </a>
