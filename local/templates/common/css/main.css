@@ -1932,7 +1932,6 @@ a.catalog_menu-item-title{
 }
 .popup_liener.header_catalog-popup{
     left: 0;
-    top: -100%;
     opacity: 0;
 }
 .popup_liener.header_menu-popup,
