@@ -309,7 +309,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                                 "CACHE_TIME" => "36000000",
                                 "CACHE_NOTES" => "",
                                 "CACHE_GROUPS" => "Y",
-                                "IMAGE_SIZE" => ["WIDTH" => "", "HEIGHT" => ""]
+                                "IMAGE_SIZE" => ["WIDTH" => 62, "HEIGHT" => 45]
                             ]
                         );?>
                     </div>
