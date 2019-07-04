@@ -288,7 +288,7 @@
         border-left: 1px solid #EBEBEB;
         border-bottom: 1px solid #EBEBEB;
         width: 20%;
-        padding: 40px 30px;
+        padding: 20px;
     }
     .popup.full_popup{
         overflow-y: auto;
@@ -323,17 +323,6 @@
     }
     .popup_liener.header_menu-popup{
         left: -336px;
-    }
-    .header_catalog-popup{
-        left: -100%;
-    }
-    .header-part:not(.fixed) .header_catalog-popup{
-        top: 100%;
-        height: calc(100vh - 132px);
-    }
-    .header-part.fixed .header_catalog-popup{
-        top: calc(100% + 1px);
-        height: calc(100vh - 74px);
     }
     .block_wrapper{
         padding: 40px 35px;

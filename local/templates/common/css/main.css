@@ -456,7 +456,7 @@ small{
     top: 100%;
     overflow: hidden;
     transition:.3s height;
-    z-index: 3;
+    z-index: 4;
 }
 .header-location-link{
     display:block;
@@ -1574,11 +1574,13 @@ a:hover > .burger > hr:last-child{
 }
 .catalog_menu-item-title,
 a.catalog_menu-item-title{
-    margin: 15px 0 10px;
-    font-size: 112.5%;
+    font-size: 110%;
     line-height: 1.2;
     font-weight: bold;
     display: block;
+}
+.catalog_menu-item-wrap{
+    margin-bottom: 10px;
 }
 .title_wrap{
     display: flex;
@@ -1928,13 +1930,25 @@ a.catalog_menu-item-title{
 .popup_liener.header_menu-popup{
     top: 0;
 }
+.popup_liener.header_catalog-popup{
+    left: 0;
+    top: -100%;
+    opacity: 0;
+}
 .popup_liener.header_menu-popup,
 .popup_liener.header_catalog-popup{
-    transition: left .5s;
+    transition-property: left, top, opacity;
+    transition-duration: .5s;
 }
-.popup_liener.header_menu-popup.active,
-.popup_liener.header_catalog-popup.active{
+.popup_liener.header_menu-popup.active{
     left: 0;
+}
+.popup_liener.header_catalog-popup.active{
+    top: 100%;
+    opacity: 1;
+}
+.header-part.fixed .popup_liener.header_catalog-popup.active{
+    top: calc(100% + 1px);
 }
 .popup_menu{
     font-size: 87.5%;

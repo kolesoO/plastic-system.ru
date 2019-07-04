@@ -187,21 +187,21 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         );?>
                     </a>
                 <?endif?>
-                <div class="header-col col-lg-3 col-md-4 col-xs-6">
-                    <?if (DEVICE_TYPE == "DESKTOP") :?>
-                        <a href="#" flex-align="center" class="js-toggle-hover" data-target=".js-catalog-menu" data-class="active">
-                            <div class="burger"><hr><hr><hr></div>
-                            <?$APPLICATION->IncludeComponent(
-                                "bitrix:main.include",
-                                ".default",
-                                [
-                                    "AREA_FILE_SHOW" => "file",
-                                    "PATH" => SITE_TEMPLATE_PATH . "/include/header/catalog-title.php"
-                                ],
-                                false
-                            );?>
-                        </a>
-                    <?else:?>
+                <?if (DEVICE_TYPE == "DESKTOP") :?>
+                    <a href="#" flex-align="center" class="header-col col-lg-3 js-toggle-hover" data-target=".js-catalog-menu" data-class="active">
+                        <div class="burger"><hr><hr><hr></div>
+                        <?$APPLICATION->IncludeComponent(
+                            "bitrix:main.include",
+                            ".default",
+                            [
+                                "AREA_FILE_SHOW" => "file",
+                                "PATH" => SITE_TEMPLATE_PATH . "/include/header/catalog-title.php"
+                            ],
+                            false
+                        );?>
+                    </a>
+                <?else:?>
+                    <div class="header-col col-md-4 col-xs-6">
                         <a href="#" data-popup-open=".js-catalog-menu" flex-align="center">
                             <?$APPLICATION->IncludeComponent(
                                 "bitrix:main.include",
@@ -213,8 +213,8 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                                 false
                             );?>
                         </a>
-                    <?endif?>
-                </div>
+                    </div>
+                <?endif?>
                 <div class="header-col header-search col-lg-6 col-md-2 col-xs-3">
                     <?if (DEVICE_TYPE == "DESKTOP") :?>
                         <form method="get" action="/search/" class="header-search-form">
@@ -289,7 +289,6 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
             if (DEVICE_TYPE == "DESKTOP") :?>
                 <div class="popup_liener header_catalog-popup col-lg-24 js-catalog-menu">
                     <div class="popup_content full_popup js-popup_content">
-                        <a href="#" class="popup_content-close js-toggle" data-target=".js-catalog-menu" data-class="active"><i class="icon close"></i></a>
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:catalog.section.list",
                             "popup",
@@ -315,7 +314,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         );?>
                     </div>
                 </div>
-            <?
+                <?
                 //end
             endif?>
         </div>

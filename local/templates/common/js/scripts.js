@@ -161,8 +161,12 @@ $(document).ready(function(){
             var strClass = $(this).attr("data-class"),
                 $target = $($(this).attr("data-target"));
             if($target.length == 0) $target = $(this);
-            $target.addClass(strClass)
+            $target.addClass(strClass);
         }
+    })
+    $("body").on("mouseleave", ".js-catalog-menu.active", function(e) {
+        e.preventDefault();
+        $(this).removeClass("active");
     })
     //end
 
