@@ -167,7 +167,8 @@ $APPLICATION->IncludeComponent(
         "DETAIL_OFFERS_FIELD_CODE" => array(
             0 => "NAME",
             1 => "DETAIL_PICTURE",
-            2 => "CODE"
+            2 => "CODE",
+            3 => "DETAIL_TEXT"
         ),
         "DETAIL_OFFERS_PROPERTY_CODE" => array("*"),
         "DETAIL_BACKGROUND_IMAGE" => "-",

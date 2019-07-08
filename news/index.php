@@ -3,7 +3,7 @@ define("HIDE_H1", "Y");
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
 $APPLICATION->SetPageProperty("keywords", "Ключевые слова");
 $APPLICATION->SetPageProperty("description", "Описание");
-$APPLICATION->SetPageProperty("title", "Новости");
+$APPLICATION->SetPageProperty("title", "Новости - Складские лотки и пластиковая тара от компании ООО «Пластик Система»");
 $APPLICATION->SetPageProperty("header_section-class", "section");
 $APPLICATION->SetTitle("Новости");
 

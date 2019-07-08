@@ -245,7 +245,7 @@ $APPLICATION->IncludeComponent(
         "DISCOUNT_PERCENT_POSITION" => "bottom-right",
         "DISPLAY_BOTTOM_PAGER" => "Y",
         "DISPLAY_TOP_PAGER" => "N",
-        "ELEMENT_SORT_FIELD" => "sort",
+        "ELEMENT_SORT_FIELD" => "rand",
         "ELEMENT_SORT_FIELD2" => "id",
         "ELEMENT_SORT_ORDER" => "asc",
         "ELEMENT_SORT_ORDER2" => "desc",
@@ -333,6 +333,10 @@ $APPLICATION->IncludeComponent(
         "USE_MAIN_ELEMENT_SECTION" => "N",
         "USE_PRICE_COUNT" => "N",
         "USE_PRODUCT_QUANTITY" => "N",
+        "DISPLAY_COMPARE" => (isset($arParams['USE_COMPARE']) ? $arParams['USE_COMPARE'] : ''),
+        "COMPARE_PATH" => $arResult['URL_TEMPLATES']['compare'],
+        "MESS_BTN_COMPARE" => (isset($arParams['~MESS_BTN_COMPARE']) ? $arParams['~MESS_BTN_COMPARE'] : ''),
+        "USE_COMPARE_LIST" => 'Y',
         "IMAGE_SIZE" => $arParams["ELEMENT_IMAGE_SIZE"],
         "DEVICE_TYPE" => $arParams["DEVICE_TYPE"]
     )

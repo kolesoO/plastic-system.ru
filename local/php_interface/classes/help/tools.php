@@ -31,7 +31,7 @@ class Tools
             }
         }
 
-        $rsForms = \CForm::GetList($by = "s_id", $order = "desc", [], $is_filtered);
+        $rsForms = \CForm::GetList($by = "s_id", $order = "desc", [], ($is_filtered = null));
         while ($arForm = $rsForms->Fetch()) {
             $CONSTANT = ToUpper(implode('_', ['WEB_FORM', $arForm['SID']]));
             if (!defined($CONSTANT)) {

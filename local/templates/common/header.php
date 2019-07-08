@@ -16,10 +16,9 @@ $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/icons.css');
 $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/main.css');
 if (DEVICE_TYPE == "MOBILE") {
     $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/mobile.css');
-} elseif (DEVICE_TYPE == "TABLET") {
-    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/tablet.css');
 } else {
     $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/desktop.css');
+    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/tablet.css');
 }
 //end
 
@@ -44,30 +43,26 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
     <title><?$APPLICATION->ShowTitle()?></title>
 
     <?if (DEVICE_TYPE == "MOBILE") :?>
-        <meta name="viewport" content="width=375, user-scalable=no">
+        <meta name="viewport" content="width=375, user-scalable=0">
+    <?elseif (DEVICE_TYPE == "TABLET") :?>
+        <meta name="viewport" content="width=768, user-scalable=0">
     <?else:?>
-        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0">
     <?endif?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no">
 
     <!--Favicon-->
-    <link rel="shortcut icon" type="image/png" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/png" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon-96x96.png">
-    <link rel="apple-touch-icon" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon.ico">
-    <link rel="apple-touch-icon" sizes="57x57" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="270x270" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-270x270.png">
     <link rel="manifest" href="<?=SITE_TEMPLATE_PATH?>/manifest.json">
     <link name="msapplication-TileColor" content="#fff">
+    <meta name="msapplication-TileImage" content="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon-180x180.png"/>
     <link name="theme-color" content="#fff">
     <!--end-->
 
@@ -332,6 +327,6 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                     ]
                 );?>
                 <?if (HIDE_H1 != "Y") :?>
-                    <div class="title-1"><?$APPLICATION->ShowTitle(false)?></div>
+                    <h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
                 <?endif?>
     <?endif?>

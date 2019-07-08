@@ -36,7 +36,7 @@ class Basket
                         [
                             "IBLOCK_ID" => IBLOCK_CATALOG_CATALOGSKU,
                             "ID" => $arParams["offer_id"],
-                            "!CATALOG_STORE_AMOUNT_".STORE_ID => false
+                            //"!CATALOG_STORE_AMOUNT_".STORE_ID => false
                         ],
                         false,
                         false,

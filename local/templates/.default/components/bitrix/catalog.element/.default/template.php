@@ -18,6 +18,7 @@ if (!$arOffer) {
     $arOffer = $arResult;
 }
 $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
+$arOffer["CAN_BUY"] = $arOffer["CAN_BUY"] || $arPrice["PRICE"] > 0;
 
 //параметры для js
 $jsParams = [
@@ -136,19 +137,22 @@ if ($arParams['DISPLAY_COMPARE']) {
                         <div class="dropdown header-location js-drop_down">
                             <a href="#" class="dropdown-btn link js-drop_down-btn">
                                 <span><?=$arResult[$code]["TITLE"]?></span>
-                                <?if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) :?>
-                                    <small>(<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"].", ".$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
+                                <?if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) :
+                                    $prefix = strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0 ? $arOffer["PROPERTIES"]["TSVET"]["VALUE"].", " : "";
+                                    ?>
+                                    <small>(<?=$prefix.$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
                                 <?endif?>
                             </a>
                             <div class="header-location-content js-drop_down-content">
                                 <div class="header-location-inner">
                                     <?foreach ($arResult["OFFERS"] as $offerKey => $arOfferItem) :
                                         if (!in_array($arOfferItem["ID"], $arResult[$code]["ID"])) continue;
+                                        $prefix = strlen($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]) > 0 ? $arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", " : "";
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
-                                            <span class="header-location-link"><?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", ".$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
+                                            <span class="header-location-link"><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
                                         <?else:?>
-                                            <a href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", ".$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
+                                            <a href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
                                         <?endif?>
                                     <?endforeach?>
                                 </div>
@@ -197,6 +201,9 @@ if ($arParams['DISPLAY_COMPARE']) {
         </div>
     </div>
 </div>
+<?if (strlen($arOffer["DETAIL_TEXT"]) > 0) :?>
+    <div class="block_wrapper"><?=($arOffer["DETAIL_TEXT_TYPE"] == "text" ? $arOffer["DETAIL_TEXT"] : htmlspecialcharsback($arOffer["DETAIL_TEXT"]))?></div>
+<?endif?>
 <script>
     BX.message({
         ECONOMY_INFO_MESSAGE: '<?=GetMessageJS('CT_BCE_CATALOG_ECONOMY_INFO2')?>',
@@ -220,5 +227,5 @@ if ($arParams['DISPLAY_COMPARE']) {
         BTN_MESSAGE_FAVORITE_REDIRECT: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_FAVORITE_REDIRECT')?>',
         FAVORITE_TITLE: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_FAVORITE_TITLE')?>'
     });
-    var obCatalogElement = new window.catalogElement(<?=CUtil::PhpToJSObject($jsParams, false, true)?>);
+    var obCatalogElementDetail = new window.catalogElementDetail(<?=CUtil::PhpToJSObject($jsParams, false, true)?>);
 </script>

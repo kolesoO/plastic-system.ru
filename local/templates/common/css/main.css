@@ -72,6 +72,7 @@ h1, .title-1{
     line-height: 1.2;
     font-weight: bold;
     margin-bottom: 30px;
+    margin-top: 0;
 }
 h2, .title-2{
     line-height: 1.2;
@@ -101,10 +102,16 @@ small{
     align-items: center;
     flex-wrap: wrap;
 }
-[flex-align='start']{
+[flex-align='start'],
+[flex-align='end']{
     display:flex;
-    align-items: flex-start;
     flex-wrap: wrap;
+}
+[flex-align='start']{
+    align-items: flex-start;
+}
+[flex-align='end']{
+    align-items: flex-end;
 }
 [flex-text_align='center']{
     justify-content: center;
@@ -1555,6 +1562,9 @@ a:hover > .burger > hr:last-child{
 .inline_list-img{
     max-width: 100px;
 }
+.inline_list-img + * {
+    margin-top: 5px;
+}
 .catalog_menu{
 
 }
@@ -1911,16 +1921,6 @@ a.catalog_menu-item-title{
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
-}
-.block_wrapper > .block_content{
-    margin: -40px -35px;
-}
-.block_content-item{
-    width: 50%;
-    padding: 40px;
-}
-.block_content-item + .block_content-item{
-    border-left: 1px solid #EBEBEB;
 }
 .popup_liener{
     position: absolute;

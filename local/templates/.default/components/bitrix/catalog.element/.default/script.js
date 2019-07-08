@@ -1,13 +1,13 @@
 (function(window){
 	'use strict';
-	window.catalogElement = function(obParams)
+	window.catalogElementDetail = function(obParams)
 	{
 		this.params = obParams;
 		this.obFavorite = document.querySelector('[data-entity="favorite"]');
 		this.obCompare = document.querySelector('[data-entity="compare"]');
 	};
 
-	window.catalogElement.prototype = {
+	window.catalogElementDetail.prototype = {
 		/**
 		 *
 		 * @param flag

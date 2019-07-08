@@ -2,6 +2,9 @@
 
 <?if ($arResult["STORES_COUNT"] > 0) :?>
     <div class="block_wrapper big">
+        <div class="block_content">
+            <div id="contacts-map" class="y_map"></div>
+        </div>
         <div class="contacts_list">
             <?foreach ($arResult["STORES"] as $arItem) :?>
                 <div class="contacts_list-item">

@@ -17,7 +17,14 @@ global $APPLICATION;
 $arOffer = $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]];
 
 //seo fields
-$rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($arParams["LINK_IBLOCK_ID"], $arOffer["ID"]);
+if ($arOffer) {
+    $seoIblockId = $arParams["LINK_IBLOCK_ID"];
+    $seoItemId = $arOffer["ID"];
+} else {
+    $seoIblockId = $arParams["IBLOCK_ID"];
+    $seoItemId = $arResult["ID"];
+}
+$rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
 $arIPropValues = $rsIProps->getValues();
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
     $APPLICATION->SetPageProperty("title", $arIPropValues["ELEMENT_META_TITLE"]);
@@ -55,13 +62,13 @@ if (!empty($templateData['TEMPLATE_LIBRARY']))
 
 // check compared state
 if ($arParams['DISPLAY_COMPARE']) :?>
-    <script>obCatalogElement.initCompare(<?=array_key_exists($arOffer['ID'], $_SESSION[$arParams['COMPARE_NAME']][$arParams['IBLOCK_ID']]['ITEMS']) ? "true" : "false"?>);</script>
+    <script>obCatalogElementDetail.initCompare(<?=array_key_exists($arOffer['ID'], $_SESSION[$arParams['COMPARE_NAME']][$arParams['IBLOCK_ID']]['ITEMS']) ? "true" : "false"?>);</script>
 <?endif;
 //end
 
 // check favorite
 ?>
-<script>obCatalogElement.initFavorite(<?=\kDevelop\Ajax\Favorite::isAdded($arResult["ID"]) ? "true" : "false"?>);</script>
+<script>obCatalogElementDetail.initFavorite(<?=\kDevelop\Ajax\Favorite::isAdded($arResult["ID"]) ? "true" : "false"?>);</script>
 <?
 //end
 
@@ -76,8 +83,8 @@ $APPLICATION->IncludeComponent(
     "kDevelop:blank",
     $afterTmp,
     array(
-        "OFFER" => $arResult["OFFERS"][$arResult["OFFER_KEY"]],
-        "ELEMENT_ID" => $arResult["ID"],
+        "OFFER" => $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]],
+        "ELEMENT_ID" => $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["ID"],
         "ELEMENT_PROPERTIES" => $arResult["PROPERTIES"],
         "PROPERTY_CODE" => $arParams["PROPERTY_CODE"],
         'USE_MIN_AMOUNT' =>  $arParams['USE_MIN_AMOUNT'],
@@ -129,8 +136,7 @@ $APPLICATION->IncludeComponent(
 </div>
 <?//end
 
-//форма "Купить в 1 клик"
-if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) :?>
+//форма "Купить в 1 клик"?>
 <div id="buy-one-click" class="popup">
     <div class="popup_wrapper">
         <div class="popup_content js-popup_content">
@@ -154,14 +160,10 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) :?>
                     "AJAX_OPTION_SHADOW" => "N",
                     "AJAX_OPTION_JUMP" => "N",
                     "AJAX_OPTION_STYLE" => "Y",
-                    "AJAX_OPTION_HISTORY" => "N",
-                    "FIELD_VALUES" => [
-                        "product_id" => $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["ID"]
-                    ]
+                    "AJAX_OPTION_HISTORY" => "N"
                 ]
             );?>
         </div>
     </div>
 </div>
-<?endif;
-//end?>
+<?//end?>

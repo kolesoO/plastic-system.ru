@@ -1,16 +1,20 @@
 <?
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
-$APPLICATION->SetTitle("О компании");
+$APPLICATION->SetPageProperty("description", "ООО &quot;Пластик Система&quot; – торгово-производственная компания, представляющая широкую гамму продукции на рынке полимерных материалов уже более 8 лет.");
+$APPLICATION->SetPageProperty("title", "Информация о компании ООО &quot;Пластик Система&quot;");
 $APPLICATION->SetPageProperty("header_section-class", "section");
+$APPLICATION->SetTitle("О компании");
 ?><div class="block_wrapper big">
 	<div flex-align="center" flex-text_align="space-around">
-		<div>
- <img src="/local/templates/common/images/Group 9@2x.png">
+		<div class="col-lg-12 col-md-12 col-xs-24">
+            <div class="col-lg-21 col-md-21 colxs-24">
+                <img src="/upload/content/about-company/front.png">
+            </div>
 			<p>
 				Выставка «РосУпак»
 			</p>
 		</div>
-		<div flex-text_align="center" class="col-xs-24">
+		<div flex-text_align="center" class="col-lg-12 col-md-12 col-xs-24">
 			<ul class="color_list">
 				<li class="color_list-item" flex-align="center">
 				<div class="color_list-number">
@@ -53,43 +57,43 @@ $APPLICATION->SetPageProperty("header_section-class", "section");
 		Основные направления нашей деятельности
 	</div>
 	<hr>
-	<ul class="inline_list" flex-align="start">
+	<ul class="inline_list" flex-align="end">
 		<li>
-		<div class="inline_list-img">
-			<img src="/local/templates/common/images/Group 9@2x.png">
-		</div>
- <b>Поликарбонат <br>
-		листовой</b> </li>
+            <div class="inline_list-img">
+                <img src="/upload/content/about-company/catalog_section-1.svg" width="72" height="56">
+            </div>
+            <div><b>Поликарбонат <br>листовой</b></div>
+        </li>
 		<li>
-		<div class="inline_list-img">
-			<img src="/local/templates/common/images/Group 9@2x.png">
-		</div>
- <b>Полипропилен <br>
-		листовой</b> </li>
+            <div class="inline_list-img">
+                <img src="/upload/content/about-company/catalog_section-2.svg" width="82" height="60">
+            </div>
+            <div><b>Полипропилен <br>листовой</b></div>
+        </li>
 		<li>
-		<div class="inline_list-img">
-			<img src="/local/templates/common/images/Group 9@2x.png">
-		</div>
- <b>Пластиковые <br>
-		паллеты</b> </li>
+            <div class="inline_list-img">
+                <img src="/upload/content/about-company/catalog_section-3.svg" width="80" height="45">
+            </div>
+            <div><b>Пластиковые <br>паллеты</b></div>
+        </li>
 		<li>
-		<div class="inline_list-img">
-			<img src="/local/templates/common/images/Group 9@2x.png">
-		</div>
- <b>Модульные <br>
-		стеллажи</b> </li>
+            <div class="inline_list-img">
+                <img src="/upload/content/about-company/catalog_section-4.svg" width="52" height="66">
+            </div>
+            <div><b>Модульные <br>стеллажи</b></div>
+        </li>
 		<li>
-		<div class="inline_list-img">
-			<img src="/local/templates/common/images/Group 9@2x.png">
-		</div>
- <b>Лотки <br>
-		и стеллажи</b> </li>
+            <div class="inline_list-img">
+                <img src="/upload/content/about-company/catalog_section-5.svg" width="80" height="49">
+            </div>
+            <div><b>Лотки <br>и стеллажи</b></div>
+        </li>
 		<li>
-		<div class="inline_list-img">
-			<img src="/local/templates/common/images/Group 9@2x.png">
-		</div>
- <b>Пластиковые <br>
-		контейнеры</b> </li>
+            <div class="inline_list-img">
+                <img src="/upload/content/about-company/catalog_section-6.svg" width="73" height="53">
+            </div>
+            <div><b>Пластиковые <br>контейнеры</b></div>
+        </li>
 	</ul>
 	<hr>
 	<div flex-align="start">

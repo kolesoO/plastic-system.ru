@@ -1,13 +1,10 @@
 <?
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
 $APPLICATION->SetPageProperty("keywords", "");
-$APPLICATION->SetPageProperty("description", "Способы доставки 1. Самовывоз со склада в городе: в Санкт-Петербурге по адресу: ул.Рабочая, д.16Г в Москве по адресу:  М.О., г. Дзержинский, ул. Алексеевская, д. 2 в Самаре по адресу: Заводское шоссе, д.17Д в Саратове по адресу: ул. Танкистов д. 37 в Ростове-на-Дону по адресу: ул. Менжинского, д.4Г в Краснодаре по адресу: ул.Новороссийская, д.210 во Владивостоке по адресу: ул. Русская [&hellip;]");
+$APPLICATION->SetPageProperty("description", "Способы доставки 1. Самовывоз со склада в городе: в Санкт-Петербурге по адресу: ул.Рабочая, д.16Г в Москве по адресу:  М.О., г. Дзержинский, ул. Алексеевская, д. 2 в Самаре по адресу: Заводское шоссе, д.17Д в Саратове по адресу: ул. Танкистов д. 37 в Ростове-на-Дону по адресу: ул. Менжинского, д.4Г в Краснодаре по адресу: ул.Новороссийская, д.210 во Владивостоке по адресу: ул. Русская &hellip;");
 $APPLICATION->SetPageProperty("title", "Доставка и оплата - Складские лотки и пластиковая тара от компании ООО «Пластик Система»");
 $APPLICATION->SetPageProperty("header_section-class", "section");
 $APPLICATION->SetTitle("Доставка и оплата");
-
-$rsAsset->addString('<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&onload=onLoadedYandexMap" type="text/javascript" async></script>');
-$rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/ymap/script.js');
 ?>
 
 <div class="block_wrapper big">
