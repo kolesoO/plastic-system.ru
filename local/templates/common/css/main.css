@@ -1934,8 +1934,7 @@ a.catalog_menu-item-title{
     left: 0;
     opacity: 0;
 }
-.popup_liener.header_menu-popup,
-.popup_liener.header_catalog-popup{
+.popup_liener.header_menu-popup{
     transition-property: left, top, opacity;
     transition-duration: .5s;
 }
