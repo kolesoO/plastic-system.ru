@@ -1,0 +1,2 @@
+<?
+$sSectionName = "Стандарт ISO";

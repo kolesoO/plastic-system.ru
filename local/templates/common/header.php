@@ -183,7 +183,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                     </a>
                 <?endif?>
                 <?if (DEVICE_TYPE == "DESKTOP") :?>
-                    <a href="#" flex-align="center" class="header-col col-lg-3 js-toggle-hover" data-target=".js-catalog-menu" data-class="active">
+                    <a href="#" flex-align="center" class="header-col col-lg-3 js-toggle" data-target=".js-catalog-menu" data-class="active">
                         <div class="burger"><hr><hr><hr></div>
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:main.include",
