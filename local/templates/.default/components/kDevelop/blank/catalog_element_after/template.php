@@ -15,7 +15,9 @@
                         </div>
                     <?endif?>
                 <?endforeach?>
-                <?foreach ($arParams["OFFER"]["PROPERTIES"] as $arProp) :?>
+                <?foreach ($arParams["OFFER"]["PROPERTIES"] as $arProp) :
+                    if (in_array($arProp["CODE"], $arParams["EXCLUDE_PROPS"])) continue;
+                    ?>
                     <?if (is_string($arProp["VALUE"]) && strlen($arProp["VALUE"]) > 0) :?>
                         <div class="cart_info-wrap-item">
                             <span><?=$arProp["NAME"]?></span>

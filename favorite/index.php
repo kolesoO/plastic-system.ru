@@ -26,9 +26,10 @@ if (isset($_SESSION["FAVORITE"]) && count($_SESSION["FAVORITE"]) > 0) {
         $pagerTmp = ".default-mobile";
     }
     $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
-//end
+    //end
 
-//сортировка и внешний вид
+    //сортировка и внешний вид
+    //TODO: сортировка не работает
     $tmp = "catalog_controls";
     if (DEVICE_TYPE != "DESKTOP") {
         $tmp .= "-".strtolower($arParams["DEVICE_TYPE"]);
@@ -40,9 +41,9 @@ if (isset($_SESSION["FAVORITE"]) && count($_SESSION["FAVORITE"]) > 0) {
             "SORT" => $arSort
         )
     );
-//end
+    //end
 
-//каталог
+    //каталог
     $GLOBALS["arrFilter"] = [
         "ID" => $_SESSION["FAVORITE"]
     ];
@@ -175,7 +176,7 @@ if (isset($_SESSION["FAVORITE"]) && count($_SESSION["FAVORITE"]) > 0) {
             "DISPLAY_COMPARE" => "N"
         )
     );
-//end
+    //end
 } else {
     $APPLICATION->IncludeComponent(
         "kDevelop:blank",

@@ -20,7 +20,10 @@ $arResult["SECTIONS_COUNT"] = 0;
 //разделы
 $rsSection = \CIBlockSection::GetList(
     [],
-    ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "DEPTH_LEVEL" => "1"]
+    [
+        "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+        "UF_FOR_CALC" => "1"
+    ]
 );
 while ($arSection = $rsSection->fetch()) {
     $arResult["SECTIONS"][] = $arSection;
@@ -29,17 +32,17 @@ while ($arSection = $rsSection->fetch()) {
 //end
 
 //свойства для фильтрации
-$arResult["FILTER_PROPS"] = [];
+/*$arResult["FILTER_PROPS"] = [];
 $rsPropValue = \CIBlockPropertyEnum::GetList(
     [],
     ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "ACTIVE" => "Y", "CODE" => ["SHIRINA_MM", "VYSOTA_MM", "OBEM_L"]]
 );
 while ($arValueInfo = $rsPropValue->fetch()) {
     $arResult["FILTER_PROPS"][$arValueInfo["PROPERTY_CODE"]][] = $arValueInfo;
-}
+}*/
 //end
 
-foreach ($arResult["ITEMS"] as &$arItem) {
+/*foreach ($arResult["ITEMS"] as &$arItem) {
     //ресайз и кеширование изображений
     if (is_array($arItem["PREVIEW_PICTURE"]) && $hasResizeImage) {
         $thumb = \CFile::ResizeImageGet(
@@ -91,7 +94,7 @@ foreach ($arResult["ITEMS"] as &$arItem) {
         //end
     }
 }
-unset($arItem);
+unset($arItem);*/
 
 $cp = $this->__component;
 if (is_object($cp)) {

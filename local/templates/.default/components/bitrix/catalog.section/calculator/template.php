@@ -3,31 +3,39 @@
 <div class="block_wrapper">
     <div class="cart">
         <div class="cart_img">
-            <?if (count($arResult["FILTER_PROPS"]) > 0) :?>
-                <div class="title-2">Параметры стеллажа</div>
-                <form id="catalog-calculator-main" class="horizontal_form" flex-align="center">
-                    <?foreach ($arResult["FILTER_PROPS"] as $code => $arProp) :?>
-                        <div class="horizontal_form-item" flex-align="center">
-                            <label><?=$arProp[0]["PROPERTY_NAME"]?></label>
-                            <select name="PROPERTY_<?=$code?>_VALUE" class="small" onchange="obAjax.getCatalogCalcItems(this, 'catalog-calculator-sub_main')">
-                                <option value="">выбрать</option>
-                                <?foreach ($arProp as $arValue) :?>
-                                    <option value="<?=$arValue["VALUE"]?>"><?=$arValue["VALUE"]?></option>
-                                <?endforeach?>
-                            </select>
+            <div class="title-2">Параметры стеллажа</div>
+            <form id="catalog-calculator-main" class="horizontal_form" flex-align="center">
+                <div class="horizontal_form-item" flex-align="center">
+                    <label>Ширина, мм</label>
+                    <select name="PROPERTY_<?=$code?>_VALUE" class="small" onchange="obAjax.getCatalogCalcItems(this, 'catalog-calculator-sub_main')">
+                        <option value="">выбрать</option>
+                        <?foreach ($arProp as $arValue) :?>
+                            <option value="<?=$arValue["VALUE"]?>"><?=$arValue["VALUE"]?></option>
+                        <?endforeach?>
+                    </select>
+                </div>
+            </form>
+            <div class="horizontal_form" flex-align="center">
+                <div class="horizontal_form-item" flex-align="center">
+                    <label>Полка 1, высота мм</label>
+                    <input type="text" name="<=PROPERTY_VYSOTA_MM_VALUE" value="" class="small">
+                </div>
+                <div class="horizontal_form-item">
+                    <a href="#" class="link dashed">Добавить полку</a>
+                </div>
+            </div>
+            <div class="rack-wrap">
+                <div class="rack">
+                    <div class="rack-header"></div>
+                    <div id="rack" class="rack-content">
+                        <div class="rack_item">
+                            <div class="tray_item">
+                                <a href="#" class="tray_item-close"><i class="icon icon-close"></i></a>
+                            </div>
                         </div>
-                    <?endforeach?>
-                </form>
-                <!--div class="horizontal_form" flex-align="center">
-                    <div class="horizontal_form-item" flex-align="center">
-                        <label>Полка 1, высота мм</label>
-                        <input type="text" value="1000" class="small">
                     </div>
-                    <div class="horizontal_form-item">
-                        <a href="#" class="link dashed">Добавить полку</a>
-                    </div>
-                </div-->
-            <?endif?>
+                </div>
+            </div>
         </div>
         <div class="cart_desc">
             <div class="title-2">Лотки и контейнеры</div>

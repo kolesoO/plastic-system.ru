@@ -13,6 +13,28 @@ $arItemsRelations = [];
 $arOfferKeys = [];
 $arOfferKeysForAmount = [];
 
+//чистые торг предложения (по глобавльному фильру OFFERS)
+if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"])) {
+    $arPureOffersId = [];
+    $rsElems = \CIBlockElement::GetList(
+        [],
+        array_merge(
+            [
+                "IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"],
+                "ID" => array_column(array_column($arResult["ITEMS"], "OFFERS")[0], "ID")
+            ],
+            $GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"]
+        ),
+        false,
+        false,
+        ["ID", "IBLOCK_ID"]
+    );
+    while ($arOffer = $rsElems->GetNext()) {
+        $arPureOffersId[] = $arOffer["ID"];
+    }
+}
+//end
+
 foreach ($arResult["ITEMS"] as $itemKey => &$arItem) {
     $arItemsRelations[$arItem["ID"]] = $itemKey;
     //ресайз и кеширование изображений
@@ -28,6 +50,12 @@ foreach ($arResult["ITEMS"] as $itemKey => &$arItem) {
     //end
     if (is_array($arItem["OFFERS"]) && count($arItem["OFFERS"]) > 0) {
         foreach ($arItem["OFFERS"] as $key => $arOffer) {
+            if (isset($arPureOffersId) && !in_array($arOffer["ID"], $arPureOffersId)) {
+                unset($arItem["OFFERS"][$key]);
+                continue;
+            } else {
+                $arItem["OFFER_ID_SELECTED"] = $key;
+            }
             //ресайз и кеширование изображений
             if (is_array($arOffer["PREVIEW_PICTURE"]) && $hasResizeImage) {
                 $thumb = \CFile::ResizeImageGet(
@@ -80,7 +108,10 @@ if (count($arOfferKeys) > 0 && isset($arResult["CATALOGS"][$arParams["IBLOCK_ID"
     //Доп. свойства торг предложений
     $rsElems = \CIBlockElement::GetList(
         [],
-        ["IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"], "ID" => array_keys($arOfferKeys)],
+        [
+            "IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"],
+            "ID" => array_keys($arOfferKeys)
+        ],
         false,
         false,
         ["ID", "IBLOCK_ID"]

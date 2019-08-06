@@ -1,18 +1,56 @@
-<?
+<?php
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
-$APPLICATION->SetTitle("Калькулятор складских лотков");
+$APPLICATION->SetPageProperty("description", "");
+$APPLICATION->SetPageProperty("keywords", "");
+$APPLICATION->SetPageProperty("title", "Акции - Складские лотки и пластиковая тара от компании ООО «Пластик Система»");
 $APPLICATION->SetPageProperty("header_section-class", "section");
+$APPLICATION->SetTitle("Акции");
 
-if (DEVICE_TYPE == "MOBILE") {
-    $tmp = "calculator-mobile";
+//подготовка парметров компонента
+if (DEVICE_TYPE == "DESKTOP") {
+    $itemsInRow = 5;
+    $itemsInRowInner = 4;
+    $elemsInRow = 5;
+    $pageElemCount = 12;
+    $pagerTmp = ".default";
+} elseif (DEVICE_TYPE == "TABLET") {
+    $itemsInRow = 3;
+    $itemsInRowInner = 2;
+    $elemsInRow = 2;
+    $pageElemCount = 12;
+    $pagerTmp = ".default-mobile";
 } else {
-    $tmp = "calculator";
+    $itemsInRow = $itemsInRowInner = $elemsInRow = 1;
+    $pageElemCount = 10;
+    $pagerTmp = ".default-mobile";
 }
-$GLOBALS["arCatalogFilter"] = ["!OFFERS" => null];
+$arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
+//end
 
+//сортировка и внешний вид
+//TODO: сортировка не работает
+$tmp = "catalog_controls";
+if (DEVICE_TYPE != "DESKTOP") {
+    $tmp .= "-".strtolower($arParams["DEVICE_TYPE"]);
+}
+$APPLICATION->IncludeComponent(
+    "kDevelop:blank",
+    $tmp,
+    array(
+        "SORT" => $arSort
+    )
+);
+//end
+
+//каталог
+$GLOBALS["arrFilter"] = [
+    "OFFERS" => [
+        "PROPERTY_STATUS_VALUE" => "Акция"
+    ]
+];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog.section",
-    $tmp,
+    "",
     Array(
         "ACTION_VARIABLE" => "action",
         "ADD_PICT_PROP" => "MORE_PHOTO",
@@ -42,13 +80,13 @@ $APPLICATION->IncludeComponent(
         "DISCOUNT_PERCENT_POSITION" => "bottom-right",
         "DISPLAY_BOTTOM_PAGER" => "Y",
         "DISPLAY_TOP_PAGER" => "N",
-        "ELEMENT_SORT_FIELD" => "sort",
+        "ELEMENT_SORT_FIELD" => "PROPERTY_CML2_ARTICLE",
         "ELEMENT_SORT_FIELD2" => "id",
         "ELEMENT_SORT_ORDER" => "asc",
         "ELEMENT_SORT_ORDER2" => "desc",
         "ENLARGE_PRODUCT" => "PROP",
         "ENLARGE_PROP" => "NEWPRODUCT",
-        "FILTER_NAME" => "arCatalogFilter",
+        "FILTER_NAME" => "arrFilter",
         "HIDE_NOT_AVAILABLE" => "N",
         "HIDE_NOT_AVAILABLE_OFFERS" => "N",
         "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
@@ -57,8 +95,8 @@ $APPLICATION->IncludeComponent(
         "LABEL_PROP" => array("NEWPRODUCT"),
         "LABEL_PROP_MOBILE" => array(),
         "LABEL_PROP_POSITION" => "top-left",
-        "LAZY_LOAD" => "Y",
-        "LINE_ELEMENT_COUNT" => "3",
+        "LAZY_LOAD" => "N",
+        "LINE_ELEMENT_COUNT" => $elemsInRow,
         "LOAD_ON_SCROLL" => "N",
         "MESSAGE_404" => "",
         "MESS_BTN_ADD_TO_BASKET" => "В корзину",
@@ -69,49 +107,53 @@ $APPLICATION->IncludeComponent(
         "MESS_NOT_AVAILABLE" => "Нет в наличии",
         "META_DESCRIPTION" => "-",
         "META_KEYWORDS" => "-",
-        "OFFERS_CART_PROPERTIES" => array("ARTNUMBER","COLOR_REF","SIZES_SHOES","SIZES_CLOTHES"),
-        "OFFERS_FIELD_CODE" => array("ID", "NAME", "PREVIEW_PICTURE", "CODE"),
+        "OFFERS_CART_PROPERTIES" => array(),
+        "OFFERS_FIELD_CODE" => array(
+            0 => "NAME",
+            1 => "PREVIEW_PICTURE",
+            2 => "CODE",
+        ),
         "OFFERS_LIMIT" => "0",
-        "OFFERS_PROPERTY_CODE" => array("RAZMER", "TSVET", "CML2_ARTICLE", "STATUS"),
-        "OFFERS_SORT_FIELD" => "sort",
-        "OFFERS_SORT_FIELD2" => "id",
+        "OFFERS_PROPERTY_CODE" => array("TSVET", "RAZMER", "CML2_ARTICLE", "STATUS"),
+        "OFFERS_SORT_FIELD" => "PROPERTY_CML2_ARTICLE",
+        "OFFERS_SORT_FIELD2" => "sort",
         "OFFERS_SORT_ORDER" => "asc",
-        "OFFERS_SORT_ORDER2" => "desc",
+        "OFFERS_SORT_ORDER2" => "asc",
         "OFFER_ADD_PICT_PROP" => "MORE_PHOTO",
-        "OFFER_TREE_PROPS" => array("COLOR_REF","SIZES_SHOES","SIZES_CLOTHES"),
+        "OFFER_TREE_PROPS" => array(),
         "PAGER_BASE_LINK_ENABLE" => "N",
         "PAGER_DESC_NUMBERING" => "N",
         "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
         "PAGER_SHOW_ALL" => "N",
-        "PAGER_SHOW_ALWAYS" => "N",
-        "PAGER_TEMPLATE" => ".default",
+        "PAGER_SHOW_ALWAYS" => "Y",
+        "PAGER_TEMPLATE" => $pagerTmp,
         "PAGER_TITLE" => "Товары",
-        "PAGE_ELEMENT_COUNT" => "0",
+        "PAGE_ELEMENT_COUNT" => $pageElemCount,
         "PARTIAL_PRODUCT_PROPERTIES" => "N",
         "PRICE_CODE" => array(PRICE_CODE),
         "PRICE_VAT_INCLUDE" => "Y",
         "PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons,compare",
         "PRODUCT_DISPLAY_MODE" => "Y",
         "PRODUCT_ID_VARIABLE" => "id",
-        "PRODUCT_PROPERTIES" => array("NEWPRODUCT","MATERIAL"),
+        "PRODUCT_PROPERTIES" => array(),
         "PRODUCT_PROPS_VARIABLE" => "prop",
         "PRODUCT_QUANTITY_VARIABLE" => "",
         "PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':true}]",
         "PRODUCT_SUBSCRIPTION" => "Y",
-        "PROPERTY_CODE" => array("NEWPRODUCT",""),
+        "PROPERTY_CODE" => array("TSVET", "RAZMER", "CML2_ARTICLE", "STATUS"),
         "PROPERTY_CODE_MOBILE" => array(),
-        "RCM_PROD_ID" => "",
+        "RCM_PROD_ID" => $_REQUEST["PRODUCT_ID"],
         "RCM_TYPE" => "personal",
         "SECTION_CODE" => "",
         "SECTION_ID" => "",
         "SECTION_ID_VARIABLE" => "SECTION_ID",
         "SECTION_URL" => "",
         "SECTION_USER_FIELDS" => array("",""),
-        "SEF_MODE" => "Y",
+        "SEF_MODE" => "N",
         "SET_BROWSER_TITLE" => "N",
         "SET_LAST_MODIFIED" => "N",
-        "SET_META_DESCRIPTION" => "N",
-        "SET_META_KEYWORDS" => "N",
+        "SET_META_DESCRIPTION" => "Y",
+        "SET_META_KEYWORDS" => "Y",
         "SET_STATUS_404" => "N",
         "SET_TITLE" => "N",
         "SHOW_404" => "N",
@@ -130,10 +172,12 @@ $APPLICATION->IncludeComponent(
         "USE_MAIN_ELEMENT_SECTION" => "N",
         "USE_PRICE_COUNT" => "N",
         "USE_PRODUCT_QUANTITY" => "N",
-        "WRAP_ID" => "catalog-calculator-wrap",
-        "AJAX_TEMPLATE" => "calculator-ajax"
-        //"IMAGE_SIZE" => []
+        "IMAGE_SIZE" => $arImageSize,
+        "DEVICE_TYPE" => DEVICE_TYPE,
+        "DISPLAY_COMPARE" => "N"
     )
 );
+//end
+
 
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');

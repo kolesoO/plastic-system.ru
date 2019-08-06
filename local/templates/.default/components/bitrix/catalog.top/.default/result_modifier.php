@@ -14,8 +14,30 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 $this->setFrameMode(true);
 
 $hasResizeImage = is_array($arParams["IMAGE_SIZE"]);
-
 $arResult["ITEMS_COUNT"] = count($arResult["ITEMS"]);
+
+//чистые торг предложения (по глобавльному фильру OFFERS)
+if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"])) {
+    $arPureOffersId = [];
+    $rsElems = \CIBlockElement::GetList(
+        [],
+        array_merge(
+            [
+                "IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"],
+                "ID" => array_column(array_column($arResult["ITEMS"], "OFFERS")[0], "ID")
+            ],
+            $GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"]
+        ),
+        false,
+        false,
+        ["ID", "IBLOCK_ID"]
+    );
+    while ($arOffer = $rsElems->GetNext()) {
+        $arPureOffersId[] = $arOffer["ID"];
+    }
+}
+//end
+
 foreach ($arResult["ITEMS"] as &$arItem) {
     //ресайз и кеширование изображений
     if (is_array($arItem["PREVIEW_PICTURE"]) && $hasResizeImage) {
@@ -31,6 +53,12 @@ foreach ($arResult["ITEMS"] as &$arItem) {
     if (is_array($arItem["OFFERS"]) && count($arItem["OFFERS"]) > 0) {
         $arOfferKeys = [];
         foreach ($arItem["OFFERS"] as $key => $arOffer) {
+            if (isset($arPureOffersId) && !in_array($arOffer["ID"], $arPureOffersId)) {
+                unset($arItem["OFFERS"][$key]);
+                continue;
+            } else {
+                $arItem["OFFER_ID_SELECTED"] = $key;
+            }
             //ресайз и кеширование изображений
             if (is_array($arOffer["PREVIEW_PICTURE"]) && $hasResizeImage) {
                 $thumb = \CFile::ResizeImageGet(

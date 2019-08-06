@@ -167,7 +167,7 @@ $arCatalogItemsParams = [
                     [
                         "RESULT" => [
                             "ITEM" => $arItem,
-                            "OFFER_KEY" => 0,
+                            "OFFER_KEY" => $arItem["OFFER_ID_SELECTED"],
                             "OFFERS_LIST" => $arItem["OFFERS"],
                             "WRAP_ID" => "catalog-item-".$arItem["ID"],
                             "AREA_ID" => $this->GetEditAreaId($arItem["ID"])

@@ -196,7 +196,11 @@ if (DEVICE_TYPE == "TABLET") {
 } elseif (DEVICE_TYPE == "MOBILE") {
     $arCatalogTopParams["LINE_ELEMENT_COUNT"] = 1;
 }
-$GLOBALS["arCatalogTopFilter"] = ["OFFERS" => ["PROPERTY_STATUS_VALUE" => "Акция"]];
+$GLOBALS["arCatalogTopFilter"] = [
+    "OFFERS" => [
+        "PROPERTY_STATUS_VALUE" => "Акция"
+    ]
+];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog.top",
     "",
