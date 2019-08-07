@@ -28,11 +28,12 @@
                 <div class="rack">
                     <div class="rack-header"></div>
                     <div id="rack" class="rack-content">
-                        <div class="rack_item">
+                        <!--div class="rack_item">
                             <div class="tray_item">
-                                <a href="#" class="tray_item-close"><i class="icon icon-close"></i></a>
+                                <a href="#" class="tray_item-close"><i class="icon close"></i></a>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="27.002" height="17.997" viewBox="0 0 27.002 17.997"><defs><style>.a{fill:#ff2429;}</style></defs><path class="a" d="M-21980.4,206.55l-3.6-3.6v-14.4h2v13.6l2.4,2.4h18.2l2.4-2.4v-11.6h-2v9h-19v-9h-2v-2h25v14.4l-3.6,3.6Zm2.4-9h15v-7h-15Z" transform="translate(21984 -188.552)"/></svg>
                             </div>
-                        </div>
+                        </div-->
                     </div>
                 </div>
             </div>

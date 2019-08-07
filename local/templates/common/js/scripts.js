@@ -251,6 +251,7 @@ $(document).ready(function(){
                 }
                 $wrapper.find(curValue).prop("checked", true);
                 $wrapper.find(curValue).attr("checked", "checked");
+                $wrapper.find(curValue).change();
                 $content.attr("data-position", arPositions[key]);
                 $content.attr("data-value", curValue);
             }

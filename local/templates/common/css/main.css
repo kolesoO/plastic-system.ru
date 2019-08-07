@@ -1838,7 +1838,7 @@ a.catalog_menu-item-title{
     position: absolute;
     z-index: 1;
     top: calc(50% - 8px);
-    left: calc(50% - 12px);
+    left: calc(50% - 20px);
     width: 24px;
     height: 16px;
     background-color: #4195EA;

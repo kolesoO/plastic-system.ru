@@ -291,8 +291,8 @@
         border-left: 1px solid #EBEBEB;
         border-bottom: 1px solid #EBEBEB;
         width: 20%;
-        padding: 20px;
-        font-size: 90%;
+        padding: 10px 20px;
+        font-size: 80%;
     }
     .popup.full_popup{
         overflow-y: auto;
@@ -574,16 +574,37 @@
     }
     .rack_item{
         position: absolute;
+        display: flex;
+        align-items: flex-end;
+        flex-wrap: wrap;
         left: 8px;
         right: 8px;
         height: 10px;
         background: url('../images/rack/stellazh.svg') repeat-x 0 0 / auto 100%;
     }
     .tray_item{
-
+        position: relative;
+    }
+    .tray_item > svg{
+        width: 100%;
+        height: 100%;
     }
     .tray_item-close{
-
+        position: absolute;
+        top: 0;
+        left: calc(50% - 8px);
+        opacity: 0;
+        transition-property: top, opacity;
+        transition-duration: .3s;
+        line-height: 1;
+    }
+    .tray_item-close .icon.close{
+        width: 15px;
+        height: 15px;
+    }
+    .tray_item:hover .tray_item-close{
+        top: -15px;
+        opacity: 1;
     }
 
 }

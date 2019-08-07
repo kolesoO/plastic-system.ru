@@ -16,10 +16,13 @@ $arResult["DELIVERY_COUNT"] = count($arResult["DELIVERY"]);
 $arResult["PAY_SYSTEM_COUNT"] = count($arResult["PAY_SYSTEM"]);
 
 //тип платеьлщика
+$counter = 0;
 foreach ($arResult["PERSON_TYPE"] as $arPersonType) {
     if ($arPersonType["CHECKED"] == "Y") {
         $arResult["ACTIVE_PERSON_TYPE"] = $arPersonType["ID"];
+        $arResult["ACTIVE_PERSON_TYPE_KEY"] = $counter;
     }
+    $counter ++;
 }
 //end
 

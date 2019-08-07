@@ -9,7 +9,7 @@ use \Bitrix\Main\Localization\Loc;
             <?foreach ($arResult["SECTIONS"] as $arSection) :?>
                 <div class="catalog_menu-item">
                     <div class="catalog_menu-item-wrap" flex-align="center" flex-text_align="space-between">
-                        <div class="catalog_menu-img col-lg-6">
+                        <div class="catalog_menu-img col-lg-5">
                             <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>">
                         </div>
                         <a href="<?=$arSection["SECTION_PAGE_URL"]?>" class="catalog_menu-item-title col-lg-15"><?=$arSection["NAME"]?></a>

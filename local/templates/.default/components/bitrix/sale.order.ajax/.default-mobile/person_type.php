@@ -9,7 +9,7 @@
                     data-target="#PERSON_TYPE_<?=implode(",#PERSON_TYPE_", array_column($arResult["PERSON_TYPE"], "ID"))?>"
                     data-positions="left,right"
                     data-value="#PERSON_TYPE_<?=$arResult["ACTIVE_PERSON_TYPE"]?>"
-                    data-position="left"
+                    data-position="<?=$arResult["ACTIVE_PERSON_TYPE_KEY"] == 0 ? "left" : "right"?>"
             ></div>
             <?foreach($arResult["PERSON_TYPE"] as $v):?>
                 <input
