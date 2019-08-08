@@ -47,4 +47,27 @@ class Logger
         }
         fclose($fileHandle);
     }
+
+    /**
+     *
+     */
+    public static function loadCatalogPictures()
+    {
+        global $DB;
+        $fileHandle = fopen($_SERVER["DOCUMENT_ROOT"].self::$fileDir, "r");
+        while (($row = fgets($fileHandle)) !== false) {
+            $arInfo = explode(";", $row);
+            if (strlen($arInfo[1]) > 0) {
+                $arInfo[2] = trim($arInfo[2]);
+                if (strlen($arInfo[2]) > 0) { //preview picture
+                    $DB->Query("update b_iblock_element set PREVIEW_PICTURE=".$arInfo[2]." where XML_ID='".$arInfo[1]."' and IBLOCK_ID=".$arInfo[0]);
+                }
+                $arInfo[3] = trim($arInfo[3]);
+                if (strlen($arInfo[3]) > 0) { //detail picture
+                    $DB->Query("update b_iblock_element set DETAIL_PICTURE=".$arInfo[3]." where XML_ID='".$arInfo[1]."' and IBLOCK_ID=".$arInfo[0]);
+                }
+            }
+        }
+        fclose($fileHandle);
+    }
 }
