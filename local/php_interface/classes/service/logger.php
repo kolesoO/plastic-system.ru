@@ -33,13 +33,17 @@ class Logger
         $fileHandle = fopen($_SERVER["DOCUMENT_ROOT"].self::$fileDir, "a");
         $rsItem = \CIBlockElement::GetList(
             [],
-            ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG],
+            [
+                "LOGIC" => "OR",
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG],
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOGSKU]
+            ],
             false,
             false,
             ["IBLOCK_ID", "ID", "XML_ID", "NAME", "PREVIEW_PICTURE", "DETAIL_PICTURE"]
         );
         while ($arItem = $rsItem->GetNext()) {
-            fwrite($fileHandle, $arItem["XML_ID"].";".$arItem["PREVIEW_PICTURE"].";".$arItem["DETAIL_PICTURE"]."\n");
+            fwrite($fileHandle, $arItem["IBLOCK_ID"].";".$arItem["XML_ID"].";".$arItem["PREVIEW_PICTURE"].";".$arItem["DETAIL_PICTURE"]."\n");
         }
         fclose($fileHandle);
     }
