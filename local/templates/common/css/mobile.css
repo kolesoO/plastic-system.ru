@@ -456,11 +456,11 @@
         width: 100%;
         padding: 20px 10px;
     }
+    .order_address .address_list{
+        flex-wrap: wrap;
+    }
     .order_address .address_list-item{
         width: 100%;
-    }
-    .order_address .address_list-item + .address_list-item{
-        border-top: 0;
     }
     .y_map{
         height: 384px;

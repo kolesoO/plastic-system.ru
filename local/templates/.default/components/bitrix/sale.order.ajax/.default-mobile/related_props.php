@@ -1,6 +1,10 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
 
-<?foreach ($arResult["ORDER_PROP"]["USER_PROPS_Y"] as $arProp) :?>
+<?foreach ($arResult["ORDER_PROP"]["RELATED"] as $arProp) :
+    //name
+    $name = $arProp["NAME"].($arProp["REQUIRED"] == "Y" ? "*" : "");
+    //end
+    ?>
     <div class="order_form-item">
         <div class="order_form-title">
             <div class="title-3 text"><?=$arProp["NAME"]?></div>
@@ -24,13 +28,17 @@
                     <input id="korp" type="text" name="<?=$arProp["FIELD_NAME"]?>[]">
                 </div>
             <?else:?>
-                <div>
-                    <input type="text" name="<?=$arProp["FIELD_NAME"]?>">
+                <div class="animate_input js-animate_input">
+                    <label for="<?=$arProp["FIELD_ID"]?>"><?=$name?></label>
+                    <input id="<?=$arProp["FIELD_ID"]?>" type="text" name="<?=$arProp["FIELD_NAME"]?>">
                 </div>
             <?endif?>
         </div>
-        <div class="order_form-item-wrap">
-            <button class="form_button">Добавить из адресов</button>
-        </div>
+        <?if ($arProp["CODE"] == "ADDRESS") :?>
+            <div class="order_form-item-wrap">
+                <button class="form_button" onclick="obAjax.getUserAddressList('address-list', event)">Добавить из адресов</button>
+            </div>
+            <div id="address-list" class="order_form-item-wrap order_address"></div>
+        <?endif?>
     </div>
 <?endforeach?>

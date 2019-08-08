@@ -34,7 +34,7 @@ $APPLICATION->IncludeComponent(
         "PATH_TO_AUTH" => "/auth/",
         "PATH_TO_BASKET" => "/cart/",
         "PATH_TO_PAYMENT" => "payment.php",
-        "PATH_TO_PERSONAL" => "index.php",
+        "PATH_TO_PERSONAL" => "/personal/",
         "PAY_FROM_ACCOUNT" => "N",
         "PAY_SYSTEMS_PER_PAGE" => "8",
         "PICKUPS_PER_PAGE" => "5",

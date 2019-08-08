@@ -43,9 +43,9 @@ foreach ($arResult["ORDER_PROP"]["USER_PROPS_N"] as &$arProp) {
                     ["CITY_NAME" => $arFields["UF_CITY_NAME"]["VALUE"]],
                     false,
                     false,
-                    []
+                    ["CODE"]
                 )->fetch()) {
-                    $arProp["VALUE"] = $arLocation["CITY_ID"];
+                    $arProp["VALUE"] = $arLocation["CODE"];
                 }
             }
         }

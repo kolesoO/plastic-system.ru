@@ -458,6 +458,7 @@ BX.saleOrderAjax = { // bad solution, actually, a singleton at the page
 			BX('confirmorder').value = 'N';
 			this.isSubmit = false;
 		} else {
+			BX('confirmorder').value = 'Y';
 			this.isSubmit = true;
 		}
 		orderForm = BX(this.orderFormId);

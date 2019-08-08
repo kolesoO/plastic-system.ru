@@ -9,9 +9,9 @@
         //end
         //type
         $type = "text";
-        if ($arProp["IS_PHONE"]) {
+        if ($arProp["IS_PHONE"] == "Y") {
             $type = "tel";
-        } elseif ($arProp["IS_EMAIL"]) {
+        } elseif ($arProp["IS_EMAIL"] == "Y") {
             $type = "email";
         }
         //end
@@ -20,7 +20,7 @@
             </div><div flex-align="center" class="order_form-item-input">
         <?endif?>
         <?if ($arProp["IS_LOCATION"] == "Y") :?>
-            <input type="hidden" name="<?=$arProp["FIELD_NAME"]?>" value="<?=$arProp["VALUE"]?>">
+            <input type="hidden" name="<?=$arProp["FIELD_NAME"]?>" value="<?=intval($arProp["VALUE"]) > 0 ? $arProp["VALUE"] : $arProp["DEFAULT_VALUE"]?>">
         <?else:?>
             <div class="col-lg-6 col-md-9 animate_input js-animate_input">
                 <label for="<?=$arProp["FIELD_ID"]?>"><?=$name?></label>

@@ -9,7 +9,8 @@ Main\Loader::registerAutoLoadClasses(null, [
     "\kDevelop\Help\Mobile_Detect" => "/local/php_interface/classes/help/mobile_detect.php",
     "\kDevelop\Help\Tools" => "/local/php_interface/classes/help/tools.php",
     "\kDevelop\Settings\Store" => "/local/php_interface/classes/settings/store.php",
-    "\kDevelop\Service\Catalog" => "/local/php_interface/classes/service/catalog.php"
+    "\kDevelop\Service\Catalog" => "/local/php_interface/classes/service/catalog.php",
+    "\kDevelop\Service\Logger" => "/local/php_interface/classes/service/logger.php"
 ]);
 //end
 
