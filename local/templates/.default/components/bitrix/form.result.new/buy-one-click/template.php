@@ -17,10 +17,10 @@
             <?endif?>
         <?endforeach?>
         <div class="popup_form-item">
-            <button type="submit" name="web_form_submit" class="form_button color"><?=$arResult["arForm"]["BUTTON"]?></button>
+            <input type="submit" name="web_form_submit" class="form_button color" value="<?=$arResult["arForm"]["BUTTON"]?>">
         </div>
     </div>
     <?=$arResult["FORM_FOOTER"]?>
 <?else:?>
-    <p>success</p>
+    <p>Ваш заказ успешно оправлен,менеджер свяжется с вами с ближайшеевремя для уточнения деталей</p>
 <?endif?>

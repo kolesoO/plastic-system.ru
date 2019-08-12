@@ -264,7 +264,8 @@ small{
     font-size: 90%;
     top: 16px;
 }
-.animate_input label + input{
+.animate_input label + input,
+.animate_input label + textarea{
     width: 100%;
     display: block;
     padding-top: 16px;

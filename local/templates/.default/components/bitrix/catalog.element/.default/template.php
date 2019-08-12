@@ -131,7 +131,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                     </div>
                 </div>
             <?endif?>
-            <?foreach (["RAZMER", "OPTSII_IBOX", "DNO"] as $code) :?>
+            <?foreach (["RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA"] as $code) :?>
                 <?if ($arResult[$code]["COUNT"] > 0) :?>
                     <div class="cart_desc-item">
                         <div class="dropdown header-location js-drop_down">
@@ -203,6 +203,8 @@ if ($arParams['DISPLAY_COMPARE']) {
 </div>
 <?if (strlen($arOffer["DETAIL_TEXT"]) > 0) :?>
     <div class="block_wrapper"><?=($arOffer["DETAIL_TEXT_TYPE"] == "text" ? $arOffer["DETAIL_TEXT"] : htmlspecialcharsback($arOffer["DETAIL_TEXT"]))?></div>
+<?elseif (strlen($arResult["DETAIL_TEXT"]) > 0): ?>
+    <div class="block_wrapper"><?=($arResult["DETAIL_TEXT_TYPE"] == "text" ? $arResult["DETAIL_TEXT"] : htmlspecialcharsback($arResult["DETAIL_TEXT"]))?></div>
 <?endif?>
 <script>
     BX.message({

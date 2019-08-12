@@ -36,6 +36,7 @@ var obCalculator = {
                 height: parseFloat(self.value),
                 products: []
             });
+            obCalculatorRender.addTraiInput(this.items.length);
         },
 
         /**
@@ -85,6 +86,10 @@ var obCalculator = {
 
         blockId: "rack",
 
+        traiInputBlockId: "calculator_render-items",
+
+        traiIdPrefix: "trai-",
+
         /**
          *
          * @param id
@@ -92,6 +97,42 @@ var obCalculator = {
         setBlockId: function(id)
         {
             this.blockId = id;
+        },
+
+        /**
+         *
+         * @param id
+         */
+        setTraiInputBlockId: function(id)
+        {
+            this.traiInputBlockId = id;
+        },
+
+        /**
+         *
+         * @param index
+         * @returns {string}
+         */
+        getTraiInputBlock: function(index)
+        {
+            return '<div id="' + this.traiIdPrefix + index + '" class="horizontal_form-item" flex-align="center">' +
+                '<label>Полка ' + index + ', высота мм</label>' +
+                '<input type="text" name="<=PROPERTY_VYSOTA_MM_VALUE" value="" class="small">' +
+            '</div>';
+        },
+
+        /**
+         *
+         * @param index
+         */
+        addTraiInput: function(index)
+        {
+            document.getElementById(this.traiInputBlockId).appendChild(this.getTraiInputBlock(index));
+        },
+
+        deleteTraiInput: function(index)
+        {
+
         },
 
         /**

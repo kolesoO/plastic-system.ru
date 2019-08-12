@@ -43,7 +43,7 @@ class Logger
             ["IBLOCK_ID", "ID", "XML_ID", "NAME", "PREVIEW_PICTURE", "DETAIL_PICTURE"]
         );
         while ($arItem = $rsItem->GetNext()) {
-            fwrite($fileHandle, $arItem["IBLOCK_ID"].";".$arItem["XML_ID"].";".$arItem["PREVIEW_PICTURE"].";".$arItem["DETAIL_PICTURE"]."\n");
+            fwrite($fileHandle, $arItem["IBLOCK_ID"].";".$arItem["NAME"].";".\CFile::GetPath($arItem["PREVIEW_PICTURE"]).";".\CFile::GetPath($arItem["DETAIL_PICTURE"])."\n");
         }
         fclose($fileHandle);
     }
@@ -59,12 +59,18 @@ class Logger
             $arInfo = explode(";", $row);
             if (strlen($arInfo[1]) > 0) {
                 $arInfo[2] = trim($arInfo[2]);
-                if (strlen($arInfo[2]) > 0) { //preview picture
-                    $DB->Query("update b_iblock_element set PREVIEW_PICTURE=".$arInfo[2]." where XML_ID='".$arInfo[1]."' and IBLOCK_ID=".$arInfo[0]);
+                if (strlen($arInfo[2]) > 0) { //preview picture path
+                    $fileId = \CFile::SaveFile(\CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"].$arInfo[2]), "iblock");
+                    if (intval($fileId) > 0) {
+                        $DB->Query("update b_iblock_element set PREVIEW_PICTURE=".$fileId." where NAME='".$arInfo[1]."' and IBLOCK_ID=".$arInfo[0]);
+                    }
                 }
                 $arInfo[3] = trim($arInfo[3]);
-                if (strlen($arInfo[3]) > 0) { //detail picture
-                    $DB->Query("update b_iblock_element set DETAIL_PICTURE=".$arInfo[3]." where XML_ID='".$arInfo[1]."' and IBLOCK_ID=".$arInfo[0]);
+                if (strlen($arInfo[3]) > 0) { //detail picture path
+                    $fileId = \CFile::SaveFile(\CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"].$arInfo[3]), "iblock");
+                    if (intval($fileId) > 0) {
+                        $DB->Query("update b_iblock_element set DETAIL_PICTURE=".$fileId." where NAME='".$arInfo[1]."' and IBLOCK_ID=".$arInfo[0]);
+                    }
                 }
             }
         }

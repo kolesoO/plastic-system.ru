@@ -101,7 +101,8 @@ class Tools
             "Белый" => "#F5F6F9",
             "Бело-красный" => "#f19898",
             "Желтый" => "yellow",
-            "Серый бак, красная крышка" => "#f3cfcf"
+            "Серый бак, красная крышка" => "#f3cfcf",
+            "Оранжевый" => "orange"
         ];
         if (isset($arColors[$colorName])) {
             return $arColors[$colorName];

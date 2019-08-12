@@ -15,13 +15,13 @@
                     </select>
                 </div>
             </form>
-            <div class="horizontal_form" flex-align="center">
+            <div id="calculator_render-items" class="horizontal_form" flex-align="center">
                 <div class="horizontal_form-item" flex-align="center">
                     <label>Полка 1, высота мм</label>
-                    <input type="text" name="<=PROPERTY_VYSOTA_MM_VALUE" value="" class="small">
+                    <input type="text" name="item_height" value="" class="small">
                 </div>
                 <div class="horizontal_form-item">
-                    <a href="#" class="link dashed">Добавить полку</a>
+                    <a href="#" class="link dashed" onclick="obCalculator.updateItem(0, document.querySelector('item_height'))">Добавить полку</a>
                 </div>
             </div>
             <div class="rack-wrap">

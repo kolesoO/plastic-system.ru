@@ -4,13 +4,13 @@ var obAnimateInput = {
 
     /**
      *
-     * @param self
+     * @param node
      */
-    onKeyUpHandler: function(input){
+    onKeyUpHandler: function(node){
 
-        var $parent = $(input).parents(this.target).first();
+        var $parent = $(node).parents(this.target).first();
 
-        if($(input).val().length == 0){
+        if($(node).val().length == 0){
             $parent.addClass("_empty");
         }
         else{
@@ -27,9 +27,9 @@ var obAnimateInput = {
         var ctx = this;
 
         $("body").find(ctx.target).each(function(){
-            ctx.onKeyUpHandler($(this).find("input").first());
+            ctx.onKeyUpHandler($(this).find("input, textarea").first());
         })
-        $(ctx.target + " input").keyup(function(){
+        $(ctx.target + " input, " + ctx.target + " textarea").keyup(function(){
             ctx.onKeyUpHandler(this);
         })
 

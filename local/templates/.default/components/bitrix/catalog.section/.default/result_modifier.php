@@ -52,8 +52,10 @@ foreach ($arResult["ITEMS"] as $itemKey => &$arItem) {
         foreach ($arItem["OFFERS"] as $key => $arOffer) {
             if (isset($arPureOffersId) && !in_array($arOffer["ID"], $arPureOffersId)) {
                 unset($arItem["OFFERS"][$key]);
+                unset($arItem["OFFER_ID_SELECTED"]);
                 continue;
-            } else {
+            }
+            if (!$arItem["OFFER_ID_SELECTED"]) {
                 $arItem["OFFER_ID_SELECTED"] = $key;
             }
             //ресайз и кеширование изображений

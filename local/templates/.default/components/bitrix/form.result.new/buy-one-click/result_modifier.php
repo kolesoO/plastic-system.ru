@@ -55,7 +55,13 @@ foreach ($arResult["QUESTIONS"] as $FIELD_SID => &$arQuestion) {
             //id
             $id = $FIELD_SID."_".$arQuestion["STRUCTURE"][0]["ID"];
             //end
-            $arQuestion["HTML_CODE"] = '<input id="'.$id.'" type="'.$type.'" name="'.$name.'" value="'.$arQuestion["VALUE"].'" class="'.$class.'" '.$attrs.'>';
+
+            if ($arQuestion["STRUCTURE"][0]["FIELD_TYPE"] == "textarea") {
+                $arQuestion["HTML_CODE"] = '<textarea id="'.$id.'" type="'.$type.'" name="'.$name.'" class="'.$class.'" '.$attrs.'>'.$arQuestion["VALUE"].'</textarea>';
+            } else {
+                $arQuestion["HTML_CODE"] = '<input id="'.$id.'" type="'.$type.'" name="'.$name.'" value="'.$arQuestion["VALUE"].'" class="'.$class.'" '.$attrs.'>';
+            }
+
             $arQuestion["HAS_ANIMATE"] = "Y";
         }
     } else {

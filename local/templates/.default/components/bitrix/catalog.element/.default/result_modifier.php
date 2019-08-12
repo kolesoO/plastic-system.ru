@@ -110,18 +110,13 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
     }
     //end
 
-    //разбивка торг предложений на 'с цветом', 'с размером', 'дно', 'ibox'
+    //разбивка торг предложений на 'с цветом', 'с размером', 'дно', 'ibox', 'Тип контейнера'
     $arResult["TSVET"] = $arResult["OFFERS_WITH_SIZE"] = $arResult["OFFERS_WITH_IBOX"] = $arResult["OFFERS_WITH_DNO"] = [
         "ID" => [],
         "COUNT" => 0,
         "TITLE" => ""
     ];
     $arValueCache = [];
-    /*foreach (["RAZMER", "OPTSII_IBOX", "DNO"] as $code) {
-        if (strlen($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["PROPERTIES"][$code]["VALUE"]) > 0) {
-            $arValueCache[] = $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]]["PROPERTIES"][$code]["VALUE"];
-        }
-    }*/
     foreach ($arResult["OFFERS"] as $key => &$arOffer) {
         if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0 && !in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arValueCache)) {
             $arResult["TSVET"]["ID"][] = $arOffer["ID"];
@@ -131,7 +126,7 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
                 $arResult["TSVET"]["TITLE"] = $arOffer["PROPERTIES"]["TSVET"]["NAME"];
             }
         }
-        if (strlen($arOffer["PROPERTIES"]["RAZMER"]["VALUE"]) > 0/* && !in_array($arOffer["PROPERTIES"]["RAZMER"]["VALUE"], $arValueCache)*/) {
+        if (strlen($arOffer["PROPERTIES"]["RAZMER"]["VALUE"]) > 0) {
             $arResult["RAZMER"]["ID"][] = $arOffer["ID"];
             $arResult["RAZMER"]["COUNT"] ++;
             $arValueCache[] = $arOffer["PROPERTIES"]["RAZMER"]["VALUE"];
@@ -139,7 +134,7 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
                 $arResult["RAZMER"]["TITLE"] = $arOffer["PROPERTIES"]["RAZMER"]["NAME"];
             }
         }
-        if (strlen($arOffer["PROPERTIES"]["OPTSII_IBOX"]["VALUE"]) > 0/* && !in_array($arOffer["PROPERTIES"]["OPTSII_IBOX"]["VALUE"], $arValueCache)*/) {
+        if (strlen($arOffer["PROPERTIES"]["OPTSII_IBOX"]["VALUE"]) > 0) {
             $arResult["OPTSII_IBOX"]["ID"][] = $arOffer["ID"];
             $arResult["OPTSII_IBOX"]["COUNT"] ++;
             $arValueCache[] = $arOffer["PROPERTIES"]["OPTSII_IBOX"]["VALUE"];
@@ -147,12 +142,20 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
                 $arResult["OPTSII_IBOX"]["TITLE"] = $arOffer["PROPERTIES"]["OPTSII_IBOX"]["NAME"];
             }
         }
-        if (strlen($arOffer["PROPERTIES"]["DNO"]["VALUE"]) > 0/* && !in_array($arOffer["PROPERTIES"]["DNO"]["VALUE"], $arValueCache)*/) {
+        if (strlen($arOffer["PROPERTIES"]["DNO"]["VALUE"]) > 0) {
             $arResult["DNO"]["ID"][] = $arOffer["ID"];
             $arResult["DNO"]["COUNT"] ++;
             $arValueCache[] = $arOffer["PROPERTIES"]["DNO"]["VALUE"];
             if (strlen($arResult["DNO"]["TITLE"]) == 0) {
                 $arResult["DNO"]["TITLE"] = $arOffer["PROPERTIES"]["DNO"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["TIP_KONTEYNERA"]["VALUE"]) > 0) {
+            $arResult["TIP_KONTEYNERA"]["ID"][] = $arOffer["ID"];
+            $arResult["TIP_KONTEYNERA"]["COUNT"] ++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["TIP_KONTEYNERA"]["VALUE"];
+            if (strlen($arResult["TIP_KONTEYNERA"]["TITLE"]) == 0) {
+                $arResult["TIP_KONTEYNERA"]["TITLE"] = $arOffer["PROPERTIES"]["TIP_KONTEYNERA"]["NAME"];
             }
         }
     }
