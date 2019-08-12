@@ -15,16 +15,23 @@ $this->setFrameMode(true);
 
 $hasResizeImage = is_array($arParams["IMAGE_SIZE"]);
 $arResult["ITEMS_COUNT"] = count($arResult["ITEMS"]);
+$arOfferId = [];
+
+foreach ($arResult["ITEMS"] as $arItem) {
+    foreach ($arItem["OFFERS"] as $arOffer) {
+        $arOfferId[] = $arOffer["ID"];
+    }
+}
 
 //чистые торг предложения (по глобавльному фильру OFFERS)
-if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"])) {
+if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"]) && count($arOfferId) > 0) {
     $arPureOffersId = [];
     $rsElems = \CIBlockElement::GetList(
         [],
         array_merge(
             [
                 "IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"],
-                "ID" => array_column(array_column($arResult["ITEMS"], "OFFERS")[0], "ID")
+                "ID" => $arOfferId
             ],
             $GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"]
         ),
@@ -39,6 +46,7 @@ if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"])) {
 //end
 
 foreach ($arResult["ITEMS"] as &$arItem) {
+    $arItem["OFFER_ID_SELECTED"] = 0; // непонятная логика формирования этого ключа, так как для некоторых товаров пишется не порядкой номер ТП, а ID ТП
     //ресайз и кеширование изображений
     if (is_array($arItem["PREVIEW_PICTURE"]) && $hasResizeImage) {
         $thumb = \CFile::ResizeImageGet(
@@ -55,8 +63,12 @@ foreach ($arResult["ITEMS"] as &$arItem) {
         foreach ($arItem["OFFERS"] as $key => $arOffer) {
             if (isset($arPureOffersId) && !in_array($arOffer["ID"], $arPureOffersId)) {
                 unset($arItem["OFFERS"][$key]);
+                if ($arItem["OFFER_ID_SELECTED"] == $key) {
+                    unset($arItem["OFFER_ID_SELECTED"]);
+                }
                 continue;
-            } else {
+            }
+            if (!isset($arItem["OFFER_ID_SELECTED"])) {
                 $arItem["OFFER_ID_SELECTED"] = $key;
             }
             //ресайз и кеширование изображений

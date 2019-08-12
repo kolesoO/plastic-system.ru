@@ -12,16 +12,23 @@ $arResult["ITEMS_COUNT"] = count($arResult["ITEMS"]);
 $arItemsRelations = [];
 $arOfferKeys = [];
 $arOfferKeysForAmount = [];
+$arOfferId = [];
+
+foreach ($arResult["ITEMS"] as $arItem) {
+    foreach ($arItem["OFFERS"] as $arOffer) {
+        $arOfferId[] = $arOffer["ID"];
+    }
+}
 
 //чистые торг предложения (по глобавльному фильру OFFERS)
-if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"])) {
+if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"]) && count($arOfferId) > 0) {
     $arPureOffersId = [];
     $rsElems = \CIBlockElement::GetList(
         [],
         array_merge(
             [
                 "IBLOCK_ID" => $arResult["CATALOGS"][$arParams["IBLOCK_ID"]]["IBLOCK_ID"],
-                "ID" => array_column(array_column($arResult["ITEMS"], "OFFERS")[0], "ID")
+                "ID" => $arOfferId
             ],
             $GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"]
         ),
@@ -36,6 +43,7 @@ if (is_array($GLOBALS[$arParams["FILTER_NAME"]]["OFFERS"])) {
 //end
 
 foreach ($arResult["ITEMS"] as $itemKey => &$arItem) {
+    $arItem["OFFER_ID_SELECTED"] = 0; // непонятная логика формирования этого ключа, так как для некоторых товаров пишется не порядкой номер ТП, а ID ТП
     $arItemsRelations[$arItem["ID"]] = $itemKey;
     //ресайз и кеширование изображений
     if (is_array($arItem["PREVIEW_PICTURE"]) && $hasResizeImage) {
@@ -52,10 +60,12 @@ foreach ($arResult["ITEMS"] as $itemKey => &$arItem) {
         foreach ($arItem["OFFERS"] as $key => $arOffer) {
             if (isset($arPureOffersId) && !in_array($arOffer["ID"], $arPureOffersId)) {
                 unset($arItem["OFFERS"][$key]);
-                unset($arItem["OFFER_ID_SELECTED"]);
+                if ($arItem["OFFER_ID_SELECTED"] == $key) {
+                    unset($arItem["OFFER_ID_SELECTED"]);
+                }
                 continue;
             }
-            if (!$arItem["OFFER_ID_SELECTED"]) {
+            if (!isset($arItem["OFFER_ID_SELECTED"])) {
                 $arItem["OFFER_ID_SELECTED"] = $key;
             }
             //ресайз и кеширование изображений
