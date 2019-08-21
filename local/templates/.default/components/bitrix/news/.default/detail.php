@@ -41,7 +41,7 @@ if ($arInfo = \Bitrix\Iblock\ElementTable::getList([
 <div class="block_wrapper">
     <div class="news_detail">
         <div class="title_wrap">
-            <div class="title-1"><?$APPLICATION->ShowTitle(false)?></div>
+            <h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
             <?if (is_array($arInfo["DETAIL_PICTURE"])) :?>
                 <div class="title_wrap-img">
                     <img src="<?=$arInfo["DETAIL_PICTURE"]["SRC"]?>" alt="<?+$arInfo["NAME"]?>">

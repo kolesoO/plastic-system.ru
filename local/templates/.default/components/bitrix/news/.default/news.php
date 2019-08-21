@@ -13,7 +13,7 @@
 $this->setFrameMode(true);
 ?>
 
-<div class="title-1"><?$APPLICATION->ShowTitle(false)?></div>
+<h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
 <?
 $APPLICATION->IncludeComponent(
     "bitrix:news.list",

@@ -3,13 +3,15 @@
 <?if ($arResult["STORES_COUNT"] > 0) :?>
     <div class="footer-part-item footer_content-wrap">
         <?foreach ($arResult["STORES"] as $arItem) :?>
-            <div id="<?=$this->GetEditAreaId($arItem['ID']);?>" class="footer_content">
-                <div class="footer_content-title"><?=$arItem["STORE_TITLE"]?></div>
+            <div id="<?=$this->GetEditAreaId($arItem['ID']);?>" class="footer_content" itemscope itemtype="https://schema.org/Organization">
+                <div class="footer_content-title" itemprop="name"><?=$arItem["STORE_TITLE"]?></div>
                 <?if (strlen($arItem["ADDRESS"]) > 0) :?>
-                    <span><?=$arItem["ADDRESS"]?></span>
+                    <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                        <span itemprop="streetAddress"><?=$arItem["ADDRESS"]?></span>
+                    </span>
                 <?endif?>
                 <?if (strlen($arItem["PHONE"]) > 0) :?>
-                    <br><span><?=$arItem["PHONE"]?></span>
+                    <br><span itemprop="telephone"><?=$arItem["PHONE"]?></span>
                 <?endif?>
                 <?if (strlen($arItem["EMAIL"]) > 0) :?>
                     <br><span><?=$arItem["EMAIL"]?></span>

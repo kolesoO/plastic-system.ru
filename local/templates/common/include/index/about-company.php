@@ -1,6 +1,4 @@
-<div class="title-2">
-	 О компании
-</div>
+<h1 class="title-2">О компании</h1>
 <div class="number_list">
 	<div class="number_list-item">
 		<div class="number_list-number">

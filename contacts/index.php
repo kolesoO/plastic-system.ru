@@ -19,22 +19,24 @@ $APPLICATION->IncludeComponent(
         "SET_TITLE" => "N",
         "CACHE_TYPE" => "A",
         "CACHE_TIME" => "36000000",
-        "IMAGE_SIZE" => ["WIDTH" => 290, "HEIGHT" => 168]
+        "IMAGE_SIZE" => ["WIDTH" => 290, "HEIGHT" => 168],
+        "SORT_BY" => "SORT",
+        "SORT_ORDER" => "ASC"
     )
 );
 //end
 ?>
 
-    <div class="block_wrapper big">
-        <?$APPLICATION->IncludeComponent(
-            "bitrix:main.include",
-            ".default",
-            [
-                "AREA_FILE_SHOW" => "file",
-                "PATH" => SITE_TEMPLATE_PATH . "/include/contacts/requisites.php"
-            ],
-            false
-        );?>
-    </div>
+<div class="block_wrapper big">
+    <?$APPLICATION->IncludeComponent(
+        "bitrix:main.include",
+        ".default",
+        [
+            "AREA_FILE_SHOW" => "file",
+            "PATH" => SITE_TEMPLATE_PATH . "/include/contacts/requisites.php"
+        ],
+        false
+    );?>
+</div>
 
 <?require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');

@@ -25,6 +25,10 @@ foreach ($arResult["STORES"] as &$arItem) {
         $arItem["UF_SCHEME"] = \CFile::GetFileArray($arFields["UF_SCHEME"]["VALUE"]);
         $arItem["UF_SCHEME"]["EXTENSION"] = pathinfo($arItem["UF_SCHEME"]["ORIGINAL_NAME"], PATHINFO_EXTENSION);
     }
+    if (isset($arFields["UF_CUSTOM_COORDS"])) {
+        $arItem["UF_CUSTOM_COORDS"] = explode(",", $arFields["UF_CUSTOM_COORDS"]["VALUE"]);
+        $arItem["UF_CITY_NAME"] = $arFields["UF_CITY_NAME"]["VALUE"];
+    }
     //end
     //кеширование изображений
     if (is_array($arItem["DETAIL_IMG"]) && $hasResizeImg) {
