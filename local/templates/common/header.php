@@ -61,9 +61,9 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
     <link rel="apple-touch-icon" sizes="192x192" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-192x192.png">
     <link rel="apple-touch-icon" sizes="270x270" href="<?=SITE_TEMPLATE_PATH?>/images/favicons/apple-touch-icon-270x270.png">
     <link rel="manifest" href="<?=SITE_TEMPLATE_PATH?>/manifest.json">
-    <link name="msapplication-TileColor" content="#fff">
+    <meta name="msapplication-TileColor" content="#fff">
     <meta name="msapplication-TileImage" content="<?=SITE_TEMPLATE_PATH?>/images/favicons/favicon-180x180.png"/>
-    <link name="theme-color" content="#fff">
+    <meta name="theme-color" content="#fff">
     <!--end-->
 
     <?$APPLICATION->ShowHead();?>
