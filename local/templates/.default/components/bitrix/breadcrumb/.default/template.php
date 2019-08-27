@@ -17,7 +17,7 @@ if ($count > 0) {
                 <i class="icon arrow-right"></i>
             ';
         } else {
-            $strReturn .= '<span itemprop="name">'.$arItem["TITLE"].'</span>';
+            $strReturn .= '<span itemprop="item"><span itemprop="name">'.$arItem["TITLE"].'</span></span>';
         }
         $strReturn .= '<meta itemprop="position" content="'.($key + 1).'" />';
         $strReturn .= '</div>';
