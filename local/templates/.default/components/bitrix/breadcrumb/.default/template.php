@@ -9,16 +9,12 @@ if ($count > 0) {
     $strReturn .= '<div class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">';
     foreach ($arResult as $key => $arItem) {
         $strReturn .= '<div class="breadcrumbs-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
-        if ($key < $count - 1) {
-            $strReturn .= '
-                <a href="'.$arItem["LINK"].'" class="link" itemprop="item">
-                    <span itemprop="name">'.$arItem["TITLE"].'</span>
-                </a>
-                <i class="icon arrow-right"></i>
-            ';
-        } else {
-            $strReturn .= '<span itemprop="item"><span itemprop="name">'.$arItem["TITLE"].'</span></span>';
-        }
+        $strReturn .= '
+            <a href="'.$arItem["LINK"].'" class="link" itemprop="item">
+                <span itemprop="name">'.$arItem["TITLE"].'</span>
+            </a>
+            <i class="icon arrow-right"></i>
+        ';
         $strReturn .= '<meta itemprop="position" content="'.($key + 1).'" />';
         $strReturn .= '</div>';
     }
