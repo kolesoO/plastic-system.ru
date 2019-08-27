@@ -13,8 +13,10 @@ if ($count > 0) {
             <a href="'.$arItem["LINK"].'" class="link" itemprop="item">
                 <span itemprop="name">'.$arItem["TITLE"].'</span>
             </a>
-            <i class="icon arrow-right"></i>
         ';
+        if ($key < $count - 1) {
+            $strReturn .= '<i class="icon arrow-right"></i>';
+        }
         $strReturn .= '<meta itemprop="position" content="'.($key + 1).'" />';
         $strReturn .= '</div>';
     }
