@@ -71,6 +71,61 @@
 				obAjax.addPopupMessage("compare-white", resp.MESSAGE);
 			}
 			this.initCompare(resp.STATUS == "OK");
+		},
+
+		/**
+		 *
+		 * @param value
+		 * @param type
+		 * @returns {*}
+		 */
+		getActualQnt: function(value, type)
+		{
+			value = parseInt(value);
+			if (isNaN(value)) {
+				value = 1;
+			}
+			switch (type) {
+				case "plus": {
+					value += 1;
+					break;
+				}
+				case "minus": {
+					value -= 1;
+					break;
+				}
+			}
+			if (value <= 0) {
+				value = 1;
+			}
+
+			return value;
+		},
+
+		/**
+		 *
+		 * @param self
+		 * @param type
+		 */
+		setQnt: function(self, type)
+		{
+			var $target = $($(self).attr("data-target"));
+			if ($target.length > 0) {
+				var newValue = this.getActualQnt($target.val(), type);
+				$target.attr("value", newValue);
+				$target.val(newValue);
+			}
+		},
+
+		/**
+		 *
+		 * @param self
+		 */
+		changeQnt: function(self)
+		{
+			var newValue = this.getActualQnt($(self).val(), "");
+			$(self).attr("value", newValue);
+			$(self).val(newValue);
 		}
 	}
 })(window);

@@ -345,7 +345,7 @@ $APPLICATION->IncludeComponent(
         "IBLOCK_TYPE" => "content",
         "IBLOCK_ID" => IBLOCK_CONTENT_NEWS,
         "NEWS_COUNT" => "3",
-        "SORT_BY1" => "ACTIVE_DATE",
+        "SORT_BY1" => "ACTIVE_FROM",
         "SORT_ORDER1" => "DESC",
         "SORT_BY2" => "SORT",
         "SORT_ORDER2" => "ASC",
