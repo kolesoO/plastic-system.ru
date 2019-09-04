@@ -14,7 +14,7 @@
 $this->setFrameMode(true);
 
 $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELECTED"]];
-$arResult["OFFER"]["CAN_BUY"] = $arResult["OFFER"]["CAN_BUY"] && $arPrice["PRICE"] > 0;
+$arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["PRICE"] > 0;
 ?>
 
 <?if ($arStatus = \kDevelop\Help\Tools::getOfferStatusInfo($arResult["OFFER"]["PROPERTIES"]["STATUS"]["VALUE_XML_ID"])) :?>

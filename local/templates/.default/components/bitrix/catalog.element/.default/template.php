@@ -18,7 +18,7 @@ if (!$arOffer) {
     $arOffer = $arResult;
 }
 $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
-$arOffer["CAN_BUY"] = $arOffer["CAN_BUY"] && $arPrice["PRICE"] > 0;
+$arOffer["CAN_BUY"] = /*$arOffer["CAN_BUY"] && */$arPrice["PRICE"] > 0;
 
 //параметры для js
 $jsParams = [
