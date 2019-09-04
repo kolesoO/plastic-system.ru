@@ -195,6 +195,8 @@ if (DEVICE_TYPE == "TABLET") {
     $arCatalogTopParams["LINE_ELEMENT_COUNT"] = 3;
 } elseif (DEVICE_TYPE == "MOBILE") {
     $arCatalogTopParams["LINE_ELEMENT_COUNT"] = 1;
+} else {
+    $arCatalogTopParams["ITEMS_COUNT"] = 5;
 }
 $GLOBALS["arCatalogTopFilter"] = [
     "OFFERS" => [
