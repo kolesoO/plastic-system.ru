@@ -269,11 +269,21 @@ var obAjax = {
     {
         evt.preventDefault();
 
-        var ctx = this;
-        ctx.setParams({
-            offer_id: typeof offerId != "object" ? [offerId] : offerId,
-            price_id: priceId
-        });
+        var ctx = this,
+            $qntTarget = $($(evt.target).attr("data-qnt-target")),
+            newParams = {
+                offer_id: typeof offerId != "object" ? [offerId] : offerId,
+                price_id: priceId
+            };
+        //fix
+        if ($qntTarget.length <= 0) {
+            $qntTarget = $($(evt.target).closest("a").attr("data-qnt-target"));
+        }
+        //end fix
+        if ($qntTarget.length > 0) {
+            newParams.qnt = $qntTarget.val();
+        }
+        ctx.setParams(newParams);
         ctx.doRequest(
             "POST",
             location.href,

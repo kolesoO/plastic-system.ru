@@ -21,11 +21,14 @@ class Basket
     }
 
     /**
-     * @param $arParams
+     * @param array $arParams
      * @return array
+     * @throws \Bitrix\Main\LoaderException
      */
     public static function add(array $arParams)
     {
+        global $USER;
+
         $arReturn = ["js_callback" => "addToBasketCallBack"];
         if (is_array($arParams["offer_id"]) && count($arParams["offer_id"]) > 0) {
             if (isset($arParams["price_id"]) && strlen($arParams["price_id"]) > 0) {
@@ -50,10 +53,30 @@ class Basket
                                 $arReturn["msg"] = self::getMsg("ITEMS_NOT_AVAILABLE", $arItem["NAME"]);
                                 continue;
                             }
+
+                            //general price info
+                            $arPrice = \CCatalogProduct::GetOptimalPrice(
+                                $arItem["ID"],
+                                $arParams["qnt"],
+                                $USER->GetUserGroupArray(),
+                                "N",
+                                [
+                                    [
+                                        "ID" => $arItem["CATALOG_PRICE_ID_".$arParams["price_id"]],
+                                        "PRICE" => $arItem["CATALOG_PRICE_".$arParams["price_id"]],
+                                        "CURRENCY" => "RUB",
+                                        "CATALOG_GROUP_ID" => $arParams["price_id"]
+                                    ]
+                                ]
+                            );
+                            //end
+
                             if ($basketId = \CSaleBasket::Add([
                                 "PRODUCT_ID" => $arItem["ID"],
-                                "PRODUCT_PRICE_ID" => $arParams["price_id"],
-                                "PRICE" => $arItem["CATALOG_PRICE_".$arParams["price_id"]],
+                                "PRODUCT_PRICE_ID" => $arPrice["PRICE"]["ID"],
+                                //"PRICE_TYPE_ID" => $arPrice["RESULT_PRICE"]["PRICE_TYPE_ID"],
+                                "PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"],
+                                "BASE_PRICE" => $arPrice["RESULT_PRICE"]["BASE_PRICE"],
                                 "CUSTOM_PRICE" => "Y",
                                 "CURRENCY" => "RUB",
                                 "WEIGHT" => $arItem["CATALOG_WEIGHT"],
@@ -65,10 +88,11 @@ class Basket
                                 "PRODUCT_XML_ID" => $arItem["XML_ID"],
                                 "MODULE" => "catalog",
                                 "NOTES" => "",
-                                "PRODUCT_PROVIDER_CLASS" => "CCatalogProductProvider",
-                                "DISCOUNT_PRICE" => "",
-                                "DISCOUNT_NAME" => "",
-                                "DISCOUNT_VALUE" => "",
+                                "PRODUCT_PROVIDER_CLASS" => "",
+                                "IGNORE_CALLBACK_FUNC" => "Y",
+                                "DISCOUNT_PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
+                                "DISCOUNT_NAME" => $arPrice["DISCOUNT"]["NAME"],
+                                //"DISCOUNT_VALUE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
                                 "DISCOUNT_COUPON" => "",
                                 "PROPS" => []
                             ])) {

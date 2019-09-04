@@ -14,7 +14,7 @@
 $this->setFrameMode(true);
 
 $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELECTED"]];
-$arResult["OFFER"]["CAN_BUY"] = $arResult["OFFER"]["CAN_BUY"] || $arPrice["PRICE"] > 0;
+$arResult["OFFER"]["CAN_BUY"] = $arResult["OFFER"]["CAN_BUY"] && $arPrice["PRICE"] > 0;
 ?>
 
 <?if ($arStatus = \kDevelop\Help\Tools::getOfferStatusInfo($arResult["OFFER"]["PROPERTIES"]["STATUS"]["VALUE_XML_ID"])) :?>
@@ -93,7 +93,7 @@ $arResult["OFFER"]["CAN_BUY"] = $arResult["OFFER"]["CAN_BUY"] || $arPrice["PRICE
                 <div class="table_list-desc-item"><span><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$value?></div>
             <?endforeach?>
         </div>
-        <?if ($arPrice) :?>
+        <?if ($arPrice["PRICE"] > 0) :?>
             <div class="table_list-info border full">
                 <div class="table_list-price_wrap">
                     <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
@@ -110,7 +110,7 @@ $arResult["OFFER"]["CAN_BUY"] = $arResult["OFFER"]["CAN_BUY"] || $arPrice["PRICE
                 <?endif?>
             </div>
         <?endif?>
-        <div class="table_list-info full hide_in_list<?if (!$arPrice) :?> margin<?endif?>">
+        <div class="table_list-info full hide_in_list<?if ($arPrice["PRICE"] <= 0) :?> margin<?endif?>">
             <?if (isset($arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) && strlen($arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) > 0) :?>
                 <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
             <?endif?>
