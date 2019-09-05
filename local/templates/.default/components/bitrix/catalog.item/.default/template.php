@@ -93,7 +93,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                     $propTitle .= "x";
                     $propValue .= " x ";
                 }
-                $propTitle .= strtoupper(substr($arResult["ITEM"]["PROPERTIES"][$code]["NAME"], 0, 1));
+                $propTitle .= strtoupper(mb_substr($arResult["ITEM"]["PROPERTIES"][$code]["NAME"], 0, 1));
                 $propValue .= $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
                 ?>
             <?endforeach?>
