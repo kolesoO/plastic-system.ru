@@ -21,7 +21,9 @@ trait MsgHandBook
         "ADD_TO_FAVORITE_ERROR" => "Ошибка при добавлении в избранное",
         "ADD_TO_FAVORITE_SUCCESS" => "Товар добавлен в избранное",
         "DELETE_FROM_FAVORITE_ERROR" => "Ошибка при удалении из избранного",
-        "DELETE_FROM_FAVORITE_SUCCESS" => "Товар удален из избранного"
+        "DELETE_FROM_FAVORITE_SUCCESS" => "Товар удален из избранного",
+        "INIT_PAYMENT_SUCCESS" => "Адрес для проведения транзакции успешно сформирован",
+        "INIT_PAYMENT_ERROR" => "Не достаточно данных для формирования адреса транзакции"
     ];
 
     /**

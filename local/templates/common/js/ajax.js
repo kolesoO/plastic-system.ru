@@ -724,6 +724,42 @@ var obAjax = {
 
     /**
      *
+     * @param form
+     * @param evt
+     */
+    initPayment: function(form, evt)
+    {
+        evt.preventDefault();
+
+        var ctx = this;
+        ctx.params.target_id = form.id;
+        ctx.doRequest(
+            "POST",
+            location.href,
+            ctx.serializeData({
+                class: "Payment",
+                method: "initPayment",
+                params: ctx.getFormObject(form)
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    initPaymentCallBack: function(data)
+    {
+        if (!!data.url) {
+            location.href = data.url;
+        }
+    },
+
+    /**
+     *
      * @param method
      * @param url
      * @param sendData
