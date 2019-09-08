@@ -10,18 +10,18 @@ $APPLICATION->SetTitle("Онлайн оплата");
 <div class="block_wrapper">
     <div class="block_content">
         <div class="block_content-item col-lg-12 col-md-12 col-xs-24">
-            <div class="def_form">
+            <form id="payment-form" class="def_form" onsubmit="obAjax.initPayment(this, event)">
                 <div class="animate_input js-animate_input">
                     <label for="number">Номер счета, например, 1366 от 12.10.2018</label>
-                    <input id="number" type="text">
+                    <input id="number" type="text" name="order_number" required>
                 </div>
                 <div class="animate_input js-animate_input">
                     <label for="sum">Сумма, р.</label>
-                    <input id="sum" type="text">
+                    <input id="sum" type="text" name="order_price" required>
                 </div>
                 <p>Нажимая на кнопку "Оплатить", я соглашаюсь с правилами оплаты в онлайн системе данного сайта.</p>
                 <button class="form_button color col-lg-6">Оплатить</button>
-            </div>
+            </form>
         </div>
         <div class="block_content-item col-lg-12 col-md-12 col-xs-24">
             <p>В этом разделе Вы можете произвести оплату с помощью банковских карт VISA или MasterCard.</p>
