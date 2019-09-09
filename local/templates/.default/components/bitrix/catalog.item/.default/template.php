@@ -32,8 +32,11 @@ if ($arParams['DISPLAY_COMPARE']) {
 <?endif?>
 <div<?if (isset($arResult["AREA_ID"])) :?> id="<?=$arResult["AREA_ID"]?>"<?endif?> class="table_list-item-wrap">
     <div class="table_list-wrap">
-        <a href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>" class="table_list-img">
-            <img src="<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arResult["OFFER"]["NAME"]?>">
+        <a
+                href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>"
+                class="table_list-img"
+                style="background-image:url('<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>')"
+        >
         </a>
         <?if ($arResult["OFFERS_COUNT"] > 0) :
             $wrapAttrs = "";

@@ -19,8 +19,11 @@ $APPLICATION->SetTitle("Онлайн оплата");
                     <label for="sum">Сумма, р.</label>
                     <input id="sum" type="text" name="order_price" required>
                 </div>
-                <p>Нажимая на кнопку "Оплатить", я соглашаюсь с правилами оплаты в онлайн системе данного сайта.</p>
-                <button class="form_button color col-lg-6">Оплатить</button>
+                <div class="animate_input">
+                    <input type="checkbox" required>
+                    <span>Нажимая на кнопку "Оплатить", я соглашаюсь с правилами оплаты в онлайн системе данного сайта.</span>
+                </div>
+                <button class="form_button color col-lg-6" type="submit">Оплатить</button>
             </form>
         </div>
         <div class="block_content-item col-lg-12 col-md-12 col-xs-24">

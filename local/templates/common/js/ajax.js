@@ -754,7 +754,7 @@ var obAjax = {
     initPaymentCallBack: function(data)
     {
         if (!!data.url) {
-            location.href = data.url;
+            window.open(data.url);
         }
     },
 
