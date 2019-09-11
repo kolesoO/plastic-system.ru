@@ -53,7 +53,8 @@ class Order
                 "CACHE_TIME" => "3600",
                 "PATH_TO_LIST" => "",
                 "PATH_TO_CANCEL" => "",
-                "PATH_TO_PAYMENT" => ""
+                "PATH_TO_PAYMENT" => "",
+                "DISALLOW_CANCEL" => "Y"
             ]
         );
         $return = \ob_get_contents();
