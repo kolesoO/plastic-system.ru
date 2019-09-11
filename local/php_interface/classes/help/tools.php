@@ -64,7 +64,7 @@ class Tools
     public static function getQntInfo($qnt, $msgPrefix)
     {
         $qnt = intval($qnt);
-        $defValue = 10;
+        $defValue = defined("CATALOG_BORDER_QNT") ? CATALOG_BORDER_QNT : 10;
         $arReturn = [
             "CLASS" => "red",
             "MSG_CODE" => $msgPrefix."_FEW"

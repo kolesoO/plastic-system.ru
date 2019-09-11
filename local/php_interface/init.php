@@ -22,6 +22,7 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Help\Tools", "defineAjax"], false, 300);
     //end
     \kDevelop\Help\Tools::definders();
+    \kDevelop\Service\Catalog::defineSettings();
 } else {
     //iblock module
     $rsManager->addEventHandler("iblock", "OnAfterIBlockElementUpdate", ["\kDevelop\Service\Catalog", "OnAfterIBlockElementUpdateHandler"], false, 100);

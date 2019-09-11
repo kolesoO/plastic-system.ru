@@ -3,7 +3,15 @@ namespace kDevelop\Service;
 
 class Catalog
 {
+    /**
+     * @var array
+     */
     private static $arSku = [];
+
+    /**
+     * @var
+     */
+    private static $iblockId = IBLOCK_SERVICE_CATALOG_SETTINGS;
 
     /**
      * @param $arFields
@@ -77,6 +85,28 @@ class Catalog
                             $arEndData["PROP_CODE"] => $arNewValue["ID"]
                         ]
                     );
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    public static function defineSettings()
+    {
+        $rs = \CIBlockElement::GetList(
+            [],
+            ["IBLOCK_ID" => self::$iblockId, "CODE" => "general", "ACTIVE" => "Y"],
+            false,
+            false,
+            ["ID", "IBLOCK_ID"]
+        );
+        if ($rsItem = $rs->getNextElement()) {
+            $props = $rsItem->getProperties();
+            foreach ($props as $code => $value) {
+                if ($value["PROPERTY_TYPE"] == "S" && !defined($code)) {
+                    define(strtoupper($code), $value["VALUE"]);
                 }
             }
         }
