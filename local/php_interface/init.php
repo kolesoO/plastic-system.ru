@@ -10,7 +10,8 @@ Main\Loader::registerAutoLoadClasses(null, [
     "\kDevelop\Help\Tools" => "/local/php_interface/classes/help/tools.php",
     "\kDevelop\Settings\Store" => "/local/php_interface/classes/settings/store.php",
     "\kDevelop\Service\Catalog" => "/local/php_interface/classes/service/catalog.php",
-    "\kDevelop\Service\Logger" => "/local/php_interface/classes/service/logger.php"
+    "\kDevelop\Service\Logger" => "/local/php_interface/classes/service/logger.php",
+    "\kDevelop\Service\Order" => "/local/php_interface/classes/service/order.php"
 ]);
 //end
 
@@ -20,6 +21,7 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Help\Tools", "setDeviceType"], false, 100);
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Settings\Store", "setStore"], false, 200);
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Help\Tools", "defineAjax"], false, 300);
+    $rsManager->addEventHandler("sale", "OnOrderNewSendEmail", ["\kDevelop\Service\Order", "OnOrderNewSendEmailHandler"], false, 100);
     //end
     \kDevelop\Help\Tools::definders();
     \kDevelop\Service\Catalog::defineSettings();
