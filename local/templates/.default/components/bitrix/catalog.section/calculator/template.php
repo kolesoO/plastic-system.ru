@@ -7,34 +7,32 @@
             <form id="catalog-calculator-main" class="horizontal_form" flex-align="center">
                 <div class="horizontal_form-item" flex-align="center">
                     <label>Ширина, мм</label>
-                    <select name="PROPERTY_<?=$code?>_VALUE" class="small" onchange="obAjax.getCatalogCalcItems(this, 'catalog-calculator-sub_main')">
-                        <option value="">выбрать</option>
-                        <?foreach ($arProp as $arValue) :?>
-                            <option value="<?=$arValue["VALUE"]?>"><?=$arValue["VALUE"]?></option>
-                        <?endforeach?>
-                    </select>
+                    <input type="text" onchange="obCalculator.setWidth(this)" class="small">
+                </div>
+                <div class="horizontal_form-item" flex-align="center">
+                    <label>Высота, мм</label>
+                    <input type="text" onchange="obCalculator.setHeight(this)" class="small">
+                </div>
+                <div class="horizontal_form-item" flex-align="center">
+                    <label>Глубина, мм</label>
+                    <input type="text" onchange="obCalculator.setLength(this)" class="small">
                 </div>
             </form>
             <div id="calculator_render-items" class="horizontal_form" flex-align="center">
-                <div class="horizontal_form-item" flex-align="center">
-                    <label>Полка 1, высота мм</label>
-                    <input type="text" name="item_height" value="" class="small">
-                </div>
-                <div class="horizontal_form-item">
-                    <a href="#" class="link dashed" onclick="obCalculator.updateItem(0, document.querySelector('item_height'))">Добавить полку</a>
+                <div class="col-lg-24" flex-align="center">
+                    <div class="horizontal_form-item">
+                        <label>Высота мм</label>
+                        <input id="item_height" type="text" name="item_height" value="" class="small">
+                    </div>
+                    <div class="horizontal_form-item">
+                        <a href="#" class="link dashed" onclick="obCalculator.addItem('#item_height')">Добавить полку</a>
+                    </div>
                 </div>
             </div>
             <div class="rack-wrap">
                 <div class="rack">
-                    <div class="rack-header"></div>
-                    <div id="rack" class="rack-content">
-                        <!--div class="rack_item">
-                            <div class="tray_item">
-                                <a href="#" class="tray_item-close"><i class="icon close"></i></a>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="27.002" height="17.997" viewBox="0 0 27.002 17.997"><defs><style>.a{fill:#ff2429;}</style></defs><path class="a" d="M-21980.4,206.55l-3.6-3.6v-14.4h2v13.6l2.4,2.4h18.2l2.4-2.4v-11.6h-2v9h-19v-9h-2v-2h25v14.4l-3.6,3.6Zm2.4-9h15v-7h-15Z" transform="translate(21984 -188.552)"/></svg>
-                            </div>
-                        </div-->
-                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="344" height="33" viewBox="0 0 344 33"><defs><style>.a{fill:#fff;}.b{fill:#303030;}.c{fill:none;stroke:#303030;stroke-miterlimit:10;stroke-width:2px;}</style></defs><path class="a" d="M337,32V23H7v9H1V1H7V9H337V1h6V32Z"/><path class="b" d="M342,2V31h-4V22H6v9H2V2H6v8H338V2h4m2-2h-8V8H8V0H0V33H8V24H336v9h8V0Z"/><line class="c" x2="325" transform="translate(10 14)"/><line class="c" x2="325" transform="translate(10 19)"/></svg>
+                    <div id="rack-content" class="rack-content"></div>
                 </div>
             </div>
         </div>

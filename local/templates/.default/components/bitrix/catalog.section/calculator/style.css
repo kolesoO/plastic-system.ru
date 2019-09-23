@@ -1,0 +1,16 @@
+.rack{
+    width: 344px;
+    display: inline-block;
+}
+.rack svg {
+    display: block;
+}
+.rack-delete{
+    position: absolute;
+    right: -20px;
+}
+.rack-delete .icon.close{
+    width: 10px;
+    height: 10px;
+    display: block;
+}

@@ -8,7 +8,7 @@
         <div flex-align="start" class="order_form-item-input">
             <?foreach ($arResult["DELIVERY"] as $delivery_id => $arDelivery): ?>
                 <?if ($delivery_id > 0) :?>
-                    <div class="radio_btn">
+                    <div class="radio_btn col-xs-24">
                         <input type="radio"
                                id="DELIVERY_ID_<?=$arDelivery["ID"]?>"
                                name="<?=$arDelivery["FIELD_NAME"]?>"

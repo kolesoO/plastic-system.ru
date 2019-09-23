@@ -11,8 +11,14 @@ Main\Loader::registerAutoLoadClasses(null, [
     "\kDevelop\Settings\Store" => "/local/php_interface/classes/settings/store.php",
     "\kDevelop\Service\Catalog" => "/local/php_interface/classes/service/catalog.php",
     "\kDevelop\Service\Logger" => "/local/php_interface/classes/service/logger.php",
-    "\kDevelop\Service\Order" => "/local/php_interface/classes/service/order.php"
+    "\kDevelop\Service\Order" => "/local/php_interface/classes/service/order.php",
+    "\kDevelop\Service\SbPolyPointer" => "/local/php_interface/classes/service/sbPolyPointer.php"
 ]);
+//end
+
+//autoloads
+require_once $_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/php-yandex-geo/autoload.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/kladrapi-php/kladr.php";
 //end
 
 //Обработчики событий
@@ -22,6 +28,7 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Settings\Store", "setStore"], false, 200);
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Help\Tools", "defineAjax"], false, 300);
     $rsManager->addEventHandler("sale", "OnOrderNewSendEmail", ["\kDevelop\Service\Order", "OnOrderNewSendEmailHandler"], false, 100);
+    $rsManager->addEventHandler("sale", "onSaleDeliveryServiceCalculate", ["\kDevelop\Service\Order", "onSaleDeliveryServiceCalculateHandler"], false, 100);
     //end
     \kDevelop\Help\Tools::definders();
     \kDevelop\Service\Catalog::defineSettings();
