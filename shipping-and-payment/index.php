@@ -89,7 +89,7 @@ $APPLICATION->SetTitle("Доставка и оплата");
                     );?>
                 </div>
                 <div style="overflow-x:auto">
-                    <img src="/upload/content/delivery/spb.svg" style="width: 1209px;max-width: none;">
+                    <img src="/upload/content/delivery/spb.png">
                 </div>
             </div>
             <div id="delivery_region-msk" data-tab_item>
@@ -105,7 +105,7 @@ $APPLICATION->SetTitle("Доставка и оплата");
                     );?>
                 </div>
                 <div style="overflow-x:auto">
-                    <img src="/upload/content/delivery/msk.svg" style="width: 1209px;max-width: none;">
+                    <img src="/upload/content/delivery/msk.png">
                 </div>
             </div>
             <div id="delivery_region-other" data-tab_item>
