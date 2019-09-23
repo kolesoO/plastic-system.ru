@@ -7,7 +7,7 @@
         </div>
         <div flex-align="center">
             <?foreach ($arResult["PAY_SYSTEM"] as $arPaySystem) :?>
-                <div class="radio_btn">
+                <div class="radio_btn col-xs-24">
                     <div flex-align="center">
                         <input
                                 id="PAY_SYSTEM_<?=$arPaySystem["ID"]?>"

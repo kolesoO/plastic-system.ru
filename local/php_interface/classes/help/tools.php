@@ -5,15 +5,18 @@ use \Bitrix\Main\Loader;
 
 class Tools
 {
+    /**
+     * @var string
+     */
     private static $offerPrefixInUrl = "offer-";
 
+    /**
+     * @var string
+     */
     private static $offerSefUrlTmp = "#SKU_CODE#";
 
     /**
-     * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\LoaderException
-     * @throws \Bitrix\Main\ObjectPropertyException
-     * @throws \Bitrix\Main\SystemException
      */
     public static function definders()
     {

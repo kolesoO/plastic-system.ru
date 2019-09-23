@@ -2,6 +2,9 @@
 
 <div class="block_wrapper">
     <div class="order_form-item-wrap">
+        <?if ($arResult["DELIVERY_PRICE"] > 0) :?>
+            <p>Стоимость доставки: <?=$arResult["DELIVERY_PRICE_FORMATED"]?></p>
+        <?endif;?>
         <div class="order_form-price">
             <span>Итого к оплате: </span>
             <b><?=$arResult["ORDER_TOTAL_PRICE_FORMATED"]?></b>
