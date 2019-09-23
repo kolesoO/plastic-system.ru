@@ -121,7 +121,7 @@ class Api
  * @property-read string          $Okato       ОКАТО объекта
  * @property-read \Kladr\Object_[] $Parents     Массив родительских объектов
  */
-class Object
+class Object_
 {
 	private $id;
 	private $name;
