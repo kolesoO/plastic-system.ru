@@ -79,7 +79,7 @@ class Api
 	/**
 	 * Возвращает результат запроса к сервису в виде массива объектов
 	 * @param \Kladr\Query $query Объект запроса
-	 * @return \Kladr\Object[]
+	 * @return \Kladr\Object_[]
 	 */
 	public function QueryToObjects(Query $query)
 	{
@@ -119,7 +119,7 @@ class Api
  * @property-read string          $TypeShort   Тип объекта коротко (обл, р-н)
  * @property-read string          $ContentType Тип объекта из перечисления ObjectType
  * @property-read string          $Okato       ОКАТО объекта
- * @property-read \Kladr\Object[] $Parents     Массив родительских объектов
+ * @property-read \Kladr\Object_[] $Parents     Массив родительских объектов
  */
 class Object
 {
