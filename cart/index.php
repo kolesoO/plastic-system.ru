@@ -8,7 +8,11 @@ if (\Bitrix\Main\Loader::includeModule('sale')) {
     $arBasketItems = [];
     $rsItems = \CSaleBasket::GetList(
         [],
-        [""],
+        [
+            "FUSER_ID" => \CSaleBasket::GetBasketUserID(),
+            "LID" => SITE_ID,
+            "ORDER_ID" => "NULL"
+        ],
         false,
         false,
         ["ID", "PRODUCT_ID", "QUANTITY"]
@@ -42,13 +46,17 @@ if (\Bitrix\Main\Loader::includeModule('sale')) {
                     ]
                 ]
             )) {
-                \CSaleBasket::Update($arBasketItems[$arItem["ID"]]["ID"], [
-                    "PRODUCT_PRICE_ID" => $arPrice["PRICE"]["ID"],
-                    "PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"],
-                    "BASE_PRICE" => $arPrice["RESULT_PRICE"]["BASE_PRICE"],
-                    "DISCOUNT_PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
-                    "DISCOUNT_NAME" => $arPrice["DISCOUNT"]["NAME"]
-                ]);
+                if ($arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"] > 0) {
+                    \CSaleBasket::Update($arBasketItems[$arItem["ID"]]["ID"], [
+                        "PRODUCT_PRICE_ID" => $arPrice["PRICE"]["ID"],
+                        "PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"],
+                        "BASE_PRICE" => $arPrice["RESULT_PRICE"]["BASE_PRICE"],
+                        "DISCOUNT_PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
+                        "DISCOUNT_NAME" => $arPrice["DISCOUNT"]["NAME"]
+                    ]);
+                } else {
+                    \CSaleBasket::Delete($arBasketItems[$arItem["ID"]]["ID"]);
+                }
             }
         }
     }
