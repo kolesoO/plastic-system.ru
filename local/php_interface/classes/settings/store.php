@@ -69,6 +69,7 @@ class Store
             []
         )->fetch()) {
             define("PRICE_CODE", $arPrice["NAME"]);
+            define("PRICE_ID", $arPrice["ID"]);
         }
     }
 }
