@@ -135,24 +135,23 @@ class Catalog
     public static function getCatalogCalcItems($arParams)
     {
         global $APPLICATION;
-        global $arCatalogFilter;
 
         $return = "";
 
         if (isset($arParams["AJAX_TEMPLATE"]) && strlen($arParams["AJAX_TEMPLATE"]) > 0) {
-            //params
-            foreach ($arParams as $code => $value) {
-                if ($value == "true" || $value == "false") {
-                    $arParams[$code] = $value ? "Y" : "N"; //TODO: сейчас сделано фиксом - переделать на стандартную реализацию внутри битрикса
-                }
-            }
-            //end
             //filter
             foreach ($arParams["FILTER_VALUES"] as $key => $filterValue) {
-                if(strlen($filterValue) == 0)
+                if(strlen($filterValue) == 0) {
                     unset($arParams["FILTER_VALUES"][$key]);
+                }
             }
-            $arCatalogFilter = (is_array($arParams["FILTER_VALUES"]) ? $arParams["FILTER_VALUES"] : []);
+            $arCatalogFilter = [];
+            if (is_array($arParams["FILTER_VALUES"]) ? $arParams["FILTER_VALUES"] : []) {
+                foreach ($arParams["FILTER_VALUES"] as $code => $value) {
+                    if (floatval($value) == 0 || strpos($code, "PROPERTY_") !== 0) continue;
+                    $arCatalogFilter["<=" . $code] = $value;
+                }
+            }
             $arCatalogFilter["!OFFERS"] = null;
             //end
             ob_start();

@@ -110,8 +110,8 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
     }
     //end
 
-    //разбивка торг предложений на 'с цветом', 'с размером', 'дно', 'ibox', 'Тип контейнера'
-    $arResult["TSVET"] = $arResult["RAZMER"] = $arResult["OPTSII_IBOX"] = $arResult["DNO"] = $arResult["TIP_KONTEYNERA"] = $arResult["KOLICHESTVO_MET_TRUB"] = [
+    //разбивка торг предложений на 'с цветом', 'с размером', 'дно', 'ibox', 'Тип контейнера' и т.д.
+    $arResult["TSVET"] = $arResult["RAZMER"] = $arResult["OPTSII_IBOX"] = $arResult["DNO"] = $arResult["TIP_KONTEYNERA"] = $arResult["KOLICHESTVO_MET_TRUB"] = $arResult["visota_yashika"] = [
         "ID" => [],
         "COUNT" => 0,
         "TITLE" => ""
@@ -164,6 +164,14 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
             $arValueCache[] = $arOffer["PROPERTIES"]["KOLICHESTVO_MET_TRUB"]["VALUE"];
             if (strlen($arResult["KOLICHESTVO_MET_TRUB"]["TITLE"]) == 0) {
                 $arResult["KOLICHESTVO_MET_TRUB"]["TITLE"] = $arOffer["PROPERTIES"]["KOLICHESTVO_MET_TRUB"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["visota_yashika"]["VALUE"]) > 0) {
+            $arResult["visota_yashika"]["ID"][] = $arOffer["ID"];
+            $arResult["visota_yashika"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["visota_yashika"]["VALUE"];
+            if (strlen($arResult["visota_yashika"]["TITLE"]) == 0) {
+                $arResult["visota_yashika"]["TITLE"] = $arOffer["PROPERTIES"]["visota_yashika"]["NAME"];
             }
         }
     }
