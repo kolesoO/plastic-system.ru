@@ -18,10 +18,18 @@
                     <input type="text" onchange="obCalculator.setLength(this)" class="small">
                 </div>
             </form>
-            <div id="calculator_render-items" class="horizontal_form" flex-align="center">
+            <div class="horizontal_form" flex-align="center">
                 <div class="col-lg-24" flex-align="center">
                     <div class="horizontal_form-item">
-                        <label>Высота мм</label>
+                        <label>Высота основания полки, мм</label>
+                        <input type="text" name="item_height" value="10" class="small" onchange="obCalculatorRender.setRackItemHeight(this)">
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal_form" flex-align="center">
+                <div class="col-lg-24" flex-align="center">
+                    <div class="horizontal_form-item">
+                        <label>Высота, мм</label>
                         <input id="item_height" type="text" name="item_height" value="" class="small">
                     </div>
                     <div class="horizontal_form-item">
@@ -39,14 +47,12 @@
         <div class="cart_desc">
             <div class="title-2">Лотки и контейнеры</div>
             <?if ($arResult["SECTIONS_COUNT"] > 0) :?>
-                <form id="catalog-calculator-sub_main">
-                    <select name="SECTION_ID" class="full" onchange="obAjax.getCatalogCalcItems(this, 'catalog-calculator-main')">
-                        <option value="">выбрать</option>
-                        <?foreach ($arResult["SECTIONS"] as $arSection) :?>
-                            <option value="<?=$arSection["ID"]?>"><?=$arSection["NAME"]?></option>
-                        <?endforeach?>
-                    </select>
-                </form>
+                <select class="full" onchange="obCalculator.getCatalogItems(this)">
+                    <option value="">выбрать</option>
+                    <?foreach ($arResult["SECTIONS"] as $arSection) :?>
+                        <option value="<?=$arSection["ID"]?>"><?=$arSection["NAME"]?></option>
+                    <?endforeach?>
+                </select>
                 <br>
             <?endif?>
             <div id="<?=$arParams["WRAP_ID"]?>">

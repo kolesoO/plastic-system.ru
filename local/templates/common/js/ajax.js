@@ -171,29 +171,23 @@ var obAjax = {
      * @param formItem
      * @param dopFormId
      */
-    getCatalogCalcItems: function(formItem, dopFormId)
+    getCatalogCalcItems: function(params)
     {
         /**
          *
          * global obCatalogCalcItemsParams
          */
 
-        var form = formItem.closest("form"),
-            subForm = document.getElementById(dopFormId),
-            ctx = this;
+        var ctx = this;
 
-        if (!!form && !!subForm && typeof obCatalogCalcItemsParams == "object") {
-            obCatalogCalcItemsParams.FILTER_VALUES = Object.assign(ctx.getFormObject(form), ctx.getFormObject(subForm));
-            ctx.setParams(obCatalogCalcItemsParams);
-        }
-
+        ctx.setParams(params);
         ctx.doRequest(
             "POST",
             location.href,
             ctx.serializeData({
                 class: "Catalog",
                 method: "getCatalogCalcItems",
-                params: ctx.params
+                params: params
             }),
             [
                 ["Content-type", "application/x-www-form-urlencoded"]

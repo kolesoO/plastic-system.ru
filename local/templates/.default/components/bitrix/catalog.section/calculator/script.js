@@ -5,7 +5,7 @@ var obCalculator = {
         length: 0,
         items: [], //полки
         products: [], //товары,
-        currentItemKey: 0, //текущая выбранная полка
+        currentItemKey: -1, //текущая выбранная полка
 
         /**
          *
@@ -16,6 +16,7 @@ var obCalculator = {
         {
             this.width = self.value;
             this.items = [];
+            obCalculatorRender.renderMain();
         },
 
         /**
@@ -24,8 +25,14 @@ var obCalculator = {
          */
         setHeight: function(self)
         {
+            var wrapperNode = document.getElementById(obCalculatorRender.blockId);
+
             this.height = self.value;
+            if (!!wrapperNode) {
+                wrapperNode.style.height = this.height + "px";
+            }
             this.items = [];
+            obCalculatorRender.renderMain();
         },
 
         /**
@@ -36,16 +43,7 @@ var obCalculator = {
         {
             this.length = self.value;
             this.items = [];
-        },
-
-        /**
-         *
-         * @param itemKey
-         * @returns {*}
-         */
-        getItemHeight: function(itemKey)
-        {
-            return this.items[itemKey].height;
+            obCalculatorRender.renderMain();
         },
 
         /**
@@ -59,19 +57,43 @@ var obCalculator = {
 
         /**
          *
+         * @returns {*}
+         */
+        getCurrentItem: function()
+        {
+            if (!this.items[this.currentItemKey]) {
+                obCalculatorRender.showMessage("Полка не выбрана");
+                return false;
+            }
+
+            return this.items[this.currentItemKey];
+        },
+
+        /**
+         *
          * @param self
          */
         addItem: function(targetSelector)
         {
-            var $target = $(targetSelector);
+            var $target = $(targetSelector),
+                ctx = this;
 
             if ($target.length > 0) {
-                var itemHeight = parseFloat($target.val());
+                var itemHeight = parseFloat($target.val()),
+                    fullHeight = 0;
                 if (!isNaN(itemHeight) && itemHeight > 0) {
-                    this.items.push({
-                        height: itemHeight,
-                        products: []
+                    this.items.forEach(function(item) {
+                        fullHeight += ctx.getItemRealHeight(item, 1);
                     });
+                    if (this.height >= fullHeight + itemHeight + obCalculatorRender.rackItemHeight) {
+                        this.items.push({
+                            height: itemHeight,
+                            products: []
+                        });
+                        obCalculatorRender.renderMain();
+                    } else {
+                        obCalculatorRender.showMessage("Большая высота");
+                    }
                 }
             }
         },
@@ -83,6 +105,8 @@ var obCalculator = {
         deleteItem: function(itemKey)
         {
             this.items.splice(itemKey, 1);
+            this.currentItemKey = -1;
+            obCalculatorRender.renderMain();
         },
 
         /**
@@ -138,14 +162,54 @@ var obCalculator = {
             for (var counter = 0; counter < parseInt(this.width/width); counter++) {
                 this.addProduct(width, height, length, productId)
             }
+        },
+
+        /**
+         *
+         * @param item
+         * @param index
+         * @returns {*}
+         */
+        getItemRealHeight: function(item, index)
+        {
+            var height = item.height;
+            if (index > 0) {
+                height += obCalculatorRender.rackItemHeight;
+            }
+
+            return height;
+        },
+
+        getCatalogItems: function(self)
+        {
+            /**
+             *
+             * global obCatalogCalcItemsParams
+             */
+
+            if (this.length == 0 || this.width == 0 || this.height == 0) {
+                obCalculatorRender.showMessage("Параметры стеллежа не заполнены полностью");
+                return;
+            }
+
+            if (typeof obCatalogCalcItemsParams == "object") {
+                var curItem;
+                if (curItem = this.getCurrentItem()) {
+                    obCatalogCalcItemsParams.FILTER_VALUES = {
+                        "SECTION_ID": self.value,
+                        "PROPERTY_DLINA_MM_VALUE": this.length,
+                        "PROPERTY_SHIRINA_MM_VALUE": this.width,
+                        "PROPERTY_VYSOTA_MM_VALUE": curItem.height
+                    };
+                    obAjax.getCatalogCalcItems(obCatalogCalcItemsParams);
+                }
+            }
         }
 
     },
     obCalculatorRender = {
 
         blockId: "rack-content",
-
-        traiInputBlockId: "calculator_render-items",
 
         traiIdPrefix: "trai-",
 
@@ -164,11 +228,29 @@ var obCalculator = {
 
         /**
          *
-         * @param id
+         * @param self
          */
-        setTraiInputBlockId: function(id)
+        setRackItemHeight: function(self)
         {
-            this.traiInputBlockId = id;
+            var cacheHeight = 0,
+                height = 0;
+            if ($(self).length > 0) {
+                height = parseFloat($(self).val());
+                if (!isNaN(height)) {
+                    var fullHeight = 0;
+                    cacheHeight = this.rackItemHeight;
+                    this.rackItemHeight = height;
+                    obCalculator.items.forEach(function(item, index) {
+                        fullHeight += obCalculator.getItemRealHeight(item, 1);
+                    });
+                    if (obCalculator.height >= fullHeight) {
+                        obCalculatorRender.renderMain();
+                    } else {
+                        obCalculatorRender.showMessage("Большая высота");
+                        this.rackItemHeight = cacheHeight;
+                    }
+                }
+            }
         },
 
         /**
@@ -178,27 +260,29 @@ var obCalculator = {
         {
             var wrapperNode = document.getElementById(this.blockId),
                 rackNode = null,
-                wrapperHeight = this.height,
                 ctx = this,
                 newItemHeight = 0;
+
             if (!!wrapperNode) {
                 wrapperNode.innerHTML = "";
-                console.log(obCalculator.items);
+                console.log(obCalculator);
                 obCalculator.items.forEach(function(item, index) {
-                    newItemHeight += ctx.rackItemHeight*index;
-                    newItemHeight += item.height;
-                    rackNode = ctx.string2Node(ctx.getRackItem(newItemHeight));
+                    newItemHeight += obCalculator.getItemRealHeight(item, index);
+                    rackNode = ctx.string2Node(ctx.getRackItem(newItemHeight, index));
                     item.products.forEach(function(product) {
                         rackNode.appendChild(ctx.string2Node(ctx.getTraiItem(product.width, product.height)))
                     })
                     wrapperNode.appendChild(rackNode);
                     wrapperNode.appendChild(ctx.string2Node(ctx.getRackDelete(newItemHeight, index)));
-                    if (newItemHeight > wrapperHeight) {
-                        wrapperHeight = newItemHeight;
-                    }
+
+                    //events
+                    rackNode.addEventListener("click", function() {
+                        $(".rack_item").removeClass("active");
+                        $(this).addClass("active");
+                        obCalculator.setCurrentItem($(this).attr("data-index"));
+                    });
+                    //end
                 });
-                wrapperHeight += 50;
-                wrapperNode.style.height = wrapperHeight + "px";
             }
         },
 
@@ -219,12 +303,13 @@ var obCalculator = {
 
         /**
          *
-         * @param height
+         * @param top
+         * @param id
          * @returns {string}
          */
-        getRackItem: function(height)
+        getRackItem: function(top, id)
         {
-            return '<div class="rack_item" style="top: ' + height + 'px"></div>';
+            return '<div class="rack_item" style="top: ' + top + 'px;height: ' + this.rackItemHeight + 'px" data-index="' + id + '"></div>';
         },
 
         /**
