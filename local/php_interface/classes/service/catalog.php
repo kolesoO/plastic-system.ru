@@ -19,6 +19,7 @@ class Catalog
     public static function OnAfterIBlockElementUpdateHandler($arFields)
     {
         if ($arFields["IBLOCK_ID"] == IBLOCK_CATALOG_CATALOG) {
+            //перекрестная синхронизация свойств между связанными инфоблоками
             self::setItemSku($arFields["ID"], ["PROPERTY_TSVET_VALUE" => false]);
             if (count(self::$arSku) > 0) {
                 self::updateProperty(
@@ -27,6 +28,23 @@ class Catalog
                     $arFields
                 );
             }
+            //end
+
+            self::ListToStringProperty(
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "DLINA_MM"],
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "DLINA_MM_NUMBER"],
+                $arFields
+            );
+            self::ListToStringProperty(
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "SHIRINA_MM"],
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "SHIRINA_MM_NUMBER"],
+                $arFields
+            );
+            self::ListToStringProperty(
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "VYSOTA_MM"],
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "VYSOTA_MM_NUMBER"],
+                $arFields
+            );
         }
     }
 
@@ -108,6 +126,32 @@ class Catalog
                 if ($value["PROPERTY_TYPE"] == "S" && !defined($code)) {
                     define(strtoupper($code), $value["VALUE"]);
                 }
+            }
+        }
+    }
+
+    /**
+     * @param $arStartData
+     * @param $arEndData
+     * @param $arFields
+     */
+    public static function ListToStringProperty($arStartData, $arEndData, $arFields)
+    {
+        if (
+            !isset($arStartData["IBLOCK_ID"]) || !isset($arStartData["PROP_CODE"]) ||
+            !isset($arEndData["IBLOCK_ID"]) || !isset($arEndData["PROP_CODE"])
+        ) return;
+
+        if ($arProperty = \CIBlockProperty::GetByID($arStartData["PROP_CODE"], $arStartData["IBLOCK_ID"])->fetch()) {
+            $arPropValue = $arFields["PROPERTY_VALUES"][$arProperty["ID"]];
+            if ($valueInfo = \CIBlockPropertyEnum::GetByID($arPropValue[0]["VALUE"])) {
+                \CIBlockElement::SetPropertyValuesEx(
+                    $arFields["ID"],
+                    $arFields["IBLOCK_ID"],
+                    [
+                        $arEndData["PROP_CODE"] => $valueInfo["VALUE"]
+                    ]
+                );
             }
         }
     }

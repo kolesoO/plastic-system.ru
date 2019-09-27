@@ -16,6 +16,7 @@ var obCalculator = {
         {
             this.width = self.value;
             this.items = [];
+            this.currentItemKey = -1;
             obCalculatorRender.renderMain();
         },
 
@@ -32,6 +33,7 @@ var obCalculator = {
                 wrapperNode.style.height = this.height + "px";
             }
             this.items = [];
+            this.currentItemKey = -1;
             obCalculatorRender.renderMain();
         },
 
@@ -43,6 +45,7 @@ var obCalculator = {
         {
             this.length = self.value;
             this.items = [];
+            this.currentItemKey = -1;
             obCalculatorRender.renderMain();
         },
 
@@ -111,19 +114,24 @@ var obCalculator = {
 
         /**
          *
-         * @param _length
          * @param _width
          * @param _height
+         * @param _length
+         * @param _price
+         * @param _price_id
          * @param productId
+         * @returns {{price: *, length: *, width: *, price_id: *, id: *, height: *}}
          */
-        addProduct: function(_width, _height, _length, productId)
+        getProduct: function(_width, _height, _length, _price, _price_id, productId)
         {
-            this.items[this.currentItemKey].products.push({
+            return {
                 length: _length,
                 width: _width,
                 height: _height,
+                price: _price,
+                price_id: _price_id,
                 id: productId
-            });
+            };
         },
 
         /**
@@ -142,11 +150,20 @@ var obCalculator = {
          * @param width
          * @param height
          * @param length
+         * @param price
+         * @param price_id
          * @param productId
+         * @param event
          */
-        addCollection: function(width, height, length, productId)
+        addCollection: function(width, height, length, price, price_id, productId, event)
         {
-            var error = "";
+            event.preventDefault();
+
+            var error = "",
+                arProducts = [],
+                ctx = this,
+                oldCollectionsHeight = 0,
+                curItem;
 
             if (this.width < width) {
                 error = "Большая ширина";
@@ -154,14 +171,25 @@ var obCalculator = {
                 error = "Большая высота";
             } else if (this.length < length) {
                 error = "Большая глубина";
+            } else {
+                if (curItem = this.getCurrentItem()) {
+                    for (var counter = 0; counter < curItem.products.length; counter++) {
+                        oldCollectionsHeight += this.items[this.currentItemKey].products[counter][0].height;
+                    }
+                    if (curItem.height < oldCollectionsHeight + height) {
+                        error = "Превышена допустимая высота полки";
+                    }
+                }
             }
             if (error.length > 0) {
-                this.showMessage(error);
+                obCalculatorRender.showMessage(error);
                 return;
             }
             for (var counter = 0; counter < parseInt(this.width/width); counter++) {
-                this.addProduct(width, height, length, productId)
+                arProducts.push(ctx.getProduct(width, height, length, price, price_id, productId));
             }
+            this.items[this.currentItemKey].products.push(arProducts);
+            obCalculatorRender.renderMain();
         },
 
         /**
@@ -180,6 +208,10 @@ var obCalculator = {
             return height;
         },
 
+        /**
+         *
+         * @param self
+         */
         getCatalogItems: function(self)
         {
             /**
@@ -188,21 +220,43 @@ var obCalculator = {
              */
 
             if (this.length == 0 || this.width == 0 || this.height == 0) {
-                obCalculatorRender.showMessage("Параметры стеллежа не заполнены полностью");
+                obCalculatorRender.showMessage("Параметры стеллажа не заполнены полностью");
                 return;
             }
 
             if (typeof obCatalogCalcItemsParams == "object") {
                 var curItem;
                 if (curItem = this.getCurrentItem()) {
+                    obCatalogCalcItemsParams.SECTION_ID = self.value;
                     obCatalogCalcItemsParams.FILTER_VALUES = {
-                        "SECTION_ID": self.value,
-                        "PROPERTY_DLINA_MM_VALUE": this.length,
-                        "PROPERTY_SHIRINA_MM_VALUE": this.width,
-                        "PROPERTY_VYSOTA_MM_VALUE": curItem.height
+                        "PROPERTY_DLINA_MM_NUMBER": this.length,
+                        "PROPERTY_SHIRINA_MM_NUMBER": this.width,
+                        "PROPERTY_VYSOTA_MM_NUMBER": curItem.height
                     };
                     obAjax.getCatalogCalcItems(obCatalogCalcItemsParams);
                 }
+            }
+        },
+
+        /**
+         *
+         * @param evt
+         */
+        addToBasketMany: function(evt)
+        {
+            evt.preventDefault();
+
+            var curItem;
+            if (curItem = this.getCurrentItem()) {
+                var offerId = [],
+                    priceId = 0;
+                curItem.products.forEach(function(row) {
+                    row.forEach(function (product) {
+                        offerId.push(product.id);
+                        priceId = product.price_id;
+                    });
+                });
+                obAjax.addToBasketMany(offerId, priceId, evt);
             }
         }
 
@@ -261,17 +315,26 @@ var obCalculator = {
             var wrapperNode = document.getElementById(this.blockId),
                 rackNode = null,
                 ctx = this,
-                newItemHeight = 0;
+                newItemHeight = 0,
+                productWidthPercent = 0,
+                productTopCoord = 0,
+                fullQnt = 0,
+                fullPrice = 0;
 
             if (!!wrapperNode) {
                 wrapperNode.innerHTML = "";
-                console.log(obCalculator);
                 obCalculator.items.forEach(function(item, index) {
                     newItemHeight += obCalculator.getItemRealHeight(item, index);
                     rackNode = ctx.string2Node(ctx.getRackItem(newItemHeight, index));
-                    item.products.forEach(function(product) {
-                        rackNode.appendChild(ctx.string2Node(ctx.getTraiItem(product.width, product.height)))
-                    })
+                    item.products.forEach(function(row, index) {
+                        productTopCoord += (index > 0 ? 2*row[0].height : row[0].height);
+                        row.forEach(function(product) {
+                            fullQnt++;
+                            fullPrice+= product.price;
+                            productWidthPercent = product.width/obCalculator.width*100;
+                            rackNode.appendChild(ctx.string2Node(ctx.getTraiItem(productWidthPercent, product.height, productTopCoord)));
+                        });
+                    });
                     wrapperNode.appendChild(rackNode);
                     wrapperNode.appendChild(ctx.string2Node(ctx.getRackDelete(newItemHeight, index)));
 
@@ -282,23 +345,37 @@ var obCalculator = {
                         obCalculator.setCurrentItem($(this).attr("data-index"));
                     });
                     //end
+
+                    //styles
+                    if(index == obCalculator.currentItemKey) {
+                        rackNode.classList.add("active");
+                    }
+                    //end
                 });
+
+                //update total
+                var countNode = document.getElementById("full_count"),
+                    priceNode = document.getElementById("full_price");
+                if (!!countNode) {
+                    countNode.innerText = fullQnt.toString();
+                }
+                if (!!priceNode) {
+                    priceNode.innerText = fullPrice.toString();
+                }
+                //end
             }
         },
 
         /**
          *
-         * @param width
+         * @param widthPercent
          * @param height
+         * @param top
          * @returns {string}
          */
-        getTraiItem: function(width, height)
+        getTraiItem: function(widthPercent, height, top)
         {
-            return '<div class="tray_item" style="width: ' + width + 'px;height: ' + height + 'px;top: -' + height + 'px">' +
-                '<a href="#" class="tray_item-close" title="удалить"><i class="icon close"></i></a>' +
-                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.002 17.997"><defs><style>.a_{fill:#ff2429;}</style></defs><path class="a_" d="M-21980.4,206.55l-3.6-3.6v-14.4h2v13.6l2.4,2.4h18.2l2.4-2.4v-11.6h-2v9h-19v-9h-2v-2h25v14.4l-3.6,3.6Zm2.4-9h15v-7h-15Z" transform="translate(21984 -188.552)"/></svg>' +
-                '</div>'
-            ;
+            return '<div class="tray_item" style="width: ' + widthPercent + '%;height: ' + height + 'px;top: -' + top + 'px"></div>';
         },
 
         /**
@@ -344,7 +421,7 @@ var obCalculator = {
          */
         showMessage: function(string)
         {
-            console.log(string);
+            obAjax.addPopupMessage("attention", string);
         }
 
     };

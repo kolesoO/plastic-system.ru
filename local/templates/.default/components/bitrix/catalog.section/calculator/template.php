@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="rack-wrap">
+            <div class="rack-wrap" align="center">
                 <div class="rack">
                     <svg xmlns="http://www.w3.org/2000/svg" width="344" height="33" viewBox="0 0 344 33"><defs><style>.a{fill:#fff;}.b{fill:#303030;}.c{fill:none;stroke:#303030;stroke-miterlimit:10;stroke-width:2px;}</style></defs><path class="a" d="M337,32V23H7v9H1V1H7V9H337V1h6V32Z"/><path class="b" d="M342,2V31h-4V22H6v9H2V2H6v8H338V2h4m2-2h-8V8H8V0H0V33H8V24H336v9h8V0Z"/><line class="c" x2="325" transform="translate(10 14)"/><line class="c" x2="325" transform="translate(10 19)"/></svg>
                     <div id="rack-content" class="rack-content"></div>
@@ -55,40 +55,18 @@
                 </select>
                 <br>
             <?endif?>
-            <div id="<?=$arParams["WRAP_ID"]?>">
-                <?if ($arResult["ITEMS_COUNT"] > 0) :?>
-                    <!--p>
-                        <span>SK 315019 шт.</span><br>
-                        <span>Стоимость выбранных лотков/контейнеров: 2242 руб.</span>
-                    </p-->
-                    <a href="#" class="table_list-basket full" onclick="obAjax.addToBasketMany(event)">
-                        <i class="icon basket-white"></i>
-                        <span>В корзину</span>
-                    </a>
-                    <div class="calculator_list">
-                        <?foreach ($arResult["ITEMS"] as $arItem) {
-                            $APPLICATION->IncludeComponent(
-                                "bitrix:catalog.item",
-                                "small",
-                                [
-                                    "RESULT" => [
-                                        "ITEM" => $arItem,
-                                        "OFFER_KEY" => 0,
-                                        "OFFERS_LIST" => $arItem["OFFERS"]
-                                    ],
-                                    "PARAMS" => $arResult["ORIGINAL_PARAMETERS"],
-                                    "PRICES" => $arResult["PRICES"]
-                                ],
-                                null,
-                                ['HIDE_ICONS' => 'Y']
-                            );
-                        }?>
-                    </div>
-                <?else:?>
-                    <p>Товары не найдены</p>
-                <?endif?>
-            </div>
+            <p>
+                <span>Добалено - <span id="full_count">0</span> шт.</span><br>
+                <span>Стоимость выбранных лотков/контейнеров: <span id="full_price">0</span> руб.</span>
+            </p>
+            <a href="#" class="table_list-basket full" onclick="obCalculator.addToBasketMany(event)">
+                <i class="icon basket-white"></i>
+                <span>В корзину</span>
+            </a>
+            <div id="<?=$arParams["WRAP_ID"]?>" class="calculator_list"></div>
         </div>
     </div>
 </div>
-<script>var obCatalogCalcItemsParams = <?=CUtil::PhpToJSObject(array_merge(["target_id" => $arParams["WRAP_ID"]], $arParams))?>;</script>
+<script>
+    var obCatalogCalcItemsParams = <?=CUtil::PhpToJSObject(array_merge(["target_id" => $arParams["WRAP_ID"]], $arParams))?>;
+</script>

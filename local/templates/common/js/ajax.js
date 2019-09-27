@@ -234,23 +234,13 @@ var obAjax = {
 
     /**
      *
+     * @param arOfferId
      * @param priceId
      * @param evt
      */
-    addToBasketMany: function(evt)
+    addToBasketMany: function(arOfferId, priceId, evt)
     {
-        /**
-         * global offerIdToBasket
-         */
-        var priceId = 0,
-            arOfferId = [];
-        for (var key in window.offerIdToBasket) {
-            priceId = window.offerIdToBasket[key].PRICE_ID;
-            arOfferId.push(window.offerIdToBasket[key].OFFER_ID);
-        }
-        if (arOfferId.length > 0) {
-            this.addToBasket(arOfferId, priceId, evt);
-        }
+        this.addToBasket(arOfferId, priceId, evt);
     },
 
     /**

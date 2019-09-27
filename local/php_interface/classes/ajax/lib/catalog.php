@@ -135,6 +135,7 @@ class Catalog
     public static function getCatalogCalcItems($arParams)
     {
         global $APPLICATION;
+        global $arCatalogFilter;
 
         $return = "";
 
@@ -150,10 +151,16 @@ class Catalog
                 foreach ($arParams["FILTER_VALUES"] as $code => $value) {
                     if (floatval($value) == 0 || strpos($code, "PROPERTY_") !== 0) continue;
                     $arCatalogFilter["<=" . $code] = $value;
+                    /*$arCatalogFilter[] = [
+                        "LOGIC" => "AND",
+                        [">=" . $code => $value],
+                        ["!" . $code => false]
+                    ];*/
                 }
             }
             $arCatalogFilter["!OFFERS"] = null;
             //end
+
             ob_start();
             $APPLICATION->IncludeComponent(
                 "bitrix:catalog.section",
@@ -175,8 +182,8 @@ class Catalog
                     "BROWSER_TITLE" => "-",
                     "CACHE_FILTER" => "N",
                     "CACHE_GROUPS" => "Y",
-                    "CACHE_TIME" => "36000000",
-                    "CACHE_TYPE" => "A",
+                    "CACHE_TIME" => "0",
+                    "CACHE_TYPE" => "N",
                     "COMPATIBLE_MODE" => "Y",
                     "CONVERT_CURRENCY" => "Y",
                     "CURRENCY_ID" => "RUB",
@@ -243,12 +250,12 @@ class Catalog
                     "PRODUCT_QUANTITY_VARIABLE" => "",
                     "PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':true}]",
                     "PRODUCT_SUBSCRIPTION" => "Y",
-                    "PROPERTY_CODE" => array("NEWPRODUCT",""),
+                    "PROPERTY_CODE" => array("DLINA_MM","SHIRINA_MM", "VYSOTA_MM"),
                     "PROPERTY_CODE_MOBILE" => array(),
                     "RCM_PROD_ID" => "",
                     "RCM_TYPE" => "personal",
                     "SECTION_CODE" => "",
-                    "SECTION_ID" => "",
+                    "SECTION_ID" => $arParams["SECTION_ID"],
                     "SECTION_ID_VARIABLE" => "SECTION_ID",
                     "SECTION_URL" => "",
                     "SECTION_USER_FIELDS" => array("",""),

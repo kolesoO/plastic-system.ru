@@ -4,7 +4,11 @@
     <?foreach ($arResult["ITEM"]["OFFERS"] as $arOffer) :
         $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
         ?>
-        <a href="#" class="calculator_list-item" onclick="obAjax.toPreBasketList('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', this, event)">
+        <a
+                href="#"
+                class="calculator_list-item"
+                onclick="obCalculator.addCollection(<?=$arResult["ITEM"]["PROPERTIES"]["SHIRINA_MM"]["VALUE"]?>, <?=$arResult["ITEM"]["PROPERTIES"]["VYSOTA_MM"]["VALUE"]?>, <?=$arResult["ITEM"]["PROPERTIES"]["DLINA_MM"]["VALUE"]?>, <?=$arPrice["PRICE"]?>, <?=$arPrice["PRICE_TYPE_ID"]?>, <?=$arOffer["ID"]?>, event)"
+        >
             <div class="calculator_list-img">
                 <img src="<?=(is_array($arOffer["PREVIEW_PICTURE"]) ? $arOffer["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arOffer["NAME"]?>">
             </div>

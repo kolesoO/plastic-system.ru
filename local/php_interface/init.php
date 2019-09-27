@@ -21,8 +21,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/php-yande
 require_once $_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/kladrapi-php/kladr.php";
 //end
 
+\kDevelop\Help\Tools::definders();
+
 //Обработчики событий
 if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
+    \kDevelop\Service\Catalog::defineSettings();
     //main module
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Help\Tools", "setDeviceType"], false, 100);
     $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Settings\Store", "setStore"], false, 200);
@@ -30,8 +33,6 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
     $rsManager->addEventHandler("sale", "OnOrderNewSendEmail", ["\kDevelop\Service\Order", "OnOrderNewSendEmailHandler"], false, 100);
     $rsManager->addEventHandler("sale", "onSaleDeliveryServiceCalculate", ["\kDevelop\Service\Order", "onSaleDeliveryServiceCalculateHandler"], false, 100);
     //end
-    \kDevelop\Help\Tools::definders();
-    \kDevelop\Service\Catalog::defineSettings();
 } else {
     //iblock module
     $rsManager->addEventHandler("iblock", "OnAfterIBlockElementUpdate", ["\kDevelop\Service\Catalog", "OnAfterIBlockElementUpdateHandler"], false, 100);

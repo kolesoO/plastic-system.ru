@@ -5,8 +5,6 @@ class Basket
 {
     use MsgHandBook;
 
-    private static $minQnt = 1;
-
     /**
      * @param array $arProp
      * @return array
@@ -33,7 +31,12 @@ class Basket
         if (is_array($arParams["offer_id"]) && count($arParams["offer_id"]) > 0) {
             if (isset($arParams["price_id"]) && strlen($arParams["price_id"]) > 0) {
                 if (\Bitrix\Main\Loader::includeModule("sale")) {
-                    $arParams["qnt"] = intval($arParams["qnt"]) > 0 ? $arParams["qnt"] : self::$minQnt;
+                    $arParams["qnt"] = intval($arParams["qnt"]);
+                    //qnt
+                    if ($arParams["qnt"] == 0) {
+                        $arParams["qnt"] = count($arParams["offer_id"]);
+                    }
+                    //end
                     $rsItem = \CIBlockElement::GetList(
                         [],
                         [
