@@ -217,12 +217,6 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                                 <i class="icon search"></i>
                             </button>
                         </form>
-                    <?else:?>
-                        <div class="header-search-wrap">
-                            <a href="#" data-popup-open="#header-search-popup">
-                                <i class="icon search"></i>
-                            </a>
-                        </div>
                     <?endif?>
                 </div>
                 <?if (!CSite::InDir("/cart") && !CSite::InDir("/checkout")) :?>
@@ -257,7 +251,11 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                 <?endif?>
                 <div class="header-col col-lg-2 col-md-2 col-xs-3">
                     <a href="/favorite/">
-                        <i class="icon favorite"></i>
+                        <i id="favorite-wrapper" class="icon favorite">
+                            <?if (\kDevelop\Ajax\Favorite::getCount() > 0) :?>
+                                <span class="icon-inner"><?=\kDevelop\Ajax\Favorite::getCount()?></span>
+                            <?endif?>
+                        </i>
                     </a>
                 </div>
                 <div class="header-col col-lg-5 col-md-2 col-xs-3">

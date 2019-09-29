@@ -36,6 +36,7 @@ class Favorite
             $_SESSION[self::$sessionKey][] = $arParams["id"];
             $arReturn["is_added"] = true;
             $arReturn["msg"] = self::getMsg("ADD_TO_FAVORITE_SUCCESS");
+            $arReturn["full_count"] = self::getCount();
         }
 
         return $arReturn;
@@ -54,17 +55,25 @@ class Favorite
         ];
         $arParams["id"] = intval($arParams["id"]);
         if ($arParams["id"] > 0 && self::isAdded($arParams["id"])) {
-            foreach ($_SESSION[self::$sessionKey] as &$id) {
+            foreach ($_SESSION[self::$sessionKey] as $key => $id) {
                 if ($id == $arParams["id"]) {
-                    unset($id);
+                    unset($_SESSION[self::$sessionKey][$key]);
                     break;
                 }
             }
-            unset($id);
             $arReturn["is_deleted"] = true;
             $arReturn["msg"] = self::getMsg("DELETE_FROM_FAVORITE_SUCCESS");
+            $arReturn["full_count"] = self::getCount();
         }
 
         return $arReturn;
+    }
+
+    /**
+     * @return int
+     */
+    public static function getCount()
+    {
+        return count($_SESSION[self::$sessionKey]);
     }
 }

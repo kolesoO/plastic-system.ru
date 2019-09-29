@@ -27,6 +27,16 @@ if ($arParams['DISPLAY_COMPARE']) {
 //end
 ?>
 
+<?if ($arParams["FAVORITE_ITEM"] == "Y") :?>
+    <a
+            href="javascript:void(0)"
+            class="close_wrap"
+            title="<?=GetMessage("CATALOG_REMOVE_PRODUCT")?>"
+            onclick="obAjax.deleteFromFavorite('<?=$arResult["ITEM"]["ID"]?>', 'catalog-item-<?=$arResult["ITEM"]["ID"]?>', event);"
+    >
+        <i class="icon close"></i>
+    </a>
+<?endif?>
 <?if ($arStatus = \kDevelop\Help\Tools::getOfferStatusInfo($arResult["OFFER"]["PROPERTIES"]["STATUS"]["VALUE_XML_ID"])) :?>
     <div class="label" style="background-color:<?=$arStatus["BG_COLOR"]?>"><?=$arResult["OFFER"]["PROPERTIES"]["STATUS"]["VALUE"]?></div>
 <?endif?>

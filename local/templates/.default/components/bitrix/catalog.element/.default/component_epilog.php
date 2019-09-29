@@ -2,9 +2,6 @@
 
 use Bitrix\Main\Loader;
 
-include_once $_SERVER["DOCUMENT_ROOT"]."/local/php_interface/classes/ajax/msgHandBook.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/local/php_interface/classes/ajax/lib/favorite.php";
-
 /**
  * @var array $templateData
  * @var array $arParams

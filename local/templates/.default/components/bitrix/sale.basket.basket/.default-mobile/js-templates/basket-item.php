@@ -12,27 +12,11 @@
         <div class="basket_list-wrap">
             <div class="basket_list-preview">
                 <div class="basket_list-img">
-                    <a href="{{DETAIL_PAGE_URL}}">
+                    <a href="javascript:void(0)">
                         <img src="{{{IMAGE_URL}}}{{^IMAGE_URL}}<?=SITE_TEMPLATE_PATH?>/images/no-image.png{{/IMAGE_URL}}" alt="{{NAME}}">
                     </a>
                 </div>
-                <a href="#" class="basket_list-title">{{NAME}}</a>
-            </div>
-            <div class="table_list-info">
-                {{#COLUMN_LIST}}
-                    {{#IS_TEXT}}
-                        <div class="table_list-desc-item" data-entity="basket-item-property">
-                            <span>{{NAME}}:</span>
-                            <b data-column-property-code="{{CODE}}" data-entity="basket-item-property-column-value">{{VALUE}}</b>
-                        </div>
-                    {{/IS_TEXT}}
-                {{/COLUMN_LIST}}
-                {{#PROPS}}
-                    <div class="table_list-desc-item" data-entity="basket-item-property">
-                        <span>{{NAME}}:</span>
-                        <b data-entity="basket-item-property-value" data-property-code="{{CODE}}">{{VALUE}}</b>
-                    </div>
-                {{/PROPS}}
+                <a href="javascript:void(0)" class="basket_list-title">{{NAME}}</a>
             </div>
             <div class="basket_list-price_wrap">
                 <div id="basket-item-sum-price-{{ID}}" class="basket_list-price">

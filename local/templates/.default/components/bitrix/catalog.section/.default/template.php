@@ -180,6 +180,7 @@ $arCatalogItemsParams = [
                                 'COMPARE_PATH' => $arParams['COMPARE_PATH']
                             ],
                             "COMPARE_NAME" => $arParams['COMPARE_NAME'],
+                            "FAVORITE_ITEM" => isset($arParams["FAVORITE_ITEM"]) ? $arParams["FAVORITE_ITEM"] : "N"
                         ])
                     ],
                     $component,

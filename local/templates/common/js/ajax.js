@@ -615,6 +615,12 @@ var obAjax = {
      */
     addToFavoriteCallBack: function(data)
     {
+        if (typeof data.full_count != "undefined") {
+            var favoriteNode = document.getElementById("favorite-wrapper");
+            if (!!favoriteNode) {
+                favoriteNode.innerHTML = (data.full_count > 0 ? '<span class="icon-inner">' + data.full_count + '</span>' : '');
+            }
+        }
         if (!!data.msg) {
             this.addPopupMessage("favorite-white", data.msg);
         }
@@ -625,10 +631,11 @@ var obAjax = {
      * @param id
      * @param evt
      */
-    deleteFromFavorite: function(id, evt)
+    deleteFromFavorite: function(id, wrapId, evt)
     {
         evt.preventDefault();
 
+        this.setParams({wrap_id: wrapId});
         this.doRequest(
             "POST",
             location.href,
@@ -651,8 +658,20 @@ var obAjax = {
      */
     deleteFromFavoriteCallBack: function(data)
     {
+        var node = null;
+
         if (!!data.msg) {
             this.addPopupMessage("favorite-white", data.msg);
+        }
+        if (typeof data.full_count != "undefined") {
+            var node = document.getElementById("favorite-wrapper");
+            if (!!node) {
+                node.innerHTML = (data.full_count > 0 ? '<span class="icon-inner">' + data.full_count + '</span>' : '');
+            }
+        }
+        var node = document.getElementById(this.params.wrap_id);
+        if (!!node) {
+            node.remove();
         }
     },
 

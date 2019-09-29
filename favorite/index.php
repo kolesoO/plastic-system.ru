@@ -173,7 +173,8 @@ if (isset($_SESSION["FAVORITE"]) && count($_SESSION["FAVORITE"]) > 0) {
             "USE_PRODUCT_QUANTITY" => "N",
             "IMAGE_SIZE" => $arImageSize,
             "DEVICE_TYPE" => DEVICE_TYPE,
-            "DISPLAY_COMPARE" => "N"
+            "DISPLAY_COMPARE" => "N",
+            "FAVORITE_ITEM" => "Y"
         )
     );
     //end

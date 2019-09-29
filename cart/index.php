@@ -76,7 +76,7 @@ $APPLICATION->IncludeComponent(
         "ACTION_VARIABLE" => "action",
         "AUTO_CALCULATION" => "Y",
         "TEMPLATE_THEME" => "blue",
-        "COLUMNS_LIST" => array("NAME", "DISCOUNT", "WEIGHT", "DELETE", "PRICE", "QUANTITY"),
+        "COLUMNS_LIST" => array(),
         "COMPONENT_TEMPLATE" => ".default",
         "COUNT_DISCOUNT_4_ALL_QUANTITY" => "N",
         "GIFTS_BLOCK_TITLE" => "Выберите один из подарков",
