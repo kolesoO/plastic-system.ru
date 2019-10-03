@@ -1,4 +1,5 @@
 <?php
+
 namespace kDevelop\Service;
 
 use \Bitrix\Main\Event;
@@ -52,17 +53,30 @@ class Order
                 false,
                 ["ID", "NAME"]
             )->fetch()) {
-                if (strlen($_POST["ORDER_PROP_".$arProp["ID"]]) > 0) {
-                    $yaApi = new \Yandex\Geo\Api();
-                    $response = $yaApi
-                        ->setQuery($_POST["ORDER_PROP_".$arProp["ID"]])
-                        //->setLimit(1)
-                        ->setLang(\Yandex\Geo\Api::LANG_RU)
-                        ->load()
-                        ->getResponse();
-                    $pointList = $response->getList();
-                    if (isset($pointList[0])) {
-                        $pointInfo = $pointList[0]->getData();
+                if (strlen($_POST["ORDER_PROP_" . $arProp["ID"]]) > 0) {
+                    //
+                    $obCache = new \CPHPCache();
+                    if ($obCache->InitCache(
+                        3600,
+                        serialize(["LOCATION_NAME" => $_POST["ORDER_PROP_" . $arProp["ID"]]]),
+                        "/iblock/locations_geo_data" //TODO: вынести в конфиг
+                    )) {
+                        extract($obCache->GetVars(), EXTR_OVERWRITE);
+                    } elseif ($obCache->StartDataCache()) {
+                        $yaApi = new \Yandex\Geo\Api();
+                        $yaApi->setToken("5a8e55ae-66ea-4959-8e40-16dc606be5c9"); //TODO: вынести в конфиг
+                        $response = $yaApi
+                            ->setQuery($_POST["ORDER_PROP_" . $arProp["ID"]])
+                            //->setLimit(1)
+                            ->setLang(\Yandex\Geo\Api::LANG_RU)
+                            ->load()
+                            ->getResponse();
+                        $pointList = $response->getList();
+                        $obCache->EndDataCache([
+                            "pointInfo" => isset($pointList[0]) ? $pointList[0]->getData() : null
+                        ]);
+                    }
+                    if (isset($pointInfo)) {
                         $rsRegions = \CIBlockElement::GetList(
                             [],
                             [
