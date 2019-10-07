@@ -6,6 +6,7 @@ var obCalculator = {
         items: [], //полки
         products: [], //товары,
         currentItemKey: -1, //текущая выбранная полка
+        colorLib: {},
 
         /**
          *
@@ -47,6 +48,15 @@ var obCalculator = {
             this.items = [];
             this.currentItemKey = -1;
             obCalculatorRender.renderMain();
+        },
+
+        /**
+         *
+         * @param data
+         */
+        setColor: function(data)
+        {
+            this.colorLib = data;
         },
 
         /**
@@ -119,10 +129,11 @@ var obCalculator = {
          * @param _length
          * @param _price
          * @param _price_id
+         * @param colorKey
          * @param productId
-         * @returns {{price: *, length: *, width: *, price_id: *, id: *, height: *}}
+         * @returns {{color: string, price: *, length: *, width: *, price_id: *, id: *, height: *}}
          */
-        getProduct: function(_width, _height, _length, _price, _price_id, productId)
+        getProduct: function(_width, _height, _length, _price, _price_id, colorKey, productId)
         {
             return {
                 length: _length,
@@ -130,6 +141,7 @@ var obCalculator = {
                 height: _height,
                 price: _price,
                 price_id: _price_id,
+                color: !!this.colorLib[colorKey] ? this.colorLib[colorKey] : '',
                 id: productId
             };
         },
@@ -152,10 +164,11 @@ var obCalculator = {
          * @param length
          * @param price
          * @param price_id
+         * @param colorKey
          * @param productId
          * @param event
          */
-        addCollection: function(width, height, length, price, price_id, productId, event)
+        addCollection: function(width, height, length, price, price_id, colorKey, productId, event)
         {
             event.preventDefault();
 
@@ -186,7 +199,7 @@ var obCalculator = {
                 return;
             }
             for (var counter = 0; counter < parseInt(this.width/width); counter++) {
-                arProducts.push(ctx.getProduct(width, height, length, price, price_id, productId));
+                arProducts.push(ctx.getProduct(width, height, length, price, price_id, colorKey, productId));
             }
             this.items[this.currentItemKey].products.push(arProducts);
             obCalculatorRender.renderMain();
@@ -332,7 +345,7 @@ var obCalculator = {
                             fullQnt++;
                             fullPrice+= product.price;
                             productWidthPercent = product.width/obCalculator.width*100;
-                            rackNode.appendChild(ctx.string2Node(ctx.getTraiItem(productWidthPercent, product.height, productTopCoord)));
+                            rackNode.appendChild(ctx.string2Node(ctx.getTraiItem(productWidthPercent, product.height, productTopCoord, product.color)));
                         });
                     });
                     wrapperNode.appendChild(rackNode);
@@ -371,11 +384,12 @@ var obCalculator = {
          * @param widthPercent
          * @param height
          * @param top
+         * @param color
          * @returns {string}
          */
-        getTraiItem: function(widthPercent, height, top)
+        getTraiItem: function(widthPercent, height, top, color)
         {
-            return '<div class="tray_item" style="width: ' + widthPercent + '%;height: ' + height + 'px;top: -' + top + 'px"></div>';
+            return '<div class="tray_item" style="width: ' + widthPercent + '%;height: ' + height + 'px;top: -' + top + 'px;background-color:' + color + '"></div>';
         },
 
         /**

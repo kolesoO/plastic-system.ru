@@ -72,4 +72,7 @@
         <span>Не найдено активных разделов каталога, доступных калькулятору</span>
     <?endif?>
 </div>
-<script>var obCatalogCalcItemsParams = <?=CUtil::PhpToJSObject(array_merge(["target_id" => $arParams["WRAP_ID"]], $arParams))?>;</script>
+<script>
+    var obCatalogCalcItemsParams = <?=CUtil::PhpToJSObject(array_merge(["target_id" => $arParams["WRAP_ID"]], $arParams))?>;
+    obCalculator.setColor(<?=CUtil::PhpToJSObject($arResult["COLORS"])?>)
+</script>

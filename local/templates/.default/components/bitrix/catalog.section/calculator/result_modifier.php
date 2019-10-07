@@ -31,7 +31,18 @@ while ($arSection = $rsSection->fetch()) {
 }
 //end
 
+//доступный список цветов
+$arResult["COLORS"] = [];
+$rsProp = \CIBlockPropertyEnum::GetList(
+    [],
+    ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOGSKU, "CODE" => "TSVET"]
+);
+while ($propItem = $rsProp->fetch()) {
+    $arResult["COLORS"][$propItem["VALUE"]] = \kDevelop\Help\Tools::getOfferColor($propItem["VALUE"]);
+}
+//end
+
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["ITEMS_COUNT", "SECTIONS", "SECTIONS_COUNT"]);
+    $cp->SetResultCacheKeys(["ITEMS_COUNT", "SECTIONS", "SECTIONS_COUNT", "COLORS"]);
 }

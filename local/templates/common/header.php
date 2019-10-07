@@ -65,6 +65,8 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
     <meta name="theme-color" content="#fff">
     <!--end-->
 
+    <script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?162",t.onload=function(){VK.Retargeting.Init("VK-RTRG-409642-hoIrs"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-409642-hoIrs" style="position:fixed; left:-999px;" alt=""/></noscript>
+
     <?$APPLICATION->ShowHead();?>
 </head>
 <body>
