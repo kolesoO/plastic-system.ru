@@ -7,7 +7,7 @@
         <a
                 href="#"
                 class="calculator_list-item"
-                onclick="obCalculator.addCollection(<?=$arResult["ITEM"]["PROPERTIES"]["SHIRINA_MM"]["VALUE"]?>, <?=$arResult["ITEM"]["PROPERTIES"]["VYSOTA_MM"]["VALUE"]?>, <?=$arResult["ITEM"]["PROPERTIES"]["DLINA_MM"]["VALUE"]?>, <?=$arPrice["PRICE"]?>, <?=$arPrice["PRICE_TYPE_ID"]?>, '<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>', <?=$arOffer["ID"]?>, event)"
+                onclick="obCalculator.addCollection(<?=$arResult["ITEM"]["PROPERTIES"]["SHIRINA_MM"]["VALUE"]?>, <?=$arResult["ITEM"]["PROPERTIES"]["VYSOTA_MM"]["VALUE"]?>, <?=$arResult["ITEM"]["PROPERTIES"]["DLINA_MM"]["VALUE"]?>, <?=$arPrice["PRICE"]?>, <?=$arPrice["PRICE_TYPE_ID"]?>, '<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>', '<?=$arOffer["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?>', <?=$arOffer["ID"]?>, event)"
         >
             <div class="calculator_list-img">
                 <img src="<?=(is_array($arOffer["PREVIEW_PICTURE"]) ? $arOffer["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arOffer["NAME"]?>">

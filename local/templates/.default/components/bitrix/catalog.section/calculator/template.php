@@ -19,7 +19,7 @@
                         <input type="text" onchange="obCalculator.setLength(this)" class="small">
                     </div>
                 </form>
-                <div class="horizontal_form" flex-align="center">
+                <div class="horizontal_form hidden-lg hidden-md hidden-xs" flex-align="center">
                     <div class="col-lg-24" flex-align="center">
                         <div class="horizontal_form-item">
                             <label>Высота основания полки, мм</label>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="rack-wrap" align="center">
                     <div class="rack">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="344" height="33" viewBox="0 0 344 33"><defs><style>.a{fill:#fff;}.b{fill:#303030;}.c{fill:none;stroke:#303030;stroke-miterlimit:10;stroke-width:2px;}</style></defs><path class="a" d="M337,32V23H7v9H1V1H7V9H337V1h6V32Z"/><path class="b" d="M342,2V31h-4V22H6v9H2V2H6v8H338V2h4m2-2h-8V8H8V0H0V33H8V24H336v9h8V0Z"/><line class="c" x2="325" transform="translate(10 14)"/><line class="c" x2="325" transform="translate(10 19)"/></svg>
+                        <div class="rack-head"></div>
                         <div id="rack-content" class="rack-content"></div>
                     </div>
                 </div>
@@ -57,6 +57,7 @@
                     <?endforeach?>
                 </select>
                 <br>
+                <p id="article_list"></p>
                 <p>
                     <span>Добалено - <span id="full_count">0</span> шт.</span><br>
                     <span>Стоимость выбранных лотков/контейнеров: <span id="full_price">0</span> руб.</span>

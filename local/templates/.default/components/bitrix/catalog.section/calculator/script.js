@@ -15,7 +15,12 @@ var obCalculator = {
          */
         setWidth: function(self)
         {
+            var wrapperNode = document.getElementById(obCalculatorRender.blockId);
+
             this.width = self.value;
+            if (!!wrapperNode) {
+                wrapperNode.parentElement.style.width = (parseFloat(this.width) + 16) + "px";
+            }
             this.items = [];
             this.currentItemKey = -1;
             obCalculatorRender.renderMain();
@@ -124,16 +129,27 @@ var obCalculator = {
 
         /**
          *
+         * @param itemKey
+         */
+        clearItem: function(itemKey)
+        {
+            this.items[itemKey].products = [];
+            obCalculatorRender.renderMain();
+        },
+
+        /**
+         *
          * @param _width
          * @param _height
          * @param _length
          * @param _price
          * @param _price_id
          * @param colorKey
+         * @param article
          * @param productId
          * @returns {{color: string, price: *, length: *, width: *, price_id: *, id: *, height: *}}
          */
-        getProduct: function(_width, _height, _length, _price, _price_id, colorKey, productId)
+        getProduct: function(_width, _height, _length, _price, _price_id, colorKey, article, productId)
         {
             return {
                 length: _length,
@@ -142,7 +158,8 @@ var obCalculator = {
                 price: _price,
                 price_id: _price_id,
                 color: !!this.colorLib[colorKey] ? this.colorLib[colorKey] : '',
-                id: productId
+                id: productId,
+                article: article
             };
         },
 
@@ -165,10 +182,11 @@ var obCalculator = {
          * @param price
          * @param price_id
          * @param colorKey
+         * @param article
          * @param productId
          * @param event
          */
-        addCollection: function(width, height, length, price, price_id, colorKey, productId, event)
+        addCollection: function(width, height, length, price, price_id, colorKey, article, productId, event)
         {
             event.preventDefault();
 
@@ -176,16 +194,16 @@ var obCalculator = {
                 arProducts = [],
                 ctx = this,
                 oldCollectionsHeight = 0,
-                curItem;
+                curItem = this.getCurrentItem();
 
-            if (this.width < width) {
-                error = "Большая ширина";
-            } else if (this.items[this.currentItemKey].height < height) {
-                error = "Большая высота";
-            } else if (this.length < length) {
-                error = "Большая глубина";
-            } else {
-                if (curItem = this.getCurrentItem()) {
+            if (curItem) {
+                if (this.width < width) {
+                    error = "Большая ширина";
+                } else if (this.items[this.currentItemKey].height < height) {
+                    error = "Большая высота";
+                } else if (this.length < length) {
+                    error = "Большая глубина";
+                } else {
                     for (var counter = 0; counter < curItem.products.length; counter++) {
                         oldCollectionsHeight += this.items[this.currentItemKey].products[counter][0].height;
                     }
@@ -193,16 +211,16 @@ var obCalculator = {
                         error = "Превышена допустимая высота полки";
                     }
                 }
+                if (error.length > 0) {
+                    obCalculatorRender.showMessage(error);
+                    return;
+                }
+                for (var counter = 0; counter < parseInt(this.width/width); counter++) {
+                    arProducts.push(ctx.getProduct(width, height, length, price, price_id, colorKey, article, productId));
+                }
+                this.items[this.currentItemKey].products.push(arProducts);
+                obCalculatorRender.renderMain();
             }
-            if (error.length > 0) {
-                obCalculatorRender.showMessage(error);
-                return;
-            }
-            for (var counter = 0; counter < parseInt(this.width/width); counter++) {
-                arProducts.push(ctx.getProduct(width, height, length, price, price_id, colorKey, productId));
-            }
-            this.items[this.currentItemKey].products.push(arProducts);
-            obCalculatorRender.renderMain();
         },
 
         /**
@@ -329,14 +347,14 @@ var obCalculator = {
                 rackNode = null,
                 ctx = this,
                 newItemHeight = 0,
-                productWidthPercent = 0,
-                productTopCoord = 0,
+                productTopCoord,
                 fullQnt = 0,
                 fullPrice = 0;
 
             if (!!wrapperNode) {
                 wrapperNode.innerHTML = "";
                 obCalculator.items.forEach(function(item, index) {
+                    productTopCoord = 0;
                     newItemHeight += obCalculator.getItemRealHeight(item, index);
                     rackNode = ctx.string2Node(ctx.getRackItem(newItemHeight, index));
                     item.products.forEach(function(row, index) {
@@ -344,36 +362,66 @@ var obCalculator = {
                         row.forEach(function(product) {
                             fullQnt++;
                             fullPrice+= product.price;
-                            productWidthPercent = product.width/obCalculator.width*100;
-                            rackNode.appendChild(ctx.string2Node(ctx.getTraiItem(productWidthPercent, product.height, productTopCoord, product.color)));
+                            rackNode.appendChild(ctx.string2Node(ctx.getTraiItem(product.width, product.height, productTopCoord, product.color)));
                         });
                     });
                     wrapperNode.appendChild(rackNode);
                     wrapperNode.appendChild(ctx.string2Node(ctx.getRackDelete(newItemHeight, index)));
+                    wrapperNode.appendChild(ctx.string2Node(ctx.getRackClear(newItemHeight, index)));
+                    wrapperNode.appendChild(ctx.string2Node(ctx.getRackName(newItemHeight, index, item.height)));
 
                     //events
                     rackNode.addEventListener("click", function() {
+                        var index = $(this).attr("data-index"),
+                            oldIndex = $(".rack_item.active").attr("data-index");
+
                         $(".rack_item").removeClass("active");
+                        $(".rack-delete[data-index='" + oldIndex + "']").removeClass("active");
+                        $(".rack-clear[data-index='" + oldIndex + "']").removeClass("active");
+                        $(".rack_item-name[data-index='" + oldIndex + "']").removeClass("active");
+
                         $(this).addClass("active");
+                        $(".rack-delete[data-index='" + index + "']").addClass("active");
+                        $(".rack-clear[data-index='" + index + "']").addClass("active");
+                        $(".rack_item-name[data-index='" + index + "']").addClass("active");
+
                         obCalculator.setCurrentItem($(this).attr("data-index"));
                     });
                     //end
 
                     //styles
                     if(index == obCalculator.currentItemKey) {
-                        rackNode.classList.add("active");
+                        $(rackNode).trigger("click");
                     }
                     //end
                 });
 
                 //update total
                 var countNode = document.getElementById("full_count"),
-                    priceNode = document.getElementById("full_price");
+                    priceNode = document.getElementById("full_price"),
+                    listNode = document.getElementById("article_list");
                 if (!!countNode) {
                     countNode.innerText = fullQnt.toString();
                 }
                 if (!!priceNode) {
                     priceNode.innerText = fullPrice.toString();
+                }
+                if (!!listNode) {
+                    var totalByArticle = {},
+                        totalByArticleStr = "";
+                    obCalculator.items.forEach(function(item) {
+                        item.products.forEach(function(row) {
+                            if (!!totalByArticle[row[0].article]) {
+                                totalByArticle[row[0].article] = totalByArticle[row[0].article] + row.length;
+                            } else {
+                                totalByArticle[row[0].article] = row.length;
+                            }
+                        });
+                    });
+                    for (var article in totalByArticle) {
+                        totalByArticleStr += '<span>' + article + ' - ' + totalByArticle[article] + ' шт.</span><br>';
+                    }
+                    listNode.innerHTML = totalByArticleStr;
                 }
                 //end
             }
@@ -387,9 +435,11 @@ var obCalculator = {
          * @param color
          * @returns {string}
          */
-        getTraiItem: function(widthPercent, height, top, color)
+        getTraiItem: function(width, height, top, color)
         {
-            return '<div class="tray_item" style="width: ' + widthPercent + '%;height: ' + height + 'px;top: -' + top + 'px;background-color:' + color + '"></div>';
+            return '<div class="tray_item" style="width: ' + width + 'px;height: ' + height + 'px;top: -' + top + 'px;background-color:' + color + '">' +
+                '<img src="/local/templates/common/images/rack/lotok.png" width="100%" height="100%">' +
+            '</div>';
         },
 
         /**
@@ -406,13 +456,38 @@ var obCalculator = {
         /**
          *
          * @param top
+         * @param index
+         * @param height
+         * @returns {string}
+         */
+        getRackName: function(top, index, height)
+        {
+            return '<div class="rack_item-name" style="top:' + top + 'px" data-index="' + index + '">Полка ' + (index + 1) + ' (высота ' + height + ')</div>'
+        },
+
+        /**
+         *
+         * @param top
          * @param id
          * @returns {string}
          */
         getRackDelete: function(top, id)
         {
-            return '<a href="#" class="rack-delete" style="top:' + top + 'px" title="удалить" onclick="obCalculator.deleteItem(' + id + ')">' +
+            return '<a href="#" class="rack-delete" style="top:' + top + 'px" title="удалить" onclick="obCalculator.deleteItem(' + id + ')" data-index="' + id + '">' +
                     '<i class="icon close"></i>' +
+                '</a>';
+        },
+
+        /**
+         *
+         * @param top
+         * @param id
+         * @returns {string}
+         */
+        getRackClear: function(top, id)
+        {
+            return '<a href="#" class="rack-clear" style="top:' + top + 'px" title="очистить" onclick="obCalculator.clearItem(' + id + ')" data-index="' + id + '">' +
+                '<i class="icon clear"></i>' +
                 '</a>';
         },
 
