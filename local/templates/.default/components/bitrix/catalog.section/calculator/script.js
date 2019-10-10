@@ -19,7 +19,7 @@ var obCalculator = {
 
             this.width = self.value;
             if (!!wrapperNode) {
-                wrapperNode.parentElement.style.width = (parseFloat(this.width) + 16) + "px";
+                wrapperNode.parentElement.style.width = (parseFloat(this.width)*obCalculatorRender.zoom + 16) + "px";
             }
             this.items = [];
             this.currentItemKey = -1;
@@ -36,7 +36,7 @@ var obCalculator = {
 
             this.height = self.value;
             if (!!wrapperNode) {
-                wrapperNode.style.height = this.height + "px";
+                wrapperNode.style.height = (parseFloat(this.height)*obCalculatorRender.zoom) + "px";
             }
             this.items = [];
             this.currentItemKey = -1;
@@ -302,6 +302,8 @@ var obCalculator = {
 
         rackItemHeight: 10,
 
+        zoom: 0.5,
+
         /**
          *
          * @param id
@@ -357,8 +359,11 @@ var obCalculator = {
                     productTopCoord = 0;
                     newItemHeight += obCalculator.getItemRealHeight(item, index);
                     rackNode = ctx.string2Node(ctx.getRackItem(newItemHeight, index));
-                    item.products.forEach(function(row, index) {
-                        productTopCoord += (index > 0 ? 2*row[0].height : row[0].height);
+                    item.products.forEach(function(row, rowIndex) {
+                        productTopCoord += row[0].height;
+                        if (rowIndex > 0) {
+                            productTopCoord += item.products[rowIndex - 1][0].height;
+                        }
                         row.forEach(function(product) {
                             fullQnt++;
                             fullPrice+= product.price;
@@ -437,8 +442,12 @@ var obCalculator = {
          */
         getTraiItem: function(width, height, top, color)
         {
-            return '<div class="tray_item" style="width: ' + width + 'px;height: ' + height + 'px;top: -' + top + 'px;background-color:' + color + '">' +
-                '<img src="/local/templates/common/images/rack/lotok.png" width="100%" height="100%">' +
+            width *= this.zoom;
+            height *= this.zoom;
+            top *= this.zoom;
+
+            return '<div class="tray_item" style="width: ' + width + 'px;height: ' + height + 'px;top: -' + top + 'px">' +
+                '<img src="/local/templates/common/images/rack/lotok-' + color.replace("#", "") + '.png" width="100%" height="100%">' +
             '</div>';
         },
 
@@ -450,6 +459,8 @@ var obCalculator = {
          */
         getRackItem: function(top, id)
         {
+            top *= this.zoom;
+
             return '<div class="rack_item" style="top: ' + top + 'px;height: ' + this.rackItemHeight + 'px" data-index="' + id + '"></div>';
         },
 
@@ -462,6 +473,9 @@ var obCalculator = {
          */
         getRackName: function(top, index, height)
         {
+            top *= this.zoom;
+            height *= this.zoom;
+
             return '<div class="rack_item-name" style="top:' + top + 'px" data-index="' + index + '">Полка ' + (index + 1) + ' (высота ' + height + ')</div>'
         },
 
@@ -473,6 +487,8 @@ var obCalculator = {
          */
         getRackDelete: function(top, id)
         {
+            top *= this.zoom;
+
             return '<a href="#" class="rack-delete" style="top:' + top + 'px" title="удалить" onclick="obCalculator.deleteItem(' + id + ')" data-index="' + id + '">' +
                     '<i class="icon close"></i>' +
                 '</a>';
@@ -486,6 +502,8 @@ var obCalculator = {
          */
         getRackClear: function(top, id)
         {
+            top *= this.zoom;
+
             return '<a href="#" class="rack-clear" style="top:' + top + 'px" title="очистить" onclick="obCalculator.clearItem(' + id + ')" data-index="' + id + '">' +
                 '<i class="icon clear"></i>' +
                 '</a>';

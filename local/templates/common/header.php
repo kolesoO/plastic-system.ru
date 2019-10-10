@@ -219,6 +219,10 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                                 <i class="icon search"></i>
                             </button>
                         </form>
+                    <?else:?>
+                        <a href="/search/">
+                            <i class="icon search"></i>
+                        </a>
                     <?endif?>
                 </div>
                 <?if (!CSite::InDir("/cart") && !CSite::InDir("/checkout")) :?>
