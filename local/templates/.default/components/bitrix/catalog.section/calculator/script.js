@@ -327,7 +327,7 @@ var obCalculator = {
 
         rackItemHeight: 10,
 
-        zoom: 0.5,
+        zoom: 0.4,
 
         /**
          *
