@@ -42,6 +42,22 @@ while ($propItem = $rsProp->fetch()) {
 }
 //end
 
+//основные настройки калькулятора
+$rs = \CIBlockElement::GetList(
+    [],
+    ["IBLOCK_ID" => IBLOCK_SERVICE_CATALOG_SETTINGS, "CODE" => "general", "ACTIVE" => "Y"],
+    false,
+    false,
+    ["ID", "IBLOCK_ID"]
+);
+if ($rsItem = $rs->getNextElement()) {
+    $props = $rsItem->getProperties();
+    foreach (["CALC_ITEM_HEIGHT", "CALC_WIDTH", "CALC_HEIGHT", "CALC_LENGTH"] as $code) {
+        $arResult["CALCULATOR_SETTINGS"][$code] = $props[$code];
+    }
+}
+//end
+
 $cp = $this->__component;
 if (is_object($cp)) {
     $cp->SetResultCacheKeys(["ITEMS_COUNT", "SECTIONS", "SECTIONS_COUNT", "COLORS"]);

@@ -15,11 +15,19 @@ var obCalculator = {
          */
         setWidth: function(self)
         {
-            var wrapperNode = document.getElementById(obCalculatorRender.blockId);
+            var wrapperNode = document.getElementById(obCalculatorRender.blockId),
+                sectionNode = document.getElementById("section_id"),
+                listNode = document.getElementById("catalog-calculator-wrap");
 
             this.width = self.value;
             if (!!wrapperNode) {
                 wrapperNode.parentElement.style.width = (parseFloat(this.width)*obCalculatorRender.zoom + 16) + "px";
+            }
+            if (!!sectionNode) {
+                sectionNode.value = 0;
+            }
+            if(!!listNode) {
+                listNode.innerHTML = "";
             }
             this.items = [];
             this.currentItemKey = -1;
@@ -32,11 +40,19 @@ var obCalculator = {
          */
         setHeight: function(self)
         {
-            var wrapperNode = document.getElementById(obCalculatorRender.blockId);
+            var wrapperNode = document.getElementById(obCalculatorRender.blockId),
+                sectionNode = document.getElementById("section_id"),
+                listNode = document.getElementById("catalog-calculator-wrap");
 
             this.height = self.value;
             if (!!wrapperNode) {
                 wrapperNode.style.height = (parseFloat(this.height)*obCalculatorRender.zoom) + "px";
+            }
+            if (!!sectionNode) {
+                sectionNode.value = 0;
+            }
+            if(!!listNode) {
+                listNode.innerHTML = "";
             }
             this.items = [];
             this.currentItemKey = -1;
@@ -49,6 +65,15 @@ var obCalculator = {
          */
         setLength: function(self)
         {
+            var sectionNode = document.getElementById("section_id"),
+                listNode = document.getElementById("catalog-calculator-wrap");
+
+            if (!!sectionNode) {
+                sectionNode.value = 0;
+            }
+            if(!!listNode) {
+                listNode.innerHTML = "";
+            }
             this.length = self.value;
             this.items = [];
             this.currentItemKey = -1;
@@ -528,6 +553,11 @@ var obCalculator = {
          */
         showMessage: function(string)
         {
+            var sectionNode = document.getElementById("section_id");
+            if (!!sectionNode) {
+                sectionNode.value = 0;
+            }
+
             obAjax.addPopupMessage("attention", string);
         }
 
