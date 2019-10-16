@@ -499,7 +499,6 @@ var obCalculator = {
         getRackName: function(top, index, height)
         {
             top *= this.zoom;
-            height *= this.zoom;
 
             return '<div class="rack_item-name" style="top:' + top + 'px" data-index="' + index + '">Полка ' + (index + 1) + ' (высота ' + height + ')</div>'
         },
