@@ -70,6 +70,37 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
     <?$APPLICATION->ShowHead();?>
 </head>
 <body>
+    <!-- Rating@Mail.ru counter -->
+    <script type="text/javascript">
+        var _tmr = window._tmr || (window._tmr = []);
+        _tmr.push({id: "3061325", type: "pageView", start: (new Date()).getTime()});
+        (function (d, w, id) {
+            if (d.getElementById(id)) return;
+            var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+            ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+            var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+            if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+        })(document, window, "topmailru-code");
+    </script>
+    <noscript><div><img src="//top-fwz1.mail.ru/counter?id=3061325;js=na" style="border:0;position:absolute;left:-9999px;" alt=""/></div></noscript>
+    <!-- end -->
+
+    <!-- ya counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        ym(12030070, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true,
+            ecommerce:"dataLayer"
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/12030070" style="position:absolute; left:-9999px;" alt=""/></div></noscript>
+    <!-- end -->
+
     <?if ($USER->IsAdmin()) :?>
         <div id="panel"><?$APPLICATION->ShowPanel();?></div>
     <?endif?>
