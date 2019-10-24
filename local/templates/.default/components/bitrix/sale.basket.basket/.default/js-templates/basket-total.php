@@ -29,7 +29,7 @@ use Bitrix\Main\Localization\Loc;
             <div class="basket_coupon-title"><?=Loc::getMessage('SBB_TOTAL')?>:</div>
             {{#DISCOUNT_PRICE_FORMATED}}
                 <div class="basket_list-old_price">
-                    <s><span>{{{PRICE_WITHOUT_DISCOUNT_FORMATED}}}</span></s>
+                    <small><s>{{{PRICE_WITHOUT_DISCOUNT_FORMATED}}}</s></small>&nbsp;
                 </div>
             {{/DISCOUNT_PRICE_FORMATED}}
             <div class="basket_list-price">

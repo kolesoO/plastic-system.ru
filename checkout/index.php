@@ -3,7 +3,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
 $APPLICATION->SetTitle("Оформление заказа");
 $APPLICATION->SetPageProperty("header_section-class", "section");
 
-//price update - fix
+//fix - clear zero-items
 if (\Bitrix\Main\Loader::includeModule('sale')) {
     $arBasketItems = [];
     $rsItems = \CSaleBasket::GetList(
@@ -20,6 +20,7 @@ if (\Bitrix\Main\Loader::includeModule('sale')) {
     while ($item = $rsItems->fetch()) {
         $arBasketItems[$item["PRODUCT_ID"]] = $item;
     }
+
     if (count($arBasketItems) > 0) {
         $rsItem = \CIBlockElement::GetList(
             [],
@@ -29,7 +30,7 @@ if (\Bitrix\Main\Loader::includeModule('sale')) {
             ],
             false,
             false,
-            ["IBLOCK_ID", "ID", "NAME", "PREVIEW_PICTURE", "XML_ID", "CATALOG_GROUP_" . PRICE_ID]
+            ["IBLOCK_ID", "ID", "XML_ID", "CATALOG_GROUP_" . PRICE_ID]
         );
         while ($arItem = $rsItem->fetch()) {
             if ($arPrice = \CCatalogProduct::GetOptimalPrice(
@@ -46,15 +47,7 @@ if (\Bitrix\Main\Loader::includeModule('sale')) {
                     ]
                 ]
             )) {
-                if ($arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"] > 0) {
-                    \CSaleBasket::Update($arBasketItems[$arItem["ID"]]["ID"], [
-                        "PRODUCT_PRICE_ID" => $arPrice["PRICE"]["ID"],
-                        "PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"],
-                        "BASE_PRICE" => $arPrice["RESULT_PRICE"]["BASE_PRICE"],
-                        "DISCOUNT_PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
-                        "DISCOUNT_NAME" => $arPrice["DISCOUNT"]["NAME"]
-                    ]);
-                } else {
+                if ($arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"] <= 0) {
                     \CSaleBasket::Delete($arBasketItems[$arItem["ID"]]["ID"]);
                 }
             }

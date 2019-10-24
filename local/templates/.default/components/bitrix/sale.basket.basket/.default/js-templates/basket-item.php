@@ -30,6 +30,9 @@
                     </div>
                 </div>
                 <div class="basket_list-price_wrap">
+                    {{#SHOW_DISCOUNT_PRICE}}
+                        <small><s>{{{FULL_PRICE_FORMATED}}}</s></small>&nbsp;
+                    {{/SHOW_DISCOUNT_PRICE}}
                     <div id="basket-item-price-{{ID}}" class="basket_list-price">{{{PRICE_FORMATED}}}</div>
                     <div class="basket_list-qnt">
                         <div class="cart_buy-qnt_wrap" data-entity="basket-item-quantity-block">
@@ -46,6 +49,9 @@
                         </div>
                     </div>
                     <div class="basket_list-price">
+                        {{#SHOW_DISCOUNT_PRICE}}
+                            <small><s>{{{SUM_FULL_PRICE_FORMATED}}}</s></small>&nbsp;
+                        {{/SHOW_DISCOUNT_PRICE}}
                         <span id="basket-item-sum-price-{{ID}}">{{{SUM_PRICE_FORMATED}}}</span>
                         <small>с НДС</small>
                     </div>

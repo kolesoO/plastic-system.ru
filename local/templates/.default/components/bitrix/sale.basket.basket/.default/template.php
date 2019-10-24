@@ -248,7 +248,6 @@ if (empty($arResult['ERROR_MESSAGE']))
 			siteId: '<?=CUtil::JSEscape($component->getSiteId())?>',
 			templateFolder: '<?=CUtil::JSEscape($templateFolder)?>'
 		});
-		var basketJSParams = {};
 	</script>
 	<?
 	if ($arParams['USE_GIFTS'] === 'Y' && $arParams['GIFTS_PLACE'] === 'BOTTOM')

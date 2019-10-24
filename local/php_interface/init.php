@@ -13,8 +13,9 @@ Main\Loader::registerAutoLoadClasses(null, [
     "\kDevelop\Service\Logger" => "/local/php_interface/classes/service/logger.php",
     "\kDevelop\Service\Order" => "/local/php_interface/classes/service/order.php",
     "\kDevelop\Service\SbPolyPointer" => "/local/php_interface/classes/service/sbPolyPointer.php",
+    "\kDevelop\Service\catalogProductProvider" => "/local/php_interface/classes/service/catalogProductProvider.php",
     "\kDevelop\Ajax\MsgHandBook" => "/local/php_interface/classes/ajax/msgHandBook.php",
-    "\kDevelop\Ajax\Favorite" => "/local/php_interface/classes/ajax/lib/favorite.php"
+    "\kDevelop\Ajax\Favorite" => "/local/php_interface/classes/ajax/lib/favorite.php",
 ]);
 //end
 

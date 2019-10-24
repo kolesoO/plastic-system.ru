@@ -77,10 +77,10 @@ class Basket
                             if ($basketId = \CSaleBasket::Add([
                                 "PRODUCT_ID" => $arItem["ID"],
                                 "PRODUCT_PRICE_ID" => $arPrice["PRICE"]["ID"],
-                                //"PRICE_TYPE_ID" => $arPrice["RESULT_PRICE"]["PRICE_TYPE_ID"],
+                                "PRICE_TYPE_ID" => $arPrice["RESULT_PRICE"]["PRICE_TYPE_ID"],
                                 "PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT_PRICE"],
                                 "BASE_PRICE" => $arPrice["RESULT_PRICE"]["BASE_PRICE"],
-                                "CUSTOM_PRICE" => "Y",
+                                //"CUSTOM_PRICE" => "Y",
                                 "CURRENCY" => "RUB",
                                 "WEIGHT" => $arItem["CATALOG_WEIGHT"],
                                 "QUANTITY" => $arParams["qnt"],
@@ -91,12 +91,12 @@ class Basket
                                 "PRODUCT_XML_ID" => $arItem["XML_ID"],
                                 "MODULE" => "catalog",
                                 "NOTES" => "",
-                                "PRODUCT_PROVIDER_CLASS" => "",
-                                "IGNORE_CALLBACK_FUNC" => "Y",
-                                "DISCOUNT_PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
-                                "DISCOUNT_NAME" => $arPrice["DISCOUNT"]["NAME"],
+                                "PRODUCT_PROVIDER_CLASS" => "\kDevelop\Service\CatalogProductProvider",
+                                //"IGNORE_CALLBACK_FUNC" => "",
+                                //"DISCOUNT_PRICE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
+                                //"DISCOUNT_NAME" => $arPrice["DISCOUNT"]["NAME"],
                                 //"DISCOUNT_VALUE" => $arPrice["RESULT_PRICE"]["DISCOUNT"],
-                                "DISCOUNT_COUPON" => "",
+                                //"DISCOUNT_COUPON" => "",
                                 "PROPS" => []
                             ])) {
                                 $arReturn["basket_id"][] = $basketId;

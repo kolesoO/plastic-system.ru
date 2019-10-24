@@ -14,7 +14,7 @@ use Bitrix\Main\Localization\Loc;
                     <label for="promocode-input"><?=Loc::getMessage('SBB_COUPON_ENTER')?></label>
                     <input id="promocode-input" type="text" data-entity="basket-coupon-input">
                 </div>
-                <div>
+                <div class="basket_coupon-text">
                     {{#COUPON_LIST}}
                         <div>
                             <b>{{COUPON}} - </b>
@@ -29,7 +29,7 @@ use Bitrix\Main\Localization\Loc;
             <div class="basket_coupon-title"><?=Loc::getMessage('SBB_TOTAL')?>:</div>
             {{#DISCOUNT_PRICE_FORMATED}}
                 <div class="basket_list-old_price">
-                    <s><span>{{{PRICE_WITHOUT_DISCOUNT_FORMATED}}}</span></s>
+                    <small><s>{{{PRICE_WITHOUT_DISCOUNT_FORMATED}}}</s></small>&nbsp;
                 </div>
             {{/DISCOUNT_PRICE_FORMATED}}
             <div class="basket_list-price">
