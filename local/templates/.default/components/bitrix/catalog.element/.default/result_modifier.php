@@ -111,7 +111,7 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
     //end
 
     //разбивка торг предложений на 'с цветом', 'с размером', 'дно', 'ibox', 'Тип контейнера' и т.д.
-    $arResult["TSVET"] = $arResult["RAZMER"] = $arResult["OPTSII_IBOX"] = $arResult["DNO"] = $arResult["TIP_KONTEYNERA"] = $arResult["KOLICHESTVO_MET_TRUB"] = $arResult["visota_yashika"] = [
+    $arResult["TSVET"] = $arResult["RAZMER"] = $arResult["OPTSII_IBOX"] = $arResult["DNO"] = $arResult["TIP_KONTEYNERA"] = $arResult["KOLICHESTVO_MET_TRUB"] = $arResult["visota_yashika"] = $arResult["TIP_DNA"] = [
         "ID" => [],
         "COUNT" => 0,
         "TITLE" => ""
@@ -172,6 +172,14 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
             $arValueCache[] = $arOffer["PROPERTIES"]["visota_yashika"]["VALUE"];
             if (strlen($arResult["visota_yashika"]["TITLE"]) == 0) {
                 $arResult["visota_yashika"]["TITLE"] = $arOffer["PROPERTIES"]["visota_yashika"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["TIP_DNA"]["VALUE"]) > 0) {
+            $arResult["TIP_DNA"]["ID"][] = $arOffer["ID"];
+            $arResult["TIP_DNA"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["TIP_DNA"]["VALUE"];
+            if (strlen($arResult["TIP_DNA"]["TITLE"]) == 0) {
+                $arResult["TIP_DNA"]["TITLE"] = $arOffer["PROPERTIES"]["TIP_DNA"]["NAME"];
             }
         }
     }
