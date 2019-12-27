@@ -97,7 +97,10 @@ $APPLICATION->IncludeComponent(
         'SHOW_GENERAL_STORE_INFORMATION' => $arParams['SHOW_GENERAL_STORE_INFORMATION'],
         'USER_FIELDS' => $arParams['USER_FIELDS'],
         'FIELDS' => $arParams['FIELDS'],
-        'EXCLUDE_PROPS' => ["CML2_BASE_UNIT", "CML2_TAXES", "STATUS", "is_main", "CML2_LINK"]
+        'EXCLUDE_PROPS' => [
+            "CML2_BASE_UNIT", "CML2_TAXES", "STATUS", "is_main",
+            "CML2_LINK", "DLINA_MM_NUMBER", "SHIRINA_MM_NUMBER", "VYSOTA_MM_NUMBER"
+        ]
     )
 );
 //end

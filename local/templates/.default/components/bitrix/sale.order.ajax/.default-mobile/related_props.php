@@ -23,6 +23,7 @@
                             data-target="#<?=$arProp["FIELD_ID"]?>"
                             onkeyup="BX.saleOrderAjax.getAddress(this)"
                             value="<?=$arValue[0]?>"
+                            required
                     >
                 </div>
                 <div class="animate_input js-animate_input">
@@ -35,6 +36,7 @@
                             data-target="#<?=$arProp["FIELD_ID"]?>"
                             onkeyup="BX.saleOrderAjax.getAddress(this, 'city')"
                             value="<?=$arValue[1]?>"
+                            required
                     >
                 </div>
                 <div class="animate_input js-animate_input">
@@ -46,6 +48,7 @@
                             data-type="<?=\Kladr\ObjectType::Building?>"
                             data-target="#<?=$arProp["FIELD_ID"]?>"
                             value="<?=$arValue[2]?>"
+                            required
                     >
                 </div>
                 <div class="animate_input js-animate_input">
@@ -56,6 +59,7 @@
                             name="<?=$arProp["FIELD_NAME"]?>_PSEUDO[]"
                             data-target="#<?=$arProp["FIELD_ID"]?>"
                             value="<?=$arValue[3]?>"
+                            required
                     >
                 </div>
                 <input
