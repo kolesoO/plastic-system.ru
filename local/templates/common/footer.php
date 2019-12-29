@@ -1,7 +1,7 @@
 <?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
 
-    <?if (!$isMainPage || (defined("NOT_CLOSE_SECTION_IN_FOOTER") && NOT_CLOSE_SECTION_IN_FOOTER != "Y")) :?>
-        </div></section>
+    <?if (!$isMainPage || !defined("NOT_CLOSE_SECTION_IN_FOOTER")) :?>
+        </div></div></section>
     <?endif?>
 
     <footer class="footer js-footer">

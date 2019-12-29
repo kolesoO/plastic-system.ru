@@ -32,7 +32,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/slider/script.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/animate-input/script.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/tabs/script.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/functions.js');
-$rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/scripts.js');
+$rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/scripts.min.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
 //end
 ?>
@@ -349,7 +349,10 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
         </div>
     </header>
     <?if (!$isMainPage) :?>
-        <section class="<?$APPLICATION->ShowProperty("header_section-class")?>" style="<?$APPLICATION->ShowProperty("header_section-style")?>">
+        <section
+                class="<?$APPLICATION->ShowProperty("header_section-class")?>"
+                style="<?$APPLICATION->ShowProperty("header_section-style")?>"
+        >
             <div class="container">
                 <?$APPLICATION->IncludeComponent(
                     "bitrix:breadcrumb",
@@ -363,4 +366,5 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                 <?if (HIDE_H1 != "Y") :?>
                     <h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
                 <?endif?>
+                <div id="<?$APPLICATION->ShowProperty("content-id")?>">
     <?endif?>

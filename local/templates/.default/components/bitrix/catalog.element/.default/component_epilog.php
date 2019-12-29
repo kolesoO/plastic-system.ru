@@ -19,13 +19,15 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
 $arOffer["CAN_BUY"] = $arOffer["CAN_BUY"] && $arPrice["PRICE"] > 0;
 
 //seo fields
-if ($arOffer) {
+/*if ($arOffer) {
     $seoIblockId = $arParams["LINK_IBLOCK_ID"];
     $seoItemId = $arOffer["ID"];
 } else {
     $seoIblockId = $arParams["IBLOCK_ID"];
     $seoItemId = $arResult["ID"];
-}
+}*/
+$seoIblockId = $arParams["IBLOCK_ID"];
+$seoItemId = $arResult["ID"];
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
 $arIPropValues = $rsIProps->getValues();
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
@@ -99,15 +101,15 @@ $APPLICATION->IncludeComponent(
         'FIELDS' => $arParams['FIELDS'],
         'EXCLUDE_PROPS' => [
             "CML2_BASE_UNIT", "CML2_TAXES", "STATUS", "is_main",
-            "CML2_LINK", "DLINA_MM_NUMBER", "SHIRINA_MM_NUMBER", "VYSOTA_MM_NUMBER"
+            "CML2_LINK", "DLINA_MM_NUMBER", "SHIRINA_MM_NUMBER", "VYSOTA_MM_NUMBER",
+            "BLOG_POST_ID", "BLOG_COMMENTS_CNT"
         ]
     )
 );
 //end
 ?>
 
-</div>
-</section>
+</div></div></section>
 
 <?
 //Сопутствующие товары

@@ -763,6 +763,53 @@ var obAjax = {
 
     /**
      *
+     * @param id
+     * @param target_id
+     * @param evt
+     */
+    getCatalogElement: function(id, offer_id, target_id, evt)
+    {
+        evt.preventDefault();
+
+        var ctx = this;
+        ctx.params.target_id = target_id;
+        ctx.doRequest(
+            "POST",
+            location.href,
+            ctx.serializeData({
+                class: "Catalog",
+                method: "getCatalogElement",
+                params: {
+                    element_id: id,
+                    offer_id: offer_id
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    getCatalogElementCallBack: function(data)
+    {
+        document.getElementById(this.params.target_id).innerHTML = data.html;
+        obSlider.init("#" + this.params.target_id);
+        $(".js-drop_down").each(function() {
+            $(this).find(".js-drop_down-content").each(function() {
+                $(this).attr("data-height", $(this).height());
+                $(this).height(0)
+            })
+        });
+        obCatalogElementDetail.initCompare(obCatalogElementDetail.compareFlag);
+        obCatalogElementDetail.initFavorite(obCatalogElementDetail.favoriteFlag);
+    },
+
+    /**
+     *
      * @param method
      * @param url
      * @param sendData

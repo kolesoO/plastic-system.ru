@@ -3,20 +3,30 @@
 	window.catalogElementDetail = function(obParams)
 	{
 		this.params = obParams;
-		this.obFavorite = document.querySelector('[data-entity="favorite"]');
-		this.obCompare = document.querySelector('[data-entity="compare"]');
+		this.obFavorite = null;
+		this.obCompare = null;
+		this.compareFlag = false;
+		this.favoriteFlag = false;
 	};
 
 	window.catalogElementDetail.prototype = {
+		initEntities: function()
+		{
+			this.obFavorite = document.querySelector('[data-entity="favorite"]');
+			this.obCompare = document.querySelector('[data-entity="compare"]');
+		},
+
 		/**
 		 *
 		 * @param flag
 		 */
 		initCompare: function(flag)
 		{
+			this.compareFlag = flag;
+			this.initEntities();
 			if (!!this.obCompare) {
 				var text = BX.message("COMPARE_TITLE");
-				if (flag) {
+				if (this.compareFlag) {
 					text = BX.message("BTN_MESSAGE_COMPARE_REDIRECT");
 					this.obCompare.href = this.params.compare.COMPARE_PATH;
 				} else {
@@ -42,10 +52,12 @@
 		 */
 		initFavorite: function(flag)
 		{
+			this.favoriteFlag = flag;
+			this.initEntities();
 			if (!!this.obFavorite) {
 				var text = BX.message("FAVORITE_TITLE"),
 					ctx = this;
-				if (flag) {
+				if (this.favoriteFlag) {
 					text = BX.message("BTN_MESSAGE_FAVORITE_REDIRECT");
 					ctx.obFavorite.href = "/favorite/";
 				} else {

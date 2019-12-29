@@ -15,6 +15,7 @@
 define("NOT_CLOSE_SECTION_IN_FOOTER", "Y");
 
 $APPLICATION->SetPageProperty("header_section-class", "section");
+$APPLICATION->SetPageProperty("content-id", "catalog-element");
 
 $componentElementParams = array(
     'IBLOCK_TYPE' => $arParams['IBLOCK_TYPE'],
@@ -125,7 +126,7 @@ $componentElementParams = array(
     'ADD_ELEMENT_CHAIN' => (isset($arParams['ADD_ELEMENT_CHAIN']) ? $arParams['ADD_ELEMENT_CHAIN'] : ''),
     'DISPLAY_PREVIEW_TEXT_MODE' => (isset($arParams['DETAIL_DISPLAY_PREVIEW_TEXT_MODE']) ? $arParams['DETAIL_DISPLAY_PREVIEW_TEXT_MODE'] : ''),
     'DETAIL_PICTURE_MODE' => (isset($arParams['DETAIL_DETAIL_PICTURE_MODE']) ? $arParams['DETAIL_DETAIL_PICTURE_MODE'] : array()),
-    'ADD_TO_BASKET_ACTION' => $basketAction,
+    'ADD_TO_BASKET_ACTION' => isset($basketAction) ? $basketAction : '',
     'ADD_TO_BASKET_ACTION_PRIMARY' => (isset($arParams['DETAIL_ADD_TO_BASKET_ACTION_PRIMARY']) ? $arParams['DETAIL_ADD_TO_BASKET_ACTION_PRIMARY'] : null),
     'SHOW_CLOSE_POPUP' => isset($arParams['COMMON_SHOW_CLOSE_POPUP']) ? $arParams['COMMON_SHOW_CLOSE_POPUP'] : '',
     'DISPLAY_COMPARE' => (isset($arParams['USE_COMPARE']) ? $arParams['USE_COMPARE'] : ''),
@@ -162,7 +163,6 @@ $componentElementParams = array(
     'GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE' => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE'],
     'GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE' => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE'],
 
-    "DEVICE_TYPE" => $arParams["DEVICE_TYPE"],
     "OFFER_CODE_SELECTED" => (strlen($arResult["VARIABLES"]["SKU_CODE"]) > 0 ? str_replace(\kDevelop\Help\Tools::getOfferPrefixInUrl(), "", $arResult["VARIABLES"]["SKU_CODE"]) : ""),
 
     "IMAGE_SIZE" => $arParams["DETAIL_IMAGE_SIZE"],

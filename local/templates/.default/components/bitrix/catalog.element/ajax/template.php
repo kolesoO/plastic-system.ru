@@ -113,20 +113,20 @@ if ($arParams['DISPLAY_COMPARE']) {
                             ?>
                             <?if ($isSlider) :?><div><?endif?>
                             <?if ($arResult["OFFER_ID_SELECTED"] == $offerKey) :?>
-                                <div
-                                        class="table_list-color-item slick-current"
-                                        title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                                ></div>
-                            <?else:?>
-                                <a
-                                        href="#"
-                                        class="table_list-color-item"
-                                        title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                                        style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                                        onclick="obAjax.getCatalogElement(<?=$arResult['ID']?>, <?=$arOfferItem['ID']?>, 'catalog-element', event)"
-                                ></a>
-                            <?endif?>
+                            <div
+                                    class="table_list-color-item slick-current"
+                                    title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                    style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                            ></div>
+                        <?else:?>
+                            <a
+                                    href="#"
+                                    class="table_list-color-item"
+                                    title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                    style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                                    onclick="obAjax.getCatalogElement(<?=$arResult['ID']?>, <?=$arOfferItem['ID']?>, 'catalog-element', event)"
+                            ></a>
+                        <?endif?>
                             <?if ($isSlider) :?></div><?endif?>
                         <?endforeach?>
                     </div>
@@ -151,14 +151,14 @@ if ($arParams['DISPLAY_COMPARE']) {
                                         $prefix = strlen($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]) > 0 ? $arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", " : "";
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
-                                            <span class="header-location-link"><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
-                                        <?else:?>
-                                            <a
-                                                    href="#"
-                                                    class="header-location-link link"
-                                                    onclick="obAjax.getCatalogElement(<?=$arResult['ID']?>, <?=$arOfferItem['ID']?>, 'catalog-element', event)"
-                                            ><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
-                                        <?endif?>
+                                        <span class="header-location-link"><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
+                                    <?else:?>
+                                        <a
+                                                href="#"
+                                                class="header-location-link link"
+                                                onclick="obAjax.getCatalogElement(<?=$arResult['ID']?>, <?=$arOfferItem['ID']?>, 'catalog-element', event)"
+                                        ><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
+                                    <?endif?>
                                     <?endforeach?>
                                 </div>
                             </div>
@@ -234,28 +234,3 @@ if ($arParams['DISPLAY_COMPARE']) {
 <?elseif (strlen($arResult["DETAIL_TEXT"]) > 0): ?>
     <div class="block_wrapper"><?=($arResult["DETAIL_TEXT_TYPE"] == "text" ? $arResult["DETAIL_TEXT"] : htmlspecialcharsback($arResult["DETAIL_TEXT"]))?></div>
 <?endif?>
-<script>
-    BX.message({
-        ECONOMY_INFO_MESSAGE: '<?=GetMessageJS('CT_BCE_CATALOG_ECONOMY_INFO2')?>',
-        TITLE_ERROR: '<?=GetMessageJS('CT_BCE_CATALOG_TITLE_ERROR')?>',
-        TITLE_BASKET_PROPS: '<?=GetMessageJS('CT_BCE_CATALOG_TITLE_BASKET_PROPS')?>',
-        BASKET_UNKNOWN_ERROR: '<?=GetMessageJS('CT_BCE_CATALOG_BASKET_UNKNOWN_ERROR')?>',
-        BTN_SEND_PROPS: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_SEND_PROPS')?>',
-        BTN_MESSAGE_BASKET_REDIRECT: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_BASKET_REDIRECT')?>',
-        BTN_MESSAGE_CLOSE: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_CLOSE')?>',
-        BTN_MESSAGE_CLOSE_POPUP: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_CLOSE_POPUP')?>',
-        TITLE_SUCCESSFUL: '<?=GetMessageJS('CT_BCE_CATALOG_ADD_TO_BASKET_OK')?>',
-        COMPARE_MESSAGE_OK: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_OK')?>',
-        COMPARE_UNKNOWN_ERROR: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_UNKNOWN_ERROR')?>',
-        COMPARE_TITLE: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_TITLE')?>',
-        BTN_MESSAGE_COMPARE_REDIRECT: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_COMPARE_REDIRECT')?>',
-        PRODUCT_GIFT_LABEL: '<?=GetMessageJS('CT_BCE_CATALOG_PRODUCT_GIFT_LABEL')?>',
-        PRICE_TOTAL_PREFIX: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_PRICE_TOTAL_PREFIX')?>',
-        RELATIVE_QUANTITY_MANY: '<?=CUtil::JSEscape($arParams['MESS_RELATIVE_QUANTITY_MANY'])?>',
-        RELATIVE_QUANTITY_FEW: '<?=CUtil::JSEscape($arParams['MESS_RELATIVE_QUANTITY_FEW'])?>',
-        SITE_ID: '<?=CUtil::JSEscape($component->getSiteId())?>',
-        BTN_MESSAGE_FAVORITE_REDIRECT: '<?=GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_FAVORITE_REDIRECT')?>',
-        FAVORITE_TITLE: '<?=GetMessageJS('CT_BCE_CATALOG_MESS_FAVORITE_TITLE')?>'
-    });
-    var obCatalogElementDetail = new window.catalogElementDetail(<?=CUtil::PhpToJSObject($jsParams, false, true)?>);
-</script>
