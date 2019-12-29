@@ -22,7 +22,7 @@ $arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["P
 <?endif?>
 <div<?if (isset($arResult["AREA_ID"])) :?> id="<?=$arResult["AREA_ID"]?>"<?endif?> class="table_list-item-wrap">
     <div class="table_list-wrap">
-        <a href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>" class="table_list-preview full">
+        <a href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>" class="table_list-preview full">
             <div class="table_list-img">
                 <img src="<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arResult["OFFER"]["NAME"]?>">
             </div>
