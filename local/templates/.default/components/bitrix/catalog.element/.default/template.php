@@ -132,7 +132,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                     </div>
                 </div>
             <?endif?>
-            <?foreach (["RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA", "KOLICHESTVO_MET_TRUB", "visota_yashika", "TIP_DNA"] as $code) :?>
+            <?foreach (["RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA", "KOLICHESTVO_MET_TRUB", "visota_yashika", "TIP_DNA", "__4"] as $code) :?>
                 <?if ($arResult[$code]["COUNT"] > 0) :?>
                     <div class="cart_desc-item">
                         <div class="dropdown header-location js-drop_down">
