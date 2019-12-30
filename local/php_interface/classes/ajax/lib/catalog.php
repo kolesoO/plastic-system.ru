@@ -446,7 +446,12 @@ class Catalog
                 "USE_VOTE_RATING" => "Y",
                 "VK_USE" => "N",
                 "VOTE_DISPLAY_AS_RATING" => "rating",
-                "OFFER_ID_SELECTED" => $arParams['offer_id']
+                "OFFER_ID_SELECTED" => $arParams['offer_id'],
+                "IMAGE_SIZE" => [
+                    "WIDTH" => 557,
+                    "HEIGHT" => 366
+                ],
+                "DEVICE_TYPE" => DEVICE_TYPE
             )
         );
         $return = ob_get_contents();
