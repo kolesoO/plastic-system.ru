@@ -27,6 +27,13 @@ if (strlen($arParams["OFFER_CODE_SELECTED"]) > 0) {
             break;
         }
     }
+} else {
+    foreach ($arResult["OFFERS"] as $key => $arOffer) {
+        if ($arOffer["ID"] == $arResult["OFFER_ID_SELECTED"]) {
+            $arResult["OFFER_ID_SELECTED"] = $key;
+            break;
+        }
+    }
 }
 //end
 
