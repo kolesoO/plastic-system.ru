@@ -212,5 +212,9 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFERS", "OFFER_ID_SELECTED", "PROPERTIES", "TSVET", "RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA", "KOLICHESTVO_MET_TRUB"]);
+    $cp->SetResultCacheKeys([
+        "OFFERS_COUNT", "OFFERS", "OFFER_ID_SELECTED", "PROPERTIES",
+        "TSVET", "RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA", "KOLICHESTVO_MET_TRUB",
+        'visota_yashika', 'TIP_DNA', '__4'
+    ]);
 }

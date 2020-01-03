@@ -139,7 +139,12 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <a href="#" class="dropdown-btn link js-drop_down-btn">
                                 <span><?=$arResult[$code]["TITLE"]?></span>
                                 <?if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) :
-                                    $prefix = strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0 ? $arOffer["PROPERTIES"]["TSVET"]["VALUE"].", " : "";
+                                    $prefix = '';
+                                    if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
+                                        $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
+                                    } elseif (strlen($arOffer["PROPERTIES"]["MATERIAL"]["VALUE"]) > 0) {
+                                        $prefix = $arOffer["PROPERTIES"]["MATERIAL"]["VALUE"] . ", ";
+                                    }
                                     ?>
                                     <small>(<?=$prefix.$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
                                 <?endif?>
@@ -148,7 +153,12 @@ if ($arParams['DISPLAY_COMPARE']) {
                                 <div class="header-location-inner">
                                     <?foreach ($arResult["OFFERS"] as $offerKey => $arOfferItem) :
                                         if (!in_array($arOfferItem["ID"], $arResult[$code]["ID"])) continue;
-                                        $prefix = strlen($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]) > 0 ? $arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", " : "";
+                                        $prefix = '';
+                                        if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
+                                            $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
+                                        } elseif (strlen($arOffer["PROPERTIES"]["MATERIAL"]["VALUE"]) > 0) {
+                                            $prefix = $arOffer["PROPERTIES"]["MATERIAL"]["VALUE"] . ", ";
+                                        }
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
                                             <span class="header-location-link"><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
