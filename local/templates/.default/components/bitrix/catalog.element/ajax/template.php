@@ -34,6 +34,7 @@ if ($arParams['DISPLAY_COMPARE']) {
 ///end
 ?>
 
+<h1 class="title-1"><?=$arOffer['NAME']?></h1>
 <div class="block_wrapper">
     <?if ($arStatus = \kDevelop\Help\Tools::getOfferStatusInfo($arOffer["PROPERTIES"]["STATUS"]["VALUE_XML_ID"])) :?>
         <div class="label absolute" style="background-color:<?=$arStatus["BG_COLOR"]?>"><?=$arOffer["PROPERTIES"]["STATUS"]["VALUE"]?></div>
@@ -142,8 +143,6 @@ if ($arParams['DISPLAY_COMPARE']) {
                                     $prefix = '';
                                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
                                         $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
-                                    } elseif (strlen($arOffer["PROPERTIES"]["MATERIAL"]["VALUE"]) > 0) {
-                                        $prefix = $arOffer["PROPERTIES"]["MATERIAL"]["VALUE"] . ", ";
                                     }
                                     ?>
                                     <small>(<?=$prefix.$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
@@ -156,8 +155,6 @@ if ($arParams['DISPLAY_COMPARE']) {
                                         $prefix = '';
                                         if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
                                             $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
-                                        } elseif (strlen($arOffer["PROPERTIES"]["MATERIAL"]["VALUE"]) > 0) {
-                                            $prefix = $arOffer["PROPERTIES"]["MATERIAL"]["VALUE"] . ", ";
                                         }
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>

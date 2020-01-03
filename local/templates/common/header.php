@@ -363,8 +363,8 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         "SITE_ID" => SITE_ID
                     ]
                 );?>
-                <?if (HIDE_H1 != "Y") :?>
-                    <h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
-                <?endif?>
                 <div id="<?$APPLICATION->ShowProperty("content-id")?>">
+                    <?if (HIDE_H1 != "Y") :?>
+                        <h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
+                    <?endif?>
     <?endif?>

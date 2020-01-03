@@ -142,8 +142,6 @@ if ($arParams['DISPLAY_COMPARE']) {
                                     $prefix = '';
                                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
                                         $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
-                                    } elseif (strlen($arOffer["PROPERTIES"]["MATERIAL"]["VALUE"]) > 0) {
-                                        $prefix = $arOffer["PROPERTIES"]["MATERIAL"]["VALUE"] . ", ";
                                     }
                                     ?>
                                     <small>(<?=$prefix.$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
@@ -156,8 +154,6 @@ if ($arParams['DISPLAY_COMPARE']) {
                                         $prefix = '';
                                         if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
                                             $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
-                                        } elseif (strlen($arOffer["PROPERTIES"]["MATERIAL"]["VALUE"]) > 0) {
-                                            $prefix = $arOffer["PROPERTIES"]["MATERIAL"]["VALUE"] . ", ";
                                         }
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
