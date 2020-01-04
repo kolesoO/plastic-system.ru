@@ -19,15 +19,13 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
 $arOffer["CAN_BUY"] = $arOffer["CAN_BUY"] && $arPrice["PRICE"] > 0;
 
 //seo fields
-/*if ($arOffer) {
+if ($arOffer) {
     $seoIblockId = $arParams["LINK_IBLOCK_ID"];
     $seoItemId = $arOffer["ID"];
 } else {
     $seoIblockId = $arParams["IBLOCK_ID"];
     $seoItemId = $arResult["ID"];
-}*/
-$seoIblockId = $arParams["IBLOCK_ID"];
-$seoItemId = $arResult["ID"];
+}
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
 $arIPropValues = $rsIProps->getValues();
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
