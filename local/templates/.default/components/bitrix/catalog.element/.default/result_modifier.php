@@ -125,7 +125,7 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
     //end
 
     //разбивка торг предложений на 'с цветом', 'с размером', 'дно', 'ibox', 'Тип контейнера' и т.д.
-    $arResult['SKU_LINK_PROPS'] = ['TSVET', 'RAZMER', 'OPTSII_IBOX', 'DNO', 'TIP_KONTEYNERA', 'KOLICHESTVO_MET_TRUB', 'visota_yashika', 'TIP_DNA', '__4'];
+    $arResult['SKU_LINK_PROPS'] = ['RAZMER', 'OPTSII_IBOX', 'DNO', 'TIP_KONTEYNERA', 'KOLICHESTVO_MET_TRUB', 'visota_yashika', 'TIP_DNA', '__4'];
     foreach ($arResult['SKU_LINK_PROPS'] as $code) {
         $arResult[$code] = [
             "ID" => [],
@@ -133,13 +133,25 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
             "TITLE" => ""
         ];
     }
+    $arResult['TSVET'] = [
+        "ID" => [],
+        "COUNT" => 0,
+        "TITLE" => ""
+    ];
     $arValueCache = [];
     foreach ($arResult["OFFERS"] as $key => &$arOffer) {
+        if (strlen($arOffer["PROPERTIES"]['TSVET']["VALUE"]) > 0 && !in_array($arOffer["PROPERTIES"]['TSVET']["VALUE"], $arValueCache)) {
+            $arResult['TSVET']["ID"][] = $arOffer["ID"];
+            $arResult['TSVET']["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]['TSVET']["VALUE"];
+            if (strlen($arResult['TSVET']["TITLE"]) == 0) {
+                $arResult['TSVET']["TITLE"] = $arOffer["PROPERTIES"]['TSVET']["NAME"];
+            }
+        }
         foreach ($arResult['SKU_LINK_PROPS'] as $code) {
-            if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0 && !in_array($arOffer["PROPERTIES"][$code]["VALUE"], $arValueCache)) {
+            if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) {
                 $arResult[$code]["ID"][] = $arOffer["ID"];
                 $arResult[$code]["COUNT"]++;
-                $arValueCache[] = $arOffer["PROPERTIES"][$code]["VALUE"];
                 if (strlen($arResult[$code]["TITLE"]) == 0) {
                     $arResult[$code]["TITLE"] = $arOffer["PROPERTIES"][$code]["NAME"];
                 }
