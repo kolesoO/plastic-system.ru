@@ -133,7 +133,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                     </div>
                 </div>
             <?endif?>
-            <?foreach (["RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA", "KOLICHESTVO_MET_TRUB", "visota_yashika", "TIP_DNA", "__4"] as $code) :?>
+            <?foreach ($arResult['SKU_LINK_PROPS'] as $code) :?>
                 <?if ($arResult[$code]["COUNT"] > 0) :?>
                     <div class="cart_desc-item">
                         <div class="dropdown header-location js-drop_down">
@@ -153,8 +153,8 @@ if ($arParams['DISPLAY_COMPARE']) {
                                     <?foreach ($arResult["OFFERS"] as $offerKey => $arOfferItem) :
                                         if (!in_array($arOfferItem["ID"], $arResult[$code]["ID"])) continue;
                                         $prefix = '';
-                                        if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
-                                            $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
+                                        if (strlen($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
+                                            $prefix = $arOfferItem["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
                                         }
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
