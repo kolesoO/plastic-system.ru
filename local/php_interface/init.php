@@ -1,5 +1,9 @@
 <?
 use \Bitrix\Main;
+use kDevelop\Help\Tools;
+use kDevelop\Service\Catalog;
+use kDevelop\Service\Order;
+use kDevelop\Settings\Store;
 
 $rsManager = Main\EventManager::getInstance();
 
@@ -28,17 +32,17 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/kladrapi-
 
 //Обработчики событий
 if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
-    \kDevelop\Service\Catalog::defineSettings();
+    Catalog::defineSettings();
     //main module
-    $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Help\Tools", "setDeviceType"], false, 100);
-    $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Settings\Store", "setStore"], false, 200);
-    $rsManager->addEventHandler("main", "OnProlog", ["\kDevelop\Help\Tools", "defineAjax"], false, 300);
-    $rsManager->addEventHandler("sale", "OnOrderNewSendEmail", ["\kDevelop\Service\Order", "OnOrderNewSendEmailHandler"], false, 100);
-    $rsManager->addEventHandler("sale", "onSaleDeliveryServiceCalculate", ["\kDevelop\Service\Order", "onSaleDeliveryServiceCalculateHandler"], false, 100);
+    $rsManager->addEventHandler("main", "OnProlog", [Tools::class, "setDeviceType"], false, 100);
+    $rsManager->addEventHandler("main", "OnProlog", [Store::class, "setStore"], false, 200);
+    $rsManager->addEventHandler("main", "OnProlog", [Tools::class, "defineAjax"], false, 300);
+    $rsManager->addEventHandler("sale", "OnOrderNewSendEmail", [Order::class, "OnOrderNewSendEmailHandler"], false, 100);
+    $rsManager->addEventHandler("sale", "onSaleDeliveryServiceCalculate", [Order::class, "onSaleDeliveryServiceCalculateHandler"], false, 100);
     //end
 } else {
     //iblock module
-    $rsManager->addEventHandler("iblock", "OnAfterIBlockElementUpdate", ["\kDevelop\Service\Catalog", "OnAfterIBlockElementUpdateHandler"], false, 100);
+    $rsManager->addEventHandler("iblock", "OnAfterIBlockElementUpdate", [Catalog::class, "OnAfterIBlockElementUpdateHandler"], false, 100);
     //end
 }
 //end

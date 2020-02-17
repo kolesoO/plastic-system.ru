@@ -51,5 +51,30 @@ foreach ($arResult["ORDER_PROP"]["USER_PROPS_N"] as &$arProp) {
         }
     }
 }
-//unset($arProp);
+
+$groupKeys = [];
+foreach ($arResult['JS_DATA']['ORDER_PROP']['groups'] as $key => &$group) {
+    $groupKeys[$group['ID']] = $key;
+    $group['PROPS_COUNT'] = 0;
+    $group['RELATED_PROPS_COUNT'] = 0;
+}
+unset($group);
+
+foreach ($arResult["ORDER_PROP"]["USER_PROPS_N"] as &$arProp) {
+    $groupId = $groupKeys[$arProp['PROPS_GROUP_ID']];
+    $arResult['JS_DATA']['ORDER_PROP']['groups'][$groupId]['PROPS_COUNT'] ++;
+    if (isset($_REQUEST[$arProp['FIELD_NAME']])) {
+        $arProp['VALUE'] = $_REQUEST[$arProp['FIELD_NAME']];
+    }
+}
+unset($arProp);
+
+foreach ($arResult["ORDER_PROP"]["RELATED"] as &$arProp) {
+    $groupId = $groupKeys[$arProp['PROPS_GROUP_ID']];
+    $arResult['JS_DATA']['ORDER_PROP']['groups'][$groupId]['RELATED_PROPS_COUNT'] ++;
+    if (isset($_REQUEST[$arProp['FIELD_NAME']])) {
+        $arProp['VALUE'] = $_REQUEST[$arProp['FIELD_NAME']];
+    }
+}
+unset($arProp);
 //end
