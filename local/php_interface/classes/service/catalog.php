@@ -1,6 +1,8 @@
 <?php
 namespace kDevelop\Service;
 
+use kDevelop\Help\Util;
+
 class Catalog
 {
     /**
@@ -14,38 +16,57 @@ class Catalog
     private static $iblockId = IBLOCK_SERVICE_CATALOG_SETTINGS;
 
     /**
+     * @param $id
+     * @return bool
+     */
+    protected static function isRightIblock($id)
+    {
+        return $id == IBLOCK_CATALOG_CATALOG;
+    }
+
+    /**
      * @param $arFields
      */
     public static function OnAfterIBlockElementUpdateHandler($arFields)
     {
-        if ($arFields["IBLOCK_ID"] == IBLOCK_CATALOG_CATALOG) {
-            //перекрестная синхронизация свойств между связанными инфоблоками
-            self::setItemSku($arFields["ID"], ["PROPERTY_TSVET_VALUE" => false]);
-            if (count(self::$arSku) > 0) {
-                self::updateProperty(
-                    ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "TSVET"],
-                    ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOGSKU, "PROP_CODE" => "TSVET"],
-                    $arFields
-                );
-            }
-            //end
+        if (!self::isRightIblock($arFields["IBLOCK_ID"])) {
+            return;
+        }
 
-            self::ListToStringProperty(
-                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "DLINA_MM"],
-                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "DLINA_MM_NUMBER"],
-                $arFields
-            );
-            self::ListToStringProperty(
-                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "SHIRINA_MM"],
-                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "SHIRINA_MM_NUMBER"],
-                $arFields
-            );
-            self::ListToStringProperty(
-                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "VYSOTA_MM"],
-                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "VYSOTA_MM_NUMBER"],
+        //перекрестная синхронизация свойств между связанными инфоблоками
+        self::setItemSku($arFields["ID"], ["PROPERTY_TSVET_VALUE" => false]);
+        if (count(self::$arSku) > 0) {
+            self::updateProperty(
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "TSVET"],
+                ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOGSKU, "PROP_CODE" => "TSVET"],
                 $arFields
             );
         }
+        //end
+
+        self::ListToStringProperty(
+            ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "DLINA_MM"],
+            ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "DLINA_MM_NUMBER"],
+            $arFields
+        );
+        self::ListToStringProperty(
+            ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "SHIRINA_MM"],
+            ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "SHIRINA_MM_NUMBER"],
+            $arFields
+        );
+        self::ListToStringProperty(
+            ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "VYSOTA_MM"],
+            ["IBLOCK_ID" => IBLOCK_CATALOG_CATALOG, "PROP_CODE" => "VYSOTA_MM_NUMBER"],
+            $arFields
+        );
+    }
+
+    /**
+     * @param $arFields
+     */
+    public static function transformElementFields(&$arFields)
+    {
+        $arFields['CODE'] = Util::translit($arFields['NAME'], LANGUAGE_ID);
     }
 
     /**

@@ -12,6 +12,7 @@ Main\Loader::registerAutoLoadClasses(null, [
     "\kDevelop\Help\Hload" => "/local/php_interface/classes/help/hload.php",
     "\kDevelop\Help\Mobile_Detect" => "/local/php_interface/classes/help/mobile_detect.php",
     "\kDevelop\Help\Tools" => "/local/php_interface/classes/help/tools.php",
+    "\kDevelop\Help\Util" => "/local/php_interface/classes/help/util.php",
     "\kDevelop\Settings\Store" => "/local/php_interface/classes/settings/store.php",
     "\kDevelop\Service\Catalog" => "/local/php_interface/classes/service/catalog.php",
     "\kDevelop\Service\Logger" => "/local/php_interface/classes/service/logger.php",
@@ -37,12 +38,22 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
     $rsManager->addEventHandler("main", "OnProlog", [Tools::class, "setDeviceType"], false, 100);
     $rsManager->addEventHandler("main", "OnProlog", [Store::class, "setStore"], false, 200);
     $rsManager->addEventHandler("main", "OnProlog", [Tools::class, "defineAjax"], false, 300);
+
     $rsManager->addEventHandler("sale", "OnOrderNewSendEmail", [Order::class, "OnOrderNewSendEmailHandler"], false, 100);
+
     $rsManager->addEventHandler("sale", "onSaleDeliveryServiceCalculate", [Order::class, "onSaleDeliveryServiceCalculateHandler"], false, 100);
     //end
 } else {
     //iblock module
     $rsManager->addEventHandler("iblock", "OnAfterIBlockElementUpdate", [Catalog::class, "OnAfterIBlockElementUpdateHandler"], false, 100);
+
+    $rsManager->addEventHandler("iblock", "OnBeforeIBlockElementUpdate", [Catalog::class, "transformElementFields"], false, 100);
+
+    $rsManager->addEventHandler("iblock", "OnBeforeIBlockElementAdd", [Catalog::class, "transformElementFields"], false, 100);
+
+    $rsManager->addEventHandler("iblock", "OnBeforeIBlockSectionAdd", [Catalog::class, "transformElementFields"], false, 100);
+
+    $rsManager->addEventHandler("iblock", "OnBeforeIBlockSectionUpdate", [Catalog::class, "transformElementFields"], false, 100);
     //end
 }
 //end
