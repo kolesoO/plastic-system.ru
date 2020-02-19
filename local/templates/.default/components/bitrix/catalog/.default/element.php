@@ -17,6 +17,8 @@ define("NOT_CLOSE_SECTION_IN_FOOTER", "Y");
 $APPLICATION->SetPageProperty("header_section-class", "section");
 $APPLICATION->SetPageProperty("content-id", "catalog-element");
 
+$rememberOfferId = $_SESSION['REMEMBER_OFFER'][$arResult["VARIABLES"]["ELEMENT_CODE"]] ?? '';
+
 $componentElementParams = array(
     'IBLOCK_TYPE' => $arParams['IBLOCK_TYPE'],
     'IBLOCK_ID' => $arParams['IBLOCK_ID'],
@@ -164,6 +166,7 @@ $componentElementParams = array(
     'GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE' => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE'],
 
     "OFFER_CODE_SELECTED" => (strlen($arResult["VARIABLES"]["SKU_CODE"]) > 0 ? str_replace(\kDevelop\Help\Tools::getOfferPrefixInUrl(), "", $arResult["VARIABLES"]["SKU_CODE"]) : ""),
+    "OFFER_ID_SELECTED" => $rememberOfferId,
 
     "IMAGE_SIZE" => $arParams["DETAIL_IMAGE_SIZE"],
     "DEVICE_TYPE" => $arParams["DEVICE_TYPE"]

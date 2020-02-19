@@ -73,11 +73,14 @@ if ($arParams['DISPLAY_COMPARE']) {
                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0 || in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arColorCache)) continue;
                     $arColorCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
                     ?>
-                    <div
-                            class="table_list-color-item"
+                    <a
+                            href="#"
+                            class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
                             title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
                             style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                    ></div>
+                            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this)"
+                            data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
+                    ></a>
                 <?endforeach;?>
             </div>
         <?else:?>

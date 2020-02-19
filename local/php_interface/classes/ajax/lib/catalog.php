@@ -459,4 +459,18 @@ class Catalog
 
         return ["js_callback" => "getCatalogElementCallBack", "html" => $return];
     }
+
+    /**
+     * @param $arParams
+     * @return array
+     */
+    public function setOfferId($arParams)
+    {
+        $_SESSION['REMEMBER_OFFER'][$arParams['element_code']] = $arParams['offer_id'];
+
+        return [
+            "js_callback" => "setOfferIdCallBack",
+            "result" => true
+        ];
+    }
 }

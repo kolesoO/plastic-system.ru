@@ -810,6 +810,42 @@ var obAjax = {
 
     /**
      *
+     * @param element_code
+     * @param offer_id
+     * @param self
+     */
+    setOfferId: function(element_code, offer_id, self)
+    {
+        this.params.offer_link = $(self).attr('data-href') || '';
+        this.doRequest(
+            "POST",
+            location.href,
+            this.serializeData({
+                class: "Catalog",
+                method: "setOfferId",
+                params: {
+                    element_code: element_code,
+                    offer_id: offer_id
+                }
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    setOfferIdCallBack: function(data) {
+        if (data.result === true && this.params.offer_link.length > 0) {
+            location.href = this.params.offer_link;
+        }
+    },
+
+    /**
+     *
      * @param method
      * @param url
      * @param sendData

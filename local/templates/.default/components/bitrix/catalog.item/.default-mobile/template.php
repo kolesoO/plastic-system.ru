@@ -57,6 +57,8 @@ $arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["P
                             class="table_list-color-item"
                             title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
                             style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this)"
+                            data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
                     ></div>
                 <?endforeach;?>
             </div>
