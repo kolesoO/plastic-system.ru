@@ -40,6 +40,7 @@ class UserAddress extends CBitrixComponent
 
         if (strlen($this->arParams["USER_PROP_CODE"]) == 0 || intval($this->arParams["IBLOCK_ID"]) == 0) return;
         if (!$this->checkUserField($this->arParams["USER_PROP_CODE"])) return;
+        if (!$USER->IsAuthorized()) return;
 
         $hasProps = is_array($this->arParams["PROPERTY_CODE"]) && count($this->arParams["PROPERTY_CODE"]) > 0;
         $hasAllProps = false;
