@@ -1,4 +1,7 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+
+/** @global $USER */
+?>
 
 <?foreach ($arResult["ORDER_PROP"]["RELATED"] as $arProp) :
     //name
@@ -72,7 +75,7 @@
                 </div>
             <?endif?>
         </div>
-        <?if ($arProp["CODE"] == "ADDRESS") :?>
+        <?if ($arProp["CODE"] == "ADDRESS" && $USER->IsAuthorized()) :?>
             <div class="order_form-item-wrap" flex-align="center">
                 <div class="col-lg-6 col-md-9">
                     <button class="form_button" onclick="obAjax.getUserAddressList('address-list', event)">Добавить из адресов</button>
