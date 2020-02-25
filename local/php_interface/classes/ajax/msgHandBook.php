@@ -23,7 +23,8 @@ trait MsgHandBook
         "DELETE_FROM_FAVORITE_ERROR" => "Ошибка при удалении из избранного",
         "DELETE_FROM_FAVORITE_SUCCESS" => "Товар удален из избранного",
         "INIT_PAYMENT_SUCCESS" => "Адрес для проведения транзакции успешно сформирован",
-        "INIT_PAYMENT_ERROR" => "Не достаточно данных для формирования адреса транзакции"
+        "INIT_PAYMENT_ERROR" => "Не достаточно данных для формирования адреса транзакции",
+        "REGISTER_WRONG_CAPTCHA" => "Неверно введено слово с картинки",
     ];
 
     /**

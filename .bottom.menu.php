@@ -1,10 +1,11 @@
 <?
 $aMenuLinks = Array(
 	Array(
-		"Карта сайта",
-		"/sitemap/",
+		"Карта сайта", 
+		"/sitemap/", 
 		Array(), 
 		Array(), 
 		"" 
 	)
 );
+?>

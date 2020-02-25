@@ -1,4 +1,7 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+
+/** @global $USER */
+?>
 
 <?foreach ($arResult['JS_DATA']['ORDER_PROP']['groups'] as $group) :
     if ($group['RELATED_PROPS_COUNT'] == 0) continue;

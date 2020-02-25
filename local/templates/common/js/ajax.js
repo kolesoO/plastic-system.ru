@@ -326,9 +326,21 @@ var obAjax = {
     userRegisterCallBack: function(data)
     {
         if (!!data.error_msg) {
-            var errorBlock = document.querySelector("#" + this.params.target_id + " .error_txt");
-            if (!!errorBlock) {
-                errorBlock.innerHTML = data.error_msg.join("<br>");
+            var block = document.querySelector("#" + this.params.target_id + " .error_txt");
+            if (!!block) {
+                block.innerHTML = data.error_msg.join("<br>");
+            }
+            if (!!data.captcha_code) {
+                block = document.getElementById('reg-captcha-sid');
+                if (!!block) {
+                    block.value = data.captcha_code;
+                }
+            }
+            if (!!data.captcha_img) {
+                block = document.getElementById('reg-captcha-picture');
+                if (!!block) {
+                    block.src = data.captcha_img;
+                }
             }
         } else if (data.USER_ID > 0) {
             location.reload();

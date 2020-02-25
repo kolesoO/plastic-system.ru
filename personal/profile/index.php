@@ -35,7 +35,7 @@ $APPLICATION->SetTitle("Учетная запись");
                     "AJAX_MODE" => "Y",
                     "USER_PROPERTY" => Array(),
                     "SEND_INFO" => "Y",
-                    "CHECK_RIGHTS" => "Y",
+                    "CHECK_RIGHTS" => "N",
                     "AJAX_OPTION_JUMP" => "N",
                     "AJAX_OPTION_STYLE" => "Y",
                     "AJAX_OPTION_HISTORY" => "N"
