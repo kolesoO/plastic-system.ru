@@ -14,7 +14,17 @@ $(document).ready(function() {
                     parseFloat($(this).attr('data-pgs_s'))
                 ],
                 mapZoom: parseInt($target.attr('data-zoom')),
-                controls: ['routePanelControl']
+                controls: [
+                    'routePanelControl',
+                    new ymaps.control.ZoomControl({
+                        options: {
+                            position: {
+                                right: 10,
+                                top: 30
+                            }
+                        }
+                    })
+                ]
             });
             map.setPlacemarkOptions({
                 iconLayout: "default#image",
