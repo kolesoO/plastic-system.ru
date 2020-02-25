@@ -1,1 +1,0 @@
-<div class="title-2">Способы оплаты</div>
