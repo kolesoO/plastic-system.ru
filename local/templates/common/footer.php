@@ -208,6 +208,18 @@
         );
     }
     //end
+
+    //store road map
+    $APPLICATION->IncludeComponent(
+        "bitrix:main.include",
+        ".default",
+        [
+            "AREA_FILE_SHOW" => "file",
+            "PATH" => SITE_TEMPLATE_PATH . "/include/footer/store-road-map.php"
+        ],
+        false
+    );
+    //end
     ?>
 
     <?if (!isset($_COOKIE['cookie_policy']) || $_COOKIE['cookie_policy'] != 'true') :?>

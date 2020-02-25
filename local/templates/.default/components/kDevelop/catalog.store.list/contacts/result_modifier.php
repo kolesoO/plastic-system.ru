@@ -29,6 +29,16 @@ foreach ($arResult["STORES"] as &$arItem) {
         $arItem["UF_CUSTOM_COORDS"] = explode(",", $arFields["UF_CUSTOM_COORDS"]["VALUE"]);
         $arItem["UF_CITY_NAME"] = $arFields["UF_CITY_NAME"]["VALUE"];
     }
+    if (isset($arFields["UF_FROM_N"]) && strlen($arFields["UF_FROM_N"]["VALUE"]) > 0) {
+        $arItem["UF_FROM_N"] = $arFields["UF_FROM_N"]["VALUE"];
+    }
+    if (isset($arFields["UF_FROM_S"]) && strlen($arFields["UF_FROM_S"]["VALUE"]) > 0) {
+        $arItem["UF_FROM_S"] = $arFields["UF_FROM_S"]["VALUE"];
+    }
+    if (strlen($arItem["UF_FROM_N"]) == 0 || strlen($arItem["UF_FROM_S"]) == 0) {
+        unset($arItem["UF_FROM_N"]);
+        unset($arItem["UF_FROM_S"]);
+    }
     //end
     //кеширование изображений
     if (is_array($arItem["DETAIL_IMG"]) && $hasResizeImg) {
