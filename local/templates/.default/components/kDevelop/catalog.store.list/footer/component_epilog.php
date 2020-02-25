@@ -14,5 +14,5 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 global $rsAsset;
 
-$rsAsset->addString('<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=5a8e55ae-66ea-4959-8e40-16dc606be5c9" type="text/javascript" async></script>');
+$rsAsset->addString('<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=5a8e55ae-66ea-4959-8e40-16dc606be5c9" type="text/javascript" defer></script>');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/ymap/script.js');
