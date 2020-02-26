@@ -40,6 +40,11 @@ foreach ($arResult["STORES"] as &$arItem) {
         unset($arItem["UF_FROM_S"]);
     }
     //end
+
+    $arItem['MAP_BALLOON_CONTENT'] = isset($arFields['UF_MAP_TITLE']) && strlen($arFields['UF_MAP_TITLE']['VALUE']) > 0
+        ? $arFields['UF_MAP_TITLE']['VALUE']
+        : $arItem['ADDRESS'];
+
     //кеширование изображений
     if (is_array($arItem["DETAIL_IMG"]) && $hasResizeImg) {
         $thumb = \CFile::ResizeImageGet(

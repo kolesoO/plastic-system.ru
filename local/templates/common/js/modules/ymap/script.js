@@ -6,7 +6,7 @@ function obMap(obParams){
     this.obParams = obParams;
     this.obMap = null;
     this.arMarkerInfo = [];
-    this.routes = null;
+    this.routes = [];
     this.obPlacemarkProperties = {};
     this.obPlacemarkOptions = {};
     this.controls = [];
@@ -26,13 +26,18 @@ obMap.prototype.showMessage = function(strMsg){
 /**
  *
  * @param arCoords
+ * @param obPlacemarkProperties
+ * @param obPlacemarkOptions
  * @returns {ymaps.Placemark}
  */
-obMap.prototype.getGeoPlaceMark = function(arCoords){
+obMap.prototype.getGeoPlaceMark = function(arCoords, obPlacemarkProperties, obPlacemarkOptions){
 
     var ctx = this;
 
-    return new ymaps.Placemark(arCoords, ctx.obPlacemarkProperties, ctx.obPlacemarkOptions);
+    obPlacemarkProperties = obPlacemarkProperties || ctx.obPlacemarkProperties;
+    obPlacemarkOptions = obPlacemarkOptions || ctx.obPlacemarkOptions;
+
+    return new ymaps.Placemark(arCoords, obPlacemarkProperties, obPlacemarkOptions);
 
 };
 
@@ -110,7 +115,7 @@ obMap.prototype.setPolygon = function(arCoords, arCoordsInner, obProps, obOption
  * @param routeInfo
  */
 obMap.prototype.addRoute = function(routeInfo) {
-    this.routes = routeInfo;
+    this.routes.push(routeInfo);
 };
 
 /**
@@ -118,9 +123,7 @@ obMap.prototype.addRoute = function(routeInfo) {
  */
 obMap.prototype.initMap = function(){
 
-    var ctx = this,
-        obGeoObject = null,
-        control = null;
+    var ctx = this;
 
     if(!ctx.obMap){
         ctx.obMap = new ymaps.Map(ctx.obParams.mapId,{
@@ -132,14 +135,42 @@ obMap.prototype.initMap = function(){
 
     if(ctx.arMarkerInfo.length > 0){
         ctx.arMarkerInfo.forEach(function(obMarkerInfo){
-            obGeoObject = ctx.getGeoPlaceMark(obMarkerInfo.coords);
+            ctx.obMap.geoObjects.add(
+                ctx.getGeoPlaceMark(obMarkerInfo.coords)
+            );
         });
-        ctx.obMap.geoObjects.add(obGeoObject);
     }
 
-    control = ctx.obMap.controls.get('routePanelControl');
-    if (!!control && ctx.routes) {
-        control.routePanel.state.set(ctx.routes);
+    if (ctx.routes.length > 0) {
+        ymaps.route(
+            ctx.routes,
+            {
+                mapStateAutoApply: true
+            }
+        ).then(function (route) {
+            route.getPaths()
+                .options.set({
+                    balloonContentLayout: ymaps.templateLayoutFactory.createClass('{{ properties.humanJamsTime }}'),
+                    strokeColor: '0000ffff',
+                    opacity: 0.9
+                });
+            route.getWayPoints()
+                .each(function (item) {
+                    item.options.set('visible', false);
+                });
+            ctx.obMap.geoObjects.add(route);
+        });
+        ctx.routes.forEach(function (obMarkerInfo) {
+            if (obMarkerInfo.type === 'wayPoint') {
+                ctx.obMap.geoObjects.add(
+                    ctx.getGeoPlaceMark(
+                        obMarkerInfo.point,
+                        obMarkerInfo.properties,
+                        obMarkerInfo.options
+                    )
+                );
+            }
+        });
     }
 
 };

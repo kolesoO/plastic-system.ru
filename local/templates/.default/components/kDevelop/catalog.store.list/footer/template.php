@@ -23,6 +23,7 @@
                             class="link dashed js-store-map"
                             data-popup-open="#store-road-wrap"
                             data-target="#store-road-map"
+                            data-way_point_body="<?=$arItem['MAP_BALLOON_CONTENT']?>"
                             data-pgs_n="<?=$arItem["GPS_N"]?>"
                             data-pgs_s="<?=$arItem["GPS_S"]?>"
                             data-pgs_n_2="<?=$arItem["UF_FROM_N"]?>"

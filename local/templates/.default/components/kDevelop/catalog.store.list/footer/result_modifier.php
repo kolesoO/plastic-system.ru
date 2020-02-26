@@ -31,6 +31,9 @@ foreach ($arResult["STORES"] as &$arItem) {
         unset($arItem["UF_FROM_S"]);
     }
     //end
+    $arItem['MAP_BALLOON_CONTENT'] = isset($arFields['UF_MAP_TITLE']) && strlen($arFields['UF_MAP_TITLE']['VALUE']) > 0
+        ? $arFields['UF_MAP_TITLE']['VALUE']
+        : $arItem['ADDRESS'];
 }
 
 $cp = $this->__component;

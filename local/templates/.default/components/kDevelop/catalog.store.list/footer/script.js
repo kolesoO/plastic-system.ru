@@ -15,7 +15,6 @@ $(document).ready(function() {
                 ],
                 mapZoom: parseInt($target.attr('data-zoom')),
                 controls: [
-                    'routePanelControl',
                     new ymaps.control.ZoomControl({
                         options: {
                             position: {
@@ -33,15 +32,29 @@ $(document).ready(function() {
                 iconImageOffset: [-18,-22]
             });
             map.addRoute({
-                from: [
+                type: 'viaPoint',
+                point: [
                     parseFloat($(this).attr('data-pgs_n_2')),
                     parseFloat($(this).attr('data-pgs_s_2'))
                 ],
-                to: [
+                properties: {},
+                options: {}
+            });
+            map.addRoute({
+                type: 'wayPoint',
+                point: [
                     parseFloat($(this).attr('data-pgs_n')),
                     parseFloat($(this).attr('data-pgs_s'))
                 ],
-                toEnabled: false
+                properties: {
+                    balloonContent: $(this).attr('data-way_point_body')
+                },
+                options: {
+                    iconLayout: "default#image",
+                    iconImageHref: "/local/templates/common/images/icons/marker_map.svg",
+                    iconImageSize: [37,45],
+                    iconImageOffset: [-18,-22]
+                }
             });
             map.initMap();
         });

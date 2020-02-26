@@ -85,6 +85,9 @@ $(document).ready(function() {
         if ($(f.target).closest("[data-popup-open]").length > 0) {
             return
         }
+        if ($(f.target).closest('ymaps').length > 0) {
+            return
+        }
         $("body").css("overflow", "");
         $(".popup .popup-content").removeClass("animate");
         $(".popup").hide()
