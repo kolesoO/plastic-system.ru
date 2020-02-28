@@ -5,7 +5,6 @@ namespace kDevelop\Service;
 use \Bitrix\Main\Event;
 use \Bitrix\Sale\Delivery\CalculationResult;
 use \Bitrix\Sale\Shipment;
-use \Bitrix\Sale\Order as OrderSale;
 
 class Order
 {
@@ -23,9 +22,7 @@ class Order
      */
     public static function OnOrderNewSendEmailHandler($orderID, &$eventName, &$arFields)
     {
-        forward_static_call_array([self::class, self::$methodMap[$eventName]], [$orderID, &$arFields]);
-
-        AddMessage2Log($arFields);
+        \call_user_func_array([self, self::$methodMap[$eventName]], [$orderID, &$arFields]);
     }
 
     /**
@@ -122,7 +119,6 @@ class Order
     {
         global $APPLICATION;
 
-        //содержиое письма
         \ob_start();
         $APPLICATION->IncludeComponent(
             "bitrix:sale.personal.order.detail.mail",
@@ -156,36 +152,5 @@ class Order
         \ob_end_clean();
 
         $arFields["ORDER_LIST"] = $return;
-        //end
-
-        //email склада
-        $arFields['STORE_EMAIL'] = '';
-        $order = OrderSale::load($orderID);
-        $propertyCollection = $order->getPropertyCollection();
-        $locPropValue = $propertyCollection->getDeliveryLocation();
-        if ($arLocation = \CSaleLocation::GetList(
-            [],
-            ["CODE" => $locPropValue->getValue()],
-            false,
-            false,
-            ["ID", "CITY_NAME"]
-        )->fetch()) {
-            $arProp["VALUE"] = $arLocation["CODE"];
-            if ($arStore = \CCatalogStore::GetList(
-                ["SORT" => "ASC"],
-                [
-                    "ACTIVE"=>"Y",
-                    "UF_CITY_NAME" => $arLocation['CITY_NAME']
-                ],
-                false,
-                false,
-                ["ID", "EMAIL"]
-            )->fetch()) {
-                if ($arStore['EMAIL'] != $arFields['SALE_EMAIL']) {
-                    $arFields['STORE_EMAIL'] = $arStore['EMAIL'];
-                }
-            }
-        }
-        //end
     }
 }

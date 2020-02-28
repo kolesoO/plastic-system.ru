@@ -120,11 +120,10 @@ if ($arParams['DISPLAY_COMPARE']) {
                                 ></div>
                             <?else:?>
                                 <a
-                                        href="#"
+                                        href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>"
                                         class="table_list-color-item"
                                         title="<?=$arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]?>"
                                         style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                                        onclick="obAjax.getCatalogElement(<?=$arResult['ID']?>, <?=$arOfferItem['ID']?>, 'catalog-element', event)"
                                 ></a>
                             <?endif?>
                             <?if ($isSlider) :?></div><?endif?>
@@ -132,17 +131,14 @@ if ($arParams['DISPLAY_COMPARE']) {
                     </div>
                 </div>
             <?endif?>
-            <?foreach ($arResult['SKU_LINK_PROPS'] as $code) :?>
+            <?foreach (["RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA", "KOLICHESTVO_MET_TRUB", "visota_yashika", "TIP_DNA"] as $code) :?>
                 <?if ($arResult[$code]["COUNT"] > 0) :?>
                     <div class="cart_desc-item">
                         <div class="dropdown header-location js-drop_down">
                             <a href="#" class="dropdown-btn link js-drop_down-btn">
                                 <span><?=$arResult[$code]["TITLE"]?></span>
                                 <?if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) :
-                                    $prefix = '';
-                                    if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
-                                        $prefix = $arOffer["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
-                                    }
+                                    $prefix = strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0 ? $arOffer["PROPERTIES"]["TSVET"]["VALUE"].", " : "";
                                     ?>
                                     <small>(<?=$prefix.$arOffer["PROPERTIES"][$code]["VALUE"]?>)</small>
                                 <?endif?>
@@ -151,19 +147,12 @@ if ($arParams['DISPLAY_COMPARE']) {
                                 <div class="header-location-inner">
                                     <?foreach ($arResult["OFFERS"] as $offerKey => $arOfferItem) :
                                         if (!in_array($arOfferItem["ID"], $arResult[$code]["ID"])) continue;
-                                        $prefix = '';
-                                        if (strlen($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]) > 0) {
-                                            $prefix = $arOfferItem["PROPERTIES"]["TSVET"]["VALUE"] . ", ";
-                                        }
+                                        $prefix = strlen($arOfferItem["PROPERTIES"]["TSVET"]["VALUE"]) > 0 ? $arOfferItem["PROPERTIES"]["TSVET"]["VALUE"].", " : "";
                                         ?>
                                         <?if ($offerKey == $arResult["OFFER_ID_SELECTED"]) :?>
                                             <span class="header-location-link"><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></span>
                                         <?else:?>
-                                            <a
-                                                    href="#"
-                                                    class="header-location-link link"
-                                                    onclick="obAjax.getCatalogElement(<?=$arResult['ID']?>, <?=$arOfferItem['ID']?>, 'catalog-element', event)"
-                                            ><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
+                                            <a href="<?=$arOfferItem["DETAIL_PAGE_URL"]?>" class="header-location-link link"><?=$prefix.$arOfferItem["PROPERTIES"][$code]["VALUE"]?></a>
                                         <?endif?>
                                     <?endforeach?>
                                 </div>

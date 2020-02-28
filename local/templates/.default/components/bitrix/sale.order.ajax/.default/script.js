@@ -580,11 +580,6 @@ BX.saleOrderAjax = { // bad solution, actually, a singleton at the page
 		}
 		BX.closeWait(BX.saleOrderAjax.orderFormId);
 		BX.onCustomEvent(orderForm, 'onAjaxSuccess');
-	},
-
-	setStore: function(self)
-	{
-		BX.storeNav.setStore(self.value, null);
 	}
 };
 
