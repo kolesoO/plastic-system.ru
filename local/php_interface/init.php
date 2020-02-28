@@ -5,6 +5,9 @@ use kDevelop\Service\Catalog;
 use kDevelop\Service\Order;
 use kDevelop\Settings\Store;
 
+mb_internal_encoding('utf-8'); 
+
+
 $rsManager = Main\EventManager::getInstance();
 
 //Классы
