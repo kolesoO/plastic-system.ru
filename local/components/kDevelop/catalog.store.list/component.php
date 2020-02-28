@@ -65,9 +65,9 @@ if ($this->startResultCache())
         $arSelect
     );
 	$arResult["PROFILES"] = array();
+	$viewMap = false;
 	while ($arProp = $dbStoreProps->GetNext())
 	{
-        $viewMap = false;
 		$storeSite = (string)$arProp['SITE_ID'];
 		if ($storeSite != '' && $storeSite != SITE_ID)
 			continue;
@@ -120,10 +120,10 @@ if ($this->startResultCache())
 			'STORE_TITLE' => $arProp['TITLE'],
 			'ADDRESS' => $arProp["ADDRESS"],
 			'URL' => $url,
-			'DESCRIPTION' => (string)$arProp['DESCRIPTION'],
-            'VIEW_MAP' => $viewMap,
+			'DESCRIPTION' => (string)$arProp['DESCRIPTION']
 		);
 	}
+	$arResult['VIEW_MAP'] = $viewMap;
 	$this->includeComponentTemplate();
 }
 if ($arParams['SET_TITLE'] == 'Y')
