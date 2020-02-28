@@ -1,1 +1,259 @@
-.icon{display:inline-block;position:relative}.icon:before{content:" ";display:inline-block;vertical-align:middle;background-repeat:no-repeat;background-size:auto;transition:.3s opacity}.icon:hover:before,a:hover>.icon:before{opacity:.5}.icon .icon-inner{position:absolute;top:-5px;right:-8px;font-size:11px;line-height:19px;width:17px;height:17px;text-align:center;color:#fff;background-color:#ff2429;border-radius:100%;font-style:normal}.icon.arrow-right{margin-left:5px}.breadcrumbs-item .icon.arrow-right{margin-left:10px}.icon.arrow-left{margin-right:5px}.icon.search:before{width:16px;height:16px;background-image:url(../images/icons/search.svg);background-size:contain}.icon.basket:before{width:22px;height:18px;background-image:url(../images/icons/basket.svg);background-size:contain}.icon.basket-white:before{width:22px;height:18px;background-image:url(../images/icons/basket-white.svg);background-size:contain}.table_list.list .icon.basket-white:before{margin-right:5px}.icon.favorite:before,.icon.favorite-white:before{width:17px;height:15px;background-size:contain}.icon.favorite:before{background-image:url(../images/icons/favorite.svg)}.icon.favorite-white:before{background-image:url(../images/icons/favorite-white.svg)}.icon.buy_one_click:before{width:17px;height:15px;background-image:url(../images/icons/buy_one_click.svg);background-size:contain}.icon.compare:before{width:21px;height:12px;background-image:url(../images/icons/compare.svg);background-size:contain}.icon.compare-white:before{width:21px;height:12px;background-image:url(../images/icons/compare-white.svg);background-size:contain}.icon.personal:before{width:18px;height:17px;background-image:url(../images/icons/personal.svg);background-size:contain;margin-right:5px}.icon.vk:before{width:27px;height:16px;background-image:url(../images/icons/socials/vk.svg);background-size:contain}.icon.facebook:before{width:16px;height:16px;background-image:url(../images/icons/socials/facebook.svg);background-size:contain}.icon.instagram:before{width:16px;height:16px;background-image:url(../images/icons/socials/instagram.svg);background-size:contain}.icon.tile{position:relative;vertical-align:middle;margin-right:5px;width:16px;height:16px;background-color:#303030;transition:background-color .3s}*:hover>.icon.tile{background-color:#3781cc}*.active>.icon.tile{background-color:#4195ea}.icon.tile:before,.icon.tile:after{content:"";background-color:#f5f6f9;position:absolute}.icon.tile:before{height:100%;width:4px;left:calc(50% - 2px);top:0;opacity:1 !important}.icon.tile:after{height:4px;width:100%;left:0;top:calc(50% - 2px)}.icon.list{position:relative;width:16px;height:16px;vertical-align:middle;margin-right:5px;transition:background-color .3s}.icon.list:before,.icon.list:after{content:"";position:absolute;left:0;width:100%;height:5px;background-color:#303030}.icon.list:before{top:0;opacity:1 !important}.icon.list:after{bottom:0}.icon.close{position:relative;width:22px;height:22px}.icon.close:before,.icon.close:after{content:"";position:absolute;top:0;left:50%;height:100%;width:2px;transition:transform .3s;background-color:#4195ea;opacity:1 !important}.icon.close:before{transform:rotate(45deg)}.icon.close:after{transform:rotate(-45deg)}.icon.close:hover:before{transform:rotate(135deg)}.icon.close:hover:after{transform:rotate(45deg)}*:hover>.icon.list:before,*:hover>.icon.list:after{background-color:#3781cc}*.active>.icon.list:before,*.active>.icon.list:after{background-color:#4195ea}.icon.clear{width:10px;height:10px;background:url('../images/icons/clear.png') no-repeat 0 0 / cover}
+.icon {
+    display: inline-block;
+    position: relative
+}
+
+.icon:before {
+    content: " ";
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: auto;
+    transition: .3s opacity
+}
+
+.icon:hover:before,
+a:hover>.icon:before {
+    opacity: .5
+}
+
+.icon .icon-inner {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    font-size: 11px;
+    line-height: 19px;
+    width: 17px;
+    height: 17px;
+    text-align: center;
+    color: #fff;
+    background-color: #ff2429;
+    border-radius: 100%;
+    font-style: normal
+}
+
+.icon.arrow-right {
+    margin-left: 5px
+}
+
+.breadcrumbs-item .icon.arrow-right {
+    margin-left: 10px
+}
+
+.icon.arrow-left {
+    margin-right: 5px
+}
+
+.icon.search:before {
+    width: 16px;
+    height: 16px;
+    background-image: url(../images/icons/search.svg);
+    background-size: contain
+}
+
+.icon.basket:before {
+    width: 22px;
+    height: 18px;
+    background-image: url(../images/icons/basket.svg);
+    background-size: contain
+}
+
+.icon.basket-white:before {
+    width: 22px;
+    height: 18px;
+    background-image: url(../images/icons/basket-white.svg);
+    background-size: contain
+}
+
+.table_list.list .icon.basket-white:before {
+    margin-right: 5px
+}
+
+.icon.favorite:before,
+.icon.favorite-white:before {
+    width: 17px;
+    height: 15px;
+    background-size: contain
+}
+
+.icon.favorite:before {
+    background-image: url(../images/icons/favorite.svg)
+}
+
+.icon.favorite-white:before {
+    background-image: url(../images/icons/favorite-white.svg)
+}
+
+.icon.buy_one_click:before {
+    width: 17px;
+    height: 15px;
+    background-image: url(../images/icons/buy_one_click.svg);
+    background-size: contain
+}
+
+.icon.compare:before {
+    width: 21px;
+    height: 12px;
+    background-image: url(../images/icons/compare.svg);
+    background-size: contain
+}
+
+.icon.compare-white:before {
+    width: 21px;
+    height: 12px;
+    background-image: url(../images/icons/compare-white.svg);
+    background-size: contain
+}
+
+.icon.personal:before {
+    width: 18px;
+    height: 17px;
+    background-image: url(../images/icons/personal.svg);
+    background-size: contain;
+    margin-right: 5px
+}
+
+.icon.vk:before {
+    width: 27px;
+    height: 16px;
+    background-image: url(../images/icons/socials/vk.svg);
+    background-size: contain
+}
+
+.icon.facebook:before {
+    width: 16px;
+    height: 16px;
+    background-image: url(../images/icons/socials/facebook.svg);
+    background-size: contain
+}
+
+.icon.instagram:before {
+    width: 16px;
+    height: 16px;
+    background-image: url(../images/icons/socials/instagram.svg);
+    background-size: contain
+}
+
+.icon.tile {
+    position: relative;
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    background-color: #303030;
+    transition: background-color .3s
+}
+
+*:hover>.icon.tile {
+    background-color: #3781cc
+}
+
+*.active>.icon.tile {
+    background-color: #4195ea
+}
+
+.icon.tile:before,
+.icon.tile:after {
+    content: "";
+    background-color: #f5f6f9;
+    position: absolute
+}
+
+.icon.tile:before {
+    height: 100%;
+    width: 4px;
+    left: calc(50% - 2px);
+    top: 0;
+    opacity: 1 !important
+}
+
+.icon.tile:after {
+    height: 4px;
+    width: 100%;
+    left: 0;
+    top: calc(50% - 2px)
+}
+
+.icon.list {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+    transition: background-color .3s
+}
+
+.icon.list:before,
+.icon.list:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #303030
+}
+
+.icon.list:before {
+    top: 0;
+    opacity: 1 !important
+}
+
+.icon.list:after {
+    bottom: 0
+}
+
+.icon.close {
+    position: relative;
+    width: 22px;
+    height: 22px
+}
+
+.icon.close:before,
+.icon.close:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 2px;
+    transition: transform .3s;
+    background-color: #4195ea;
+    opacity: 1 !important
+}
+
+.icon.close:before {
+    transform: rotate(45deg)
+}
+
+.icon.close:after {
+    transform: rotate(-45deg)
+}
+
+.icon.close:hover:before {
+    transform: rotate(135deg)
+}
+
+.icon.close:hover:after {
+    transform: rotate(45deg)
+}
+
+*:hover>.icon.list:before,
+*:hover>.icon.list:after {
+    background-color: #3781cc
+}
+
+*.active>.icon.list:before,
+*.active>.icon.list:after {
+    background-color: #4195ea
+}
+
+.icon.clear {
+    width: 10px;
+    height: 10px;
+    background: url('../images/icons/clear.png') no-repeat 0 0 / cover
+}
+.icon.download:before{
+    width: 15px;
+    height: 15px;
+    background: url('../images/icons/download.svg') no-repeat 0 0 / cover
+}

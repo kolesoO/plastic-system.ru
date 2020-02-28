@@ -12,13 +12,13 @@ $isCatalogInner = CSite::InDir("/product-category") && $strCurPage != "/product-
 
 //css
 $rsAsset->addCss(SITE_TEMPLATE_PATH.'/fonts/circle/index.css');
-$rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/icons.css');
-$rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/main.css');
+$rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/icons.min.css');
+$rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/main.min.css');
 if (DEVICE_TYPE == "MOBILE") {
-    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/mobile.css');
+    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/mobile.min.css');
 } else {
-    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/desktop.css');
-    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/tablet.css');
+    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/desktop.min.css');
+    $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/tablet.min.css');
 }
 //end
 
@@ -32,7 +32,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/slider/script.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/animate-input/script.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/tabs/script.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/functions.js');
-$rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/scripts.js');
+$rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/scripts.min.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
 //end
 ?>
@@ -188,7 +188,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
         <div class="header-part js-fixed">
             <div class="container">
                 <?if ($isMainPage) :?>
-                    <div class="header-logo header-col col-lg-6 col-md-12 col-xs-4">
+                    <div class="header-logo header-col col-lg-5 col-md-9 col-xs-3">
                         <img src="<?=SITE_TEMPLATE_PATH?>/images/logo.svg">
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:main.include",
@@ -201,7 +201,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         );?>
                     </div>
                 <?else:?>
-                    <a href="<?=SITE_DIR?>" class="header-logo header-col col-lg-6 col-md-12 col-xs-4">
+                    <a href="<?=SITE_DIR?>" class="header-logo header-col col-lg-5 col-md-9 col-xs-3">
                         <img src="<?=SITE_TEMPLATE_PATH?>/images/logo.svg">
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:main.include",
@@ -242,7 +242,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         </a>
                     </div>
                 <?endif?>
-                <div class="header-col header-search col-lg-6 col-md-2 col-xs-3">
+                <div class="header-col header-search col-lg-5 col-md-2 col-xs-3">
                     <?if (DEVICE_TYPE == "DESKTOP") :?>
                         <form method="get" action="/search/" class="header-search-form">
                             <input class="header-search-input" type="text" placeholder="Поиск продукции" name="q">
@@ -295,7 +295,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         </i>
                     </a>
                 </div>
-                <div class="header-col col-lg-5 col-md-2 col-xs-3">
+                <div class="header-col col-lg-4 col-md-2 col-xs-3">
                     <?if (!$USER->IsAuthorized()) :?>
                         <a href="#" data-popup-open="#reg-auth">
                             <i class="icon personal"></i>
@@ -311,6 +311,17 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                             <?endif?>
                         </a>
                     <?endif?>
+                </div>
+                <div class="header-col col-lg-3 col-md-2 col-xs-3">
+                    <?$APPLICATION->IncludeComponent(
+                        "bitrix:main.include",
+                        ".default",
+                        [
+                            "AREA_FILE_SHOW" => "file",
+                            "PATH" => SITE_TEMPLATE_PATH . "/include/header/download-catalog.php"
+                        ],
+                        false
+                    );?>
                 </div>
             </div>
             <?
@@ -349,7 +360,10 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
         </div>
     </header>
     <?if (!$isMainPage) :?>
-        <section class="<?$APPLICATION->ShowProperty("header_section-class")?>" style="<?$APPLICATION->ShowProperty("header_section-style")?>">
+        <section
+                class="<?$APPLICATION->ShowProperty("header_section-class")?>"
+                style="<?$APPLICATION->ShowProperty("header_section-style")?>"
+        >
             <div class="container">
                 <?$APPLICATION->IncludeComponent(
                     "bitrix:breadcrumb",
@@ -360,7 +374,8 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
                         "SITE_ID" => SITE_ID
                     ]
                 );?>
-                <?if (HIDE_H1 != "Y") :?>
-                    <h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
-                <?endif?>
+                <div id="<?$APPLICATION->ShowProperty("content-id")?>">
+                    <?if (HIDE_H1 != "Y") :?>
+                        <h1 class="title-1"><?$APPLICATION->ShowTitle(false)?></h1>
+                    <?endif?>
     <?endif?>
