@@ -2,7 +2,7 @@
 <div class="number_list">
 	<div class="number_list-item">
 		<div class="number_list-number">
-			 11
+			 12
 		</div>
  <span>лет на рынке <br>
 		 полимерных <br>
@@ -10,7 +10,7 @@
 	</div>
 	<div class="number_list-item">
 		<div class="number_list-number">
-			 8
+			 9
 		</div>
  <span class="number_list-desc">филиалов <br>
 		 на территории <br>

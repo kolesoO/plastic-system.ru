@@ -8,17 +8,17 @@ $APPLICATION->SetTitle("О компании");
 	<div flex-align="center" flex-text_align="space-around">
 		<div class="col-lg-12 col-md-12 col-xs-24">
 			<div class="col-lg-21 col-md-21 colxs-24">
- <img src="/upload/content/about-company/front.png">
+ <img alt="IMG_008(1).jpg" src="/upload/medialibrary/ffc/ffce591b42f19e50955abb6c1af007aa.jpg" title="IMG_008(1).jpg">
 			</div>
 			<p>
-				 Выставка «РосУпак»
+				 Выставка «Upakovka2020»
 			</p>
 		</div>
 		<div flex-text_align="center" class="col-lg-12 col-md-12 col-xs-24">
 			<ul class="color_list">
 				<li class="color_list-item" flex-align="center">
 				<div class="color_list-number">
-					 11
+					 12
 				</div>
  <span>лет на рынке <br>
 				 полимерных <br>

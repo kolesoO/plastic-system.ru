@@ -1,6 +1,9 @@
 <?
 use \Bitrix\Main;
 
+mb_internal_encoding('utf-8'); 
+
+
 $rsManager = Main\EventManager::getInstance();
 
 //Классы
