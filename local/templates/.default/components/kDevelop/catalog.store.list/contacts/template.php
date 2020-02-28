@@ -54,8 +54,18 @@
                             <br><span><?=$arItem["SCHEDULE"]?></span>
                         <?endif?>
                     </div>
-                    <?if (is_array($arItem["UF_SCHEME"])) :?>
-                        <a href="<?=$arItem["UF_SCHEME"]["SRC"]?>" target="_blank" class="link dashed">Схема проезда, <?=$arItem["UF_SCHEME"]["EXTENSION"]?></a>
+                    <?if ($arItem['VIEW_MAP'] === true && isset($arItem["UF_FROM_N"]) && isset($arItem["UF_FROM_S"])) :?>
+                        <a
+                                href="#"
+                                class="link dashed js-store-map"
+                                data-popup-open="#store-road-wrap"
+                                data-target="#store-road-map"
+                                data-way_point_body="<?=$arItem['MAP_BALLOON_CONTENT']?>"
+                                data-pgs_n="<?=$arItem["GPS_N"]?>"
+                                data-pgs_s="<?=$arItem["GPS_S"]?>"
+                                data-pgs_n_2="<?=$arItem["UF_FROM_N"]?>"
+                                data-pgs_s_2="<?=$arItem["UF_FROM_S"]?>"
+                        >Схема проезда</a>
                     <?endif?>
                 </div>
             <?endforeach?>

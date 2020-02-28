@@ -1,4 +1,6 @@
 <?
+define('CUSTOM_HEADER', 'Y');
+
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
 $APPLICATION->SetPageProperty("keywords", "");
 $APPLICATION->SetPageProperty("description", "Санкт-Петербург Адрес склада и офиса продаж: Санкт-Петербург, ул. Рабочая 16Г Телефон: +7 (812) 313-75-50 E-mail: mail@plsm.ru Режим работы: Пн. — Чт.: 9:00 — 17:30, Пт.— до 17:00, Сб. — Вс.: выходной Москва Адрес склада: МО, г. Дзержинский, ул. Алексеевская, д. 2 Телефон: +7 (495) 162-75-50 E-mail: msk@plsm.ru Режим работы: Пн. — Чт.: 9:00 — 17:30, Пт.— до 17:00, Сб. — Вс.: [&hellip;]");
@@ -25,17 +27,6 @@ if (DEVICE_TYPE == "DESKTOP") {
 }
 $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
 $arDetailSize = ["WIDTH" => 557, "HEIGHT" => 366];
-$sefUrlTpl = [
-    "sections" => "",
-    "section" => "#SECTION_CODE_PATH#/",
-    "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
-    "compare" => "/compare/"
-];
-$arCurPage = explode("/", trim($strCurPage, "/"));
-if (strpos(end($arCurPage), \kDevelop\Help\Tools::getOfferPrefixInUrl()) !== false) {
-    $sefUrlTpl["element"] = "#SECTION_CODE_PATH#/#ELEMENT_CODE#/".\kDevelop\Help\Tools::getOfferSefUrlTmp()."/";
-}
-unset($arCurPage);
 //end
 
 $GLOBALS["arCatalogFilter"] = ["!OFFERS" => null];
@@ -228,7 +219,7 @@ $APPLICATION->IncludeComponent(
         "PAGER_BASE_LINK" => "",
         "PAGER_PARAMS_NAME" => "arrPager",
         "SET_STATUS_404" => "N",
-        "SHOW_404" => "N",
+        "SHOW_404" => "Y",
         "MESSAGE_404" => "",
         "ADD_PICT_PROP" => "-",
         "LABEL_PROP" => "NEWPRODUCT",
@@ -258,7 +249,12 @@ $APPLICATION->IncludeComponent(
         "SIDEBAR_DETAIL_SHOW" => "N",
         "SIDEBAR_PATH" => "/examples/index_inc.php",
         "AJAX_OPTION_ADDITIONAL" => "",
-        "SEF_URL_TEMPLATES" => $sefUrlTpl,
+        "SEF_URL_TEMPLATES" => [
+            "sections" => "",
+            "section" => "#SECTION_CODE_PATH#/",
+            "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
+            "compare" => "/compare/"
+        ],
         "SECTIONS_ITEMS_IN_ROW" => $itemsInRow,
         "SECTION_ITEMS_IN_ROW" => $itemsInRowInner,
         "SECTIONS_IMAGE_SIZE" => $arImageSize,
