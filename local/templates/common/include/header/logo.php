@@ -1,0 +1,1 @@
+<span class="hidden-xs">Пластик система</span>

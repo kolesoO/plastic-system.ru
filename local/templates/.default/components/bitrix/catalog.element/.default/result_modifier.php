@@ -12,7 +12,7 @@ $updateOfferProps = isset($arResult["CATALOGS"][$arParams["IBLOCK_ID"]]) && coun
 $arOfferKeys = [];
 $arResult["OFFERS_COUNT"] = count($arResult["OFFERS"]);
 
-//на входе имеем код или id выбранного sku, ищем ключ этого sku
+//на входе имеем код выбранного sku, ищем ключ этого sku
 if (strlen($arParams["OFFER_CODE_SELECTED"]) > 0) {
     foreach ($arResult["OFFERS"] as $key => $arOffer) {
         if ($arOffer["CODE"] == $arParams["OFFER_CODE_SELECTED"]) {
@@ -20,28 +20,14 @@ if (strlen($arParams["OFFER_CODE_SELECTED"]) > 0) {
             break;
         }
     }
-} elseif (isset($arParams['OFFER_ID_SELECTED'])) {
-    foreach ($arResult["OFFERS"] as $key => $arOffer) {
-        if ($arOffer["ID"] == $arParams["OFFER_ID_SELECTED"]) {
-            $arResult["OFFER_ID_SELECTED"] = $key;
-            break;
-        }
-    }
-} else {
-    foreach ($arResult["OFFERS"] as $key => $arOffer) {
-        if ($arOffer["ID"] == $arResult["OFFER_ID_SELECTED"]) {
-            $arResult["OFFER_ID_SELECTED"] = $key;
-            break;
-        }
-    }
 }
-//end
 
 if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
     foreach ($arResult["OFFERS"] as $key => &$arOffer) {
         if ($updateOfferProps && (!is_array($arOffer["PROPERTIES"]) || count($arOffer["PROPERTIES"]) == 0)) {
             $arOfferKeys[$arOffer["ID"]] = $key;
         }
+        $arOffer["DETAIL_PAGE_URL"] = str_replace(\kDevelop\Help\Tools::getOfferSefUrlTmp(), \kDevelop\Help\Tools::getOfferPrefixInUrl() . $arOffer["CODE"], $arResult["DETAIL_PAGE_URL"]);
     }
     unset($arOffer);
     //Доп. свойства основного товара
@@ -125,36 +111,75 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
     //end
 
     //разбивка торг предложений на 'с цветом', 'с размером', 'дно', 'ibox', 'Тип контейнера' и т.д.
-    $arResult['SKU_LINK_PROPS'] = ['RAZMER', 'OPTSII_IBOX', 'DNO', 'TIP_KONTEYNERA', 'KOLICHESTVO_MET_TRUB', 'visota_yashika', 'TIP_DNA', '__4'];
-    foreach ($arResult['SKU_LINK_PROPS'] as $code) {
-        $arResult[$code] = [
-            "ID" => [],
-            "COUNT" => 0,
-            "TITLE" => ""
-        ];
-    }
-    $arResult['TSVET'] = [
+    $arResult["TSVET"] = $arResult["RAZMER"] = $arResult["OPTSII_IBOX"] = $arResult["DNO"] = $arResult["TIP_KONTEYNERA"] = $arResult["KOLICHESTVO_MET_TRUB"] = $arResult["visota_yashika"] = $arResult["TIP_DNA"] = [
         "ID" => [],
         "COUNT" => 0,
         "TITLE" => ""
     ];
     $arValueCache = [];
     foreach ($arResult["OFFERS"] as $key => &$arOffer) {
-        if (strlen($arOffer["PROPERTIES"]['TSVET']["VALUE"]) > 0 && !in_array($arOffer["PROPERTIES"]['TSVET']["VALUE"], $arValueCache)) {
-            $arResult['TSVET']["ID"][] = $arOffer["ID"];
-            $arResult['TSVET']["COUNT"]++;
-            $arValueCache[] = $arOffer["PROPERTIES"]['TSVET']["VALUE"];
-            if (strlen($arResult['TSVET']["TITLE"]) == 0) {
-                $arResult['TSVET']["TITLE"] = $arOffer["PROPERTIES"]['TSVET']["NAME"];
+        if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) > 0 && !in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arValueCache)) {
+            $arResult["TSVET"]["ID"][] = $arOffer["ID"];
+            $arResult["TSVET"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
+            if (strlen($arResult["TSVET"]["TITLE"]) == 0) {
+                $arResult["TSVET"]["TITLE"] = $arOffer["PROPERTIES"]["TSVET"]["NAME"];
             }
         }
-        foreach ($arResult['SKU_LINK_PROPS'] as $code) {
-            if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) {
-                $arResult[$code]["ID"][] = $arOffer["ID"];
-                $arResult[$code]["COUNT"]++;
-                if (strlen($arResult[$code]["TITLE"]) == 0) {
-                    $arResult[$code]["TITLE"] = $arOffer["PROPERTIES"][$code]["NAME"];
-                }
+        if (strlen($arOffer["PROPERTIES"]["RAZMER"]["VALUE"]) > 0) {
+            $arResult["RAZMER"]["ID"][] = $arOffer["ID"];
+            $arResult["RAZMER"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["RAZMER"]["VALUE"];
+            if (strlen($arResult["RAZMER"]["TITLE"]) == 0) {
+                $arResult["RAZMER"]["TITLE"] = $arOffer["PROPERTIES"]["RAZMER"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["OPTSII_IBOX"]["VALUE"]) > 0) {
+            $arResult["OPTSII_IBOX"]["ID"][] = $arOffer["ID"];
+            $arResult["OPTSII_IBOX"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["OPTSII_IBOX"]["VALUE"];
+            if (strlen($arResult["OPTSII_IBOX"]["TITLE"]) == 0) {
+                $arResult["OPTSII_IBOX"]["TITLE"] = $arOffer["PROPERTIES"]["OPTSII_IBOX"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["DNO"]["VALUE"]) > 0) {
+            $arResult["DNO"]["ID"][] = $arOffer["ID"];
+            $arResult["DNO"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["DNO"]["VALUE"];
+            if (strlen($arResult["DNO"]["TITLE"]) == 0) {
+                $arResult["DNO"]["TITLE"] = $arOffer["PROPERTIES"]["DNO"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["TIP_KONTEYNERA"]["VALUE"]) > 0) {
+            $arResult["TIP_KONTEYNERA"]["ID"][] = $arOffer["ID"];
+            $arResult["TIP_KONTEYNERA"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["TIP_KONTEYNERA"]["VALUE"];
+            if (strlen($arResult["TIP_KONTEYNERA"]["TITLE"]) == 0) {
+                $arResult["TIP_KONTEYNERA"]["TITLE"] = $arOffer["PROPERTIES"]["TIP_KONTEYNERA"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["KOLICHESTVO_MET_TRUB"]["VALUE"]) > 0) {
+            $arResult["KOLICHESTVO_MET_TRUB"]["ID"][] = $arOffer["ID"];
+            $arResult["KOLICHESTVO_MET_TRUB"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["KOLICHESTVO_MET_TRUB"]["VALUE"];
+            if (strlen($arResult["KOLICHESTVO_MET_TRUB"]["TITLE"]) == 0) {
+                $arResult["KOLICHESTVO_MET_TRUB"]["TITLE"] = $arOffer["PROPERTIES"]["KOLICHESTVO_MET_TRUB"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["visota_yashika"]["VALUE"]) > 0) {
+            $arResult["visota_yashika"]["ID"][] = $arOffer["ID"];
+            $arResult["visota_yashika"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["visota_yashika"]["VALUE"];
+            if (strlen($arResult["visota_yashika"]["TITLE"]) == 0) {
+                $arResult["visota_yashika"]["TITLE"] = $arOffer["PROPERTIES"]["visota_yashika"]["NAME"];
+            }
+        }
+        if (strlen($arOffer["PROPERTIES"]["TIP_DNA"]["VALUE"]) > 0) {
+            $arResult["TIP_DNA"]["ID"][] = $arOffer["ID"];
+            $arResult["TIP_DNA"]["COUNT"]++;
+            $arValueCache[] = $arOffer["PROPERTIES"]["TIP_DNA"]["VALUE"];
+            if (strlen($arResult["TIP_DNA"]["TITLE"]) == 0) {
+                $arResult["TIP_DNA"]["TITLE"] = $arOffer["PROPERTIES"]["TIP_DNA"]["NAME"];
             }
         }
     }
@@ -163,5 +188,5 @@ if (isset($arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]])) {
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFERS", "OFFER_ID_SELECTED", "PROPERTIES", "SKU_LINK_PROPS"]);
+    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFERS", "OFFER_ID_SELECTED", "PROPERTIES", "TSVET", "RAZMER", "OPTSII_IBOX", "DNO", "TIP_KONTEYNERA", "KOLICHESTVO_MET_TRUB"]);
 }

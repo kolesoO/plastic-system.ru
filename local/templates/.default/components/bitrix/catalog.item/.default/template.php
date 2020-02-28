@@ -43,7 +43,7 @@ if ($arParams['DISPLAY_COMPARE']) {
 <div<?if (isset($arResult["AREA_ID"])) :?> id="<?=$arResult["AREA_ID"]?>"<?endif?> class="table_list-item-wrap">
     <div class="table_list-wrap">
         <a
-                href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
+                href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>"
                 class="table_list-img"
                 style="background-image:url('<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>')"
         >
@@ -52,6 +52,7 @@ if ($arParams['DISPLAY_COMPARE']) {
             $wrapAttrs = "";
             $className = "";
             if ($arResult["OFFERS_COUNT"] > 7) {
+                $isSlider = true;
                 $className .= " js-slider";
                 $wrapAttrs .= ' 
                     data-autoplay="false"
@@ -73,14 +74,14 @@ if ($arParams['DISPLAY_COMPARE']) {
                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0 || in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arColorCache)) continue;
                     $arColorCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
                     ?>
-                    <a
-                            href="#"
-                            class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
-                            title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                            style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this)"
-                            data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
-                    ></a>
+                    <?if ($isSlider) :?><div><?endif?>
+                        <a
+                                href="<?=$arOffer["DETAIL_PAGE_URL"]?>"
+                                class="table_list-color-item"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                        ></a>
+                    <?if ($isSlider) :?></div><?endif?>
                 <?endforeach;?>
             </div>
         <?else:?>
@@ -88,7 +89,7 @@ if ($arParams['DISPLAY_COMPARE']) {
         <?endif?>
     </div>
     <div class="table_list-wrap">
-        <a href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>" class="table_list-title border full"><?=$arResult["OFFER"]["NAME"]?></a>
+        <a href="<?=$arResult["OFFER"]["DETAIL_PAGE_URL"]?>" class="table_list-title border full"><?=$arResult["OFFER"]["NAME"]?></a>
         <div class="table_list-info show_in_list">
             <?if (is_array($arResult["OFFER"]["QNT_INFO"])) :?>
                 <div class="table_list-status <?=$arResult["OFFER"]["QNT_INFO"]["CLASS"]?>"><?=$arResult["OFFER"]["QNT_INFO"]["MSG_TEXT"]?></div>

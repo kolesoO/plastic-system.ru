@@ -1,7 +1,7 @@
 <?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
 
-    <?if (!$isMainPage || !defined("NOT_CLOSE_SECTION_IN_FOOTER")) :?>
-        </div></div></section>
+    <?if (!$isMainPage || (defined("NOT_CLOSE_SECTION_IN_FOOTER") && NOT_CLOSE_SECTION_IN_FOOTER != "Y")) :?>
+        </div></section>
     <?endif?>
 
     <footer class="footer js-footer">
@@ -208,36 +208,7 @@
         );
     }
     //end
-
-    //store road map
-    $APPLICATION->IncludeComponent(
-        "bitrix:main.include",
-        ".default",
-        [
-            "AREA_FILE_SHOW" => "file",
-            "PATH" => SITE_TEMPLATE_PATH . "/include/footer/store-road-map.php"
-        ],
-        false
-    );
-    //end
     ?>
-
-    <?if (!isset($_COOKIE['cookie_policy']) || $_COOKIE['cookie_policy'] != 'true') :?>
-        <div id="popup-cookie" class="popup_content popup_cookie">
-            <a href="#" class="popup_content-close js-toggle-class" data-target="#popup-cookie" data-class_delete="active">
-                <i class="icon close"></i>
-            </a>
-            <?$APPLICATION->IncludeComponent(
-                "bitrix:main.include",
-                ".default",
-                [
-                    "AREA_FILE_SHOW" => "file",
-                    "PATH" => SITE_TEMPLATE_PATH . "/include/footer/cookie-policy.php"
-                ],
-                false
-            );?>
-        </div>
-    <?endif?>
     <script type='text/javascript'>
         (function(){ var widget_id = '107881';
             var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();
