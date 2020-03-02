@@ -112,13 +112,13 @@
         line-height: 1.2;
     }
     .main_slider-title {
-        font-size: 225%;
+        font-size: 125%;
         line-height: 1.1;
         margin-top: 50px;
         max-width: 80%
     }
     .main_slider .slick-dots {
-        bottom: 80px
+        bottom: 70px
     }
     .main_slider:after {
         width: 198px;
@@ -482,7 +482,7 @@
     .y_map {
         height: 384px
     }
-    .popup_cookie.active{
+    .popup_cookie{
         min-height: 0;
         max-width: 70%;
     }
