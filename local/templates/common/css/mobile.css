@@ -108,6 +108,9 @@
         padding: 20px 0;
         height: 352px
     }
+    .main_slider-desc{
+        line-height: 1.2;
+    }
     .main_slider-title {
         font-size: 225%;
         line-height: 1.1;
@@ -478,5 +481,9 @@
     }
     .y_map {
         height: 384px
+    }
+    .popup_cookie.active{
+        min-height: 0;
+        max-width: 70%;
     }
 }
