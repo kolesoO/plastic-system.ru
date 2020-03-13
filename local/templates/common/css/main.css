@@ -1012,7 +1012,7 @@ a:hover>.burger>hr:last-child {
 }
 
 .cart .table_list-color-item {
-    width: 25px;
+    width: 25px!important;
     height: 25px
 }
 
