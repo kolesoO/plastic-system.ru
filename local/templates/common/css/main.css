@@ -986,7 +986,7 @@ a:hover>.burger>hr:last-child {
 .table_list-color-item {
     position: relative;
     display: inline-block;
-    width: 16px;
+    width: 16px!important;
     height: 16px;
     border: 1px solid #f5f6f9;
     border-radius: 100%;
