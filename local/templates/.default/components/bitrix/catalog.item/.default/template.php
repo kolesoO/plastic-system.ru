@@ -176,9 +176,9 @@ if ($arParams['DISPLAY_COMPARE']) {
     <div class="full">
         <?
         $hasActiveProps = false;
-        foreach (["VES_KG", "OBEM_L"] as $code) :
-            if (!isset($arResult["ITEM"]["PROPERTIES"][$code])) continue;
-            $value = strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
+        foreach (["VES_KG", "OBEM_L", "PLOTNOST_KG_M2"] as $code) :
+            if (!isset($arResult["ITEM"]["PROPERTIES"][$code]) || strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0) continue;
+            $value = $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
             $hasActiveProps = true;
             ?>
             <div><small><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</small> <?=$value?></div>

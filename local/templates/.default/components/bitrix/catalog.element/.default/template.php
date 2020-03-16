@@ -135,7 +135,7 @@ if ($arParams['DISPLAY_COMPARE']) {
             <?foreach ($arResult['SKU_LINK_PROPS'] as $code) :?>
                 <?if ($arResult[$code]["COUNT"] > 0) :?>
                     <div class="cart_desc-item">
-                        <div class="dropdown header-location js-drop_down">
+                        <div class="dropdown js-drop_down">
                             <a href="#" class="dropdown-btn link js-drop_down-btn">
                                 <span><?=$arResult[$code]["TITLE"]?></span>
                                 <?if (strlen($arOffer["PROPERTIES"][$code]["VALUE"]) > 0) :
