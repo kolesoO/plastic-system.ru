@@ -151,7 +151,7 @@ obMap.prototype.initMap = function(){
             route.getPaths()
                 .options.set({
                     balloonContentLayout: ymaps.templateLayoutFactory.createClass('{{ properties.humanJamsTime }}'),
-                    strokeColor: '0000ffff',
+                    strokeColor: '5eadfd',
                     opacity: 0.9
                 });
             route.getWayPoints()
