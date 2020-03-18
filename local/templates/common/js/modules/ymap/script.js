@@ -145,13 +145,13 @@ obMap.prototype.initMap = function(){
         ymaps.route(
             ctx.routes,
             {
-                mapStateAutoApply: true
+                //mapStateAutoApply: true
             }
         ).then(function (route) {
             route.getPaths()
                 .options.set({
                     balloonContentLayout: ymaps.templateLayoutFactory.createClass('{{ properties.humanJamsTime }}'),
-                    strokeColor: '0000ffff',
+                    strokeColor: '5eadfd',
                     opacity: 0.9
                 });
             route.getWayPoints()

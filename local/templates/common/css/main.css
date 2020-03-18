@@ -435,7 +435,8 @@ small {
     flex-wrap: wrap
 }
 
-.dropdown-btn {
+.dropdown-btn,
+.dropdown{
     position: relative
 }
 

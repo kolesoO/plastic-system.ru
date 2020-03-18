@@ -6,7 +6,13 @@ $(document).ready(function() {
 
             if ($target.length === 0) return;
 
-            $target.html('');
+            //$target.html('');
+            try {
+                window['mapInstance'].destroy();
+            } catch (e) {
+                //do nothing
+                console.log(e);
+            }
             map = new obMap({
                 mapId: $target.attr('id'),
                 mapCenter: [
@@ -57,6 +63,7 @@ $(document).ready(function() {
                 }
             });
             map.initMap();
+            window['mapInstance'] = map.obMap;
         });
     });
 });
