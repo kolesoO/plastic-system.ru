@@ -189,7 +189,9 @@ if (isset($arParams['USER_CONSENT_IS_LOADED']))
     $componentElementParams['USER_CONSENT_IS_LOADED'] = $arParams['USER_CONSENT_IS_LOADED'];
 }
 
-if (isset($_SESSION['REMEMBER_OFFER'][$arResult["VARIABLES"]["ELEMENT_CODE"]])) {
+if (isset($_GET['offer_id'])) {
+    $componentElementParams['OFFER_ID_SELECTED'] = $_GET['offer_id'];
+} elseif (isset($_SESSION['REMEMBER_OFFER'][$arResult["VARIABLES"]["ELEMENT_CODE"]])) {
     $componentElementParams['OFFER_ID_SELECTED'] = $_SESSION['REMEMBER_OFFER'][$arResult["VARIABLES"]["ELEMENT_CODE"]];
 }
 

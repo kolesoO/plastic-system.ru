@@ -145,7 +145,7 @@ obMap.prototype.initMap = function(){
         ymaps.route(
             ctx.routes,
             {
-                mapStateAutoApply: true
+                //mapStateAutoApply: true
             }
         ).then(function (route) {
             route.getPaths()

@@ -112,11 +112,13 @@ if ($arParams['DISPLAY_COMPARE']) {
             <?if (strlen($propValue) > 0) :?>
                 <div class="table_list-desc-item"><span><?=$propTitle?> (мм):</span> <?=$propValue?></div>
             <?endif?>
-            <?foreach (["VES_KG", "OBEM_L"] as $code) :
-                if (!isset($arResult["ITEM"]["PROPERTIES"][$code])) continue;
-                $value = strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0 ? "-" : $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
+            <?foreach (["VES_KG", "OBEM_L", "PLOTNOST_KG_M2"] as $code) :
+                if (
+                        !isset($arResult["ITEM"]["PROPERTIES"][$code])
+                        || strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0
+                ) continue;
                 ?>
-                <div class="table_list-desc-item"><span><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$value?></div>
+                <div class="table_list-desc-item"><span><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</span> <?=$arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]?></div>
             <?endforeach?>
         </div>
     </div>
@@ -177,11 +179,13 @@ if ($arParams['DISPLAY_COMPARE']) {
         <?
         $hasActiveProps = false;
         foreach (["VES_KG", "OBEM_L", "PLOTNOST_KG_M2"] as $code) :
-            if (!isset($arResult["ITEM"]["PROPERTIES"][$code]) || strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0) continue;
-            $value = $arResult["ITEM"]["PROPERTIES"][$code]["VALUE"];
+            if (
+                    !isset($arResult["ITEM"]["PROPERTIES"][$code])
+                    || strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0
+            ) continue;
             $hasActiveProps = true;
             ?>
-            <div><small><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</small> <?=$value?></div>
+            <div><small><?=$arResult["ITEM"]["PROPERTIES"][$code]["NAME"]?>:</small> <?=$arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]?></div>
         <?endforeach?>
     </div>
     <div class="<?if ($hasActiveProps) :?>border-top <?endif?>full">
