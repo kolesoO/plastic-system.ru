@@ -96,6 +96,12 @@ if ($arParams['DISPLAY_COMPARE']) {
             <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
         </div>
         <div class="table_list-desc full">
+            <?if (
+                    isset($arResult["ITEM"]["PROPERTIES"]["PLOTNOST_KG_M2"])
+                    && strlen($arResult["ITEM"]["PROPERTIES"]["PLOTNOST_KG_M2"]["VALUE"]) > 0
+            ) :?>
+                <div class="table_list-desc-item"><span><?=$arResult["ITEM"]["PROPERTIES"]["PLOTNOST_KG_M2"]["NAME"]?>:</span> <?=$arResult["ITEM"]["PROPERTIES"]["PLOTNOST_KG_M2"]["VALUE"]?></div>
+            <?endif?>
             <?
             $propValue = "";
             $propTitle = "";
@@ -112,7 +118,7 @@ if ($arParams['DISPLAY_COMPARE']) {
             <?if (strlen($propValue) > 0) :?>
                 <div class="table_list-desc-item"><span><?=$propTitle?> (мм):</span> <?=$propValue?></div>
             <?endif?>
-            <?foreach (["VES_KG", "OBEM_L", "PLOTNOST_KG_M2"] as $code) :
+            <?foreach (["VES_KG", "OBEM_L"] as $code) :
                 if (
                         !isset($arResult["ITEM"]["PROPERTIES"][$code])
                         || strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0
@@ -178,7 +184,7 @@ if ($arParams['DISPLAY_COMPARE']) {
     <div class="full">
         <?
         $hasActiveProps = false;
-        foreach (["VES_KG", "OBEM_L", "PLOTNOST_KG_M2"] as $code) :
+        foreach (["VES_KG", "OBEM_L"] as $code) :
             if (
                     !isset($arResult["ITEM"]["PROPERTIES"][$code])
                     || strlen($arResult["ITEM"]["PROPERTIES"][$code]["VALUE"]) == 0
