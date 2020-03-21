@@ -120,27 +120,26 @@ var obAjax = {
     /**
      *
      * @param wrapId
+     * @param itemId
      * @param offerId
-     * @param evt
      */
-    getCatalogItem: function(wrapId, offerId, evt)
+    getCatalogItem: function(wrapId, itemId, offerId)
     {
         /**
          *
          * global obCatalogItemsParams
          */
 
-        evt.preventDefault();
-
         var ctx = this;
         if (typeof obCatalogItemsParams == "object") {
+            obCatalogItemsParams.item_id = itemId;
             obCatalogItemsParams.offer_id = offerId;
             obCatalogItemsParams.target_id = wrapId;
             ctx.setParams(obCatalogItemsParams);
         }
 
         ctx.doRequest(
-            "GET",
+            "POST",
             location.href,
             ctx.serializeData({
                 class: "Catalog",
@@ -825,9 +824,12 @@ var obAjax = {
      * @param element_code
      * @param offer_id
      * @param self
+     * @param evt
      */
-    setOfferId: function(element_code, offer_id, self)
+    setOfferId: function(element_code, offer_id, self, evt)
     {
+        evt.preventDefault();
+
         this.params.offer_link = $(self).attr('data-href') || '';
         this.doRequest(
             "POST",
