@@ -22,7 +22,12 @@ $arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["P
 <?endif?>
 <div<?if (isset($arResult["AREA_ID"])) :?> id="<?=$arResult["AREA_ID"]?>"<?endif?> class="table_list-item-wrap">
     <div class="table_list-wrap">
-        <a href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>" class="table_list-preview full">
+        <a
+                href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
+                class="table_list-preview full"
+                onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this, event)"
+                data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
+        >
             <div class="table_list-img">
                 <img src="<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arResult["OFFER"]["NAME"]?>">
             </div>
@@ -53,13 +58,20 @@ $arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["P
                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0 || in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arColorCache)) continue;
                     $arColorCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
                     ?>
-                    <div
-                            class="table_list-color-item"
-                            title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                            style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this)"
-                            data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
-                    ></div>
+                    <?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?>
+                        <div
+                                class="table_list-color-item"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                        ></div>
+                    <?else:?>
+                        <div
+                                class="table_list-color-item"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                                onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
+                        ></div>
+                    <?endif?>
                 <?endforeach;?>
             </div>
         <?else:?>
