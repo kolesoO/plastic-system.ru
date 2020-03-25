@@ -70,22 +70,20 @@ class Catalog
     {
         global $APPLICATION;
 
-        $return = "";
-
         $arParams = $arFullParams['PARAMS'];
         $componentElementParams = array(
             'IBLOCK_TYPE' => $arParams['IBLOCK_TYPE'],
             'IBLOCK_ID' => $arParams['IBLOCK_ID'],
-            'PROPERTY_CODE' => (isset($arParams['DETAIL_PROPERTY_CODE']) ? $arParams['DETAIL_PROPERTY_CODE'] : []),
-            'META_KEYWORDS' => $arParams['DETAIL_META_KEYWORDS'],
-            'META_DESCRIPTION' => $arParams['DETAIL_META_DESCRIPTION'],
-            'BROWSER_TITLE' => $arParams['DETAIL_BROWSER_TITLE'],
-            'SET_CANONICAL_URL' => $arParams['DETAIL_SET_CANONICAL_URL'],
+            'PROPERTY_CODE' => (isset($arParams['PROPERTY_CODE']) ? $arParams['PROPERTY_CODE'] : []),
+            'META_KEYWORDS' => $arParams['META_KEYWORDS'],
+            'META_DESCRIPTION' => $arParams['META_DESCRIPTION'],
+            'BROWSER_TITLE' => $arParams['BROWSER_TITLE'],
+            'SET_CANONICAL_URL' => $arParams['SET_CANONICAL_URL'],
             'BASKET_URL' => $arParams['BASKET_URL'],
             'ACTION_VARIABLE' => $arParams['ACTION_VARIABLE'],
             'PRODUCT_ID_VARIABLE' => $arParams['PRODUCT_ID_VARIABLE'],
             'SECTION_ID_VARIABLE' => $arParams['SECTION_ID_VARIABLE'],
-            'CHECK_SECTION_ID_VARIABLE' => (isset($arParams['DETAIL_CHECK_SECTION_ID_VARIABLE']) ? $arParams['DETAIL_CHECK_SECTION_ID_VARIABLE'] : ''),
+            'CHECK_SECTION_ID_VARIABLE' => (isset($arParams['CHECK_SECTION_ID_VARIABLE']) ? $arParams['CHECK_SECTION_ID_VARIABLE'] : ''),
             'PRODUCT_QUANTITY_VARIABLE' => $arParams['PRODUCT_QUANTITY_VARIABLE'],
             'PRODUCT_PROPS_VARIABLE' => $arParams['PRODUCT_PROPS_VARIABLE'],
             'CACHE_TYPE' => $arParams['CACHE_TYPE'],
@@ -97,7 +95,7 @@ class Catalog
             'SET_STATUS_404' => $arParams['SET_STATUS_404'],
             'SHOW_404' => $arParams['SHOW_404'],
             'FILE_404' => $arParams['FILE_404'],
-            'PRICE_CODE' => $arParams['~PRICE_CODE'],
+            'PRICE_CODE' => $arParams['PRICE_CODE'],
             'USE_PRICE_COUNT' => $arParams['USE_PRICE_COUNT'],
             'SHOW_PRICE_COUNT' => $arParams['SHOW_PRICE_COUNT'],
             'PRICE_VAT_INCLUDE' => $arParams['PRICE_VAT_INCLUDE'],
@@ -112,8 +110,8 @@ class Catalog
             'LINK_ELEMENTS_URL' => $arParams['LINK_ELEMENTS_URL'],
 
             'OFFERS_CART_PROPERTIES' => (isset($arParams['OFFERS_CART_PROPERTIES']) ? $arParams['OFFERS_CART_PROPERTIES'] : []),
-            'OFFERS_FIELD_CODE' => $arParams['DETAIL_OFFERS_FIELD_CODE'],
-            'OFFERS_PROPERTY_CODE' => (isset($arParams['DETAIL_OFFERS_PROPERTY_CODE']) ? $arParams['DETAIL_OFFERS_PROPERTY_CODE'] : []),
+            'OFFERS_FIELD_CODE' => $arParams['OFFERS_FIELD_CODE'],
+            'OFFERS_PROPERTY_CODE' => (isset($arParams['OFFERS_PROPERTY_CODE']) ? $arParams['OFFERS_PROPERTY_CODE'] : []),
             'OFFERS_SORT_FIELD' => $arParams['OFFERS_SORT_FIELD'],
             'OFFERS_SORT_ORDER' => $arParams['OFFERS_SORT_ORDER'],
             'OFFERS_SORT_FIELD2' => $arParams['OFFERS_SORT_FIELD2'],
@@ -132,7 +130,7 @@ class Catalog
             'USE_ELEMENT_COUNTER' => $arParams['USE_ELEMENT_COUNTER'],
             'SHOW_DEACTIVATED' => $arParams['SHOW_DEACTIVATED'],
             'USE_MAIN_ELEMENT_SECTION' => $arParams['USE_MAIN_ELEMENT_SECTION'],
-            'STRICT_SECTION_CHECK' => (isset($arParams['DETAIL_STRICT_SECTION_CHECK']) ? $arParams['DETAIL_STRICT_SECTION_CHECK'] : ''),
+            'STRICT_SECTION_CHECK' => (isset($arParams['STRICT_SECTION_CHECK']) ? $arParams['STRICT_SECTION_CHECK'] : ''),
             'ADD_PICT_PROP' => $arParams['ADD_PICT_PROP'],
             'LABEL_PROP' => $arParams['LABEL_PROP'],
             'LABEL_PROP_MOBILE' => $arParams['LABEL_PROP_MOBILE'],
@@ -221,7 +219,7 @@ class Catalog
 
             "OFFER_CODE_SELECTED" => '',
 
-            "IMAGE_SIZE" => $arParams["DETAIL_IMAGE_SIZE"],
+            "IMAGE_SIZE" => $arParams["IMAGE_SIZE"],
             "DEVICE_TYPE" => $arParams["DEVICE_TYPE"]
         );
 
@@ -255,90 +253,6 @@ class Catalog
             null
         );
         $return = ob_get_clean();
-
-//        if (\Bitrix\Main\Loader::includeModule("catalog")) {
-//            if ($arProdList = \CCatalogSKU::getProductList(
-//                $arParams["offer_id"],
-//                $arParams["CATALOGS"][$arParams["PARAMS"]["IBLOCK_ID"]]["IBLOCK_ID"]
-//            )) {
-//                $productId = $arProdList[$arParams["offer_id"]]["ID"];
-//                if ($arItem = self::getIblockElement(
-//                    [],
-//                    [
-//                        "IBLOCK_ID" => $arProdList[$arParams["offer_id"]]["IBLOCK_ID"],
-//                        "ID" => $productId
-//                    ],
-//                    ["*"],
-//                    $arParams["PARAMS"]["PROPERTY_CODE"]
-//                )) {
-//                    //данные по ценам
-//                    if (is_array($arParams["PARAMS"]["PRICE_CODE"]) && count($arParams["PARAMS"]["PRICE_CODE"]) > 0) {
-//                        $arItem["PRICES"] = \CIBlockPriceTools::GetCatalogPrices(
-//                            $arParams["PARAMS"]["IBLOCK_ID"],
-//                            $arParams["PARAMS"]["PRICE_CODE"]
-//                        );
-//                    }
-//                    //end
-//                    if ($arItem["OFFERS"] = self::getIblockElement(
-//                        [
-//                            $arParams["PARAMS"]["OFFERS_SORT_FIELD"] => $arParams["PARAMS"]["OFFERS_SORT_ORDER"]
-//                        ],
-//                        [
-//                            "IBLOCK_ID" => $arProdList[$arParams["offer_id"]]["OFFER_IBLOCK_ID"],
-//                            "PROPERTY_".$arProdList[$arParams["offer_id"]]["SKU_PROPERTY_ID"] => $productId
-//                        ],
-//                        $arParams["PARAMS"]["OFFERS_FIELD_CODE"],
-//                        $arParams["PARAMS"]["OFFERS_PROPERTY_CODE"]
-//                    )) {
-//                        $curConvert = self::getCurrencyConvert(
-//                            $arParams["PARAMS"]["CONVERT_CURRENCY"],
-//                            $arParams["PARAMS"]["CURRENCY_ID"]
-//                        );
-//                        foreach ($arItem["OFFERS"] as $key => &$arOffer) {
-//                            if ($arOffer["ID"] == $arParams["offer_id"]) {
-//                                $arItem["OFFER_KEY"] = $key;
-//                            }
-//                            $arOffer["PRICES"] = \CIBlockPriceTools::GetItemPrices(
-//                                $arOffer["IBLOCK_ID"],
-//                                $arItem["PRICES"],
-//                                $arOffer,
-//                                $arParams["PARAMS"]['PRICE_VAT_INCLUDE'],
-//                                $curConvert
-//                            );
-//                            var_dump($arOffer["PRICES"]);
-//                        }
-//                        unset($arOffer);
-//                        ob_start();
-//                        $APPLICATION->IncludeComponent(
-//                            "bitrix:catalog.item",
-//                            ".default",
-//                            [
-//                                "RESULT" => [
-//                                    "ITEM" => $arItem,
-//                                    "OFFER_KEY" => $arItem["OFFER_KEY"],
-//                                    "OFFERS_LIST" => $arItem["OFFERS"],
-//                                    "WRAP_ID" => $arParams["target_id"]
-//                                ],
-//                                "PARAMS" => array_merge($arParams["PARAMS"], [
-//                                    "PRICES" => $arItem["PRICES"],
-//                                    "COMPARE" => [
-//                                        'COMPARE_URL_TEMPLATE' => $arItem['~COMPARE_URL_TEMPLATE'],
-//                                        'COMPARE_DELETE_URL_TEMPLATE' => $arItem['~COMPARE_DELETE_URL_TEMPLATE'],
-//                                        'COMPARE_PATH' => $arParams['COMPARE_PATH']
-//                                    ],
-//                                    "COMPARE_NAME" => $arParams['COMPARE_NAME'],
-//                                    "FAVORITE_ITEM" => isset($arParams["FAVORITE_ITEM"]) ? $arParams["FAVORITE_ITEM"] : "N"
-//                                ]),
-//                            ],
-//                            null,
-//                            ['HIDE_ICONS' => 'Y']
-//                        );
-//                        $return = ob_get_contents();
-//                        ob_end_clean();
-//                    }
-//                }
-//            }
-//        }
 
         return ["js_callback" => "getCatalogItemCallBack", "html" => $return];
     }

@@ -10,8 +10,6 @@
  * @var string $templateFolder
  */
 
-$this->setFrameMode(true);
-
 $APPLICATION->IncludeComponent(
     "bitrix:catalog.item",
     $arResult["INNER_TEMPLATE"],

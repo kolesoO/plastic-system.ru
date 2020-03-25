@@ -6,7 +6,7 @@
  */
 
 $component = $this->getComponent();
-$arParams = $component->applyTemplateModifications();
+//$arParams = $component->applyTemplateModifications();
 $hasResizeImage = is_array($arParams["IMAGE_SIZE"]);
 $updateOfferProps = isset($arResult["CATALOGS"][$arParams["IBLOCK_ID"]]) && count($arParams["OFFERS_PROPERTY_CODE"]) > 0;
 $arOfferKeys = [];

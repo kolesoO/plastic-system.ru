@@ -75,13 +75,22 @@ if ($arParams['DISPLAY_COMPARE']) {
                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0 || in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arColorCache)) continue;
                     $arColorCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
                     ?>
-                    <a
-                            href="javascript:void(0)"
-                            class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
-                            title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                            style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                            onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
-                    ></a>
+                    <?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?>
+                        <a
+                                href="javascript:void(0)"
+                                class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                        ></a>
+                    <?else:?>
+                        <a
+                                href="javascript:void(0)"
+                                class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                                onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
+                        ></a>
+                    <?endif?>
                 <?endforeach;?>
             </div>
         <?else:?>
