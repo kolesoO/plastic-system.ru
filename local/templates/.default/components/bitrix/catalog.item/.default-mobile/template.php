@@ -69,7 +69,11 @@ $arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["P
                                 class="table_list-color-item"
                                 title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
                                 style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                                onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
+                                <?if ($arResult['CATALOG_TOP'] == 'Y') :?>
+                                    onclick="obAjax.getCatalogItemFromTop('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$offerKey?>')"
+                                <?else:?>
+                                    onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
+                                <?endif?>
                         ></div>
                     <?endif?>
                 <?endforeach;?>

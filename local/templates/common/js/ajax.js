@@ -167,6 +167,49 @@ var obAjax = {
 
     /**
      *
+     * @param wrapId
+     * @param itemId
+     * @param offerId
+     */
+    getCatalogItemFromTop: function(wrapId, itemId, offerId)
+    {
+        /**
+         *
+         * global obCatalogItemsParams
+         */
+
+        var ctx = this;
+        if (typeof obCatalogItemsParams == "object") {
+            obCatalogItemsParams.item_id = itemId;
+            obCatalogItemsParams.offer_id = offerId;
+            obCatalogItemsParams.target_id = wrapId;
+            ctx.setParams(obCatalogItemsParams);
+        }
+
+        ctx.doRequest(
+            "POST",
+            location.href,
+            ctx.serializeData({
+                class: "Catalog",
+                method: "getCatalogItemFromTop",
+                params: ctx.params
+            }),
+            [
+                ["Content-type", "application/x-www-form-urlencoded"]
+            ]
+        );
+    },
+
+    /**
+     *
+     * @param data
+     */
+    getCatalogItemFromTopCallBack: function (data) {
+        this.getCatalogItemCallBack(data);
+    },
+
+    /**
+     *
      * @param formItem
      * @param dopFormId
      */

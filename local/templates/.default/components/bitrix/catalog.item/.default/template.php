@@ -88,7 +88,11 @@ if ($arParams['DISPLAY_COMPARE']) {
                                 class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
                                 title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
                                 style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                                onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
+                                <?if ($arResult['CATALOG_TOP'] == 'Y') :?>
+                                    onclick="obAjax.getCatalogItemFromTop('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$offerKey?>')"
+                                <?else:?>
+                                    onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
+                                <?endif?>
                         ></a>
                     <?endif?>
                 <?endforeach;?>

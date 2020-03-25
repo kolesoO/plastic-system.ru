@@ -12,6 +12,12 @@
  */
 
 $this->setFrameMode(true);
+
+$arCatalogItemsParams = [
+    "PARAMS" => $arResult["ORIGINAL_PARAMETERS"],
+    "CATALOGS" => $arResult["CATALOGS"],
+    "GLOBAL_FILTER" => $GLOBALS[$arParams['FILTER_NAME']] ?? []
+];
 ?>
 
 <?if ($arResult["ITEMS_COUNT"] > 0) :?>
@@ -48,7 +54,8 @@ $this->setFrameMode(true);
                                     "OFFER_KEY" => $arItem["OFFER_ID_SELECTED"],
                                     "OFFERS_LIST" => $arItem["OFFERS"],
                                     "WRAP_ID" => "catalog-item-".$arItem["ID"],
-                                    "AREA_ID" => ($arResult["SET_AREA"] ? $this->GetEditAreaId($arItem["ID"]) : null)
+                                    "AREA_ID" => ($arResult["SET_AREA"] ? $this->GetEditAreaId($arItem["ID"]) : null),
+                                    "CATALOG_TOP" => "Y"
                                 ],
                                 "PARAMS" => $arResult["ORIGINAL_PARAMETERS"],
                                 "PRICES" => $arResult["PRICES"]
@@ -67,4 +74,5 @@ $this->setFrameMode(true);
             <?endif?>
         </div>
     </section>
+    <script>var obCatalogItemsParams = <?=CUtil::PhpToJSObject($arCatalogItemsParams)?>;</script>
 <?endif?>
