@@ -66,7 +66,12 @@ class Catalog
      */
     public static function transformElementFields(&$arFields)
     {
-        $arFields['CODE'] = Util::translit($arFields['NAME'], LANGUAGE_ID);
+        $arFields['CODE'] = Util::translit(
+            $arFields['NAME'],
+            LANGUAGE_ID,
+            [],
+            ['quot' => '']
+        );
     }
 
     /**
