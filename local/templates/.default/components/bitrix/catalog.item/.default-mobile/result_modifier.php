@@ -17,6 +17,7 @@ use \Bitrix\Main\Localization\Loc;
 $this->setFrameMode(true);
 
 $arResult["OFFERS_COUNT"] = count($arResult["OFFERS_LIST"]);
+
 if ($arResult["OFFERS_COUNT"] > 0) {
     foreach ($arResult["OFFERS_LIST"] as &$arOffer) {
         $arOffer["DETAIL_PAGE_URL"] = $arResult["ITEM"]["DETAIL_PAGE_URL"].\kDevelop\Help\Tools::getOfferPrefixInUrl().$arOffer["CODE"]."/";
@@ -37,5 +38,5 @@ if (!isset($arResult["AREA_ID"]) && strlen($arResult["AREA_ID"]) == 0) {
 
 $cp = $this->__component;
 if (is_object($cp)) {
-    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFER", "AREA_ID"]);
+    $cp->SetResultCacheKeys(["OFFERS_COUNT", "OFFER", "AREA_ID", "ITEM"]);
 }

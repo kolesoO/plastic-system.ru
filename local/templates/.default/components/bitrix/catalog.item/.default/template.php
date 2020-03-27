@@ -46,6 +46,8 @@ if ($arParams['DISPLAY_COMPARE']) {
                 href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
                 class="table_list-img"
                 style="background-image:url('<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>')"
+                onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this, event)"
+                data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
         >
         </a>
         <?if ($arResult["OFFERS_COUNT"] > 0) :
@@ -73,14 +75,26 @@ if ($arParams['DISPLAY_COMPARE']) {
                     if (strlen($arOffer["PROPERTIES"]["TSVET"]["VALUE"]) == 0 || in_array($arOffer["PROPERTIES"]["TSVET"]["VALUE"], $arColorCache)) continue;
                     $arColorCache[] = $arOffer["PROPERTIES"]["TSVET"]["VALUE"];
                     ?>
-                    <a
-                            href="#"
-                            class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
-                            title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
-                            style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
-                            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this)"
-                            data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
-                    ></a>
+                    <?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?>
+                        <a
+                                href="javascript:void(0)"
+                                class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                        ></a>
+                    <?else:?>
+                        <a
+                                href="javascript:void(0)"
+                                class="table_list-color-item<?if ($arOffer['ID'] == $arResult["OFFER"]['ID']) :?> slick-current<?endif?>"
+                                title="<?=$arOffer["PROPERTIES"]["TSVET"]["VALUE"]?>"
+                                style="background-color:<?=\kDevelop\Help\Tools::getOfferColor($arOffer["PROPERTIES"]["TSVET"]["VALUE"])?>"
+                                <?if ($arResult['CATALOG_TOP'] == 'Y') :?>
+                                    onclick="obAjax.getCatalogItemFromTop('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$offerKey?>')"
+                                <?else:?>
+                                    onclick="obAjax.getCatalogItem('<?=$arResult['WRAP_ID']?>', '<?=$arResult["ITEM"]['ID']?>', '<?=$arOffer['ID']?>')"
+                                <?endif?>
+                        ></a>
+                    <?endif?>
                 <?endforeach;?>
             </div>
         <?else:?>
@@ -88,7 +102,12 @@ if ($arParams['DISPLAY_COMPARE']) {
         <?endif?>
     </div>
     <div class="table_list-wrap">
-        <a href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>" class="table_list-title border full"><?=$arResult["OFFER"]["NAME"]?></a>
+        <a
+            href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
+            class="table_list-title border full"
+            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this)"
+            data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
+        ><?=$arResult["OFFER"]["NAME"]?></a>
         <div class="table_list-info show_in_list">
             <?if (is_array($arResult["OFFER"]["QNT_INFO"])) :?>
                 <div class="table_list-status <?=$arResult["OFFER"]["QNT_INFO"]["CLASS"]?>"><?=$arResult["OFFER"]["QNT_INFO"]["MSG_TEXT"]?></div>
