@@ -46,7 +46,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                 href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
                 class="table_list-img"
                 style="background-image:url('<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>')"
-                onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this, event)"
+                onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arResult["OFFER"]['ID']?>', this, event)"
                 data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
         >
         </a>
@@ -105,7 +105,7 @@ if ($arParams['DISPLAY_COMPARE']) {
         <a
             href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
             class="table_list-title border full"
-            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this)"
+            onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arResult["OFFER"]['ID']?>', this, event)"
             data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
         ><?=$arResult["OFFER"]["NAME"]?></a>
         <div class="table_list-info show_in_list">
