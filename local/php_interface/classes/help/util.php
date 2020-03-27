@@ -3,19 +3,32 @@ namespace kDevelop\Help;
 
 use CUtil as CUtilBase;
 
-/**
- * Class Util
- */
-class Util extends CUtilBase{
-
+class Util extends CUtilBase
+{
+    /**
+     * @param $str
+     * @param $from
+     * @param $to
+     * @return string|string[]
+     */
     private static function mb_strtr($str, $from, $to)
     {
         return str_replace(self::mb_str_split($from), self::mb_str_split($to), $str);
     }
+
+    /**
+     * @param $str
+     * @return array|false|string[]
+     */
     private static function mb_str_split($str) {
         return preg_split('~~u', $str, null, PREG_SPLIT_NO_EMPTY);
     }
 
+    /**
+     * @param $str
+     * @param bool $lang
+     * @return string
+     */
     private static function ToUpper($str, $lang = false)
     {
         static $lower = array();
@@ -46,6 +59,11 @@ class Util extends CUtilBase{
         }
     }
 
+    /**
+     * @param $str
+     * @param bool $lang
+     * @return string
+     */
     private static function ToLower($str, $lang = false)
     {
         static $lower = array();
@@ -76,10 +94,21 @@ class Util extends CUtilBase{
         }
     }
 
-
-
-    public static function translit($str, $lang, $params = array())
+    /**
+     * @param $str
+     * @param $lang
+     * @param array $params
+     * @param array $replace
+     * @return string
+     */
+    public static function translit($str, $lang, $params = [], $replace = [])
     {
+        $str = str_replace(
+            array_keys($replace),
+            array_values($replace),
+            $str
+        );
+
         static $search = array();
 
         if(!isset($search[$lang]))
