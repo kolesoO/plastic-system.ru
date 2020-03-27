@@ -14,6 +14,7 @@ var obAjax = {
     /**
      *
      * @param obData
+     * @param prefixKey
      * @returns {string}
      */
     serializeData: function(obData, prefixKey)
@@ -210,8 +211,7 @@ var obAjax = {
 
     /**
      *
-     * @param formItem
-     * @param dopFormId
+     * @param params
      */
     getCatalogCalcItems: function(params)
     {
@@ -253,6 +253,7 @@ var obAjax = {
      *
      * @param offerId
      * @param priceId
+     * @param self
      * @param evt
      */
     toPreBasketList: function(offerId, priceId, self, evt)
@@ -683,6 +684,7 @@ var obAjax = {
     /**
      *
      * @param id
+     * @param wrapId
      * @param evt
      */
     deleteFromFavorite: function(id, wrapId, evt)
@@ -818,6 +820,7 @@ var obAjax = {
     /**
      *
      * @param id
+     * @param offer_id
      * @param target_id
      * @param evt
      */
@@ -969,4 +972,4 @@ var obAjax = {
             "X-Requested-With": "xmlhttprequest"
         };
     }
-}
+};

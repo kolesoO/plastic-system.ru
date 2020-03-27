@@ -25,7 +25,7 @@ $arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["P
         <a
                 href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
                 class="table_list-preview full"
-                onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arOffer['ID']?>', this, event)"
+                onclick="obAjax.setOfferId('<?=$arResult["ITEM"]['CODE']?>', '<?=$arResult["OFFER"]['ID']?>', this, event)"
                 data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
         >
             <div class="table_list-img">
