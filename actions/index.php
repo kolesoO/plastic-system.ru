@@ -50,7 +50,7 @@ $GLOBALS["arrFilter"] = [
 ];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog.section",
-    "",
+    "actions",
     Array(
         "ACTION_VARIABLE" => "action",
         "ADD_PICT_PROP" => "MORE_PHOTO",
