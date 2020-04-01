@@ -122,9 +122,9 @@ class Util extends CUtilBase
 
         $defaultParams = array(
             "max_len" => 100,
-            "change_case" => "L", // 'L' - toLower, 'U' - toUpper, false - do not change
-            "replace_space" => '_',
-            "replace_other" => '_',
+            "change_case" => "L",
+            "replace_space" => '-',
+            "replace_other" => '',
             "delete_repeat_replace" => true,
             "safe_chars" => '',
         );
