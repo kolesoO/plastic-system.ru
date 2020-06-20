@@ -5,8 +5,7 @@ use kDevelop\Service\Catalog;
 use kDevelop\Service\Order;
 use kDevelop\Settings\Store;
 
-mb_internal_encoding('utf-8'); 
-
+mb_internal_encoding('utf-8');
 
 $rsManager = Main\EventManager::getInstance();
 
@@ -43,8 +42,6 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
     $rsManager->addEventHandler("main", "OnProlog", [Tools::class, "defineAjax"], false, 300);
 
     $rsManager->addEventHandler("sale", "OnOrderNewSendEmail", [Order::class, "OnOrderNewSendEmailHandler"], false, 100);
-
-    $rsManager->addEventHandler("sale", "onSaleDeliveryServiceCalculate", [Order::class, "onSaleDeliveryServiceCalculateHandler"], false, 100);
     //end
 } else {
     //iblock module
