@@ -6,6 +6,9 @@ namespace kDevelop\MapParser\DTO;
 
 class Polygon
 {
+    /** @var int */
+    private $id;
+
     /** @var Point[] */
     private $points;
 
@@ -15,6 +18,11 @@ class Polygon
     public function __construct(float $price)
     {
         $this->price = $price;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**
@@ -28,6 +36,13 @@ class Polygon
     public function getPrice(): float
     {
         return $this->price;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function setPoint(Point $point): self

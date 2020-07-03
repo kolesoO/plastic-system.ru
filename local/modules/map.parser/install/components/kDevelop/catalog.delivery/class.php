@@ -62,7 +62,7 @@ class CatalogDelivery extends CBitrixComponent
 
             $obCache = new CPHPCache();
             if ($obCache->InitCache(
-                3600,
+                COption::GetOptionInt('map.parser', 'cache_time', 3600),
                 serialize(["LOCATION_NAME" => $this->arParams['ADDRESS']]),
                 "/iblock/locations_geo_data" //TODO: вынести в конфиг
             )) {
@@ -75,9 +75,12 @@ class CatalogDelivery extends CBitrixComponent
                     ->setLang(Api::LANG_RU)
                     ->load()
                     ->getResponse();
+
                 $pointList = $response->getList();
+                $pointInfo = isset($pointList[0]) ? $pointList[0]->getData() : null;
+
                 $obCache->EndDataCache([
-                    "pointInfo" => isset($pointList[0]) ? $pointList[0]->getData() : null
+                    'pointInfo' => $pointInfo,
                 ]);
             }
 

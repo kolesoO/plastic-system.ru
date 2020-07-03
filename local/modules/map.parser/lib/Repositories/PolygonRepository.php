@@ -7,6 +7,7 @@ namespace kDevelop\MapParser\Repositories;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\ORM\Data\AddResult;
+use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\SystemException;
 use Exception;
 use kDevelop\MapParser\DTO\Polygon;
@@ -42,5 +43,15 @@ class PolygonRepository
         ])->fetchAll();
 
         return $result !== false ? $result : null;
+    }
+
+    /**
+     * @param int $id
+     * @return DeleteResult
+     * @throws Exception
+     */
+    public function delete(int $id): DeleteResult
+    {
+        return PolygonTable::delete($id);
     }
 }

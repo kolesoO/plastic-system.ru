@@ -7,6 +7,7 @@ namespace kDevelop\MapParser\Repositories;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\ORM\Data\AddResult;
+use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\SystemException;
 use Exception;
 use kDevelop\MapParser\DTO\Map;
@@ -24,6 +25,20 @@ class MapRepository
         return MapTable::add([
             'LOCATION_CODE' => $map->getLocation(),
         ]);
+    }
+
+    /**
+     * @param int $id
+     * @return array|null
+     * @throws ArgumentException
+     * @throws ObjectPropertyException
+     * @throws SystemException
+     */
+    public function find(int $id): ?array
+    {
+        $result = MapTable::getById($id)->fetch();
+
+        return $result !== false ? $result : null;
     }
 
     /**
@@ -51,5 +66,15 @@ class MapRepository
     public function all(): array
     {
         return MapTable::getList([])->fetchAll();
+    }
+
+    /**
+     * @param int $id
+     * @return DeleteResult
+     * @throws Exception
+     */
+    public function delete(int $id): DeleteResult
+    {
+        return MapTable::delete($id);
     }
 }

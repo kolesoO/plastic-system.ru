@@ -7,6 +7,7 @@ namespace kDevelop\MapParser\Services;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use CSaleLocation;
 use kDevelop\MapParser\DTO\Map;
 use kDevelop\MapParser\DTO\Point;
 use kDevelop\MapParser\DTO\Polygon;
@@ -75,26 +76,45 @@ class MapFetcher
      * @throws ObjectPropertyException
      * @throws SystemException
      */
-    private function createMap(array $mapSource) : Map
+    public function createMap(array $mapSource) : Map
     {
         $map = new Map();
-        $polygonSource = $this->polygonRepository->getByMap((int) $mapSource['ID']);
+        $map->setId((int) $mapSource['ID']);
+        $map->setLocation($mapSource['LOCATION_CODE']);
+
+        $polygonSource = $this->polygonRepository->getByMap(
+            $map->getId()
+        );
         $pointSource = $this->pointRepository->getByPolygonList(array_column($polygonSource, 'ID'));
 
         foreach ($polygonSource as $polygonItem) {
             $polygon = new Polygon((float) $polygonItem['PRICE']);
+            $polygon->setId((int) $polygonItem['ID']);
 
             foreach ($pointSource as $pointItem) {
                 if ($pointItem['POLYGON_ID'] !== $polygonItem['ID']) continue;
 
-                $polygon->setPoint(
-                    new Point((float) $pointItem['LAT'], (float) $pointItem['LONG'])
-                );
+                $point = new Point((float) $pointItem['LAT'], (float) $pointItem['LONG']);
+                $point->setId((int) $pointItem['ID']);
+
+                $polygon->setPoint($point);
             }
 
             $map->setPolygon($polygon);
         }
 
-        return $map->setLocation($mapSource['LOCATION_CODE']);
+        $location = CSaleLocation::GetList(
+            [],
+            ["CODE" => $map->getLocation()],
+            false,
+            false,
+            ["ID", "CITY_NAME"]
+        )->fetch();
+
+        if ($location) {
+            $map->setTitle((string) $location['CITY_NAME']);
+        }
+
+        return $map;
     }
 }

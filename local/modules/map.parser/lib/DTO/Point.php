@@ -6,6 +6,9 @@ namespace kDevelop\MapParser\DTO;
 
 class Point
 {
+    /** @var int */
+    private $id;
+
     /** @var float */
     private $lat;
 
@@ -18,6 +21,11 @@ class Point
         $this->long = $long;
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     public function getLat(): float
     {
         return $this->lat;
@@ -26,6 +34,13 @@ class Point
     public function getLong(): float
     {
         return $this->long;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function toArray(): array

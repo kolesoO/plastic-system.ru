@@ -9,6 +9,7 @@ use Bitrix\Main\Event;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Sale\Delivery\CalculationResult;
+use COption;
 use CPHPCache;
 use CSaleOrderProps;
 use kDevelop\MapParser\DTO\Point;
@@ -57,7 +58,7 @@ class Order
                     //
                     $obCache = new CPHPCache();
                     if ($obCache->InitCache(
-                        3600,
+                        COption::GetOptionInt('map.parser', 'cache_time', 3600),
                         serialize(["LOCATION_NAME" => $_POST["ORDER_PROP_" . $arProp["ID"]]]),
                         "/iblock/locations_geo_data" //TODO: вынести в конфиг
                     )) {
@@ -71,11 +72,15 @@ class Order
                             ->setLang(Api::LANG_RU)
                             ->load()
                             ->getResponse();
+
                         $pointList = $response->getList();
+                        $pointInfo = isset($pointList[0]) ? $pointList[0]->getData() : null;
+
                         $obCache->EndDataCache([
-                            "pointInfo" => isset($pointList[0]) ? $pointList[0]->getData() : null
+                            'pointInfo' => $pointInfo,
                         ]);
                     }
+
                     if (isset($pointInfo)) {
                         $mapFetcher = new MapFetcher();
                         $maps = $mapFetcher->createAll();
@@ -99,5 +104,10 @@ class Order
         $result->setDeliveryPrice($deliveryPrice);
 
         return $result;
+    }
+
+    public static function OnOrderAddHandler($ID, $arFields)
+    {
+        AddMessage2Log($ID);
     }
 }

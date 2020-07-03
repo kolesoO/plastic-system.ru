@@ -6,6 +6,9 @@ namespace kDevelop\MapParser\DTO;
 
 class Map
 {
+    /** @var int */
+    private $id;
+
     /** @var Polygon[] */
     private $polygons;
 
@@ -14,6 +17,11 @@ class Map
 
     /** @var string */
     private $location;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @return Polygon[]
@@ -31,6 +39,13 @@ class Map
     public function getLocation(): string
     {
         return $this->location;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function setPolygon(Polygon $polygon): self

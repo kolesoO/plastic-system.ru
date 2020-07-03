@@ -172,6 +172,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                     </div>
                 <?endif?>
             <?endforeach?>
+            <div class="cart_desc-item">Единица измерения - <?=$arOffer['ITEM_MEASURE']['TITLE']?></div>
             <div class="cart_desc-item">
                 <div class="cart_buy">
                     <?if ($arOffer["CAN_BUY"]) :?>

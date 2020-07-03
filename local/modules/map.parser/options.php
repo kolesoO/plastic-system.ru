@@ -5,6 +5,9 @@
  * @var $Update
  * @var $Apply
  * @var $mid
+ * @var $delete_regions
+ * @var $cache_time
+ * @var $clear_cache
  */
 
 use Bitrix\Main;
@@ -17,7 +20,10 @@ use kDevelop\MapParser\Exceptions\Location;
 use kDevelop\MapParser\Repositories\MapRepository;
 use kDevelop\MapParser\Repositories\PointRepository;
 use kDevelop\MapParser\Repositories\PolygonRepository;
+use kDevelop\MapParser\Services\MapFetcher;
 use kDevelop\MapParser\Services\Parser;
+
+global $CACHE_MANAGER;
 
 $config = include __DIR__ . '/config.php';
 
@@ -30,12 +36,17 @@ $messages = [];
 IncludeModuleLangFile($_SERVER["DOCUMENT_ROOT"].BX_ROOT."/modules/main/options.php");
 IncludeModuleLangFile(__FILE__);
 
+$mapFetcher = new MapFetcher();
+$mapRepository = new MapRepository();
+$polygonRepository = new PolygonRepository();
+$pointRepository = new PointRepository();
+
 if ($REQUEST_METHOD == 'POST' && strlen($Update . $Apply) > 0 && check_bitrix_sessid()) {
     $mapUrl = $request->get('map_url');
 
-    if (!is_null($mapUrl)) {
-        $parser = new Parser();
-        try {
+    try {
+        if (!is_null($mapUrl) && strlen($mapUrl) > 0) {
+            $parser = new Parser();
             $map = $parser->parseByUrl($mapUrl);
             $location = CSaleLocation::GetList(
                 [],
@@ -46,12 +57,8 @@ if ($REQUEST_METHOD == 'POST' && strlen($Update . $Apply) > 0 && check_bitrix_se
             )->fetch();
 
             if (!$location) {
-                throw new Location('Location ' . $map->getTitle() . ' not found');
+                throw new Location('Местоположение ' . $map->getTitle() . ' не найдено');
             }
-
-            $mapRepository = new MapRepository();
-            $polygonRepository = new PolygonRepository();
-            $pointRepository = new PointRepository();
 
             $mapEntity = $mapRepository->add(
                 $map->setLocation($location['CODE'])
@@ -65,43 +72,122 @@ if ($REQUEST_METHOD == 'POST' && strlen($Update . $Apply) > 0 && check_bitrix_se
                 }
             }
             $messages[] = 'Данные успешно загружены';
-        } catch (Throwable $exception) {
-            $messages[] = $exception->getMessage();
         }
+
+        if (isset($delete_regions)) {
+            foreach ($delete_regions as $regionId) {
+                $mapSource = $mapRepository->find((int) $regionId);
+
+                if (!$mapSource) continue;
+
+                $map = $mapFetcher->createMap($mapSource);
+
+                foreach ($map->getPolygons() as $polygon) {
+                    foreach ($polygon->getPoints() as $point) {
+                        $pointRepository->delete($point->getId());
+                    }
+
+                    $polygonRepository->delete($polygon->getId());
+                }
+
+                $mapRepository->delete($map->getId());
+            }
+            $messages[] = 'Регионы успешно удалены';
+        }
+    } catch (Throwable $exception) {
+        $messages[] = $exception->getMessage();
+    }
+
+    COption::SetOptionInt($config['MODULE_ID'], 'cache_time', $cache_time);
+    $messages[] = 'Время кеширования успешно обновлено';
+
+    if ($clear_cache) {
+        BXClearCache(true, '/iblock/locations_geo_data/');
+        $messages[] = 'Кеш успешно очищен';
     }
 }
 
-$tabControl = new CAdminTabControl("tabControl",  array(
-    array(
+//загруженные регионы
+$loadedRegions = $mapFetcher->createAll();
+//end
+
+$tabControl = new CAdminTabControl("tabControl",  [
+    [
         "DIV" => "edit1",
         "TAB" => Loc::getMessage('MAP_PARSER_TAB_NAME'),
         "ICON" => "blog_settings",
         "TITLE" => Loc::getMessage('MAP_PARSER_TAB_TITLE')
-    ),
-));
+    ],
+    [
+        "DIV" => "edit2",
+        "TAB" => Loc::getMessage('MAP_PARSER_TAB2_NAME'),
+        "ICON" => "blog_settings",
+        "TITLE" => Loc::getMessage('MAP_PARSER_TAB2_TITLE')
+    ],
+    [
+        "DIV" => "edit3",
+        "TAB" => Loc::getMessage('MAP_PARSER_TAB3_NAME'),
+        "ICON" => "blog_settings",
+        "TITLE" => Loc::getMessage('MAP_PARSER_TAB3_TITLE')
+    ]
+]);
 $tabControl->Begin();
 ?>
 
 
 <form method="POST" action="<?echo $APPLICATION->GetCurPage()?>?mid=<?=htmlspecialcharsbx($mid)?>&lang=<?=LANGUAGE_ID?>">
 	<?= bitrix_sessid_post() ?>
+
 	<? $tabControl->BeginNextTab(); ?>
 
     <tr>
         <td class="adm-detail-content-cell-l">Адрес конструктора карт</td>
         <td class="adm-detail-content-cell-r">
-            <input type="text" size="30" required name="map_url">
+            <input type="text" size="30" name="map_url">
         </td>
     </tr>
 
-    <?if (count($messages) > 0) :?>
+    <? $tabControl->BeginNextTab(); ?>
+
+    <?foreach ($loadedRegions as $region) :
+        $pointsCount = 0;
+        foreach ($region->getPolygons() as $polygon) {
+            $pointsCount += count($polygon->getPoints());
+        }
+        ?>
         <tr class="heading">
-            <td colspan="2">Системные сообщения</td>
+            <td colspan="2"><b><?=$region->getTitle()?></b></td>
         </tr>
-        <?foreach ($messages as $message) :?>
-            <tr><td colspan="2"><?=$message?></td></tr>
-        <?endforeach?>
-    <?endif?>
+        <tr>
+            <td class="adm-detail-content-cell-l" style="width:50%">Количество полигонов:</td>
+            <td class="adm-detail-content-cell-r" style="width:50%"><?=count($region->getPolygons())?></td>
+        </tr>
+        <tr>
+            <td class="adm-detail-content-cell-l" style="width:50%">Количество точек:</td>
+            <td class="adm-detail-content-cell-r" style="width:50%"><?=$pointsCount?></td>
+        </tr>
+        <tr>
+            <td class="adm-detail-content-cell-l" style="width:50%">Удалить регион</td>
+            <td class="adm-detail-content-cell-r" style="width:50%">
+                <input type="checkbox" name="delete_regions[]" value="<?=$region->getId()?>">
+            </td>
+        </tr>
+    <?endforeach?>
+
+    <? $tabControl->BeginNextTab(); ?>
+
+    <tr>
+        <td class="adm-detail-content-cell-l" style="width:50%">Время кеширования данных (сек):</td>
+        <td class="adm-detail-content-cell-r" style="width:50%">
+            <input type="text" size="30" name="cache_time" value="<?=COption::GetOptionInt($config['MODULE_ID'], 'cache_time', 3600)?>">
+        </td>
+    </tr>
+    <tr>
+        <td class="adm-detail-content-cell-l" style="width:50%">Сбросить кеш</td>
+        <td class="adm-detail-content-cell-r" style="width:50%">
+            <input type="checkbox" name="clear_cache" value="Y">
+        </td>
+    </tr>
 
     <? $tabControl->Buttons(); ?>
 		<input type="submit" name="Update" value="<?= GetMessage("MAIN_SAVE") ?>" title="<?= GetMessage("MAIN_OPT_SAVE_TITLE") ?>" class="adm-btn-save">
@@ -113,4 +199,12 @@ $tabControl->Begin();
 	        <input type="hidden" name="back_url_settings" value="<?= htmlspecialcharsbx($_REQUEST["back_url_settings"]) ?>">
 	    <? endif ?>
     <? $tabControl->End(); ?>
+
+    <?if (count($messages) > 0) :?>
+        <div class="adm-info-message">
+            <?foreach ($messages as $message) :?>
+                <div><?=$message?></div>
+            <?endforeach?>
+        </div>
+    <?endif?>
 </form>

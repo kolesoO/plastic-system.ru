@@ -495,6 +495,23 @@ BX.saleOrderAjax = { // bad solution, actually, a singleton at the page
 		$target.change();
 	},
 
+	updateAddress: function(self)
+	{
+		var targetSelector = $(self).attr("data-target"),
+			arNewValues = [];
+
+		if ($(targetSelector).length > 0) {
+			$("[data-target='" + targetSelector + "']").each(function() {
+				arNewValues.push($(this).val());
+			})
+		}
+		if (arNewValues.length > 0) {
+			$(targetSelector).val(arNewValues.join(", "));
+			$(targetSelector).attr("value", arNewValues.join(", "));
+			$(targetSelector).trigger("change");
+		}
+	},
+
 	renderAddressList: function(self, list)
 	{
 		var $parent = $(self).parent(),

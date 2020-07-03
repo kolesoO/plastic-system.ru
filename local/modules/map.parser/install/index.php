@@ -70,6 +70,7 @@ class map_parser extends CModule
 
         $eventManager = EventManager::getInstance();
         $eventManager->registerEventHandler('sale', 'onSaleDeliveryServiceCalculate', $this->MODULE_ID, '\kDevelop\MapParser\Handlers\Order', 'onSaleDeliveryServiceCalculateHandler');
+        $eventManager->registerEventHandler('sale', 'OnOrderAdd', $this->MODULE_ID, '\kDevelop\MapParser\Handlers\Order', 'OnOrderAddHandler');
 
         return true;
     }
@@ -90,6 +91,7 @@ class map_parser extends CModule
 
         $eventManager = EventManager::getInstance();
         $eventManager->unRegisterEventHandler('sale', 'onSaleDeliveryServiceCalculate', $this->MODULE_ID, '\kDevelop\MapParser\Handlers\Order', 'onSaleDeliveryServiceCalculateHandler');
+        $eventManager->unRegisterEventHandler('sale', 'OnOrderAdd', $this->MODULE_ID, '\kDevelop\MapParser\Handlers\Order', 'OnOrderAddHandler');
 
         return true;
     }
