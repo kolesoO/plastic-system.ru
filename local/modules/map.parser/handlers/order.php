@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace kDevelop\MapParser\Handlers;
 
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\ArgumentNullException;
+use Bitrix\Main\ArgumentOutOfRangeException;
 use Bitrix\Main\Event;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Sale\Delivery\CalculationResult;
+use Bitrix\Sale\Order as SaleOrder;
 use COption;
 use CPHPCache;
 use CSaleOrderProps;
@@ -106,8 +109,20 @@ class Order
         return $result;
     }
 
+    /**
+     * @param $ID
+     * @param $arFields
+     * @throws ArgumentException
+     * @throws ArgumentNullException
+     * @throws ArgumentOutOfRangeException
+     */
     public static function OnOrderAddHandler($ID, $arFields)
     {
+        AddMessage2Log('OnOrderAddHandler');
         AddMessage2Log($ID);
+
+        $order = SaleOrder::load($ID);
+        $order->setField('PRICE_DELIVERY', 1000);
+        $order->save();
     }
 }
