@@ -40,6 +40,15 @@
                             >Схема проезда</a>
                         </div>
                     <?endif?>
+                    <?if ($arItem['UF_SCHEME']) :?>
+                        <div>
+                            <a
+                                    href="<?=$arItem['UF_SCHEME']['SRC']?>"
+                                    download="<?=$arItem['UF_SCHEME']['FILE_NAME']?>"
+                                    class="link dashed"
+                            >Скачать схему проезда (<?=$arItem['UF_SCHEME']['EXTENSION']?>)</a>
+                        </div>
+                    <?endif?>
                     <?if ($arItem['UF_MAP_LINK']) :?>
                         <div>
                             <a
