@@ -5,6 +5,7 @@
     <?=$arResult["FORM_HEADER"]?>
     <?if ($arResult["isFormErrors"] == "Y"):?><?=$arResult["FORM_ERRORS_TEXT"];?><?endif;?>
     <div class="popup_form">
+        <p><?=$arResult['arForm']['DESCRIPTION']?></p>
         <?foreach ($arResult["QUESTIONS"] as $FIELD_SID => $arQuestion) :?>
             <?if ($arQuestion['STRUCTURE'][0]['FIELD_TYPE'] == 'hidden') :?>
                 <?=$arQuestion["HTML_CODE"];?>
@@ -42,5 +43,5 @@
         }
     </script>
 <?else:?>
-    <p>Ваш заказ успешно оправлен,менеджер свяжется с вами с ближайшеевремя для уточнения деталей</p>
+    <p>Данные успешно оправлены,менеджер свяжется с вами с ближайшеевремя для уточнения деталей</p>
 <?endif?>

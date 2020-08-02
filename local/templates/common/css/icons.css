@@ -134,6 +134,20 @@ a:hover>.icon:before {
     background-size: contain
 }
 
+.icon.telegram:before {
+    width: 19px;
+    height: 19px;
+    background-image: url(../images/icons/socials/telegram.svg);
+    background-size: contain
+}
+
+.icon.whatsapp:before {
+    width: 25px;
+    height: 25px;
+    background-image: url(../images/icons/socials/whatsapp.svg);
+    background-size: contain
+}
+
 .icon.tile {
     position: relative;
     vertical-align: middle;
