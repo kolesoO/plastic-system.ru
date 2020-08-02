@@ -39,6 +39,9 @@ foreach ($arResult["STORES"] as &$arItem) {
         unset($arItem["UF_FROM_N"]);
         unset($arItem["UF_FROM_S"]);
     }
+    if (strlen($arFields['UF_MAP_LINK']['VALUE']) > 0) {
+        $arItem['UF_MAP_LINK'] = $arFields['UF_MAP_LINK']['VALUE'];
+    }
     //end
 
     $arItem['MAP_BALLOON_CONTENT'] = isset($arFields['UF_MAP_TITLE']) && strlen($arFields['UF_MAP_TITLE']['VALUE']) > 0
