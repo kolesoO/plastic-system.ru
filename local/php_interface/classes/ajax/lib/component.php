@@ -160,7 +160,9 @@ class Component
             "",
             [
                 "LOCATION_NAME" => $arParams["form_data"]["city"],
-                "LOCATION_ADDRESS" => $arParams["form_data"]["address"]
+                "LOCATION_STREET" => $arParams["form_data"]["street"],
+                "LOCATION_BUILDING" => $arParams["form_data"]["building"],
+                "ADDRESS" => $arParams["form_data"]["address"],
             ]
         );
         $return = ob_get_contents();

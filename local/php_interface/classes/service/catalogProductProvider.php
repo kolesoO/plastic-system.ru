@@ -29,23 +29,27 @@ class CatalogProductProvider extends \Bitrix\Catalog\Product\CatalogProvider
         );
         while ($arItem = $rsItem->fetch()) {
             $priceListKey = array_keys($data["PRODUCT_DATA_LIST"][$arItem["ID"]]["PRICE_LIST"])[0];
-            $data["PRODUCT_DATA_LIST"][$arItem["ID"]]["PRICE_LIST"][$priceListKey] = array_merge(
-                $data["PRODUCT_DATA_LIST"][$arItem["ID"]]["PRICE_LIST"][$priceListKey],
-                $this->getUpdatedProductData(\CCatalogProduct::GetOptimalPrice(
-                    $arItem["ID"],
-                    $data["PRODUCT_DATA_LIST"][$arItem["ID"]]["PRICE_LIST"][$priceListKey]["QUANTITY"],
-                    $USER->GetUserGroupArray(),
-                    "N",
+            $optimalPrice = \CCatalogProduct::GetOptimalPrice(
+                $arItem["ID"],
+                $data["PRODUCT_DATA_LIST"][$arItem["ID"]]["PRICE_LIST"][$priceListKey]["QUANTITY"],
+                $USER->GetUserGroupArray(),
+                "N",
+                [
                     [
-                        [
-                            "ID" => $arItem["CATALOG_PRICE_ID_" . PRICE_ID],
-                            "PRICE" => $arItem["CATALOG_PRICE_" . PRICE_ID],
-                            "CURRENCY" => "RUB",
-                            "CATALOG_GROUP_ID" => PRICE_ID
-                        ]
+                        "ID" => $arItem["CATALOG_PRICE_ID_" . PRICE_ID],
+                        "PRICE" => $arItem["CATALOG_PRICE_" . PRICE_ID],
+                        "CURRENCY" => "RUB",
+                        "CATALOG_GROUP_ID" => PRICE_ID
                     ]
-                ))
+                ]
             );
+
+            if (is_array($optimalPrice)) {
+                $data["PRODUCT_DATA_LIST"][$arItem["ID"]]["PRICE_LIST"][$priceListKey] = array_merge(
+                    $data["PRODUCT_DATA_LIST"][$arItem["ID"]]["PRICE_LIST"][$priceListKey],
+                    $this->getUpdatedProductData($optimalPrice)
+                );
+            }
         }
         $return->setData($data);
 

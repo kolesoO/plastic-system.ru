@@ -82,7 +82,8 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <span>c НДС</span>
                         </div>
                         <br>
-                        <span><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</span>
+                        <div><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</div>
+                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap">Нашли дешевле?</a></div>
                     <?endif?>
                 </div>
             <?endif?>
@@ -172,6 +173,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                     </div>
                 <?endif?>
             <?endforeach?>
+            <div class="cart_desc-item">Единица измерения - <?=$arOffer['ITEM_MEASURE']['TITLE']?></div>
             <div class="cart_desc-item">
                 <div class="cart_buy">
                     <?if ($arOffer["CAN_BUY"]) :?>

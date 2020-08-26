@@ -21,6 +21,10 @@
             <div class="order_form-item-wrap order_form-item-input" flex-align="center">
                 <?if ($arProp["CODE"] == "ADDRESS") :
                     $arValue = explode(",", $arProp["VALUE"]);
+                    foreach ($arValue as &$value) {
+                        $value = trim($value);
+                    }
+                    unset($value);
                     ?>
                     <div class="col-lg-6 col-md-9 animate_input js-animate_input">
                         <label for="city">Город</label>
@@ -55,6 +59,7 @@
                             data-type="<?=\Kladr\ObjectType::Building?>"
                             data-target="#<?=$arProp["FIELD_ID"]?>"
                             value="<?=$arValue[2]?>"
+                            onkeyup="BX.saleOrderAjax.updateAddress(this)"
                         >
                     </div>
                     <div class="col-lg-3 col-md-9 animate_input js-animate_input">
