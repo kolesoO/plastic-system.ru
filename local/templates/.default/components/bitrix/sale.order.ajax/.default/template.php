@@ -301,58 +301,72 @@ elseif ($arParams['DISABLE_BASKET_REDIRECT'] === 'Y' && $arResult['SHOW_EMPTY_BA
 else
 {
     ?>
-    <form action="<?=POST_FORM_ACTION_URI?>" method="POST" name="ORDER_FORM" id="bx-soa-order-form" enctype="multipart/form-data" class="order_form">
-        <!--input type="hidden" name="<?=$arParams['ACTION_VARIABLE']?>" value="saveOrderAjax"-->
-        <input type="hidden" name="location_type" value="code">
-        <input type="hidden" name="BUYER_STORE" id="BUYER_STORE" value="<?=$arResult['BUYER_STORE']?>">
-        <input type="hidden" name="confirmorder" id="confirmorder" value="Y">
-        <input type="hidden" name="profile_change" id="profile_change" value="N">
-        <input type="hidden" name="is_ajax_post" id="is_ajax_post" value="Y">
-        <input type="hidden" name="json" value="Y">
-        <?echo bitrix_sessid_post();?>
-        <div id="bx-soa-order-form-content">
-            <?if ($_POST["is_ajax_post"] == "Y") {
-                $APPLICATION->RestartBuffer();
-            }?>
-            <?if (!empty($arResult["ERROR"])) :?>
-                <div class="block_wrapper error_txt">
-                    <?foreach ($arResult["ERROR"] as $err) :?>
-                        <p><?=$err?></p>
-                    <?endforeach?>
-                </div>
-            <?endif?>
-            <div class="block_wrapper">
-                <div class="order_form">
-                    <div class="order_form-item">
-                        <div flex-align="center" class="order_form-title">
-                            <div class="title-3 text">Личные данные</div>
-                            <?include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/person_type.php");?>
+    <div style="display:flex;flex-wrap:wrap;justify-content: space-between">
+        <div class="col-lg-15">
+            <form action="<?=POST_FORM_ACTION_URI?>" method="POST" name="ORDER_FORM" id="bx-soa-order-form" enctype="multipart/form-data" class="order_form">
+                <!--input type="hidden" name="<?=$arParams['ACTION_VARIABLE']?>" value="saveOrderAjax"-->
+                <input type="hidden" name="location_type" value="code">
+                <input type="hidden" name="BUYER_STORE" id="BUYER_STORE" value="<?=$arResult['BUYER_STORE']?>">
+                <input type="hidden" name="confirmorder" id="confirmorder" value="Y">
+                <input type="hidden" name="profile_change" id="profile_change" value="N">
+                <input type="hidden" name="is_ajax_post" id="is_ajax_post" value="Y">
+                <input type="hidden" name="json" value="Y">
+                <?echo bitrix_sessid_post();?>
+                <div id="bx-soa-order-form-content">
+                    <?if ($_POST["is_ajax_post"] == "Y") {
+                        $APPLICATION->RestartBuffer();
+                    }?>
+                    <?if (!empty($arResult["ERROR"])) :?>
+                        <div class="block_wrapper error_txt">
+                            <?foreach ($arResult["ERROR"] as $err) :?>
+                                <p><?=$err?></p>
+                            <?endforeach?>
                         </div>
-                        <?include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/props.php");?>
+                    <?endif?>
+                    <div class="block_wrapper">
+                        <div class="order_form">
+                            <div class="order_form-item">
+                                <div flex-align="center" class="order_form-title">
+                                    <div class="title-3 text">Личные данные</div>
+                                    <?include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/person_type.php");?>
+                                </div>
+                                <?include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/props.php");?>
+                            </div>
+                            <?
+                            if ($arParams["DELIVERY_TO_PAYSYSTEM"] == "p2d") {
+                                include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/paysystem.php");
+                                include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/delivery.php");
+                                include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/related_props.php");
+                            }
+                            else {
+                                include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/delivery.php");
+                                include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/related_props.php");
+                                include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/paysystem.php");
+                            }
+                            if (strlen($arResult['PREPAY_ADIT_FIELDS']) > 0) {
+                                echo $arResult['PREPAY_ADIT_FIELDS'];
+                            }
+                            ?>
+                        </div>
                     </div>
-                    <?
-                    if ($arParams["DELIVERY_TO_PAYSYSTEM"] == "p2d") {
-                        include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/paysystem.php");
-                        include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/delivery.php");
-                        include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/related_props.php");
-                    }
-                    else {
-                        include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/delivery.php");
-                        include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/related_props.php");
-                        include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/paysystem.php");
-                    }
-                    if (strlen($arResult['PREPAY_ADIT_FIELDS']) > 0) {
-                        echo $arResult['PREPAY_ADIT_FIELDS'];
-                    }
-                    ?>
+                    <?include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/summary.php");?>
+                    <?if ($_POST["is_ajax_post"] == "Y") {
+                        die();
+                    }?>
                 </div>
-            </div>
-            <?include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/summary.php");?>
-            <?if ($_POST["is_ajax_post"] == "Y") {
-                die();
-            }?>
+            </form>
         </div>
-    </form>
+        <div class="col-lg-8">
+            <div class="block_wrapper">
+                <?$APPLICATION->IncludeComponent(
+                    'kDevelop:catalog.delivery',
+                    '.default',
+                    array(),
+                    null
+                );?>
+            </div>
+        </div>
+    </div>
 
 	<div id="bx-soa-saved-files" style="display:none"></div>
 	<div id="bx-soa-soc-auth-services" style="display:none">

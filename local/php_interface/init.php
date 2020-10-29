@@ -1,5 +1,5 @@
 <?
-use \Bitrix\Main;
+use Bitrix\Main;
 use kDevelop\Help\Tools;
 use kDevelop\Service\Catalog;
 use kDevelop\Service\Order;
@@ -47,13 +47,15 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
     //iblock module
     $rsManager->addEventHandler("iblock", "OnAfterIBlockElementUpdate", [Catalog::class, "OnAfterIBlockElementUpdateHandler"], false, 100);
 
-    $rsManager->addEventHandler("iblock", "OnBeforeIBlockElementUpdate", [Catalog::class, "transformElementFields"], false, 100);
+    if ($APPLICATION->GetCurPage(false) === '/bitrix/admin/1c_exchange.php') {
+        $rsManager->addEventHandler("iblock", "OnBeforeIBlockElementUpdate", [Catalog::class, "transformElementFields"], false, 100);
 
-    $rsManager->addEventHandler("iblock", "OnBeforeIBlockElementAdd", [Catalog::class, "transformElementFields"], false, 100);
+        $rsManager->addEventHandler("iblock", "OnBeforeIBlockElementAdd", [Catalog::class, "transformElementFields"], false, 100);
 
-    $rsManager->addEventHandler("iblock", "OnBeforeIBlockSectionAdd", [Catalog::class, "transformElementFields"], false, 100);
+        $rsManager->addEventHandler("iblock", "OnBeforeIBlockSectionAdd", [Catalog::class, "transformElementFields"], false, 100);
 
-    $rsManager->addEventHandler("iblock", "OnBeforeIBlockSectionUpdate", [Catalog::class, "transformElementFields"], false, 100);
+        $rsManager->addEventHandler("iblock", "OnBeforeIBlockSectionUpdate", [Catalog::class, "transformElementFields"], false, 100);
+    }
     //end
 }
 //end
