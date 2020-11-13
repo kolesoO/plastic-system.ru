@@ -21,11 +21,28 @@
             </div><div class="order_form-item-input">
         <?endif?>
         <?if ($arProp["IS_LOCATION"] == "Y") :?>
-            <input type="hidden" name="<?=$arProp["FIELD_NAME"]?>" value="<?=intval($arProp["VALUE"]) > 0 ? $arProp["VALUE"] : $arProp["DEFAULT_VALUE"]?>">
+            <input
+                    type="hidden"
+                    name="<?=$arProp["FIELD_NAME"]?>"
+                    value="<?=intval($arProp["VALUE"]) > 0 ? $arProp["VALUE"] : $arProp["DEFAULT_VALUE"]?>"
+            >
         <?else:?>
             <div class="animate_input js-animate_input">
                 <label for="<?=$arProp["FIELD_ID"]?>"><?=$name?></label>
-                <input id="<?=$arProp["FIELD_ID"]?>" type="<?=$type?>" name="<?=$arProp["FIELD_NAME"]?>" value="<?=$arProp["VALUE"]?>">
+                <?if ($arProp['TYPE'] === 'TEXTAREA') :?>
+                    <textarea
+                            id="<?=$arProp["FIELD_ID"]?>"
+                            name="<?=$arProp["FIELD_NAME"]?>"
+                            rows="5"
+                    ><?=$arProp["VALUE"]?></textarea>
+                <?else:?>
+                    <input
+                            id="<?=$arProp["FIELD_ID"]?>"
+                            type="<?=$type?>"
+                            name="<?=$arProp["FIELD_NAME"]?>"
+                            value="<?=$arProp["VALUE"]?>"
+                    >
+                <?endif?>
             </div>
         <?endif?>
         <?

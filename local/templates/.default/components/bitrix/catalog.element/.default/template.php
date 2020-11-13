@@ -78,7 +78,11 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                                 <s class="table_list-price_small"><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                             <?endif?>
-                            <div class="table_list-price text-line"><?=$arPrice["PRINT_PRICE"]?></div>
+                            <div class="table_list-price text-line">
+                                <?if ($arOffer['PROPERTIES']['PRICE_FROM']['VALUE'] === 'Y') :?>
+                                    <span>от</span>
+                                <?endif?>
+                                <?=$arPrice["PRINT_PRICE"]?></div>
                             <span>c НДС</span>
                         </div>
                         <br>
@@ -176,39 +180,43 @@ if ($arParams['DISPLAY_COMPARE']) {
             <div class="cart_desc-item">Единица измерения - <?=$arOffer['ITEM_MEASURE']['TITLE']?></div>
             <div class="cart_desc-item">
                 <div class="cart_buy">
-                    <?if ($arOffer["CAN_BUY"]) :?>
-                        <div class="cart_buy-qnt_wrap">
+                    <?if ($arOffer['PROPERTIES']['PRICE_FROM']['VALUE'] === 'Y') :?>
+                        <a href="#" class="table_list-basket col-xs-24" data-popup-open="#price_from-form">Заказать</a>
+                    <?else:?>
+                        <?if ($arOffer["CAN_BUY"]) :?>
+                            <div class="cart_buy-qnt_wrap">
+                                <a
+                                        href="#"
+                                        class="cart_buy-qnt"
+                                        data-target="#qnt-to-basket"
+                                        onclick="obCatalogElementDetail.setQnt(this, 'plus')"
+                                >+</a>
+                                <input
+                                        id="qnt-to-basket"
+                                        type="text"
+                                        class="cart_buy-qnt"
+                                        value="1"
+                                        onchange="obCatalogElementDetail.changeQnt(this)"
+                                >
+                                <a
+                                        href="#"
+                                        class="cart_buy-qnt"
+                                        data-target="#qnt-to-basket"
+                                        onclick="obCatalogElementDetail.setQnt(this, 'minus')"
+                                >-</a>
+                            </div>
                             <a
                                     href="#"
-                                    class="cart_buy-qnt"
-                                    data-target="#qnt-to-basket"
-                                    onclick="obCatalogElementDetail.setQnt(this, 'plus')"
-                            >+</a>
-                            <input
-                                    id="qnt-to-basket"
-                                    type="text"
-                                    class="cart_buy-qnt"
-                                    value="1"
-                                    onchange="obCatalogElementDetail.changeQnt(this)"
+                                    class="table_list-basket"
+                                    data-qnt-target="#qnt-to-basket"
+                                    onclick="obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event)"
                             >
-                            <a
-                                    href="#"
-                                    class="cart_buy-qnt"
-                                    data-target="#qnt-to-basket"
-                                    onclick="obCatalogElementDetail.setQnt(this, 'minus')"
-                            >-</a>
-                        </div>
-                        <a
-                                href="#"
-                                class="table_list-basket"
-                                data-qnt-target="#qnt-to-basket"
-                                onclick="obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event)"
-                        >
-                            <i class="icon basket-white"></i>
-                            <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
-                        </a>
-                    <?else: ?>
-                        <a href="#" class="table_list-basket col-xs-24" data-popup-open="#pre-order">Под заказ</a>
+                                <i class="icon basket-white"></i>
+                                <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
+                            </a>
+                        <?else: ?>
+                            <a href="#" class="table_list-basket col-xs-24" data-popup-open="#pre-order">Под заказ</a>
+                        <?endif?>
                     <?endif?>
                 </div>
                 <div class="cart_links">

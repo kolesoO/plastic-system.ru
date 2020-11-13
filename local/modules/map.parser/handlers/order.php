@@ -58,7 +58,6 @@ class Order
                 ["ID", "NAME"]
             )->fetch()) {
                 if (strlen($_POST["ORDER_PROP_" . $arProp["ID"]]) > 0) {
-                    //
                     $obCache = new CPHPCache();
                     if ($obCache->InitCache(
                         COption::GetOptionInt('map.parser', 'cache_time', 3600),

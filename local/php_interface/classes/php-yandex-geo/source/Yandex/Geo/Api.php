@@ -90,7 +90,6 @@ class Api
             throw new \Yandex\Geo\Exception($msg);
         }
         if (!empty($data['error'])) {
-            var_dump($data['error']);
             throw new \Yandex\Geo\Exception\MapsError($data['error']['message'], $data['error']['code']);
         }
 
