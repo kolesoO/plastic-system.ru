@@ -14,7 +14,8 @@
 $this->setFrameMode(true);
 
 $arPrice = $arResult["OFFER"]["ITEM_PRICES"][$arResult["OFFER"]["ITEM_PRICE_SELECTED"]];
-$arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["PRICE"] > 0;
+$arResult["OFFER"]["CAN_BUY"] = $arPrice["PRICE"] > 0
+    && $arResult["OFFER"]['PROPERTIES']['PRICE_FROM']['VALUE'] !== 'Y';
 ?>
 
 <?if ($arStatus = \kDevelop\Help\Tools::getOfferStatusInfo($arResult["OFFER"]["PROPERTIES"]["STATUS"]["VALUE_XML_ID"])) :?>
@@ -111,7 +112,12 @@ $arResult["OFFER"]["CAN_BUY"] = /*$arResult["OFFER"]["CAN_BUY"] && */$arPrice["P
                     <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                         <s><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                     <?endif?>
-                    <div class="table_list-price text-line"><?=$arPrice["PRINT_RATIO_PRICE"]?></div>
+                    <div class="table_list-price text-line">
+                        <?if ($arResult["OFFER"]['PROPERTIES']['PRICE_FROM']['VALUE'] === 'Y') :?>
+                            <span>от</span>
+                        <?endif?>
+                        <?=$arPrice["PRINT_RATIO_PRICE"]?>
+                    </div>
                     <span>c НДС</span>
                 </div>
                 <?if ($arResult["OFFER"]["CAN_BUY"]) :?>
