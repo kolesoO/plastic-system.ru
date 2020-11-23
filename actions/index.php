@@ -114,7 +114,7 @@ $APPLICATION->IncludeComponent(
             2 => "CODE",
         ),
         "OFFERS_LIMIT" => "0",
-        "OFFERS_PROPERTY_CODE" => array("TSVET", "RAZMER", "CML2_ARTICLE", "STATUS"),
+        "OFFERS_PROPERTY_CODE" => array("TSVET", "RAZMER", "CML2_ARTICLE", "STATUS", "PRICE_FROM"),
         "OFFERS_SORT_FIELD" => "PROPERTY_CML2_ARTICLE",
         "OFFERS_SORT_FIELD2" => "sort",
         "OFFERS_SORT_ORDER" => "asc",

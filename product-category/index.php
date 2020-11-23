@@ -142,7 +142,7 @@ $APPLICATION->IncludeComponent(
             1 => "PREVIEW_PICTURE",
             2 => "CODE",
         ),
-        "LIST_OFFERS_PROPERTY_CODE" => array("RAZMER", "TSVET", "CML2_ARTICLE", "STATUS"),
+        "LIST_OFFERS_PROPERTY_CODE" => array("RAZMER", "TSVET", "CML2_ARTICLE", "STATUS", "PRICE_FROM"),
         "LIST_OFFERS_LIMIT" => "0",
         "SECTION_BACKGROUND_IMAGE" => "-",
         "DETAIL_DETAIL_PICTURE_MODE" => "IMG",
