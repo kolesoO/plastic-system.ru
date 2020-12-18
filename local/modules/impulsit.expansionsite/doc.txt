@@ -1,0 +1,137 @@
+1) Закинуть модуль в папку \local\modules\
+2) Зайти в админку сайта
+3) Перейти во вкладку Marketplace->Установленные решения
+4) Найти модуль Модуль расширяющий сайт (impulsit.expansionsite)
+5) Установить модуль
+6) В шаблоне сайта вставить
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <?/** --- OpenGraph + Schema.org --- **/
+    $APPLICATION->ShowViewContent('MetaTag');?>
+</head>
+
+Пример вставки в компоненте news.list
+<?/** --- SCHEMA ORG + OPEN GRAPH --- **/
+if(\Bitrix\Main\Loader::includeModule('impulsit.expansionsite'))
+{
+    /**
+     * @brief Инициализация MetaTag
+     * @param Type = Article - Статьи детальная
+     * @param Type = ListItem - Статьи список
+     * @param Type = Product - Товар детальная
+     * @param Type = ProductItem - Товар список
+     * @param $arResult = массив данных
+     * @param $arParams = массив данных
+     * @return Буферизированный контент
+     **/
+    \Impulsit\ExpansionSite\MetaTag::init('ListItem',$arResult, $arParams);
+}?>
+
+Пример вставки в компоненте news.detail
+<?/** --- SCHEMA ORG + OPEN GRAPH --- **/
+if(\Bitrix\Main\Loader::includeModule('impulsit.expansionsite'))
+{
+    /**
+     * @brief Инициализация MetaTag
+     * @param Type = Article - Статьи детальная
+     * @param Type = ListItem - Статьи список
+     * @param Type = Product - Товар детальная
+     * @param Type = ProductItem - Товар список
+     * @param $arResult = массив данных
+     * @param $arParams = массив данных
+     * @return Буферизированный контент
+     **/
+    \Impulsit\ExpansionSite\MetaTag::init('Article',$arResult, $arParams);
+}?>
+
+Пример вставки в компоненте catalog.element
+<?/** --- SCHEMA ORG + OPEN GRAPH --- **/
+if(\Bitrix\Main\Loader::includeModule('impulsit.expansionsite'))
+{
+    /**
+     * @brief Инициализация MetaTag
+     * @param Type = Article - Статьи детальная
+     * @param Type = ListItem - Статьи список
+     * @param Type = Product - Товар детальная
+     * @param Type = ProductItem - Товар список
+     * @param $arResult = массив данных
+     * @return Буферизированный контент
+     **/
+    \Impulsit\ExpansionSite\MetaTag::init('Product',$arResult);
+}?>
+
+Пример вставки Организации
+<?/** --- SCHEMA ORG + OPEN GRAPH --- **/
+if(\Bitrix\Main\Loader::includeModule('impulsit.expansionsite'))
+{
+    $seoDescription = ( (mb_strlen($arResult["DETAIL_TEXT"]) > 0) ? TruncateText(strip_tags($arResult["~DETAIL_TEXT"]), 150) : TruncateText(strip_tags($arResult["~PREVIEW_TEXT"]), 150)  );
+    $seoDescription= preg_replace("/\s{2,}/"," ",$seoDescription);
+    
+    $arOrganization[] = array(
+        "NAME" => "Системный софт",
+        "DESCRIPTION" => $seoDescription,
+        "PRICE_RANGE" => "100-1000000RUB",
+        "FACRBOOK" => "",
+        "GEO_LATITUDE" => "55.785379",
+        "GEO_LONGITUDE" => "37.584614",
+        "STREET_ADDRESS" => "ул. 5-я Ямского Поля, д. 5, стр.1, БЦ «Ямское Плаза»",
+        "ADDRESS_LOCALITY" => "г. Москва",
+        "POSTAL_CODE" => "100000",
+        "TELEPHONE" => "+7 800 333 33 71",
+        "FAX_NUMBER" => "",
+        "EMAIL" => "info@syssoft.ru",
+    );
+
+    /**
+     * @brief Инициализация MetaTag
+     * @param Type = Article - Статьи детальная
+     * @param Type = ListItem - Статьи список
+     * @param Type = Product - Товар детальная
+     * @param Type = ProductItem - Товар список
+     * @param Type = Organization - Организация
+     * @param $arResult = массив данных
+     * @return Буферизированный контент
+     **/
+    \Impulsit\ExpansionSite\MetaTag::init('Organization',$arOrganization);
+}?>
+
+Пример вставки MetaPagenavigation
+<?#SCHEMA ORG + OPEN GRAPH
+#В файле result_modifier.php
+$cp = $this->__component;
+
+if (is_object($cp))
+{
+    foreach($arResult["ITEMS"] as $arItem)
+    {
+        $elementsId[] = $arItem["ID"];
+    }
+        
+    $arResult["NAV_RESULT_EPILOG"] = array(
+        "ELEMENTS_ID" => $elementsId,
+        "bNavStart" => $arResult["NAV_RESULT"]->bNavStart,
+        "NavNum" => $arResult["NAV_RESULT"]->NavNum,
+        "NavPageCount" => $arResult["NAV_RESULT"]->NavPageCount,
+        "NavPageNomer" => $arResult["NAV_RESULT"]->NavPageNomer,
+        "NavPageSize" => $arResult["NAV_RESULT"]->NavPageSize,
+        "NavRecordCount" => $arResult["NAV_RESULT"]->NavRecordCount,
+        "bFirstPrintNav" => $arResult["NAV_RESULT"]->bFirstPrintNav,
+        "PAGEN" => $arResult["NAV_RESULT"]->PAGEN,
+        "SIZEN" => $arResult["NAV_RESULT"]->SIZEN,
+        "bFromLimited" => $arResult["NAV_RESULT"]->bFromLimited,
+        "sSessInitAdd" => $arResult["NAV_RESULT"]->sSessInitAdd,
+        "nPageWindow" => $arResult["NAV_RESULT"]->nPageWindow,
+        "nSelectedCount" => $arResult["NAV_RESULT"]->nSelectedCount
+    );
+
+   $cp->SetResultCacheKeys(array('NAV_RESULT_EPILOG', 'SECTION_PAGE_URL'));
+   
+    /**
+     * @brief Пагинация MetaTag
+     * @param Type = Pagenavigation - Пагинация
+     * @param $arResult["NAV_RESULT_EPILOG"] = массив данных о пагинации
+     * @return Буферизированный контент
+     **/
+    \Webtu\ExpansionSite\MetaTag::init('Pagenavigation',$arResult);
+}
+?>

@@ -3,7 +3,7 @@
 <div class="block_wrapper">
     <div class="cart_info">
         <div class="cart_info-item col-xs-24">
-            <div class="title-3">Технические характеристики</div>
+            <h2 class="title-3">Технические характеристики</h2>
             <div class="cart_info-wrap">
                 <?
                 $arOldPropCode = [];

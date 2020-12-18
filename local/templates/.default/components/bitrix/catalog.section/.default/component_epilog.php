@@ -92,3 +92,21 @@ if ($request->isAjaxRequest() && ($request->get('action') === 'showMore' || $req
     </div>
 </div>
 <?//end?>
+
+<?/** --- SCHEMA ORG + OPEN GRAPH --- **/
+if(\Bitrix\Main\Loader::includeModule('impulsit.expansionsite'))
+{
+    /**
+     * @brief Инициализация MetaTag
+     * @param Type = Article - Статьи детальная
+     * @param Type = ListItem - Статьи список
+     * @param Type = Product - Товар детальная
+     * @param Type = ProductOffer - Offer список
+     * @param Type = ProductItem - Товар список
+     * @param $arResult = массив данных
+     * @param $arParams = массив данных
+     * @return Буферизированный контент
+     **/
+    \Impulsit\ExpansionSite\MetaTag::init('ProductOffer',$arResult,$arParams);
+    \Impulsit\ExpansionSite\MetaTag::init('Pagenavigation',$arResult);
+}?>

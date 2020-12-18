@@ -26,14 +26,15 @@ $arSectionFilter = [
     "IBLOCK_ID" => $arParams["IBLOCK_ID"],
     "CODE" => $arResult["VARIABLES"]["SECTION_CODE"]
 ];
-if ($obCache->InitCache($arParams["CACHE_TIME"], serialize($arSectionFilter), "/iblock/catalog")) {
+if ($obCache->InitCache($arParams["CACHE_TIME"], serialize($arSectionFilter), "/iblock/catalog"))
+{
     extract($obCache->GetVars(), EXTR_OVERWRITE);
-} elseif ($obCache->StartDataCache()) {
-    $arSection = \CIBlockSection::GetList(
-        [],
-        $arSectionFilter
-    )->fetch();
-    if ($arSection) {
+}
+elseif ($obCache->StartDataCache())
+{
+    $arSection = \CIBlockSection::GetList([],$arSectionFilter)->fetch();
+    if ($arSection)
+    {
         $rsChildSections = \CIBlockSection::GetList(
             [],
             [
@@ -46,18 +47,17 @@ if ($obCache->InitCache($arParams["CACHE_TIME"], serialize($arSectionFilter), "/
         );
         $hasChildSections = $rsChildSections->SelectedRowsCount() > 0;
         $picturePath = \CFile::GetPath($arSection["DETAIL_PICTURE"]);
-        if(defined("BX_COMP_MANAGED_CACHE")) {
+        if(defined("BX_COMP_MANAGED_CACHE"))
+        {
             $CACHE_MANAGER->StartTagCache("/iblock/catalog");
             $CACHE_MANAGER->RegisterTag("iblock_id_".$arParams["IBLOCK_ID"]);
             $CACHE_MANAGER->EndTagCache();
         }
     }
-    if (\Bitrix\Main\Loader::includeModule('catalog')) {
-        $arPrice = \CCatalogGroup::GetList(
-            [],
-            ["NAME" => $arParams["PRICE_CODE"][0]]
-        )->fetch();
-    }
+
+    if (\Bitrix\Main\Loader::includeModule('catalog'))
+        $arPrice = \CCatalogGroup::GetList([],["NAME" => $arParams["PRICE_CODE"][0]])->fetch();
+
     //$obCache->EndDataCache(compact($arSection, $picturePath, $hasChildSections, $arPrice));
     $obCache->EndDataCache([
         "arSection" => $arSection,
@@ -66,35 +66,33 @@ if ($obCache->InitCache($arParams["CACHE_TIME"], serialize($arSectionFilter), "/
         "arPrice" => $arPrice
     ]);
 }
-if (!isset($arSection)) {
+if (!isset($arSection))
     $arSection = [];
-}
-if (!isset($hasChildSections)) {
+
+if (!isset($hasChildSections))
     $hasChildSections = false;
-}
-if (isset($picturePath) && $picturePath) {
+
+if (isset($picturePath) && $picturePath)
     $APPLICATION->SetPageProperty("header_section-style", "background-image:url('".$picturePath."')");
-} else {
+else
     $APPLICATION->SetPageProperty("header_section-style", "color:inherit");
-}
+
 $APPLICATION->SetPageProperty("header_section-class", "catalog_section");
 //end
 
 //данные для сортировки
-$arSort = [
-    [
-        "CODE" => "show_counter",
-        "TITLE" => "По полулярности"
-    ]
-];
-$arSort[] = [
-    "CODE" => "catalog_PRICE_".$arPrice["ID"],
-    "TITLE" => "По цене"
-];
-foreach ($arSort as &$arSortItem) {
-    if (isset($_GET[$arSortItem["CODE"]])){
+$arSort[] = [];
+$arSort[] = ["CODE" => "show_counter","TITLE" => "По полулярности"];
+$arSort[] = ["CODE" => "catalog_PRICE_".$arPrice["ID"],"TITLE" => "По цене"];
+
+foreach ($arSort as &$arSortItem)
+{
+    if (isset($_GET[$arSortItem["CODE"]]))
+    {
         $arSortItem["VALUE"] = ($_GET[$arSortItem["CODE"]] == "asc" ? "desc" : "asc");
-    } else {
+    }
+    else
+    {
         $arSortItem["VALUE"] = "desc";
         $arSortItem["NO_LAST_SORT"] = "Y";
     }
@@ -102,16 +100,25 @@ foreach ($arSort as &$arSortItem) {
 }
 unset($arSortItem);
 //end
-?>
 
-<?if (strlen($arSection["DESCRIPTION"]) > 0) :?>
-    <div class="catalog_section-content"><?=$arSection["DESCRIPTION"]?></div>
-<?endif?>
-</div>
-</section>
+#Пагинация на страницах
+$pregCheck = array();
+preg_match('/PAGEN_(.*?)=(\d+)/i', $APPLICATION->GetCurUri(), $pregCheck);
+$currentPage = (( intval($pregCheck[2]) > 0 ) ? false : true);
 
-<?if ($arParams["DEVICE_TYPE"] == "MOBILE") :?>
-    <?$APPLICATION->IncludeComponent(
+if(!$arResult["VARIABLES"]["SMART_FILTER_PATH"] && $currentPage)
+{
+    if (strlen($arSection["DESCRIPTION"]) > 0) 
+        echo '<div class="catalog_section-content">'.$arSection["DESCRIPTION"].'</div>';
+}
+
+echo '</div>';
+echo '</div>';
+echo '</section>';
+
+if ($arParams["DEVICE_TYPE"] == "MOBILE")
+{
+    $APPLICATION->IncludeComponent(
         "bitrix:catalog.smart.filter",
         "popup",
         [
@@ -142,8 +149,8 @@ unset($arSortItem);
         ],
         $component,
         ['HIDE_ICONS' => 'Y']
-    );?>
-<?endif?>
+    );
+}?>
 
 <section class="section<?if ($hasChildSections) :?> relative<?endif?>">
     <div class="container">
@@ -185,8 +192,7 @@ unset($arSortItem);
                 </div>
             <?endif?>
             <div class="aside-content">
-                <?
-                //подразделы
+                <?//подразделы
                 $APPLICATION->IncludeComponent(
                     "bitrix:catalog.section.list",
                     "",

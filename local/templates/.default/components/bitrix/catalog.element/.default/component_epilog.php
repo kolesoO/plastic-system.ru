@@ -68,6 +68,22 @@ if ($arParams['DISPLAY_COMPARE']) :?>
 <?endif;
 //end
 
+/** --- SCHEMA ORG + OPEN GRAPH --- **/
+if(\Bitrix\Main\Loader::includeModule('impulsit.expansionsite'))
+{
+    /**
+     * @brief Инициализация MetaTag
+     * @param Type = Article - Статьи детальная
+     * @param Type = ListItem - Статьи список
+     * @param Type = Product - Товар детальная
+     * @param Type = ProductItem - Товар список
+     * @param $arResult = массив данных
+     * @param $arParams = массив данных
+     * @return Буферизированный контент
+     **/
+    \Impulsit\ExpansionSite\MetaTag::init('Product',$arResult,$arParams);
+}
+
 // check favorite
 ?>
 <script>obCatalogElementDetail.initFavorite(<?=\kDevelop\Ajax\Favorite::isAdded($arResult["ID"]) ? "true" : "false"?>);</script>

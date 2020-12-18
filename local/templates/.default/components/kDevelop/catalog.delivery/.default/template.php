@@ -18,7 +18,7 @@ $this->setFrameMode(true);
 
 <form id="get_delivery-form" class="def_form" onsubmit="obAjax.getDelivery(this, event)">
     <input id="address" type="hidden" name="address" value="<?=$arParams["ADDRESS"]?>">
-    <div class="title-3">Доставка</div>
+    <h2 class="title-3">Доставка</h2>
     <div class="animate_input js-animate_input">
         <label for="city">Город</label>
         <input

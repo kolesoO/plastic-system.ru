@@ -168,3 +168,35 @@ $cp = $this->__component;
 if (is_object($cp)) {
     $cp->SetResultCacheKeys(["ITEMS_COUNT"]);
 }
+
+if (\Bitrix\Main\Loader::includeModule("impulsit.expansionsite"))
+{
+    #SCHEMA ORG + OPEN GRAPH
+    $cp = $this->__component;
+    if (is_object($cp))
+    {
+        foreach($arResult["ITEMS"] as $arItem)
+        {
+            $elementsId[] = $arItem["ID"];
+        }
+
+        $arResult["NAV_RESULT_EPILOG"] = array(
+            "ELEMENTS_ID" => $elementsId,
+            "bNavStart" => $arResult["NAV_RESULT"]->bNavStart,
+            "NavNum" => $arResult["NAV_RESULT"]->NavNum,
+            "NavPageCount" => $arResult["NAV_RESULT"]->NavPageCount,
+            "NavPageNomer" => $arResult["NAV_RESULT"]->NavPageNomer,
+            "NavPageSize" => $arResult["NAV_RESULT"]->NavPageSize,
+            "NavRecordCount" => $arResult["NAV_RESULT"]->NavRecordCount,
+            "bFirstPrintNav" => $arResult["NAV_RESULT"]->bFirstPrintNav,
+            "PAGEN" => $arResult["NAV_RESULT"]->PAGEN,
+            "SIZEN" => $arResult["NAV_RESULT"]->SIZEN,
+            "bFromLimited" => $arResult["NAV_RESULT"]->bFromLimited,
+            "sSessInitAdd" => $arResult["NAV_RESULT"]->sSessInitAdd,
+            "nPageWindow" => $arResult["NAV_RESULT"]->nPageWindow,
+            "nSelectedCount" => $arResult["NAV_RESULT"]->nSelectedCount
+        );
+    
+       $cp->SetResultCacheKeys(array('NAV_RESULT_EPILOG', 'SECTION_PAGE_URL'));
+    }
+}
