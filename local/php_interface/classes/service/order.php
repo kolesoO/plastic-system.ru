@@ -52,7 +52,7 @@ class Order
                 "SHOW_ORDER_PARAMS" => "Y",
                 "SHOW_ORDER_BUYER" => "Y",
                 "SHOW_ORDER_DELIVERY" => "Y",
-                "SHOW_ORDER_PAYMENT" => "Y",
+                "SHOW_ORDER_PAYMENT" => "N",
                 "SHOW_ORDER_SUM" => "Y",
                 "CUSTOM_SELECT_PROPS" => array("NAME", "DISCOUNT_PRICE_PERCENT_FORMATED", "PRICE_FORMATED", "QUANTITY"),
                 "PROP_1" => array(),
