@@ -7,7 +7,7 @@
                 <?foreach ($arResult["STORES"] as $arItem) :
                     if (!is_array($arItem["UF_CUSTOM_COORDS"]) || count($arItem["UF_CUSTOM_COORDS"]) == 0) continue;
                     ?>
-                    <a href="#" class="banner_map-marker js-tool_tip" data-target="#tool_tip-<?=$arItem["ID"]?>" style="left:<?=$arItem["UF_CUSTOM_COORDS"][0]?>px;top:<?=$arItem["UF_CUSTOM_COORDS"][1]?>px;"><?=$arItem["UF_CITY_NAME"]?></a>
+                    <a href="#" class="banner_map-marker js-tool_tip" data-target="#tool_tip-<?=$arItem["ID"]?>" style="left:<?=$arItem["UF_CUSTOM_COORDS"][0]?>px;top:<?=$arItem["UF_CUSTOM_COORDS"][1]?>px;"><?=$arItem["STORE_TITLE"]?></a>
                     <div id="tool_tip-<?=$arItem["ID"]?>" class="banner_map-balloon js-tool_tip-content">
                         <div class="banner_map-balloon_title"><?=$arItem["STORE_TITLE"]?></div>
                         <p>

@@ -3,13 +3,13 @@
 <?if ($arResult["STORES_COUNT"] > 0) :?>
     <div class="block_wrapper big">
         <div class="contacts_list">
-            <?foreach ($arResult["STORES"] as $arItem) :
-                $itemImg = is_array($arItem["DETAIL_IMG"]) ? $arItem["DETAIL_IMG"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png";
-                ?>
+            <?foreach ($arResult["STORES"] as $arItem) :?>
                 <div class="contacts_list-item">
-                    <div class="contacts_list-img">
-                        <img src="<?=$itemImg?>" alt="<?=$arItem["STORE_TITLE"]?>">
-                    </div>
+                    <?if (is_array($arItem["DETAIL_IMG"])) :?>
+                        <div class="contacts_list-img">
+                            <img src="<?=$arItem["DETAIL_IMG"]["SRC"]?>" alt="<?=$arItem["STORE_TITLE"]?>">
+                        </div>
+                    <?endif?>
                     <div class="contacts_list-title"><?=$arItem["STORE_TITLE"]?></div>
                     <div class="contacts_list-desc">
                         <?if (strlen($arItem["ADDRESS"]) > 0) :?>
