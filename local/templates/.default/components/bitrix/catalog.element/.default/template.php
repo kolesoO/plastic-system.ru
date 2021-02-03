@@ -87,7 +87,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                         </div>
                         <br>
                         <div><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</div>
-                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap">Сообщить о пуступлении</a></div>
+                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap">Сообщить о поступлении</a></div>
                     <?endif?>
                 </div>
             <?endif?>
