@@ -26,8 +26,8 @@
                         height="40"
                 >
                 <div class="col-lg-12 col-md-12 col-xs-12 animate_input js-animate_input">
-                    <label for="captcha_word">Ввод символов</label>
-                    <input id="captcha_word" type="text" name="captcha_word" size="30" maxlength="50" value="" required>
+                    <label for="captcha_word-<?=$arResult["arForm"]["ID"]?>">Ввод символов</label>
+                    <input id="captcha_word-<?=$arResult["arForm"]["ID"]?>" type="text" name="captcha_word" size="30" maxlength="50" value="" required>
                 </div>
             </div>
         <?endif?>
