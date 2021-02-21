@@ -18,7 +18,6 @@ $this->setFrameMode(true);
 
 <div class="def_form">
     <h2 class="title-3">Доставка</h2>
-    <p>Нет доступных служб доставок</p>
     <a href="/shipping-and-payment/" class="link" target="_blank">
         <span>Подробнее о доставке и оплате</span>
         <i class="icon arrow-right"></i>
