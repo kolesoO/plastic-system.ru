@@ -222,7 +222,7 @@ if ($arParams['DISPLAY_COMPARE']) {
     <div class="<?if ($hasActiveProps) :?>border-top <?endif?>full">
         <?if ($arResult["OFFER"]["CAN_BUY"]) :?>
             <div class="table_list-info">
-                <a href="#" data-popup-open="#buy-one-click">
+                <a href="#" data-popup-open="#buy-one-click" onclick="ym(12030070,'reachGoal','buy_one_click')">
                     <i class="icon buy_one_click"></i>
                     <span>Купить в 1 клик</span>
                 </a>
