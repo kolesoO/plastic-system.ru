@@ -19,17 +19,10 @@
             <?endif?>
         <?endforeach?>
         <?if ($arResult["isUseCaptcha"] == "Y") :?>
-            <div class="popup_form-item" flex-align="center" flex-text_align="space-between">
+            <div class="popup_form-item">
                 <input type="hidden" name="captcha_sid" value="<?=htmlspecialcharsbx($arResult["CAPTCHACode"]);?>">
-                <img
-                        class="col-lg-9 col-md-9 col-xs-9"
-                        src="/bitrix/tools/captcha.php?captcha_sid=<?=htmlspecialcharsbx($arResult["CAPTCHACode"]);?>"
-                        height="40"
-                >
-                <div class="col-lg-12 col-md-12 col-xs-12 animate_input js-animate_input">
-                    <label for="captcha_word-<?=$arResult["arForm"]["ID"]?>">Ввод символов</label>
-                    <input id="captcha_word-<?=$arResult["arForm"]["ID"]?>" type="text" name="captcha_word" size="30" maxlength="50" value="" required>
-                </div>
+                <img src="/bitrix/tools/captcha.php?captcha_sid=<?=htmlspecialcharsbx($arResult["CAPTCHACode"]);?>" width="70" height="30" alt="CAPTCHA">
+                <input type="text" name="captcha_word" size="30" maxlength="50" value="" >
             </div>
         <?endif?>
         <div class="popup_form-item">

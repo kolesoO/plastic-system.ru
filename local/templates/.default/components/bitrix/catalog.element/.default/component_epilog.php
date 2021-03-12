@@ -309,7 +309,7 @@ if (is_array($arResult["PROPERTIES"]["MORE_ITEMS"]["VALUE"]) && count($arResult[
 </div>
 <?//end
 
-//форма "Нашли дешевле"?>
+//форма "Сообщить о поступлении"?>
 <div id="more-cheap" class="popup">
     <div class="popup_wrapper">
         <div class="popup_content js-popup_content">
