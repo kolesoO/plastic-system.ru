@@ -34,6 +34,7 @@
         if (typeof obAnimateInput == "object") {
             obAnimateInput.init()
         }
+        Recaptchafree.reset();
     </script>
 <?else:?>
     <p><?=$arResult['arForm']['RESULT_TEXT']?></p>
