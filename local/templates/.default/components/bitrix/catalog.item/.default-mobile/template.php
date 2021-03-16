@@ -136,7 +136,7 @@ $arResult["OFFER"]["CAN_BUY"] = $arPrice["PRICE"] > 0
         <div class="show_in_list">
             <?if ($arResult["OFFER"]["CAN_BUY"]) :?>
                 <div class="table_list-info">
-                    <a href="#" data-popup-open="#buy-one-click">
+                    <a href="#" data-popup-open="#buy-one-click" onclick="ym(12030070,'reachGoal','buy_one_click')">
                         <i class="icon favorite"></i>
                         <span>Купить в 1 клик</span>
                     </a>

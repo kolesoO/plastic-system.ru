@@ -11,7 +11,7 @@
             <small>c НДС</small>
         </div>
     </div>
-    <div class="order_form-item-wrap">
+    <div class="order_form-item-wrap" onclick="ym(12030070,'reachGoal','form_button_start')">
         <button class="form_button color col-xs-24" onclick="BX.saleOrderAjax.submitForm('Y');">Оформить заказ</button>
     </div>
 </div>

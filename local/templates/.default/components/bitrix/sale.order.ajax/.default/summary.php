@@ -11,7 +11,7 @@
             <small>c НДС</small>
         </div>
     </div>
-    <div flex-align="start" flex-text_align="flex-end" class="col-lg-9 col-md-12">
+    <div flex-align="start" flex-text_align="flex-end" class="col-lg-9 col-md-12" onclick="ym(12030070,'reachGoal','form_button_start')">
         <button class="form_button color col-lg-9 col-md-12" onclick="BX.saleOrderAjax.submitForm('Y');">Оформить заказ</button>
     </div>
 </div>
