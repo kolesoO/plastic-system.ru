@@ -54,11 +54,11 @@ if ($arParams['DISPLAY_COMPARE']) {
                         data-showArrows="true"
                 >
                     <?if (is_array($arOffer["DETAIL_PICTURE"])) :?>
-                        <div><img src="<?=$arOffer["DETAIL_PICTURE"]["SRC"]?>" alt="<?=$arOffer["NAME"]?>"></div>
+                        <div><img src="<?=$arOffer["DETAIL_PICTURE"]["SRC"]?>" alt="<?=$arOffer["NAME"]?>" title="<?=$arOffer["NAME"]?>"></div>
                     <?endif?>
                     <?if (is_array($arOffer["PROPERTIES"]["MORE_PHOTO"]["VALUE"])) :?>
                         <?foreach ($arOffer["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $filePath) :?>
-                            <div><img src="<?=$filePath?>" alt="<?=$arOffer["NAME"]?>"></div>
+                            <div><img src="<?=$filePath?>" alt="<?=$arOffer["NAME"]?>" title="<?=$arOffer["NAME"]?>"></div>
                         <?endforeach?>
                     <?endif?>
                 </div>

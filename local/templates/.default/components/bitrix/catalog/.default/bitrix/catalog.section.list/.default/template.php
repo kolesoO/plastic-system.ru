@@ -17,7 +17,7 @@
             ?>
             <a href="<?=$arSection["SECTION_PAGE_URL"]?>" id="<?=$this->GetEditAreaId($arSection['ID'])?>" class="table_list-item">
                 <div class="table_list-img">
-                    <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>">
+                    <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>" title="<?=$arSection["NAME"]?>">
                 </div>
                 <div class="table_list-title"><?=$arSection["NAME"]?></div>
             </a>

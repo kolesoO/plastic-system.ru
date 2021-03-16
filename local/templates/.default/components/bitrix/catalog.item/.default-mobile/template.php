@@ -30,7 +30,7 @@ $arResult["OFFER"]["CAN_BUY"] = $arPrice["PRICE"] > 0
                 data-href="<?=$arResult["ITEM"]["DETAIL_PAGE_URL"]?>"
         >
             <div class="table_list-img">
-                <img src="<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arResult["OFFER"]["NAME"]?>">
+                <img src="<?=(is_array($arResult["OFFER"]["PREVIEW_PICTURE"]) ? $arResult["OFFER"]["PREVIEW_PICTURE"]["SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arResult["OFFER"]["NAME"]?>" title="<?=$arResult["OFFER"]["NAME"]?>">
             </div>
             <div class="table_list-title"><?=$arResult["OFFER"]["NAME"]?></div>
         </a>
