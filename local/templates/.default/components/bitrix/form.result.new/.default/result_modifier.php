@@ -70,3 +70,8 @@ foreach ($arResult["QUESTIONS"] as $FIELD_SID => &$arQuestion) {
 }
 unset($arQuestion);
 //end
+
+//описание формы и финальное сообщение
+$fullDescription = $arResult['arForm']['DESCRIPTION'];
+$arResult['arForm']['DESCRIPTION'] = preg_replace('/<description>([^<\/]*)<\/description>.*/i', '$1', $fullDescription) ?? '';
+$arResult['arForm']['RESULT_TEXT'] = preg_replace('/.*?<result>([^<\/]*)<\/result>.*/i', '$1', $fullDescription) ?? '';

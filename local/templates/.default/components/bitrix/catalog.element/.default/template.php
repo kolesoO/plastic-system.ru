@@ -78,7 +78,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                                 <s class="table_list-price_small"><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                             <?endif?>
-                            <div class="table_list-price text-line">
+                            <div class="table_list-price">
                                 <?if ($arOffer['PROPERTIES']['PRICE_FROM']['VALUE'] === 'Y') :?>
                                     <span>от</span>
                                 <?endif?>
