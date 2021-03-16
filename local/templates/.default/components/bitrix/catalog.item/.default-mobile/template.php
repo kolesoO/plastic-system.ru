@@ -112,7 +112,7 @@ $arResult["OFFER"]["CAN_BUY"] = $arPrice["PRICE"] > 0
                     <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                         <s><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                     <?endif?>
-                    <div class="table_list-price text-line">
+                    <div class="table_list-price">
                         <?if ($arResult["OFFER"]['PROPERTIES']['PRICE_FROM']['VALUE'] === 'Y') :?>
                             <span>от</span>
                         <?endif?>
@@ -131,9 +131,6 @@ $arResult["OFFER"]["CAN_BUY"] = $arPrice["PRICE"] > 0
         <div class="table_list-info full hide_in_list<?if ($arPrice["PRICE"] <= 0) :?> margin<?endif?>">
             <?if (isset($arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) && strlen($arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) > 0) :?>
                 <div class="table_list-desc-item"><span><?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["NAME"]?>:</span> <?=$arResult["OFFER"]["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></div>
-            <?endif?>
-            <?if (is_array($arResult["OFFER"]["QNT_INFO"])) :?>
-                <div class="table_list-status <?=$arResult["OFFER"]["QNT_INFO"]["CLASS"]?>"><?=$arResult["OFFER"]["QNT_INFO"]["MSG_TEXT"]?></div>
             <?endif?>
         </div>
         <div class="show_in_list">

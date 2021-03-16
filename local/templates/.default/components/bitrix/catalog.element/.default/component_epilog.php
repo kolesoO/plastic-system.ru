@@ -116,7 +116,7 @@ $APPLICATION->IncludeComponent(
         'EXCLUDE_PROPS' => [
             "CML2_BASE_UNIT", "CML2_TAXES", "STATUS", "is_main",
             "CML2_LINK", "DLINA_MM_NUMBER", "SHIRINA_MM_NUMBER", "VYSOTA_MM_NUMBER",
-            "BLOG_POST_ID", "BLOG_COMMENTS_CNT"
+            "BLOG_POST_ID", "BLOG_COMMENTS_CNT", "PRICE_FROM",
         ]
     )
 );
@@ -309,7 +309,7 @@ if (is_array($arResult["PROPERTIES"]["MORE_ITEMS"]["VALUE"]) && count($arResult[
 </div>
 <?//end
 
-//форма "Нашли дешевле"?>
+//форма "Сообщить о поступлении"?>
 <div id="more-cheap" class="popup">
     <div class="popup_wrapper">
         <div class="popup_content js-popup_content">

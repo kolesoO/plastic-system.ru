@@ -16,7 +16,15 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 $this->setFrameMode(true);
 ?>
 
-<form id="get_delivery-form" class="def_form" onsubmit="obAjax.getDelivery(this, event)">
+<div class="def_form">
+    <h2 class="title-3">Доставка</h2>
+    <a href="/shipping-and-payment/" class="link" target="_blank">
+        <span>Подробнее о доставке и оплате</span>
+        <i class="icon arrow-right"></i>
+    </a>
+</div>
+
+<!--form id="get_delivery-form" class="def_form" onsubmit="obAjax.getDelivery(this, event)">
     <input id="address" type="hidden" name="address" value="<?=$arParams["ADDRESS"]?>">
     <h2 class="title-3">Доставка</h2>
     <div class="animate_input js-animate_input">
@@ -67,4 +75,4 @@ $this->setFrameMode(true);
         <span>Подробнее о доставке и оплате</span>
         <i class="icon arrow-right"></i>
     </a>
-</form>
+</form-->

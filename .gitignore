@@ -36,3 +36,4 @@ gitignore/*
 .htaccess
 .htaccess.restore
 .htpasswd
+.section.php
