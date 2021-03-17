@@ -21,6 +21,9 @@ global $CACHE_MANAGER;
 
 $obCache = new CPHPCache();
 
+#Получаем свойства UF текущего раздела
+$arResult["SECTION"]["UF_PROP"] = CIBlockSection::GetList(array("SORT"=>"ASC"),array("IBLOCK_ID"=>$arParams["IBLOCK_ID"],"ID"=>$arResult["VARIABLES"]["SECTION_ID"]),false,array("UF_*","ID"))->Fetch();
+
 //даныне по текущему раделу
 $arSectionFilter = [
     "IBLOCK_ID" => $arParams["IBLOCK_ID"],
@@ -375,6 +378,11 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
                     }
                     ?>
                 </div>
+
+                <?#Описание под списком элементов:
+                if($arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW_LIST"])
+                    echo '<div class="aside-content__description">'.$arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW_LIST"].'</div>';
+                ?>
             </div>
         </div>
     </div>
