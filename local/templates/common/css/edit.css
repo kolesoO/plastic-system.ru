@@ -1,3 +1,15 @@
+/*----------------------------------------------------- */
+/* * */
+/*----------------------------------------------------- */
+
+/*----------------------------------------------------- */
+/* CATALOG */
+/*----------------------------------------------------- */
+.table-list__description {margin-top: 10px;padding: 5px;background-color: #f5f6f9;font-size: 15px;}
+
+/*----------------------------------------------------- */
+/* FOOTER */
+/*----------------------------------------------------- */
 .footer__menu-list {width: 94%;max-width: 1500px;margin: 0px auto;padding: 40px 0px;display: grid;grid-template-columns: repeat(4, 1fr);grid-column-gap: 30px;grid-row-gap: 30px;font-size: 15px;}
 .footer__menu-item {display: flex;flex-direction: column;justify-content: space-between;}
 .footer__menu-item a {line-height: 1;margin-bottom: 10px;}

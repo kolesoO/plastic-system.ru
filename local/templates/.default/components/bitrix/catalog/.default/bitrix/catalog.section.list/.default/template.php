@@ -20,6 +20,10 @@
                     <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>" title="<?=$arSection["NAME"]?>">
                 </div>
                 <div class="table_list-title"><?=$arSection["NAME"]?></div>
+                <?
+                if($arSection["UF_PROP"]["UF_SHORT_DESCRIPTION"])
+                    echo '<div class="table-list__description">'.$arSection["UF_PROP"]["UF_SHORT_DESCRIPTION"].'</div>';
+                ?>
             </a>
         <?endforeach?>
     </div>

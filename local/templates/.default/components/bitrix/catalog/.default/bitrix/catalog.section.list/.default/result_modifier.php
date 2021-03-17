@@ -37,3 +37,7 @@ $cp = $this->__component;
 if (is_object($cp)) {
     $cp->SetResultCacheKeys(["SECTION_COUNT"]);
 }
+
+#Получаем свойства разделов UF
+foreach($arResult["SECTIONS"] as $key => $arSection)
+    $arResult["SECTIONS"][$key]["UF_PROP"] = CIBlockSection::GetList(array("SORT"=>"ASC"),array("IBLOCK_ID"=>$arSection["IBLOCK_ID"],"ID"=>$arSection["ID"]),false,array("UF_*","ID"))->Fetch();
