@@ -10,7 +10,7 @@ use \Bitrix\Main\Localization\Loc;
                 <div class="catalog_menu-item">
                     <div class="catalog_menu-item-wrap" flex-align="center" flex-text_align="space-between">
                         <div class="catalog_menu-img col-lg-5">
-                            <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>">
+                            <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>" title="<?=$arSection["NAME"]?>">
                         </div>
                         <a href="<?=$arSection["SECTION_PAGE_URL"]?>" class="catalog_menu-item-title col-lg-15"><?=$arSection["NAME"]?></a>
                     </div>

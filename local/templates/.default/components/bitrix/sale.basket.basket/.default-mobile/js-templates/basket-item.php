@@ -13,7 +13,7 @@
             <div class="basket_list-preview">
                 <div class="basket_list-img">
                     <a href="javascript:void(0)">
-                        <img src="{{{IMAGE_URL}}}{{^IMAGE_URL}}<?=SITE_TEMPLATE_PATH?>/images/no-image.png{{/IMAGE_URL}}" alt="{{NAME}}">
+                        <img src="{{{IMAGE_URL}}}{{^IMAGE_URL}}<?=SITE_TEMPLATE_PATH?>/images/no-image.png{{/IMAGE_URL}}" alt="{{NAME}}" title="{{NAME}}">
                     </a>
                 </div>
                 <a href="javascript:void(0)" class="basket_list-title">{{NAME}}</a>
