@@ -78,7 +78,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                                 <s class="table_list-price_small"><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                             <?endif?>
-                            <div class="table_list-price">
+                            <div class="table_list-price text-line">
                                 <?if ($arOffer['PROPERTIES']['PRICE_FROM']['VALUE'] === 'Y') :?>
                                     <span>от</span>
                                 <?endif?>
@@ -86,8 +86,8 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <span>c НДС</span>
                         </div>
                         <br>
-                        <div><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</div>
-                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap">Сообщить о поступлении</a></div>
+                        <div><a href="#" class="link dashed" data-popup-open="#price-order" onclick="ym(12030070,'reachGoal','zakaz-tseny')">Запросить</a> оптовую цену</div>
+                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap" onclick="ym(12030070,'reachGoal','postyplenie')">Сообщить о поступлении</a></div>
                     <?endif?>
                 </div>
             <?endif?>
@@ -227,7 +227,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                 </div>
                 <div class="cart_links">
                     <?if ($arOffer["CAN_BUY"]) :?>
-                        <a href="#" class="cart_links-item" data-popup-open="#buy-one-click">
+                        <a href="#" class="cart_links-item" data-popup-open="#buy-one-click" onclick="ym(12030070,'reachGoal','buy_one_click')">
                             <i class="icon buy_one_click"></i>
                             <span>Купить в 1 клик</span>
                         </a>
