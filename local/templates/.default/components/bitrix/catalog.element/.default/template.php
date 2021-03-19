@@ -54,11 +54,11 @@ if ($arParams['DISPLAY_COMPARE']) {
                         data-showArrows="true"
                 >
                     <?if (is_array($arOffer["DETAIL_PICTURE"])) :?>
-                        <div><img src="<?=$arOffer["DETAIL_PICTURE"]["SRC"]?>" alt="<?=$arOffer["NAME"]?>"></div>
+                        <div><img src="<?=$arOffer["DETAIL_PICTURE"]["SRC"]?>" alt="<?=$arOffer["NAME"]?>" title="<?=$arOffer["NAME"]?>"></div>
                     <?endif?>
                     <?if (is_array($arOffer["PROPERTIES"]["MORE_PHOTO"]["VALUE"])) :?>
                         <?foreach ($arOffer["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $filePath) :?>
-                            <div><img src="<?=$filePath?>" alt="<?=$arOffer["NAME"]?>"></div>
+                            <div><img src="<?=$filePath?>" alt="<?=$arOffer["NAME"]?>" title="<?=$arOffer["NAME"]?>"></div>
                         <?endforeach?>
                     <?endif?>
                 </div>
@@ -78,7 +78,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <?if ($arParams['SHOW_OLD_PRICE'] == "Y" && $arPrice["BASE_PRICE"] > $arPrice["PRICE"]) :?>
                                 <s class="table_list-price_small"><?=$arPrice['PRINT_RATIO_BASE_PRICE']?></s><br>
                             <?endif?>
-                            <div class="table_list-price text-line">
+                            <div class="table_list-price">
                                 <?if ($arOffer['PROPERTIES']['PRICE_FROM']['VALUE'] === 'Y') :?>
                                     <span>от</span>
                                 <?endif?>
@@ -86,8 +86,8 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <span>c НДС</span>
                         </div>
                         <br>
-                        <div><a href="#" class="link dashed" data-popup-open="#price-order" onclick="ym(12030070,'reachGoal','zakaz-tseny')">Запросить</a> оптовую цену</div>
-                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap" onclick="ym(12030070,'reachGoal','postyplenie')">Сообщить о поступлении</a></div>
+                        <div><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</div>
+                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap">Сообщить о поступлении</a></div>
                     <?endif?>
                 </div>
             <?endif?>
@@ -205,18 +205,21 @@ if ($arParams['DISPLAY_COMPARE']) {
                                         onclick="obCatalogElementDetail.setQnt(this, 'minus')"
                                 >-</a>
                             </div>
-                            
-                            <div onclick="ym(12030070,'reachGoal','cart_buy')">
-                                <a
-                                        href="#"
-                                        class="table_list-basket"
-                                        data-qnt-target="#qnt-to-basket"
-                                        onclick="obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event)"
-                                >
-                                    <i class="icon basket-white"></i>
-                                    <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
-                                </a>
-                            </div>
+                            <a
+                                    href="#"
+                                    class="table_list-basket"
+                                    data-qnt-target="#qnt-to-basket"
+                                    onclick="buttonBasket()"
+                            >
+                                <i class="icon basket-white"></i>
+                                <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
+                            </a>
+                            <script>
+                                function buttonBasket(){
+                                    ym(12030070,'reachGoal','cart_buy');
+                                    obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event);
+                                }
+                            </script>
                         <?else: ?>
                             <a href="#" class="table_list-basket col-xs-24" data-popup-open="#pre-order">Под заказ</a>
                         <?endif?>
