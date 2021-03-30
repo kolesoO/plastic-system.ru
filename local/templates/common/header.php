@@ -71,6 +71,15 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
     $APPLICATION->ShowViewContent('MetaTag');?>
 
     <?$APPLICATION->ShowHead();?>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-180461344-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-180461344-1');
+    </script>
 </head>
 <body>
     <!-- Rating@Mail.ru counter -->
