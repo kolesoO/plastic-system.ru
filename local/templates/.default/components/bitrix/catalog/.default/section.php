@@ -380,8 +380,8 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
                 </div>
 
                 <?#Описание под списком элементов:
-                if($arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW_LIST"])
-                    echo '<div class="aside-content__description">'.$arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW_LIST"].'</div>';
+                if($arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW"])
+                    echo '<div class="aside-content__description">'.$arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW"].'</div>';
                 ?>
             </div>
         </div>
