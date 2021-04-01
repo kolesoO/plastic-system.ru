@@ -86,8 +86,8 @@ if ($arParams['DISPLAY_COMPARE']) {
                             <span>c НДС</span>
                         </div>
                         <br>
-                        <div><a href="#" class="link dashed" data-popup-open="#price-order">Запросить</a> оптовую цену</div>
-                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap">Сообщить о поступлении</a></div>
+                        <div><a href="#" class="link dashed" data-popup-open="#price-order" onclick="ym(12030070,'reachGoal','zakaz-tseny')">Запросить</a> оптовую цену</div>
+                        <div><a href="#" class="link dashed" data-popup-open="#more-cheap" onclick="ym(12030070,'reachGoal','postyplenie')">Сообщить о поступлении</a></div>
                     <?endif?>
                 </div>
             <?endif?>
@@ -205,15 +205,18 @@ if ($arParams['DISPLAY_COMPARE']) {
                                         onclick="obCatalogElementDetail.setQnt(this, 'minus')"
                                 >-</a>
                             </div>
-                            <a
-                                    href="#"
-                                    class="table_list-basket"
-                                    data-qnt-target="#qnt-to-basket"
-                                    onclick="obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event)"
-                            >
-                                <i class="icon basket-white"></i>
-                                <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
-                            </a>
+                            
+                            <div onclick="ym(12030070,'reachGoal','cart_buy')">
+                                <a
+                                        href="#"
+                                        class="table_list-basket"
+                                        data-qnt-target="#qnt-to-basket"
+                                        onclick="obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event)"
+                                >
+                                    <i class="icon basket-white"></i>
+                                    <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
+                                </a>
+                            </div>
                         <?else: ?>
                             <a href="#" class="table_list-basket col-xs-24" data-popup-open="#pre-order">Под заказ</a>
                         <?endif?>
