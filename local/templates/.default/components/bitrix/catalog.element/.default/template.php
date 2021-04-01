@@ -224,7 +224,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                 </div>
                 <div class="cart_links">
                     <?if ($arOffer["CAN_BUY"]) :?>
-                        <a href="#" class="cart_links-item" data-popup-open="#buy-one-click">
+                        <a href="#" class="cart_links-item" data-popup-open="#buy-one-click" onclick="ym(12030070,'reachGoal','buy_one_click_otpravka')">
                             <i class="icon buy_one_click"></i>
                             <span>Купить в 1 клик</span>
                         </a>
