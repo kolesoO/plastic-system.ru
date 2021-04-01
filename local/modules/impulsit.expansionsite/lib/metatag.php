@@ -652,6 +652,7 @@ class MetaTag
                 ),
                 "offers" => array(
                     "@type" => "Offer",
+                    "url" => $seoDetailPage,
                     "availability" => "http://schema.org/InStock",
                     "price" => $arResult['MIN_PRICE']['DISCOUNT_VALUE'],
                     "priceCurrency" => "RUB"

@@ -1,0 +1,25 @@
+/*----------------------------------------------------- */
+/* * */
+/*----------------------------------------------------- */
+
+/*----------------------------------------------------- */
+/* CATALOG */
+/*----------------------------------------------------- */
+.table-list__description {margin-top: 10px;padding: 5px;background-color: #f5f6f9;font-size: 15px;}
+.aside-content__description {margin: 35px 0px;padding: 10px;background-color: #fff;text-align: justify;}
+
+/*----------------------------------------------------- */
+/* FOOTER */
+/*----------------------------------------------------- */
+.footer__menu-list {width: 94%;max-width: 1500px;margin: 0px auto;padding: 40px 0px;display: grid;grid-template-columns: repeat(4, 1fr);grid-column-gap: 30px;grid-row-gap: 30px;font-size: 15px;}
+.footer__menu-item {display: flex;flex-direction: column;justify-content: space-between;}
+.footer__menu-item a {line-height: 1;margin-bottom: 10px;}
+.footer__pay {padding: 4px;background-color: #f5f6f9;}
+.footer__pay h3 {margin: 0px;font-size: 24px;font-weight: 400;}
+.footer__pay p {font-size: 14px;margin: 10px 0px;}
+.footer__pay a {text-decoration: underline;}
+.footer__pay img {width: 60px;border: 1px solid #cccc;border-radius: 4px;}
+
+@media screen and (max-width: 992px) {
+    .footer__menu-list {grid-template-columns: repeat(1, 1fr);}
+}

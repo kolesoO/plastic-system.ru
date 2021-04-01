@@ -108,6 +108,56 @@
                 </div>
             </div>
         </div>
+
+        <div class="footer__menu-list">
+            <div class="footer__menu-item">
+                <a href="/about-company/">О компании</a>
+                <a href="/shipping-and-payment/">Доставка и оплата</a>
+                <a href="/news/">Новости</a>
+                <a href="#">Гарантии и возврат</a>
+                <a href="/contacts/">Контакты</a>
+            </div>
+
+            <?#Меню каталога
+            $APPLICATION->IncludeComponent(
+                "bitrix:catalog.section.list",
+                "footer_menu",
+                Array(
+                    "ADD_SECTIONS_CHAIN" => "N",
+                    "CACHE_FILTER" => "N",
+                    "CACHE_GROUPS" => "N",
+                    "CACHE_TIME" => "36000000",
+                    "CACHE_TYPE" => "A",
+                    "COUNT_ELEMENTS" => "N",
+                    "COUNT_ELEMENTS_FILTER" => "CNT_ACTIVE",
+                    "FILTER_NAME" => "",
+                    "IBLOCK_ID" => "40",
+                    "IBLOCK_TYPE" => "catalog",
+                    "SECTION_CODE" => "",
+                    "SECTION_FIELDS" => array(),
+                    "SECTION_ID" => "",
+                    "SECTION_URL" => "",
+                    "SECTION_USER_FIELDS" => array(),
+                    "SHOW_PARENT_NAME" => "Y",
+                    "TOP_DEPTH" => "1",
+                    "VIEW_MODE" => "LINE"
+                )
+            );?>
+
+            <div class="footer__menu-item">
+                <div class="footer__pay">
+                    <h3>Способ оплаты</h3>
+                    <p>Вы можете оплатить покупки наличными при получении, либо выбрать другой <a href="#">способ оплаты</a></p>
+                    <img src="/local/templates/common/images/pay/pay-1.png" alt="VISA" title="VISA">
+                    <img src="/local/templates/common/images/pay/pay-2.png" alt="MasterCart" title="MasterCart">
+                    <img src="/local/templates/common/images/pay/pay-3.png" alt="RBK Money" title="RBK Money">
+                </div>
+            </div>
+
+            <div class="footer__menu-item">
+                Пластиковая тара оптом и в розницу</br>ООО «‎Пластик Система»
+            </div>    
+        </div>
     </footer>
     <?
     //Всплывающее меню - "Каталог продукции"
