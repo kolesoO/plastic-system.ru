@@ -110,15 +110,47 @@
         </div>
 
         <div class="footer__menu-list">
-            <div class="footer__menu-item">
-                <a href="/about-company/">О компании</a>
-                <a href="/shipping-and-payment/">Доставка и оплата</a>
-                <a href="/news/">Новости</a>
-                <a href="#">Гарантии и возврат</a>
-                <a href="/contacts/">Контакты</a>
-            </div>
+            <?#Меню 1
+            $APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "footer1",
+                Array(
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "1",
+                    "MENU_CACHE_GET_VARS" => array(),
+                    "MENU_CACHE_TIME" => "360000",
+                    "MENU_CACHE_TYPE" => "A",
+                    "MENU_CACHE_USE_GROUPS" => "N",
+                    "MENU_CACHE_USE_USERS" => "N",
+                    "CACHE_SELECTED_ITEMS" => "N",
+                    "ROOT_MENU_TYPE" => "footer1",
+                    "USE_EXT" => "Y"
+                )
+            );
 
-            <?#Меню каталога
+            #Меню 2
+            $APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "footer2",
+                Array(
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "1",
+                    "MENU_CACHE_GET_VARS" => array(),
+                    "MENU_CACHE_TIME" => "360000",
+                    "MENU_CACHE_TYPE" => "A",
+                    "MENU_CACHE_USE_GROUPS" => "N",
+                    "MENU_CACHE_USE_USERS" => "N",
+                    "CACHE_SELECTED_ITEMS" => "N",
+                    "ROOT_MENU_TYPE" => "footer2",
+                    "USE_EXT" => "Y"
+                )
+            );?>
+
+            <?/*#Меню каталога
             $APPLICATION->IncludeComponent(
                 "bitrix:catalog.section.list",
                 "footer_menu",
@@ -142,20 +174,17 @@
                     "TOP_DEPTH" => "1",
                     "VIEW_MODE" => "LINE"
                 )
-            );?>
+            );*/?>
 
             <div class="footer__menu-item">
                 <div class="footer__pay">
-                    <h3>Способ оплаты</h3>
-                    <p>Вы можете оплатить покупки наличными при получении, либо выбрать другой <a href="#">способ оплаты</a></p>
-                    <img src="/local/templates/common/images/pay/pay-1.png" alt="VISA" title="VISA">
-                    <img src="/local/templates/common/images/pay/pay-2.png" alt="MasterCart" title="MasterCart">
-                    <img src="/local/templates/common/images/pay/pay-3.png" alt="RBK Money" title="RBK Money">
+                    <?#Оплата
+                    $APPLICATION->IncludeComponent("bitrix:main.include", "", array("AREA_FILE_SHOW" => "file", "PATH" => "/local/templates/common/inc/footer__pay.php"), false);?>
                 </div>
             </div>
-
             <div class="footer__menu-item">
-                Пластиковая тара оптом и в розницу</br>ООО «‎Пластик Система»
+                <?#Оплата
+                $APPLICATION->IncludeComponent("bitrix:main.include", "", array("AREA_FILE_SHOW" => "file", "PATH" => "/local/templates/common/inc/footer__company-info.php"), false);?>
             </div>    
         </div>
     </footer>
