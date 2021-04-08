@@ -206,17 +206,21 @@ if ($arParams['DISPLAY_COMPARE']) {
                                 >-</a>
                             </div>
                             
-                            <div onclick="ym(12030070,'reachGoal','cart_buy')">
-                                <a
-                                        href="#"
-                                        class="table_list-basket"
-                                        data-qnt-target="#qnt-to-basket"
-                                        onclick="obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event)"
-                                >
-                                    <i class="icon basket-white"></i>
-                                    <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
-                                </a>
-                            </div>
+                            <a
+                                href="#"
+                                class="table_list-basket"
+                                data-qnt-target="#qnt-to-basket"
+                                onclick="buttonBasket()"
+                            >
+                                <i class="icon basket-white"></i>
+                                <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
+                            </a>
+                            <script>
+                                function buttonBasket(){
+                                    ym(12030070,'reachGoal','cart_buy');
+                                    obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event);
+                                }
+                            </script>
                         <?else: ?>
                             <a href="#" class="table_list-basket col-xs-24" data-popup-open="#pre-order">Под заказ</a>
                         <?endif?>
