@@ -206,17 +206,21 @@ if ($arParams['DISPLAY_COMPARE']) {
                                 >-</a>
                             </div>
                             
-                            <div onclick="ym(12030070,'reachGoal','cart_buy')">
-                                <a
-                                        href="#"
-                                        class="table_list-basket"
-                                        data-qnt-target="#qnt-to-basket"
-                                        onclick="obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event)"
-                                >
-                                    <i class="icon basket-white"></i>
-                                    <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
-                                </a>
-                            </div>
+                            <a
+                                href="#"
+                                class="table_list-basket"
+                                data-qnt-target="#qnt-to-basket"
+                                onclick="buttonBasket()"
+                            >
+                                <i class="icon basket-white"></i>
+                                <span><?=$arParams["MESS_BTN_ADD_TO_BASKET"]?></span>
+                            </a>
+                            <script>
+                                function buttonBasket(){
+                                    ym(12030070,'reachGoal','cart_buy');
+                                    obAjax.addToBasket('<?=$arOffer["ID"]?>', '<?=$arPrice["PRICE_TYPE_ID"]?>', event);
+                                }
+                            </script>
                         <?else: ?>
                             <a href="#" class="table_list-basket col-xs-24" data-popup-open="#pre-order">Под заказ</a>
                         <?endif?>
@@ -224,7 +228,7 @@ if ($arParams['DISPLAY_COMPARE']) {
                 </div>
                 <div class="cart_links">
                     <?if ($arOffer["CAN_BUY"]) :?>
-                        <a href="#" class="cart_links-item" data-popup-open="#buy-one-click">
+                        <a href="#" class="cart_links-item" data-popup-open="#buy-one-click" onclick="ym(12030070,'reachGoal','buy_one_click_otpravka')">
                             <i class="icon buy_one_click"></i>
                             <span>Купить в 1 клик</span>
                         </a>

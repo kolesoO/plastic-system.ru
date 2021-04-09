@@ -37,3 +37,7 @@ gitignore/*
 .htaccess.restore
 .htpasswd
 .section.php
+
+.footer1.menu.php
+.footer2.menu.php
+/local/templates/common/inc/*
