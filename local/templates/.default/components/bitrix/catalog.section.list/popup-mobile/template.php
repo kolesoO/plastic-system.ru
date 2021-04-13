@@ -28,7 +28,7 @@ use \Bitrix\Main\Localization\Loc;
                             ?>
                             <a href="<?=$href?>" class="catalog_menu-item<?=$dopClass?>" flex-text_align="space-between">
                                 <div class="catalog_menu-img col-xs-8">
-                                    <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>">
+                                    <img src="<?=(is_array($arSection["PICTURE"]) ? $arSection["PICTURE"]["SAFE_SRC"] : SITE_TEMPLATE_PATH."/images/no-image.png")?>" alt="<?=$arSection["NAME"]?>" title="<?=$arSection["NAME"]?>">
                                 </div>
                                 <div class="catalog_menu-item-title col-xs-12"><?=$arSection["NAME"]?></div>
                                 <i class="icon arrow-right"></i>

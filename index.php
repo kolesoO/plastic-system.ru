@@ -19,7 +19,7 @@ $APPLICATION->IncludeComponent(
         "AJAX_MODE" => "N",
         "IBLOCK_TYPE" => "content",
         "IBLOCK_ID" => IBLOCK_CONTENT_SLIDER,
-        "NEWS_COUNT" => "5",
+        "NEWS_COUNT" => "10",
         "SORT_BY1" => "ID",
         "SORT_ORDER1" => "DESC",
         "SORT_BY2" => "SORT",

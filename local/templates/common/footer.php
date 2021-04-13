@@ -108,6 +108,85 @@
                 </div>
             </div>
         </div>
+
+        <div class="footer__menu-list">
+            <?#Меню 1
+            $APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "footer1",
+                Array(
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "1",
+                    "MENU_CACHE_GET_VARS" => array(),
+                    "MENU_CACHE_TIME" => "360000",
+                    "MENU_CACHE_TYPE" => "A",
+                    "MENU_CACHE_USE_GROUPS" => "N",
+                    "MENU_CACHE_USE_USERS" => "N",
+                    "CACHE_SELECTED_ITEMS" => "N",
+                    "ROOT_MENU_TYPE" => "footer1",
+                    "USE_EXT" => "Y"
+                )
+            );
+
+            #Меню 2
+            $APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "footer2",
+                Array(
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "1",
+                    "MENU_CACHE_GET_VARS" => array(),
+                    "MENU_CACHE_TIME" => "360000",
+                    "MENU_CACHE_TYPE" => "A",
+                    "MENU_CACHE_USE_GROUPS" => "N",
+                    "MENU_CACHE_USE_USERS" => "N",
+                    "CACHE_SELECTED_ITEMS" => "N",
+                    "ROOT_MENU_TYPE" => "footer2",
+                    "USE_EXT" => "Y"
+                )
+            );?>
+
+            <?/*#Меню каталога
+            $APPLICATION->IncludeComponent(
+                "bitrix:catalog.section.list",
+                "footer_menu",
+                Array(
+                    "ADD_SECTIONS_CHAIN" => "N",
+                    "CACHE_FILTER" => "N",
+                    "CACHE_GROUPS" => "N",
+                    "CACHE_TIME" => "36000000",
+                    "CACHE_TYPE" => "A",
+                    "COUNT_ELEMENTS" => "N",
+                    "COUNT_ELEMENTS_FILTER" => "CNT_ACTIVE",
+                    "FILTER_NAME" => "",
+                    "IBLOCK_ID" => "40",
+                    "IBLOCK_TYPE" => "catalog",
+                    "SECTION_CODE" => "",
+                    "SECTION_FIELDS" => array(),
+                    "SECTION_ID" => "",
+                    "SECTION_URL" => "",
+                    "SECTION_USER_FIELDS" => array(),
+                    "SHOW_PARENT_NAME" => "Y",
+                    "TOP_DEPTH" => "1",
+                    "VIEW_MODE" => "LINE"
+                )
+            );*/?>
+
+            <div class="footer__menu-item">
+                <div class="footer__pay">
+                    <?#Оплата
+                    $APPLICATION->IncludeComponent("bitrix:main.include", "", array("AREA_FILE_SHOW" => "file", "PATH" => "/local/templates/common/inc/footer__pay.php"), false);?>
+                </div>
+            </div>
+            <div class="footer__menu-item">
+                <?#Оплата
+                $APPLICATION->IncludeComponent("bitrix:main.include", "", array("AREA_FILE_SHOW" => "file", "PATH" => "/local/templates/common/inc/footer__company-info.php"), false);?>
+            </div>    
+        </div>
     </footer>
     <?
     //Всплывающее меню - "Каталог продукции"
