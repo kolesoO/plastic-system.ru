@@ -14,6 +14,7 @@ $isCatalogInner = CSite::InDir("/product-category") && $strCurPage != "/product-
 $rsAsset->addCss(SITE_TEMPLATE_PATH.'/fonts/circle/index.css');
 $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/icons.min.css');
 $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/main.min.css');
+$rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/jquery.fancybox.min.css');
 if (DEVICE_TYPE == "MOBILE") {
     $rsAsset->addCss(SITE_TEMPLATE_PATH.'/css/mobile.min.css');
 } else {
@@ -34,6 +35,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/modules/tabs/script.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/functions.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/scripts.min.js');
 $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/ajax.js');
+$rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
 //end
 ?>
 
