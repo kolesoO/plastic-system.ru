@@ -196,7 +196,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
         <div class="header-part js-fixed">
             <div class="container">
                 <?if ($isMainPage) :?>
-                    <div class="header-logo header-col col-lg-4 col-md-9 col-xs-3">
+                    <div class="header-logo header-col col-lg-4 col-md-5 col-xs-3">
                         <img src="<?=SITE_TEMPLATE_PATH?>/images/logo.svg">
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:main.include",
@@ -209,7 +209,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         );?>
                     </div>
                 <?else:?>
-                    <a href="<?=SITE_DIR?>" class="header-logo header-col col-lg-5 col-md-9 col-xs-3">
+                    <a href="<?=SITE_DIR?>" class="header-logo header-col col-lg-5 col-md-5 col-xs-3">
                         <img src="<?=SITE_TEMPLATE_PATH?>/images/logo.svg">
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:main.include",
@@ -340,7 +340,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         ".default",
                         [
                             "AREA_FILE_SHOW" => "file",
-                            "PATH" => SITE_TEMPLATE_PATH . "/inc/header/sale.php"
+                            "PATH" => SITE_TEMPLATE_PATH . "/inc/sale.php"
                         ],
                         false
                     );?>
