@@ -410,6 +410,10 @@ small {
     transform: translate(0, 0)
 }
 
+.small {
+    font-size: smaller;
+}
+
 .header {
     position: relative
 }
@@ -612,6 +616,9 @@ small {
 
 .header-col+.header-col {
     border-left: 1px solid #f5f6f9
+}
+.header-col.auto-fill {
+    flex: 1 1 auto;
 }
 
 .header-logo {

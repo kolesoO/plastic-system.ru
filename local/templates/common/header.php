@@ -250,7 +250,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         </a>
                     </div>
                 <?endif?>
-                <div class="header-col header-search col-lg-5 col-md-2 col-xs-3">
+                <div class="header-col header-search col-lg-4 col-md-2 col-xs-3">
                     <?if (DEVICE_TYPE == "DESKTOP") :?>
                         <form method="get" action="/search/" class="header-search-form">
                             <input class="header-search-input" type="text" placeholder="Поиск продукции" name="q">
@@ -265,7 +265,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                     <?endif?>
                 </div>
                 <?if (!CSite::InDir("/cart") && !CSite::InDir("/checkout")) :?>
-                    <div class="header-col col-lg-1 col-md-2 col-xs-3">
+                    <div class="header-col auto-fill col-lg-1 col-md-2 col-xs-3">
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:sale.basket.basket.line",
                             "",
@@ -294,7 +294,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         );?>
                     </div>
                 <?endif?>
-                <div class="header-col col-lg-1 col-md-2 col-xs-3">
+                <div class="header-col auto-fill col-lg-1 col-md-2 col-xs-3">
                     <a href="/favorite/">
                         <i id="favorite-wrapper" class="icon favorite">
                             <?if (\kDevelop\Ajax\Favorite::getCount() > 0) :?>
@@ -308,14 +308,14 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         <a href="#" data-popup-open="#reg-auth">
                             <i class="icon personal"></i>
                             <?if (DEVICE_TYPE == "DESKTOP") :?>
-                                <span>Вход | Регистрация</span>
+                                <span class="small">Вход | Регистрация</span>
                             <?endif?>
                         </a>
                     <?else:?>
                         <a href="/personal/">
                             <i class="icon personal"></i>
                             <?if (DEVICE_TYPE == "DESKTOP") :?>
-                                <span>Личный кабинет</span>
+                                <span class="small">Личный кабинет</span>
                             <?endif?>
                         </a>
                     <?endif?>
@@ -330,22 +330,66 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         ],
                         false
                     );?>
-
-
                 </div>
-
-<div class="header-col col-lg-3 col-md-2 hidden-xs">
+                <div class="header-col col-lg-3 col-md-2 hidden-md hidden-xs">
                     <?$APPLICATION->IncludeComponent(
-                        "bitrix:main.include",
-                        ".default",
+                        "bitrix:news.list",
+                        "sale-pdf",
                         [
-                            "AREA_FILE_SHOW" => "file",
-                            "PATH" => SITE_TEMPLATE_PATH . "/inc/header/sale.php"
-                        ],
-                        false
+                            "DISPLAY_DATE" => "N",
+                            "DISPLAY_NAME" => "N",
+                            "DISPLAY_PICTURE" => "N",
+                            "DISPLAY_PREVIEW_TEXT" => "N",
+                            "AJAX_MODE" => "N",
+                            "IBLOCK_TYPE" => "content",
+                            "IBLOCK_ID" => IBLOCK_CONTENT_SALE_PDF,
+                            "NEWS_COUNT" => "1",
+                            "SORT_BY1" => "ID",
+                            "SORT_ORDER1" => "DESC",
+                            "SORT_BY2" => "SORT",
+                            "SORT_ORDER2" => "ASC",
+                            "FILTER_NAME" => "arBannerFilter",
+                            "FIELD_CODE" => Array("ID"),
+                            "PROPERTY_CODE" => Array("FILE"),
+                            "CHECK_DATES" => "Y",
+                            "DETAIL_URL" => "",
+                            "PREVIEW_TRUNCATE_LEN" => "",
+                            "ACTIVE_DATE_FORMAT" => "M d, Y",
+                            "SET_TITLE" => "N",
+                            "SET_BROWSER_TITLE" => "N",
+                            "SET_META_KEYWORDS" => "N",
+                            "SET_META_DESCRIPTION" => "N",
+                            "SET_LAST_MODIFIED" => "Y",
+                            "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+                            "ADD_SECTIONS_CHAIN" => "Y",
+                            "HIDE_LINK_WHEN_NO_DETAIL" => "Y",
+                            "PARENT_SECTION" => "",
+                            "PARENT_SECTION_CODE" => "",
+                            "INCLUDE_SUBSECTIONS" => "Y",
+                            "CACHE_TYPE" => "A",
+                            "CACHE_TIME" => "3600",
+                            "CACHE_FILTER" => "Y",
+                            "CACHE_GROUPS" => "Y",
+                            "DISPLAY_TOP_PAGER" => "N",
+                            "DISPLAY_BOTTOM_PAGER" => "N",
+                            "PAGER_TITLE" => "Новости",
+                            "PAGER_SHOW_ALWAYS" => "Y",
+                            "PAGER_TEMPLATE" => ".default",
+                            "PAGER_DESC_NUMBERING" => "Y",
+                            "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                            "PAGER_SHOW_ALL" => "Y",
+                            "PAGER_BASE_LINK_ENABLE" => "Y",
+                            "SET_STATUS_404" => "N",
+                            "SHOW_404" => "Y",
+                            "MESSAGE_404" => "",
+                            "PAGER_BASE_LINK" => "",
+                            "PAGER_PARAMS_NAME" => "arrPager",
+                            "AJAX_OPTION_JUMP" => "N",
+                            "AJAX_OPTION_STYLE" => "Y",
+                            "AJAX_OPTION_HISTORY" => "N",
+                            "AJAX_OPTION_ADDITIONAL" => "",
+                        ]
                     );?>
-
-
                 </div>
             </div>
             <?
