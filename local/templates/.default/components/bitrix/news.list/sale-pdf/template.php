@@ -9,7 +9,7 @@ declare(strict_types=1);
         href="<?=CFile::GetPath($item['PROPERTIES']["FILE"]["VALUE"]);?>"
         target="_blank"
     >
-        <i class="icon download"></i>
+        <i class="icon download-red"></i>
         <span class="small hidden-md hidden-xs red"><?php echo $item['NAME']?></span>
     </a>
 <?php endforeach;?>
