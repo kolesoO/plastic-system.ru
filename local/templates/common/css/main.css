@@ -414,6 +414,10 @@ small {
     font-size: smaller;
 }
 
+.red {
+    color: red;
+}
+
 .header {
     position: relative
 }
