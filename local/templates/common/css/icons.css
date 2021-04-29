@@ -266,8 +266,14 @@ a:hover>.icon:before {
     height: 10px;
     background: url('../images/icons/clear.png') no-repeat 0 0 / cover
 }
-.icon.download:before{
+.icon.download:before,
+.icon.download-red:before {
     width: 15px;
     height: 15px;
+}
+.icon.download:before{
     background: url('../images/icons/download.svg') no-repeat 0 0 / cover
+}
+.icon.download-red:before{
+    background: url('../images/icons/download-red.svg') no-repeat 0 0 / cover
 }
