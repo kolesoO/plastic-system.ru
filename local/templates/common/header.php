@@ -196,7 +196,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
         <div class="header-part js-fixed">
             <div class="container">
                 <?if ($isMainPage) :?>
-                    <div class="header-logo header-col col-lg-4 col-md-9 col-xs-3">
+                    <div class="header-logo header-col col-lg-4 col-md-8 col-xs-3">
                         <img src="<?=SITE_TEMPLATE_PATH?>/images/logo.svg">
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:main.include",
@@ -209,7 +209,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         );?>
                     </div>
                 <?else:?>
-                    <a href="<?=SITE_DIR?>" class="header-logo header-col col-lg-5 col-md-9 col-xs-3">
+                    <a href="<?=SITE_DIR?>" class="header-logo header-col col-lg-4 col-md-8 col-xs-3">
                         <img src="<?=SITE_TEMPLATE_PATH?>/images/logo.svg">
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:main.include",
@@ -236,7 +236,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         );?>
                     </a>
                 <?else:?>
-                    <div class="header-col col-md-4 col-xs-6">
+                    <div class="header-col col-md-3 col-xs-6">
                         <a href="#" data-popup-open=".js-catalog-menu" flex-align="center">
                             <?$APPLICATION->IncludeComponent(
                                 "bitrix:main.include",
@@ -331,7 +331,7 @@ $rsAsset->addJs(SITE_TEMPLATE_PATH.'/js/jquery.fancybox.min.js');
                         false
                     );?>
                 </div>
-                <div class="header-col col-lg-3 col-md-2 hidden-md hidden-xs">
+                <div class="header-col col-lg-3 col-md-2 hidden-xs">
                     <?$APPLICATION->IncludeComponent(
                         "bitrix:news.list",
                         "sale-pdf",
