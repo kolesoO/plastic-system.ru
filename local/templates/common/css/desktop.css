@@ -79,15 +79,13 @@
     .header-col {
         padding: 14px 20px
     }
-    .header-col:first-child,
-    .header-col:last-child {
+    .header-col:first-child {
+        padding-left: 0;
         justify-content: flex-start
     }
-    .header-col:first-child {
-        padding-left: 0
-    }
     .header-col:last-child {
-        padding-right: 0
+        padding-right: 0;
+        justify-content: flex-end
     }
     .header-logo {
         font-size: 110%
