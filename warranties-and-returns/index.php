@@ -25,7 +25,7 @@ $APPLICATION->SetTitle("Гарантии и возврат");?>
 		"DISPLAY_PREVIEW_TEXT" => "Y",
 		"DISPLAY_TOP_PAGER" => "N",
 		"ELEMENT_CODE" => "",
-		"ELEMENT_ID" => "6161",
+		"ELEMENT_ID" => "6387",
 		"FIELD_CODE" => array(),
 		"FILE_404" => "",
 		"IBLOCK_ID" => "54",
