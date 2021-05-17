@@ -59,7 +59,7 @@ if ($this->startResultCache())
 	);
 	$dbStoreProps = CCatalogStore::GetList(
 	    array($arParams["SORT_BY"] => $arParams["SORT_ORDER"]),
-        array("ACTIVE"=>"Y"),
+        array("ACTIVE"=>"Y", '!SITE_ID' => false),
         false,
         false,
         $arSelect
@@ -68,10 +68,6 @@ if ($this->startResultCache())
 	while ($arProp = $dbStoreProps->GetNext())
 	{
         $viewMap = false;
-		$storeSite = (string)$arProp['SITE_ID'];
-		if ($storeSite != '' && $storeSite != SITE_ID)
-			continue;
-		unset($storeSite);
 		$url = CComponentEngine::makePathFromTemplate($arParams["PATH_TO_ELEMENT"], array("store_id" => $arProp["ID"]));
 
 		$storeImg = false;
@@ -122,9 +118,29 @@ if ($this->startResultCache())
 			'URL' => $url,
 			'DESCRIPTION' => (string)$arProp['DESCRIPTION'],
             'VIEW_MAP' => $viewMap,
+            'SITE_ID' => $arProp['SITE_ID'],
 		);
 	}
+
+	$sitesList = [];
+    $rsSites = CSite::GetList($by="sort", $order="desc", ['ID' => array_column($arResult["STORES"], 'SITE_ID')]);
+
+	while ($site = $rsSites->fetch()) {
+	    foreach ($arResult["STORES"] as $key => $store) {
+	        if ($store['SITE_ID'] !== $site['ID']) {
+	            continue;
+            }
+
+            $arResult["STORES"][$key]['SITE'] = $site;
+
+	        unset($arResult["STORES"][$key]['SITE_ID']);
+        }
+        $sitesList[$site['ID']] = $site;
+    }
+
 	$this->includeComponentTemplate();
 }
-if ($arParams['SET_TITLE'] == 'Y')
-	$APPLICATION->SetTitle($arParams['TITLE']);
+
+if ($arParams['SET_TITLE'] == 'Y') {
+    $APPLICATION->SetTitle($arParams['TITLE']);
+}

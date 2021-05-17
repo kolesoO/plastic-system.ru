@@ -1,6 +1,9 @@
 <?
 namespace kDevelop\Settings;
 
+use Bitrix\Main\Loader;
+use CCatalogGroup;
+use CCatalogStore;
 use \Rover\GeoIp\Location;
 
 class Store
@@ -10,50 +13,15 @@ class Store
      */
     public static function setStore()
     {
-        if (!\Bitrix\Main\Loader::includeModule("catalog")) return;
+        if (!Loader::includeModule("catalog")) return;
 
-        $storeId = "";
-        $priceId = 0;
-        $isStoreExists = false;
-        $arStoreIdList = [];
-        $arPriceIdList = [];
-        $filter = ["ACTIVE"=>"Y"];
-        if (isset($_COOKIE["store_id"]) && strlen($_COOKIE["store_id"]) > 0) {
-            $storeId = $_COOKIE["store_id"];
-        } elseif (\Bitrix\Main\Loader::includeModule("rover.geoip")) {
-            $location = Location::getInstance(Location::getCurIp());
-            $filter[] = [
-                "LOGIC" => "OR",
-                ["UF_CITY_NAME" => $location->getCityName()],
-                ["!UF_CITY_NAME" => false]
-            ];
-        }
+        [$storeId, $priceId] = self::getStoreInfo([
+            'ACTIVE' => 'Y',
+            'SITE_ID' => SITE_ID,
+        ]);
 
-        $rsStore = \CCatalogStore::GetList(
-            ["SORT" => "ASC"],
-            $filter,
-            false,
-            false,
-            ["ID", "UF_PRICE_ID", "ADDRESS"]
-        );
-        while ($arStore = $rsStore->fetch()) {
-            $arStoreIdList[] = $arStore["ID"];
-            $arPriceIdList[] = $arStore["UF_PRICE_ID"];
-            if ($arStore["ID"] == $storeId) {
-                $isStoreExists = true;
-                $priceId = $arStore["UF_PRICE_ID"];
-                break;
-            }
-        }
-
-        if (count($arStoreIdList) > 0) {
-            if (!$isStoreExists) {
-                $storeId = $arStoreIdList[0];
-                $priceId = $arPriceIdList[0];
-            }
-            define("STORE_ID", $storeId);
-            self::setPrice($priceId);
-        }
+        define("STORE_ID", $storeId);
+        self::setPrice($priceId);
     }
 
     /**
@@ -61,7 +29,7 @@ class Store
      */
     public static function setPrice($id)
     {
-        if ($arPrice = \CCatalogGroup::GetList(
+        if ($arPrice = CCatalogGroup::GetList(
             [],
             ["ID" => $id],
             false,
@@ -71,5 +39,28 @@ class Store
             define("PRICE_CODE", $arPrice["NAME"]);
             define("PRICE_ID", $arPrice["ID"]);
         }
+    }
+
+    /**
+     * @return mixed[]
+     */
+    private static function getStoreInfo(array $filter): array
+    {
+        $rsStore = CCatalogStore::GetList(
+            ["SORT" => "ASC"],
+            $filter,
+            false,
+            false,
+            ["ID", "UF_PRICE_ID"]
+        );
+
+        if ($arStore = $rsStore->fetch()) {
+            return [$arStore['ID'], $arStore["UF_PRICE_ID"]];
+        }
+
+        return self::getStoreInfo([
+            'ACTIVE' => 'Y',
+            'DEFAULT' => 'Y',
+        ]);
     }
 }
