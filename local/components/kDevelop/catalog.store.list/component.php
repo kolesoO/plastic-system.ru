@@ -122,8 +122,7 @@ if ($this->startResultCache())
 		);
 	}
 
-	$sitesList = [];
-    $rsSites = CSite::GetList($by="sort", $order="desc", ['ID' => array_column($arResult["STORES"], 'SITE_ID')]);
+    $rsSites = CSite::GetList($by="sort", $order="desc", []);
 
 	while ($site = $rsSites->fetch()) {
 	    foreach ($arResult["STORES"] as $key => $store) {
@@ -135,7 +134,6 @@ if ($this->startResultCache())
 
 	        unset($arResult["STORES"][$key]['SITE_ID']);
         }
-        $sitesList[$site['ID']] = $site;
     }
 
 	$this->includeComponentTemplate();
