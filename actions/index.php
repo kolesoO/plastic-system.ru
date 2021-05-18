@@ -72,7 +72,7 @@ $APPLICATION->IncludeComponent(
         "CACHE_TYPE" => "A",
         "COMPATIBLE_MODE" => "Y",
         "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => "RUB",
+        "CURRENCY_ID" => CURRENCY_ID,
         "CUSTOM_FILTER" => "",
         "DATA_LAYER_NAME" => "dataLayer",
         "DETAIL_URL" => "",

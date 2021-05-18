@@ -4,7 +4,7 @@ namespace kDevelop\Settings;
 use Bitrix\Main\Loader;
 use CCatalogGroup;
 use CCatalogStore;
-use \Rover\GeoIp\Location;
+use CCurrency;
 
 class Store
 {
@@ -15,12 +15,17 @@ class Store
     {
         if (!Loader::includeModule("catalog")) return;
 
-        [$storeId, $priceId] = self::getStoreInfo([
+        [$storeId, $priceId, $currencyId] = self::getStoreInfo([
             'ACTIVE' => 'Y',
             'SITE_ID' => SITE_ID,
         ]);
 
+        if (!$currencyId) {
+            $currencyId = self::getDefaultCurrencyId();
+        }
+
         define("STORE_ID", $storeId);
+        define("CURRENCY_ID", $currencyId);
         self::setPrice($priceId);
     }
 
@@ -51,16 +56,29 @@ class Store
             $filter,
             false,
             false,
-            ["ID", "UF_PRICE_ID"]
+            ["ID", "UF_PRICE_ID", "UF_CURRENCY"]
         );
 
         if ($arStore = $rsStore->fetch()) {
-            return [$arStore['ID'], $arStore["UF_PRICE_ID"]];
+            return [$arStore['ID'], $arStore["UF_PRICE_ID"], $arStore["UF_CURRENCY"]];
         }
 
         return self::getStoreInfo([
             'ACTIVE' => 'Y',
             'DEFAULT' => 'Y',
         ]);
+    }
+
+    private static function getDefaultCurrencyId(): ?string
+    {
+        $rs = CCurrency::GetList(($by="name"), ($order="asc"));
+
+        while ($currency = $rs->fetch()) {
+            if ($currency['BASE'] === 'Y') {
+                return $currency['CURRENCY'];
+            }
+        }
+
+        return null;
     }
 }

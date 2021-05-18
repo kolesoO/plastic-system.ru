@@ -38,7 +38,7 @@ class CatalogProductProvider extends \Bitrix\Catalog\Product\CatalogProvider
                     [
                         "ID" => $arItem["CATALOG_PRICE_ID_" . PRICE_ID],
                         "PRICE" => $arItem["CATALOG_PRICE_" . PRICE_ID],
-                        "CURRENCY" => "RUB",
+                        "CURRENCY" => CURRENCY_ID,
                         "CATALOG_GROUP_ID" => PRICE_ID
                     ]
                 ]

@@ -219,7 +219,7 @@ $APPLICATION->IncludeComponent(
         "COMPARE_PATH" => "",
         "COMPATIBLE_MODE" => "N",
         "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => "RUB",
+        "CURRENCY_ID" => CURRENCY_ID,
         "CUSTOM_FILTER" => "",
         "DATA_LAYER_NAME" => "dataLayer",
         "DETAIL_URL" => "",

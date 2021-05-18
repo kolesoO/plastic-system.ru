@@ -61,7 +61,7 @@ $APPLICATION->IncludeComponent (
         "AJAX_OPTION_STYLE" => "Y",
         "AJAX_OPTION_HISTORY" => "Y",
         "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => "RUB",
+        "CURRENCY_ID" => CURRENCY_ID,
         "TEMPLATE_THEME" => "blue",
         "LINE_ELEMENT_COUNT" => $elemsInRow,
         "DEVICE_TYPE" => DEVICE_TYPE
