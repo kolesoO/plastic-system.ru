@@ -1725,11 +1725,11 @@ a:hover>.burger>hr:last-child {
 }
 
 .cart_info-wrap-item>*:first-child {
-    width: 70%
+    width: 60%
 }
 
 .cart_info-wrap-item>*:last-child {
-    width: 30%
+    width: 40%
 }
 
 .popup {
