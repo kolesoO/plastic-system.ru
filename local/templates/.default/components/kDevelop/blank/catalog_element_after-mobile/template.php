@@ -39,7 +39,7 @@
     <div class="cart_info">
         <div class="cart_info-item col-xs-24">
             <?$APPLICATION->IncludeComponent(
-                'bitrix:catalog.store.amount',
+                'kDevelop:catalog.store.amount',
                 '.default',
                 array(
                     'ELEMENT_ID' => $arParams['ELEMENT_ID'],
@@ -54,7 +54,7 @@
                     'USER_FIELDS' => $arParams['USER_FIELDS'],
                     'FIELDS' => $arParams['FIELDS']
                 ),
-                $component,
+                null,
                 array('HIDE_ICONS' => 'Y')
             );?>
         </div>
