@@ -3,7 +3,10 @@
 <?if ($arResult["STORES_COUNT"] > 0) :?>
     <div class="banner_map-item">
         <div class="banner_map-map-wrap">
-            <div class="banner_map-map" style="background-image: url('<?=SITE_TEMPLATE_PATH?>/images/map-bg.svg');width:1050px;height:453px">
+            <div
+                    class="banner_map-map"
+                    style="background-image: url('<?=SITE_TEMPLATE_PATH?>/images/map-bg.svg');width:1050px;height:453px"
+            >
                 <?foreach ($arResult["STORES"] as $arItem) :
                     if (!is_array($arItem["UF_CUSTOM_COORDS"]) || count($arItem["UF_CUSTOM_COORDS"]) == 0) continue;
                     ?>
