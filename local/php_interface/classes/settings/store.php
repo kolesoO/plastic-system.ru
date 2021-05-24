@@ -1,6 +1,7 @@
 <?
 namespace kDevelop\Settings;
 
+use Bitrix\Catalog\Product\Price\Calculation;
 use Bitrix\Main\Loader;
 use CCatalogGroup;
 use CCatalogStore;
@@ -8,9 +9,6 @@ use CCurrency;
 
 class Store
 {
-    /**
-     *
-     */
     public static function setStore()
     {
         if (!Loader::includeModule("catalog")) return;
@@ -26,12 +24,12 @@ class Store
 
         define("STORE_ID", $storeId);
         define("CURRENCY_ID", $currencyId);
+
+        Calculation::setConfig(['CURRENCY' => CURRENCY_ID]);
+
         self::setPrice($priceId);
     }
 
-    /**
-     * @param $id
-     */
     public static function setPrice($id)
     {
         if ($arPrice = CCatalogGroup::GetList(
@@ -47,6 +45,7 @@ class Store
     }
 
     /**
+     * @param mixed[] $filter
      * @return mixed[]
      */
     private static function getStoreInfo(array $filter): array
