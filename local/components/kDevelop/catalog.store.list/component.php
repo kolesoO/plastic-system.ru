@@ -130,6 +130,7 @@ if ($this->startResultCache())
 	            continue;
             }
 
+            $site['URL'] = $site['SERVER_NAME'] . $APPLICATION->GetCurPage(false);
             $arResult["STORES"][$key]['SITE'] = $site;
 
 	        unset($arResult["STORES"][$key]['SITE_ID']);

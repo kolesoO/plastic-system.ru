@@ -11,7 +11,7 @@
             <div class="header-location-inner">
                 <?foreach ($arResult["STORES"] as $arItem) :?>
                     <a
-                            href="//<?=$arItem['SITE']['SERVER_NAME']?>"
+                            href="//<?=$arItem['SITE']['URL']?>"
                             class="header-location-link link"
                     ><?=$arItem["STORE_TITLE"]?></a>
                 <?endforeach?>
