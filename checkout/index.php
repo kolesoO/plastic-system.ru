@@ -63,7 +63,7 @@ if (DEVICE_TYPE == "MOBILE") {
 }
 
 $APPLICATION->IncludeComponent(
-    "bitrix:sale.order.ajax",
+    "kDevelop:sale.order.ajax",
     $tmp,
     Array(
         "ADDITIONAL_PICT_PROP_8" => "-",
