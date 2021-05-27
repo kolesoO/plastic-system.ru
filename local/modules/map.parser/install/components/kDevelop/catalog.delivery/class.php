@@ -94,7 +94,7 @@ class CatalogDelivery extends CBitrixComponent
                             (new Point($pointInfo["Longitude"], $pointInfo["Latitude"]))->toArray()
                         )) {
                             $this->arResult['DELIVERY'] = [
-                                'PRICE' => SaleFormatCurrency($polygon->getPrice(), 'RUB'),
+                                'PRICE' => SaleFormatCurrency($polygon->getPrice(), CURRENCY_ID),
                                 'POLYGON' => $polygon,
                             ];
 

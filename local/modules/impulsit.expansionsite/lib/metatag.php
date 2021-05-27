@@ -49,7 +49,7 @@ class MetaTag
 	}
 
     /**
-     * @brief Для детальной страницы 
+     * @brief Для детальной страницы
      * @param $arResult = массив данных
      * @return Разметка
      **/
@@ -60,9 +60,9 @@ class MetaTag
 
         #Если данные о элементах отсутствуют
         if(
-            !$arResult["DETAIL_TEXT"] && 
-            !$arResult["PREVIEW_TEXT"] && 
-            !$arResult["PROPERTIES"] && 
+            !$arResult["DETAIL_TEXT"] &&
+            !$arResult["PREVIEW_TEXT"] &&
+            !$arResult["PROPERTIES"] &&
             intval($arResult["ID"]) > 0
         )
         {
@@ -101,7 +101,7 @@ class MetaTag
         $modParams = Handler::getOptions();
 
         $serverName = SITE_SERVER_NAME;
-        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://"; 
+        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://";
         $seoDetailPage = $protocol.$serverName.$arResult["DETAIL_PAGE_URL"];
         $seoTitle = !empty($arResult['IPROPERTY_VALUES']['ELEMENT_META_TITLE']) ? $arResult['IPROPERTY_VALUES']['ELEMENT_META_TITLE'] : $arResult['NAME'];
         $datePublished = ( ($arResult["DATE_CREATE"]) ? $arResult["DATE_CREATE"] : $arResult["TIMESTAMP_X"] );
@@ -133,7 +133,7 @@ class MetaTag
         }
         else if( $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
         {
-            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  ); 
+            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  );
             $seoImage = $protocol.$serverName.$arMorePhoto["SRC"];
         }
         else
@@ -173,7 +173,7 @@ class MetaTag
         );
 
         $jsMetaTag = json_encode($jsMetaTag,JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
- 
+
         $html = '';
         $html .= '<meta property="og:title" content="'.$seoTitle.'" />'."\r\n";
         $html .= '<meta property="og:description" content="'.$seoDescription.'" />'."\r\n";
@@ -227,7 +227,7 @@ class MetaTag
         $modParams = Handler::getOptions();
 
         $serverName = SITE_SERVER_NAME;
-        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://"; 
+        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://";
         $currentPage = $APPLICATION->GetCurPage();
         $seoDetailPage = $protocol.$serverName.$currentPage;
         $seoTitle = !empty($arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE']) ? $arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE'] : $arResult['NAME'];
@@ -252,7 +252,7 @@ class MetaTag
         }
         else if( $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
         {
-            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  ); 
+            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  );
             $seoImage = $protocol.$serverName.$arMorePhoto["SRC"];
         }
         else
@@ -285,7 +285,7 @@ class MetaTag
                 parse_str($parts['query'], $query);
                 foreach( $query as $key => $arItem )
                 {
-                    if(strpos($key,"PAGEN_") !== false) 
+                    if(strpos($key,"PAGEN_") !== false)
                     {
                         $pageKey = $key;
                         break;
@@ -317,7 +317,7 @@ class MetaTag
                 }
                 else if( $arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
                 {
-                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]); 
+                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]);
                     $seoItemImage = $protocol.$serverName.$arMorePhoto["SRC"];
                 }
                 else
@@ -430,7 +430,7 @@ class MetaTag
         $modParams = Handler::getOptions();
 
         $serverName = SITE_SERVER_NAME;
-        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://"; 
+        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://";
         $currentPage = $APPLICATION->GetCurPage();
         $seoDetailPage = $protocol.$serverName.$currentPage;
         $seoTitle = !empty($arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE']) ? $arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE'] : $arResult['NAME'];
@@ -455,7 +455,7 @@ class MetaTag
         }
         else if( $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
         {
-            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  ); 
+            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  );
             $seoImage = $protocol.$serverName.$arMorePhoto["SRC"];
         }
         else
@@ -488,7 +488,7 @@ class MetaTag
                 parse_str($parts['query'], $query);
                 foreach( $query as $key => $arItem )
                 {
-                    if(strpos($key,"PAGEN_") !== false) 
+                    if(strpos($key,"PAGEN_") !== false)
                     {
                         $pageKey = $key;
                         break;
@@ -520,7 +520,7 @@ class MetaTag
                 }
                 else if( $arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
                 {
-                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]); 
+                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]);
                     $seoItemImage = $protocol.$serverName.$arMorePhoto["SRC"];
                 }
                 else
@@ -599,7 +599,7 @@ class MetaTag
         $modParams = Handler::getOptions();
 
         $serverName = SITE_SERVER_NAME;
-        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://"; 
+        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://";
         $seoDetailPage = $protocol.$serverName.$arResult["DETAIL_PAGE_URL"];
         $seoTitle = !empty($arResult['IPROPERTY_VALUES']['ELEMENT_META_TITLE']) ? $arResult['IPROPERTY_VALUES']['ELEMENT_META_TITLE'] : $arResult['NAME'];
         $siteLogo = $protocol.$serverName.$modParams["META_TAG"]["LOGO"];
@@ -627,14 +627,14 @@ class MetaTag
         }
         else if( $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
         {
-            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  ); 
+            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  );
             $seoImage = $protocol.$serverName.$arMorePhoto["SRC"];
         }
         else
         {
             $seoImage = $siteLogo;
         }
-        
+
         $jsMetaTag = array();
 
         if($arResult['MIN_PRICE']['DISCOUNT_VALUE'])
@@ -642,7 +642,7 @@ class MetaTag
             $jsMetaTag = array(
                 "@context" => "https://schema.org",
                 "@type" => "Product",
-                "description" => $seoDescription, 
+                "description" => $seoDescription,
                 "name" => $seoTitle,
                 "image" => array(
                     "@type" => "ImageObject",
@@ -655,7 +655,7 @@ class MetaTag
                     "url" => $seoDetailPage,
                     "availability" => "http://schema.org/InStock",
                     "price" => $arResult['MIN_PRICE']['DISCOUNT_VALUE'],
-                    "priceCurrency" => "RUB"
+                    "priceCurrency" => CURRENCY_ID
                 )
             );
         }
@@ -683,7 +683,7 @@ class MetaTag
         }
 
         $jsMetaTag = json_encode($jsMetaTag,JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
- 
+
         $html = '';
         $html .= '<meta property="og:title" content="'.$seoTitle.'" />'."\r\n";
         $html .= '<meta property="og:description" content="'.$seoDescription.'" />'."\r\n";
@@ -730,7 +730,7 @@ class MetaTag
                 $arFilter["INCLUDE_SUBSECTIONS"] = "Y";
                 $arFilter["SECTION_ID"] = $arParams["SECTION_ID"];
             }
-            
+
             if($arResult["NAV_RESULT_EPILOG"]["ELEMENTS_ID"])
             {
                 $arFilter["ID"] = $arResult["NAV_RESULT_EPILOG"]["ELEMENTS_ID"];
@@ -743,7 +743,7 @@ class MetaTag
         $modParams = Handler::getOptions();
 
         $serverName = SITE_SERVER_NAME;
-        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://"; 
+        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://";
         $currentPage = $APPLICATION->GetCurPage();
         $seoDetailPage = $protocol.$serverName.$currentPage;
         $seoTitle = !empty($arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE']) ? $arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE'] : $arResult['NAME'];
@@ -768,7 +768,7 @@ class MetaTag
         }
         else if( $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
         {
-            $arMorePhoto = \CFile::GetFileArray($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]); 
+            $arMorePhoto = \CFile::GetFileArray($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]);
             $seoImage = $protocol.$serverName.$arMorePhoto["SRC"];
         }
         else
@@ -801,7 +801,7 @@ class MetaTag
                 }
                 else if( $arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
                 {
-                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]); 
+                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]);
                     $seoItemImage = $protocol.$serverName.$arMorePhoto["SRC"];
                 }
                 else
@@ -884,7 +884,7 @@ class MetaTag
                 $arFilter["INCLUDE_SUBSECTIONS"] = "Y";
                 $arFilter["SECTION_ID"] = $arParams["SECTION_ID"];
             }
-            
+
             if($arResult["NAV_RESULT_EPILOG"]["ELEMENTS_ID"])
             {
                 $arFilter["ID"] = $arResult["NAV_RESULT_EPILOG"]["ELEMENTS_ID"];
@@ -897,7 +897,7 @@ class MetaTag
         $modParams = Handler::getOptions();
 
         $serverName = SITE_SERVER_NAME;
-        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://"; 
+        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://";
         $currentPage = $APPLICATION->GetCurPage();
         $seoDetailPage = $protocol.$serverName.$currentPage;
         $seoTitle = !empty($arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE']) ? $arResult['IPROPERTY_VALUES']['SECTION_PAGE_TITLE'] : $arResult['NAME'];
@@ -922,7 +922,7 @@ class MetaTag
         }
         else if( $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
         {
-            $arMorePhoto = \CFile::GetFileArray($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]); 
+            $arMorePhoto = \CFile::GetFileArray($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]);
             $seoImage = $protocol.$serverName.$arMorePhoto["SRC"];
         }
         else
@@ -950,7 +950,7 @@ class MetaTag
                 }
                 else if( $arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
                 {
-                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]); 
+                    $arMorePhoto = \CFile::GetFileArray($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]);
                     $seoItemImage = $protocol.$serverName.$arMorePhoto["SRC"];
                 }
                 else
@@ -1009,7 +1009,7 @@ class MetaTag
         $modParams = Handler::getOptions();
 
         $serverName = SITE_SERVER_NAME;
-        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://"; 
+        $protocol = (\CMain::IsHTTPS()) ? "https://" : "http://";
         $seoDetailPage = $protocol.$serverName.$arResult["DETAIL_PAGE_URL"];
         $seoTitle = !empty($arResult["NAME"]) ? $arResult["NAME"] : $serverName;
         $siteLogo = $protocol.$serverName.$modParams["META_TAG"]["LOGO"];
@@ -1026,7 +1026,7 @@ class MetaTag
         }
         else if( $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0] )
         {
-            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  ); 
+            $arMorePhoto = \CFile::GetFileArray(   $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"][0]  );
             $seoImage = $protocol.$serverName.$arMorePhoto["SRC"];
         }
         else
@@ -1067,7 +1067,7 @@ class MetaTag
             }
 
             $arOrganization["address"] = array("@type" => "PostalAddress");
-            
+
             if($arItem["STREET_ADDRESS"])
                 $arOrganization["address"]["streetAddress"] = $arItem["STREET_ADDRESS"];
 
@@ -1165,7 +1165,7 @@ class MetaTag
             $priceTypeFirst["ID"] = "2";
             $dbPriceType = \CCatalogGroup::GetList(array("SORT" => "ASC"),array());
             while ($arPriceType = $dbPriceType->Fetch())
-            { 
+            {
                 if( $arPriceType["BASE"] == "Y" ){ $priceTypeFirst = $arPriceType; break; }
             }
         }
@@ -1241,7 +1241,7 @@ class MetaTag
         parse_str($parts['query'], $query);
         foreach( $query as $key => $arItem )
         {
-            if(strpos($key,"PAGEN_") !== false) 
+            if(strpos($key,"PAGEN_") !== false)
             {
                 $pageKey = $key;
                 break;

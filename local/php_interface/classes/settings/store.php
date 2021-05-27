@@ -1,67 +1,38 @@
 <?
 namespace kDevelop\Settings;
 
-use \Rover\GeoIp\Location;
+use Bitrix\Catalog\Product\Price\Calculation;
+use Bitrix\Main\Loader;
+use CCatalogGroup;
+use CCatalogStore;
+use CCurrency;
 
 class Store
 {
-    /**
-     *
-     */
     public static function setStore()
     {
-        if (!\Bitrix\Main\Loader::includeModule("catalog")) return;
+        if (!Loader::includeModule("catalog")) return;
 
-        $storeId = "";
-        $priceId = 0;
-        $isStoreExists = false;
-        $arStoreIdList = [];
-        $arPriceIdList = [];
-        $filter = ["ACTIVE"=>"Y"];
-        if (isset($_COOKIE["store_id"]) && strlen($_COOKIE["store_id"]) > 0) {
-            $storeId = $_COOKIE["store_id"];
-        } elseif (\Bitrix\Main\Loader::includeModule("rover.geoip")) {
-            $location = Location::getInstance(Location::getCurIp());
-            $filter[] = [
-                "LOGIC" => "OR",
-                ["UF_CITY_NAME" => $location->getCityName()],
-                ["!UF_CITY_NAME" => false]
-            ];
+        [$storeId, $priceId, $currencyId] = self::getStoreInfo([
+            'ACTIVE' => 'Y',
+            'SITE_ID' => SITE_ID,
+        ]);
+
+        if (!$currencyId) {
+            $currencyId = self::getDefaultCurrencyId();
         }
 
-        $rsStore = \CCatalogStore::GetList(
-            ["SORT" => "ASC"],
-            $filter,
-            false,
-            false,
-            ["ID", "UF_PRICE_ID", "ADDRESS"]
-        );
-        while ($arStore = $rsStore->fetch()) {
-            $arStoreIdList[] = $arStore["ID"];
-            $arPriceIdList[] = $arStore["UF_PRICE_ID"];
-            if ($arStore["ID"] == $storeId) {
-                $isStoreExists = true;
-                $priceId = $arStore["UF_PRICE_ID"];
-                break;
-            }
-        }
+        define("STORE_ID", $storeId);
+        define("CURRENCY_ID", $currencyId);
 
-        if (count($arStoreIdList) > 0) {
-            if (!$isStoreExists) {
-                $storeId = $arStoreIdList[0];
-                $priceId = $arPriceIdList[0];
-            }
-            define("STORE_ID", $storeId);
-            self::setPrice($priceId);
-        }
+        Calculation::setConfig(['CURRENCY' => CURRENCY_ID]);
+
+        self::setPrice($priceId);
     }
 
-    /**
-     * @param $id
-     */
     public static function setPrice($id)
     {
-        if ($arPrice = \CCatalogGroup::GetList(
+        if ($arPrice = CCatalogGroup::GetList(
             [],
             ["ID" => $id],
             false,
@@ -71,5 +42,42 @@ class Store
             define("PRICE_CODE", $arPrice["NAME"]);
             define("PRICE_ID", $arPrice["ID"]);
         }
+    }
+
+    /**
+     * @param mixed[] $filter
+     * @return mixed[]
+     */
+    private static function getStoreInfo(array $filter): array
+    {
+        $rsStore = CCatalogStore::GetList(
+            ["SORT" => "ASC"],
+            $filter,
+            false,
+            false,
+            ["ID", "UF_PRICE_ID", "UF_CURRENCY"]
+        );
+
+        if ($arStore = $rsStore->fetch()) {
+            return [$arStore['ID'], $arStore["UF_PRICE_ID"], $arStore["UF_CURRENCY"]];
+        }
+
+        return self::getStoreInfo([
+            'ACTIVE' => 'Y',
+            'DEFAULT' => 'Y',
+        ]);
+    }
+
+    private static function getDefaultCurrencyId(): ?string
+    {
+        $rs = CCurrency::GetList(($by="name"), ($order="asc"));
+
+        while ($currency = $rs->fetch()) {
+            if ($currency['BASE'] === 'Y') {
+                return $currency['CURRENCY'];
+            }
+        }
+
+        return null;
     }
 }

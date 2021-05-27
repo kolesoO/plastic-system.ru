@@ -17,17 +17,18 @@ global $USER_FIELD_MANAGER;
 
 $arResult["STORES_COUNT"] = count($arResult["STORES"]);
 
-foreach ($arResult["STORES"] as &$arItem) {
-    //пользовательские свойства
+foreach ($arResult["STORES"] as $key => $arItem) {
     $arFields = $USER_FIELD_MANAGER->GetUserFields("CAT_STORE", $arItem["ID"]);
 
-    if (isset($arFields["UF_CUSTOM_COORDS"])) {
-        $arItem["UF_CUSTOM_COORDS"] = explode(",", $arFields["UF_CUSTOM_COORDS"]["VALUE"]);
-        $arItem["UF_CITY_NAME"] = $arFields["UF_CITY_NAME"]["VALUE"];
+    if (!isset($arFields["UF_CUSTOM_COORDS"]) || !$arFields["UF_CUSTOM_COORDS"]['VALUE']) {
+        unset($arResult["STORES"][$key]);
+
+        continue;
     }
-    //end
+
+    $arResult["STORES"][$key]["UF_CUSTOM_COORDS"] = explode(",", $arFields["UF_CUSTOM_COORDS"]["VALUE"]);
+    $arResult["STORES"][$key]["UF_CITY_NAME"] = $arFields["UF_CITY_NAME"]["VALUE"];
 }
-unset($arItem);
 
 $cp = $this->__component;
 if (is_object($cp)) {

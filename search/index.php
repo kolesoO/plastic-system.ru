@@ -82,7 +82,7 @@ $APPLICATION->IncludeComponent (
         "PAGER_SHOW_ALL" => "Y",
         "HIDE_NOT_AVAILABLE" => "N",
         "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => "RUB",
+        "CURRENCY_ID" => CURRENCY_ID,
         "OFFERS_CART_PROPERTIES" => array(),
         "AJAX_OPTION_JUMP" => "Y",
         "AJAX_OPTION_STYLE" => "Y",

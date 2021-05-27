@@ -115,7 +115,7 @@ $APPLICATION->IncludeComponent(
         ),
         "USE_PRODUCT_QUANTITY" => "Y",
         "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => "RUB",
+        "CURRENCY_ID" => CURRENCY_ID,
         "OFFERS_CART_PROPERTIES" => array(
             0 => "COLOR_REF",
             1 => "SIZES_SHOES",

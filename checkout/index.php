@@ -42,7 +42,7 @@ if (\Bitrix\Main\Loader::includeModule('sale')) {
                     [
                         "ID" => $arItem["CATALOG_PRICE_ID_" . PRICE_ID],
                         "PRICE" => $arItem["CATALOG_PRICE_" . PRICE_ID],
-                        "CURRENCY" => "RUB",
+                        "CURRENCY" => CURRENCY_ID,
                         "CATALOG_GROUP_ID" => PRICE_ID
                     ]
                 ]
@@ -63,7 +63,7 @@ if (DEVICE_TYPE == "MOBILE") {
 }
 
 $APPLICATION->IncludeComponent(
-    "bitrix:sale.order.ajax",
+    "kDevelop:sale.order.ajax",
     $tmp,
     Array(
         "ADDITIONAL_PICT_PROP_8" => "-",
