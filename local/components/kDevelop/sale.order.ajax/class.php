@@ -5856,7 +5856,7 @@ class SaleOrderAjax extends \CBitrixComponent
 			{
 				$arResult["REDIRECT_URL"] = $APPLICATION->GetCurPageParam("ORDER_ID=".urlencode(urlencode($arResult["ACCOUNT_NUMBER"])), array("ORDER_ID"));
 
-				if ($this->request['json'] == "Y" && ($this->isOrderConfirmed || $arResult["NEED_REDIRECT"] == "Y"))
+				if ($this->request->get('json') == "Y" && ($this->isOrderConfirmed || $arResult["NEED_REDIRECT"] == "Y"))
 				{
 					$APPLICATION->RestartBuffer();
 					echo json_encode(array("success" => "Y", "redirect" => $arResult["REDIRECT_URL"]));
