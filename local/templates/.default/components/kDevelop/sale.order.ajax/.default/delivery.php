@@ -43,13 +43,13 @@ $curDelivery = null;
                 <div class="col-lg-24 col-md-24">
                     <select
                             class="col-lg-9 col-md-9 col-xs-24"
-                            onchange="BX.saleOrderAjax.setStore(this)"
+                            onchange="location.href=this.value"
                     >
                         <?foreach ($curDelivery['STORE'] as $storeId) :
                             $store = $arResult['STORE_LIST'][$storeId];
                             ?>
                             <option
-                                    value="<?=$store['ID']?>"
+                                    value="<?=$store['SITE']['URL']?>"
                                     <?if ($store['ID'] == $curStore['ID']) :?>selected<?endif?>
                             ><?=$store['TITLE']?></option>
                         <?endforeach;?>

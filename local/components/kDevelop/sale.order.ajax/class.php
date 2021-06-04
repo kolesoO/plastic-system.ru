@@ -2872,6 +2872,8 @@ class SaleOrderAjax extends \CBitrixComponent
 	 */
 	protected function obtainDelivery()
 	{
+	    global $APPLICATION;
+
 		$arResult =& $this->arResult;
 
 		$arStoreId = array();
@@ -2916,7 +2918,12 @@ class SaleOrderAjax extends \CBitrixComponent
 		$arStore = array();
 		$dbList = CCatalogStore::GetList(
 			array("SORT" => "DESC", "ID" => "DESC"),
-			array("ACTIVE" => "Y", "ID" => $arStoreId, "ISSUING_CENTER" => "Y"),
+			array(
+			    "ACTIVE" => "Y",
+                "ID" => $arStoreId,
+                "ISSUING_CENTER" => "Y",
+                '!SITE_ID' => false,
+            ),
 			false,
 			false,
 			array("ID", "TITLE", "ADDRESS", "DESCRIPTION", "IMAGE_ID", "PHONE", "SCHEDULE", "GPS_N", "GPS_S", "ISSUING_CENTER", "SITE_ID")
@@ -2931,7 +2938,26 @@ class SaleOrderAjax extends \CBitrixComponent
 			$arStore[$arStoreTmp["ID"]] = $arStoreTmp;
 		}
 
-		$arResult["STORE_LIST"] = $arStore;
+		$sites = [];
+		$sitesRs = CSite::GetList($by="sort", $order="desc", []);
+		while ($site = $sitesRs->fetch()) {
+            $sites[] = $site;
+        }
+
+        foreach ($arStore as $key => $store) {
+            foreach ($sites as $site) {
+                if ($site['ID'] === $store['SITE_ID']) {
+                    $arStore[$key]['SITE'] = array_merge(
+                        $site,
+                        ['URL' => '//' . $site['SERVER_NAME'] . $APPLICATION->GetCurPage(false)]
+                    );
+
+                    break;
+                }
+            }
+        }
+
+        $arResult["STORE_LIST"] = $arStore;
 
 		$arResult["DELIVERY_EXTRA"] = array();
 		$deliveryExtra = $this->request->get('DELIVERY_EXTRA');

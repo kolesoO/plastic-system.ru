@@ -558,6 +558,7 @@ BX.saleOrderAjax = { // bad solution, actually, a singleton at the page
 
 		if (this.BXFormPosting === true) return true;
 		this.BXFormPosting = true;
+
 		if(val != 'Y') {
 			BX('confirmorder').value = 'N';
 			this.isSubmit = false;
@@ -597,11 +598,6 @@ BX.saleOrderAjax = { // bad solution, actually, a singleton at the page
 		}
 		BX.closeWait(BX.saleOrderAjax.orderFormId);
 		BX.onCustomEvent(orderForm, 'onAjaxSuccess');
-	},
-
-	setStore: function(self)
-	{
-		BX.storeNav.setStore(self.value, null);
 	}
 };
 
