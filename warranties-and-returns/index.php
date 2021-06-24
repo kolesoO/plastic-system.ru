@@ -28,7 +28,7 @@ $APPLICATION->SetTitle("Гарантии и возврат");?>
 		"ELEMENT_ID" => "6161",
 		"FIELD_CODE" => array(),
 		"FILE_404" => "",
-		"IBLOCK_ID" => "54",
+		"IBLOCK_ID" => "53",
 		"IBLOCK_TYPE" => "content",
 		"IBLOCK_URL" => "",
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
