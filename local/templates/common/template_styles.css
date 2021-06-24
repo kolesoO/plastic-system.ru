@@ -1,0 +1,16 @@
+.table_list.sections:not(.list)[items-count='4'] .table_list-item {
+    width: calc(16% - 8px);
+}
+@media screen and (min-width: 992px)
+{
+.table_list.sections:not(.list) .table_list-item {
+    padding: 28px 5px;
+}
+
+.table_list.sections .table_list-img>img {
+    max-height: 140px;
+}
+.table_list.sections .table_list-img {
+    height: 100px;
+}
+}
