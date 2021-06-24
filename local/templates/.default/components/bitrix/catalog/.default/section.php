@@ -1,4 +1,11 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<?
+
+use Bitrix\Main\Loader;
+use Bitrix\Main\ModuleManager;
+use kDevelop\Service\MultiSite;
+
+if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -10,8 +17,6 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-use Bitrix\Main\Loader;
-use Bitrix\Main\ModuleManager;
 
 $this->setFrameMode(true);
 
@@ -23,6 +28,10 @@ $obCache = new CPHPCache();
 
 #Получаем свойства UF текущего раздела
 $arResult["SECTION"]["UF_PROP"] = CIBlockSection::GetList(array("SORT"=>"ASC"),array("IBLOCK_ID"=>$arParams["IBLOCK_ID"],"ID"=>$arResult["VARIABLES"]["SECTION_ID"]),false,array("UF_*","ID"))->Fetch();
+$arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"] = MultiSite::valueOrDefault(
+    $arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW_" . strtoupper(SITE_ID)],
+    $arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"]
+);
 
 //даныне по текущему раделу
 $arSectionFilter = [
@@ -111,7 +120,7 @@ $currentPage = (( intval($pregCheck[2]) > 0 ) ? false : true);
 
 if(!$arResult["VARIABLES"]["SMART_FILTER_PATH"] && $currentPage)
 {
-    if (strlen($arSection["DESCRIPTION"]) > 0) 
+    if (strlen($arSection["DESCRIPTION"]) > 0)
         echo '<div class="catalog_section-content">'.$arSection["DESCRIPTION"].'</div>';
 }
 
@@ -215,7 +224,11 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
                         "HIDE_SECTION_NAME" => (isset($arParams["SECTIONS_HIDE_SECTION_NAME"]) ? $arParams["SECTIONS_HIDE_SECTION_NAME"] : "N"),
                         "ADD_SECTIONS_CHAIN" => (isset($arParams["ADD_SECTIONS_CHAIN"]) ? $arParams["ADD_SECTIONS_CHAIN"] : ''),
                         "ITEMS_IN_ROW" => $arParams["SECTION_ITEMS_IN_ROW"],
-                        "IMAGE_SIZE" => $arParams["SECTIONS_IMAGE_SIZE"]
+                        "IMAGE_SIZE" => $arParams["SECTIONS_IMAGE_SIZE"],
+                        "SECTION_USER_FIELDS" => array_merge(
+                            MultiSite::getStringOptions('UF_DESCR_BELOW'),
+                            MultiSite::getStringOptions('UF_SHORT_DESCR')
+                        ),
                     ],
                     $component,
                     ["HIDE_ICONS" => "Y"]
@@ -380,8 +393,8 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
                 </div>
 
                 <?#Описание под списком элементов:
-                if($arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW"])
-                    echo '<div class="aside-content__description">'.$arResult["SECTION"]["UF_PROP"]["UF_DESCRIPTION_BELOW"].'</div>';
+                if($arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"])
+                    echo '<div class="aside-content__description">'.$arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"].'</div>';
                 ?>
             </div>
         </div>
@@ -393,15 +406,38 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\SectionValues($arParams["IBLOCK_ID"], $sectionId);
 $arIPropValues = $rsIProps->getValues();
 if ($arIPropValues["SECTION_META_TITLE"]) {
-    $APPLICATION->SetPageProperty("title", $arIPropValues["SECTION_META_TITLE"]);
+    $APPLICATION->SetPageProperty(
+        "title",
+        MultiSite::valueOrDefault(
+            $arResult["SECTION"]["UF_PROP"]["UF_META_MT_" . strtoupper(SITE_ID)],
+            $arIPropValues["SECTION_META_TITLE"]
+        )
+    );
 }
 if ($arIPropValues["SECTION_META_KEYWORDS"]) {
-    $APPLICATION->SetPageProperty("keywords", $arIPropValues["SECTION_META_KEYWORDS"]);
+    $APPLICATION->SetPageProperty(
+        "keywords",
+        MultiSite::valueOrDefault(
+            $arResult["SECTION"]["UF_PROP"]["UF_META_KW_" . strtoupper(SITE_ID)],
+            $arIPropValues["SECTION_META_KEYWORDS"]
+        )
+    );
 }
 if ($arIPropValues["SECTION_META_DESCRIPTION"]) {
-    $APPLICATION->SetPageProperty("description", $arIPropValues["SECTION_META_DESCRIPTION"]);
+    $APPLICATION->SetPageProperty(
+        "description",
+        MultiSite::valueOrDefault(
+            $arResult["SECTION"]["UF_PROP"]["UF_META_DS_" . strtoupper(SITE_ID)],
+            $arIPropValues["SECTION_META_DESCRIPTION"]
+        )
+    );
 }
 if ($arIPropValues["SECTION_PAGE_TITLE"]) {
-    $APPLICATION->SetTitle($arIPropValues["SECTION_PAGE_TITLE"]);
+    $APPLICATION->SetTitle(
+        MultiSite::valueOrDefault(
+            $arResult["SECTION"]["UF_PROP"]["UF_META_T_" . strtoupper(SITE_ID)],
+            $arIPropValues["SECTION_PAGE_TITLE"]
+        )
+    );
 }
 //end
