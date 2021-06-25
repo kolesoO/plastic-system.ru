@@ -1,7 +1,7 @@
 <?require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');?>
 <?
 
-$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues(55,$cTag["ID"]);
+$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues(IBLOCK_CATALOG_TAGS,$cTag["ID"]);
 $IPROPERTY  = $ipropValues->getValues();
 
 //echo $GLOBAL['SEO'];
@@ -114,7 +114,7 @@ $APPLICATION->IncludeComponent(
         ),
         "USE_PRODUCT_QUANTITY" => "Y",
         "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => "RUB",
+        "CURRENCY_ID" => CURRENCY_ID,
         "OFFERS_CART_PROPERTIES" => array(
             0 => "COLOR_REF",
             1 => "SIZES_SHOES",

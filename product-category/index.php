@@ -6,14 +6,14 @@ $url = explode('/', trim($url[0], '/'));
 if (count($url) == 3) {
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
-	$arFilter = array('IBLOCK_ID' => 40, 'CODE' => $url[1]);
+	$arFilter = array('IBLOCK_ID' => IBLOCK_CATALOG_CATALOG, 'CODE' => $url[1]);
 	$rsSections = CIBlockSection::GetList([], $arFilter, false, ['UF_TAGS_LIST']);
 	$tagListId = [];
 	while ($arSection = $rsSections->Fetch()) {
 		$tagListId = $arSection['UF_TAGS_LIST'];
 	}
 	if (count($tagListId)) {
-		$res = CIBlockElement::GetList([], ['IBLOCK_ID' => 55, 'ID' => $tagListId, 'CODE' => $url[2]], false, false, ['*', 'PROPERTY_*', "PROPERTY_TITLE"]);
+		$res = CIBlockElement::GetList([], ['IBLOCK_ID' => IBLOCK_CATALOG_TAGS, 'ID' => $tagListId, 'CODE' => $url[2]], false, false, ['*', 'PROPERTY_*', "PROPERTY_TITLE"]);
 		if($ob = $res->GetNextElement()) {
 			$cTag = $ob->GetFields();
 			$cTag['PROPS'] = $ob->GetProperties();
@@ -137,7 +137,7 @@ $APPLICATION->IncludeComponent(
         ),
         "USE_PRODUCT_QUANTITY" => "Y",
         "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => "RUB",
+        "CURRENCY_ID" => CURRENCY_ID,
         "OFFERS_CART_PROPERTIES" => array(
             0 => "COLOR_REF",
             1 => "SIZES_SHOES",
