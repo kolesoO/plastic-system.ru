@@ -21,8 +21,8 @@
                 </div>
                 <div class="table_list-title"><?=$arSection["NAME"]?></div>
                 <?
-                if($arSection["UF_PROP"]["UF_SHORT_DESCRIPTION"])
-                    echo '<div class="table-list__description">'.$arSection["UF_PROP"]["UF_SHORT_DESCRIPTION"].'</div>';
+                if($arSection["UF_SHORT_DESCR"])
+                    echo '<div class="table-list__description">'.$arSection["UF_SHORT_DESCR"].'</div>';
                 ?>
             </a>
         <?endforeach?>

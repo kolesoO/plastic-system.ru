@@ -1,6 +1,7 @@
 <? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
 use Bitrix\Main\Loader;
+use kDevelop\Service\MultiSite;
 
 /**
  * @var array $templateData
@@ -12,6 +13,7 @@ use Bitrix\Main\Loader;
 global $APPLICATION;
 
 $arOffer = $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]];
+
 if (!$arOffer) {
     $arOffer = $arResult;
 }
@@ -26,16 +28,28 @@ if ($arOffer) {
     $seoIblockId = $arParams["IBLOCK_ID"];
     $seoItemId = $arResult["ID"];
 }
+
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
 $arIPropValues = $rsIProps->getValues();
+var_dump($arIPropValues);
+
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
-    $APPLICATION->SetPageProperty("title", $arIPropValues["ELEMENT_META_TITLE"]);
+    $APPLICATION->SetPageProperty(
+        "title",
+        $arIPropValues["ELEMENT_META_TITLE"]
+    );
 }
 if ($arIPropValues["ELEMENT_META_KEYWORDS"]) {
-    $APPLICATION->SetPageProperty("keywords", $arIPropValues["ELEMENT_META_KEYWORDS"]);
+    $APPLICATION->SetPageProperty(
+        "keywords",
+        $arIPropValues["ELEMENT_META_KEYWORDS"]
+    );
 }
 if ($arIPropValues["ELEMENT_META_DESCRIPTION"]) {
-    $APPLICATION->SetPageProperty("description", $arIPropValues["ELEMENT_META_DESCRIPTION"]);
+    $APPLICATION->SetPageProperty(
+        "description",
+        $arIPropValues["ELEMENT_META_DESCRIPTION"]
+    );
 }
 if ($arIPropValues["ELEMENT_PAGE_TITLE"]) {
     $APPLICATION->SetTitle($arIPropValues["ELEMENT_PAGE_TITLE"]);
