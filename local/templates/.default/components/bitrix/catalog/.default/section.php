@@ -237,7 +237,7 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
 ?>
 
 <?
-if(!empty($arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"])) { 
+if(!empty($arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"])) {
 $GLOBALS['tagFilter'] = array("ID"=> $arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"]);
 $APPLICATION->IncludeComponent(
 	"bitrix:news.list",
@@ -469,38 +469,15 @@ $APPLICATION->IncludeComponent(
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\SectionValues($arParams["IBLOCK_ID"], $sectionId);
 $arIPropValues = $rsIProps->getValues();
 if ($arIPropValues["SECTION_META_TITLE"]) {
-    $APPLICATION->SetPageProperty(
-        "title",
-        MultiSite::valueOrDefault(
-            $arResult["SECTION"]["UF_PROP"]["UF_META_MT_" . strtoupper(SITE_ID)],
-            $arIPropValues["SECTION_META_TITLE"]
-        )
-    );
+    $APPLICATION->SetPageProperty("title", $arIPropValues["SECTION_META_TITLE"]);
 }
 if ($arIPropValues["SECTION_META_KEYWORDS"]) {
-    $APPLICATION->SetPageProperty(
-        "keywords",
-        MultiSite::valueOrDefault(
-            $arResult["SECTION"]["UF_PROP"]["UF_META_KW_" . strtoupper(SITE_ID)],
-            $arIPropValues["SECTION_META_KEYWORDS"]
-        )
-    );
+    $APPLICATION->SetPageProperty("keywords", $arIPropValues["SECTION_META_KEYWORDS"]);
 }
 if ($arIPropValues["SECTION_META_DESCRIPTION"]) {
-    $APPLICATION->SetPageProperty(
-        "description",
-        MultiSite::valueOrDefault(
-            $arResult["SECTION"]["UF_PROP"]["UF_META_DS_" . strtoupper(SITE_ID)],
-            $arIPropValues["SECTION_META_DESCRIPTION"]
-        )
-    );
+    $APPLICATION->SetPageProperty("description", $arIPropValues["SECTION_META_DESCRIPTION"]);
 }
 if ($arIPropValues["SECTION_PAGE_TITLE"]) {
-    $APPLICATION->SetTitle(
-        MultiSite::valueOrDefault(
-            $arResult["SECTION"]["UF_PROP"]["UF_META_T_" . strtoupper(SITE_ID)],
-            $arIPropValues["SECTION_PAGE_TITLE"]
-        )
-    );
+    $APPLICATION->SetTitle($arIPropValues["SECTION_PAGE_TITLE"]);
 }
 //end
