@@ -224,6 +224,10 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
 ?>
 
 <?
+<<<<<<< Updated upstream
+=======
+if(!empty($arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"])) { 
+>>>>>>> Stashed changes
 $GLOBALS['tagFilter'] = array("ID"=> $arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"]);
 $APPLICATION->IncludeComponent(
 	"bitrix:news.list",
@@ -281,7 +285,12 @@ $APPLICATION->IncludeComponent(
 		"SORT_ORDER2" => "ASC",
 		"STRICT_SECTION_CHECK" => "N"
 	)
+<<<<<<< Updated upstream
 );?>
+=======
+);
+															} ?>
+>>>>>>> Stashed changes
 <?
                 //сортировка и внешний вид
                 $tmp = "catalog_controls";

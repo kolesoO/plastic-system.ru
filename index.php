@@ -1,398 +1,290 @@
 <?
+define('CUSTOM_HEADER', 'Y');
+
+$url = explode('?', $_SERVER['REQUEST_URI']);
+$url = explode('/', trim($url[0], '/'));
+if (count($url) == 3) {
+	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+
+	$arFilter = array('IBLOCK_ID' => IBLOCK_CATALOG_CATALOG, 'CODE' => $url[1]);
+	$rsSections = CIBlockSection::GetList([], $arFilter, false, ['UF_TAGS_LIST']);
+	$tagListId = [];
+	while ($arSection = $rsSections->Fetch()) {
+		$tagListId = $arSection['UF_TAGS_LIST'];
+	}
+	if (count($tagListId)) {
+		$res = CIBlockElement::GetList([], ['IBLOCK_ID' => IBLOCK_CATALOG_TAGS, 'ID' => $tagListId, 'CODE' => $url[2]], false, false, ['*', 'PROPERTY_*', "PROPERTY_TITLE"]);
+		if($ob = $res->GetNextElement()) {
+			$cTag = $ob->GetFields();
+			$cTag['PROPS'] = $ob->GetProperties();
+			include 'tags.php';
+			die;
+		}
+	}
+}
+
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
 
-//Слайдер
-$GLOBALS["arSliderFilter"] = [
-    "!PREVIEW_PICTURE" => false,
-    "!PREVIEW_TEXT" => false
-];
-$APPLICATION->IncludeComponent(
-    "bitrix:news.list",
-    "slider-front",
-    [
-        "DISPLAY_DATE" => "Y",
-        "DISPLAY_NAME" => "Y",
-        "DISPLAY_PICTURE" => "Y",
-        "DISPLAY_PREVIEW_TEXT" => "Y",
-        "AJAX_MODE" => "N",
-        "IBLOCK_TYPE" => "content",
-        "IBLOCK_ID" => IBLOCK_CONTENT_SLIDER,
-        "NEWS_COUNT" => "10",
-        "SORT_BY1" => "ID",
-        "SORT_ORDER1" => "DESC",
-        "SORT_BY2" => "SORT",
-        "SORT_ORDER2" => "ASC",
-        "FILTER_NAME" => "arSliderFilter",
-        "FIELD_CODE" => Array("ID", "NAME", "PREVIEW_PICTURE", "PREVIEW_TEXT"),
-        "PROPERTY_CODE" => Array("*"),
-        "CHECK_DATES" => "Y",
-        "DETAIL_URL" => "",
-        "PREVIEW_TRUNCATE_LEN" => "",
-        "ACTIVE_DATE_FORMAT" => "M d, Y",
-        "SET_TITLE" => "N",
-        "SET_BROWSER_TITLE" => "N",
-        "SET_META_KEYWORDS" => "N",
-        "SET_META_DESCRIPTION" => "N",
-        "SET_LAST_MODIFIED" => "Y",
-        "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
-        "ADD_SECTIONS_CHAIN" => "Y",
-        "HIDE_LINK_WHEN_NO_DETAIL" => "Y",
-        "PARENT_SECTION" => "",
-        "PARENT_SECTION_CODE" => "main-page",
-        "INCLUDE_SUBSECTIONS" => "Y",
-        "CACHE_TYPE" => "A",
-        "CACHE_TIME" => "3600",
-        "CACHE_FILTER" => "Y",
-        "CACHE_GROUPS" => "Y",
-        "DISPLAY_TOP_PAGER" => "N",
-        "DISPLAY_BOTTOM_PAGER" => "N",
-        "PAGER_TITLE" => "Новости",
-        "PAGER_SHOW_ALWAYS" => "Y",
-        "PAGER_TEMPLATE" => "",
-        "PAGER_DESC_NUMBERING" => "Y",
-        "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-        "PAGER_SHOW_ALL" => "Y",
-        "PAGER_BASE_LINK_ENABLE" => "Y",
-        "SET_STATUS_404" => "N",
-        "SHOW_404" => "Y",
-        "MESSAGE_404" => "",
-        "PAGER_BASE_LINK" => "",
-        "PAGER_PARAMS_NAME" => "arrPager",
-        "AJAX_OPTION_JUMP" => "N",
-        "AJAX_OPTION_STYLE" => "Y",
-        "AJAX_OPTION_HISTORY" => "N",
-        "AJAX_OPTION_ADDITIONAL" => "",
-        "SHOW_TITLE" => "Y",
-        "SHOW_MORE" => "Y",
-        //"IMAGE_SIZE" => []
-    ]
+$APPLICATION->SetTitle(
+    $APPLICATION->GetDirProperty('h1')
 );
-//end
 
-//разделы каталога
+//подготовка парметров компонента
 if (DEVICE_TYPE == "DESKTOP") {
     $itemsInRow = 5;
+    $itemsInRowInner = 6;
+    $elemsInRow = 4;
+    $pageElemCount = 12;
+    $pagerTmp = ".default";
 } elseif (DEVICE_TYPE == "TABLET") {
     $itemsInRow = 3;
+    $itemsInRowInner = 2;
+    $elemsInRow = 2;
+    $pageElemCount = 12;
+    $pagerTmp = ".default-mobile";
 } else {
-    $itemsInRow = 1;
+    $itemsInRow = $itemsInRowInner = $elemsInRow = 1;
+    $pageElemCount = 10;
+    $pagerTmp = ".default-mobile";
 }
 $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
-$APPLICATION->IncludeComponent(
-    "bitrix:catalog.section.list",
-    "",
-    [
-        "VIEW_MODE" => "TEXT",
-        "SHOW_PARENT_NAME" => "Y",
-        "IBLOCK_TYPE" => "catalog",
-        "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
-        "SECTION_ID" => "",
-        "SECTION_CODE" => "",
-        "SECTION_URL" => "",
-        "COUNT_ELEMENTS" => "Y",
-        "TOP_DEPTH" => "1",
-        "SECTION_FIELDS" => "",
-        "SECTION_USER_FIELDS" => "",
-        "ADD_SECTIONS_CHAIN" => "N",
-        "CACHE_TYPE" => "A",
-        "CACHE_TIME" => "36000000",
-        "CACHE_NOTES" => "",
-        "CACHE_GROUPS" => "Y",
-        "ITEMS_IN_ROW" => $itemsInRow,
-        "IMAGE_SIZE" => $arImageSize
-    ]
-);
+$arDetailSize = ["WIDTH" => 557, "HEIGHT" => 366];
 //end
 
-//основной текст
+$GLOBALS["arCatalogFilter"] = ["!OFFERS" => null];
 $APPLICATION->IncludeComponent(
-    "kDevelop:blank",
-    "index-text",
-    []
-);
-//end
-
-//Баннеры
-$GLOBALS["arBannerFilter"] = [
-    "!PROPERTY_LINK" => false,
-    "CODE" => "index"
-];
-$APPLICATION->IncludeComponent(
-    "bitrix:news.list",
-    "banner-front",
-    [
-        "DISPLAY_DATE" => "Y",
-        "DISPLAY_NAME" => "Y",
-        "DISPLAY_PICTURE" => "Y",
-        "DISPLAY_PREVIEW_TEXT" => "Y",
-        "AJAX_MODE" => "N",
-        "IBLOCK_TYPE" => "content",
-        "IBLOCK_ID" => IBLOCK_CONTENT_BANNER,
-        "NEWS_COUNT" => "5",
-        "SORT_BY1" => "ID",
-        "SORT_ORDER1" => "DESC",
-        "SORT_BY2" => "SORT",
-        "SORT_ORDER2" => "ASC",
-        "FILTER_NAME" => "arBannerFilter",
-        "FIELD_CODE" => Array("ID", "NAME", "PREVIEW_PICTURE", "PREVIEW_TEXT"),
-        "PROPERTY_CODE" => Array("STYLE", "COLOR", "LINK"),
-        "CHECK_DATES" => "Y",
-        "DETAIL_URL" => "",
-        "PREVIEW_TRUNCATE_LEN" => "",
-        "ACTIVE_DATE_FORMAT" => "M d, Y",
-        "SET_TITLE" => "N",
-        "SET_BROWSER_TITLE" => "N",
-        "SET_META_KEYWORDS" => "N",
-        "SET_META_DESCRIPTION" => "N",
-        "SET_LAST_MODIFIED" => "Y",
-        "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
-        "ADD_SECTIONS_CHAIN" => "Y",
-        "HIDE_LINK_WHEN_NO_DETAIL" => "Y",
-        "PARENT_SECTION" => "",
-        "PARENT_SECTION_CODE" => "",
-        "INCLUDE_SUBSECTIONS" => "Y",
-        "CACHE_TYPE" => "A",
-        "CACHE_TIME" => "3600",
-        "CACHE_FILTER" => "Y",
-        "CACHE_GROUPS" => "Y",
-        "DISPLAY_TOP_PAGER" => "N",
-        "DISPLAY_BOTTOM_PAGER" => "N",
-        "PAGER_TITLE" => "Новости",
-        "PAGER_SHOW_ALWAYS" => "Y",
-        "PAGER_TEMPLATE" => ".default",
-        "PAGER_DESC_NUMBERING" => "Y",
-        "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-        "PAGER_SHOW_ALL" => "Y",
-        "PAGER_BASE_LINK_ENABLE" => "Y",
-        "SET_STATUS_404" => "N",
-        "SHOW_404" => "Y",
-        "MESSAGE_404" => "",
-        "PAGER_BASE_LINK" => "",
-        "PAGER_PARAMS_NAME" => "arrPager",
-        "AJAX_OPTION_JUMP" => "N",
-        "AJAX_OPTION_STYLE" => "Y",
-        "AJAX_OPTION_HISTORY" => "N",
-        "AJAX_OPTION_ADDITIONAL" => "",
-        "SHOW_TITLE" => "Y",
-        "SHOW_MORE" => "Y",
-        //"IMAGE_SIZE" => []
-    ]
-);
-//end
-
-//топ-элементов каталога
-$arCatalogTopParams = [
-    "IMAGE_SIZE" => [
-        "WIDTH" => "",
-        "HEIGHT" => ""
-    ],
-    "ITEMS_COUNT" => 10,
-    "LINE_ELEMENT_COUNT" => 5
-];
-if (DEVICE_TYPE == "TABLET") {
-    $arCatalogTopParams["LINE_ELEMENT_COUNT"] = 3;
-} elseif (DEVICE_TYPE == "MOBILE") {
-    $arCatalogTopParams["LINE_ELEMENT_COUNT"] = 1;
-} else {
-    $arCatalogTopParams["ITEMS_COUNT"] = 5;
-}
-$GLOBALS["arCatalogTopFilter"] = [
-    "OFFERS" => [
-        "PROPERTY_STATUS_VALUE" => "Акция"
-    ]
-];
-$APPLICATION->IncludeComponent(
-    "bitrix:catalog.top",
+    "bitrix:catalog",
     "",
     Array(
-        "ACTION_VARIABLE" => "action",
-        "ADD_PICT_PROP" => "MORE_PHOTO",
-        "ADD_PROPERTIES_TO_BASKET" => "Y",
-        "ADD_TO_BASKET_ACTION" => "ADD",
-        "BASKET_URL" => "/personal/basket.php",
-        "BRAND_PROPERTY" => "BRAND_REF",
-        "CACHE_FILTER" => "N",
-        "CACHE_GROUPS" => "Y",
-        "CACHE_TIME" => "36000000",
-        "CACHE_TYPE" => "A",
-        "COMPARE_NAME" => "CATALOG_COMPARE_LIST",
-        "COMPARE_PATH" => "",
-        "COMPATIBLE_MODE" => "N",
-        "CONVERT_CURRENCY" => "Y",
-        "CURRENCY_ID" => CURRENCY_ID,
-        "CUSTOM_FILTER" => "",
-        "DATA_LAYER_NAME" => "dataLayer",
-        "DETAIL_URL" => "",
-        "DISCOUNT_PERCENT_POSITION" => "bottom-right",
-        "DISPLAY_COMPARE" => "N",
-        "ELEMENT_COUNT" => $arCatalogTopParams["ITEMS_COUNT"],
-        "ELEMENT_SORT_FIELD" => "sort",
-        "ELEMENT_SORT_FIELD2" => "id",
-        "ELEMENT_SORT_ORDER" => "asc",
-        "ELEMENT_SORT_ORDER2" => "desc",
-        "ENLARGE_PRODUCT" => "STRICT",
-        "FILTER_NAME" => "arCatalogTopFilter",
-        "HIDE_NOT_AVAILABLE" => "N",
-        "HIDE_NOT_AVAILABLE_OFFERS" => "N",
-        "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
-        "IBLOCK_TYPE" => "catalog",
-        "LABEL_PROP" => array("SALELEADER"),
-        "LABEL_PROP_MOBILE" => array(),
-        "LABEL_PROP_POSITION" => "top-left",
-        "LINE_ELEMENT_COUNT" => $arCatalogTopParams["LINE_ELEMENT_COUNT"],
-        "MESS_BTN_ADD_TO_BASKET" => "В корзину",
-        "MESS_BTN_BUY" => "Купить",
-        "MESS_BTN_COMPARE" => "Сравнить",
-        "MESS_BTN_DETAIL" => "Подробнее",
-        "MESS_NOT_AVAILABLE" => "Нет в наличии",
-        "MESS_RELATIVE_QUANTITY_FEW" => "мало",
-        "MESS_RELATIVE_QUANTITY_MANY" => "много",
-        "MESS_SHOW_MAX_QUANTITY" => "Наличие",
-        "OFFERS_CART_PROPERTIES" => array("COLOR_REF","SIZES_SHOES","SIZES_CLOTHES"),
-        "OFFERS_FIELD_CODE" => array("ID", "NAME", "PREVIEW_PICTURE", "CODE"),
-        "OFFERS_LIMIT" => "0",
-        "OFFERS_PROPERTY_CODE" => array("RAZMER", "TSVET", "CML2_ARTICLE", "STATUS", "PRICE_FROM"),
-        "OFFERS_SORT_FIELD" => "sort",
-        "OFFERS_SORT_FIELD2" => "id",
-        "OFFERS_SORT_ORDER" => "asc",
-        "OFFERS_SORT_ORDER2" => "desc",
-        "OFFER_ADD_PICT_PROP" => "MORE_PHOTO",
-        "OFFER_TREE_PROPS" => array("COLOR_REF","SIZES_SHOES"),
-        "PARTIAL_PRODUCT_PROPERTIES" => "N",
-        "PRICE_CODE" => array(PRICE_CODE),
-        "PRICE_VAT_INCLUDE" => "Y",
-        "PRODUCT_BLOCKS_ORDER" => "price,buttons",
-        "PRODUCT_DISPLAY_MODE" => "Y",
-        "PRODUCT_ID_VARIABLE" => "id",
-        "PRODUCT_PROPERTIES" => array("NEWPRODUCT"),
-        "PRODUCT_PROPS_VARIABLE" => "prop",
-        "PRODUCT_QUANTITY_VARIABLE" => "",
-        "PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false}]",
-        "PRODUCT_SUBSCRIPTION" => "Y",
-        "PROPERTY_CODE" => array(),
-        "PROPERTY_CODE_MOBILE" => array(),
-        "RELATIVE_QUANTITY_FACTOR" => "5",
-        "ROTATE_TIMER" => "30",
-        "SECTION_URL" => "",
-        "SEF_MODE" => "N",
-        "SEF_RULE" => "",
-        "SHOW_CLOSE_POPUP" => "N",
-        "SHOW_DISCOUNT_PERCENT" => "Y",
-        "SHOW_MAX_QUANTITY" => "N",
-        "SHOW_OLD_PRICE" => "Y",
-        "SHOW_PAGINATION" => "Y",
-        "SHOW_PRICE_COUNT" => "1",
-        "SHOW_SLIDER" => "Y",
-        "SLIDER_INTERVAL" => "3000",
-        "SLIDER_PROGRESS" => "N",
         "TEMPLATE_THEME" => "blue",
-        "USE_ENHANCED_ECOMMERCE" => "Y",
-        "USE_PRICE_COUNT" => "N",
-        "USE_PRODUCT_QUANTITY" => "Y",
-        "VIEW_MODE" => "SECTION",
-        "SHOW_PRODUCTS_".IBLOCK_CATALOG_CATALOGSKU => "Y",
-        "DEVICE_TYPE" => DEVICE_TYPE,
-        "IMAGE_SIZE" => $arCatalogTopParams["IMAGE_SIZE"],
-        "ALL_LINK" => "/actions/"
-    )
-);
-//end
-?>
-
-<section class="section banner_map">
-    <div class="container">
-        <div class="banner_map-item">
-            <?$APPLICATION->IncludeComponent(
-                "bitrix:main.include",
-                ".default",
-                [
-                    "AREA_FILE_SHOW" => "file",
-                    "PATH" => SITE_TEMPLATE_PATH . "/include/index/about-company.php"
-                ],
-                false
-            );?>
-        </div>
-        <?if (DEVICE_TYPE != "MOBILE") {
-            $APPLICATION->IncludeComponent(
-                "kDevelop:catalog.store.list",
-                "front-map",
-                Array(
-                    "PHONE" => "Y",
-                    "EMAIL" => "Y",
-                    "SCHEDULE" => "Y",
-                    "PATH_TO_ELEMENT" => "store/#store_id#",
-                    "MAP_TYPE" => "0",
-                    "SET_TITLE" => "N",
-                    "CACHE_TYPE" => "A",
-                    "CACHE_TIME" => "36000000"
-                )
-            );
-        }?>
-    </div>
-</section>
-
-<?
-//Новости
-$APPLICATION->IncludeComponent(
-    "bitrix:news.list",
-    "news-front",
-    [
-        "DISPLAY_DATE" => "Y",
-        "DISPLAY_NAME" => "Y",
-        "DISPLAY_PICTURE" => "Y",
-        "DISPLAY_PREVIEW_TEXT" => "Y",
+        "IBLOCK_TYPE" => "catalog",
+        "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
+        "HIDE_NOT_AVAILABLE" => "N",
+        "BASKET_URL" => "/personal/cart/",
+        "ACTION_VARIABLE" => "action",
+        "PRODUCT_ID_VARIABLE" => "id",
+        "SECTION_ID_VARIABLE" => "SECTION_ID",
+        "PRODUCT_QUANTITY_VARIABLE" => "quantity",
+        "ADD_PROPERTIES_TO_BASKET" => "Y",
+        "PRODUCT_PROPS_VARIABLE" => "prop",
+        "PARTIAL_PRODUCT_PROPERTIES" => "Y",
+        "COMMON_SHOW_CLOSE_POPUP" => "N",
+        "SEF_MODE" => "Y",
+        "SEF_FOLDER" => "/product-category/",
         "AJAX_MODE" => "N",
-        "IBLOCK_TYPE" => "content",
-        "IBLOCK_ID" => IBLOCK_CONTENT_NEWS,
-        "NEWS_COUNT" => "3",
-        "SORT_BY1" => "ACTIVE_FROM",
-        "SORT_ORDER1" => "DESC",
-        "SORT_BY2" => "SORT",
-        "SORT_ORDER2" => "ASC",
-        "FILTER_NAME" => "",
-        "FIELD_CODE" => Array("ID", "NAME"),
-        "PROPERTY_CODE" => Array(),
-        "CHECK_DATES" => "N",
-        "DETAIL_URL" => "",
-        "PREVIEW_TRUNCATE_LEN" => "",
-        "ACTIVE_DATE_FORMAT" => "d.m.Y",
-        "SET_TITLE" => "N",
-        "SET_BROWSER_TITLE" => "N",
-        "SET_META_KEYWORDS" => "N",
-        "SET_META_DESCRIPTION" => "N",
-        "SET_LAST_MODIFIED" => "Y",
-        "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
-        "ADD_SECTIONS_CHAIN" => "N",
-        "HIDE_LINK_WHEN_NO_DETAIL" => "Y",
-        "PARENT_SECTION" => "",
-        "PARENT_SECTION_CODE" => "",
-        "INCLUDE_SUBSECTIONS" => "Y",
-        "CACHE_TYPE" => "A",
-        "CACHE_TIME" => "3600",
-        "CACHE_FILTER" => "Y",
-        "CACHE_GROUPS" => "Y",
-        "DISPLAY_TOP_PAGER" => "N",
-        "DISPLAY_BOTTOM_PAGER" => "N",
-        "PAGER_TITLE" => "Новости",
-        "PAGER_SHOW_ALWAYS" => "Y",
-        "PAGER_TEMPLATE" => "",
-        "PAGER_DESC_NUMBERING" => "N",
-        "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-        "PAGER_SHOW_ALL" => "Y",
-        "PAGER_BASE_LINK_ENABLE" => "Y",
-        "SET_STATUS_404" => "N",
-        "SHOW_404" => "Y",
-        "MESSAGE_404" => "",
-        "PAGER_BASE_LINK" => "",
-        "PAGER_PARAMS_NAME" => "arrPager",
         "AJAX_OPTION_JUMP" => "N",
         "AJAX_OPTION_STYLE" => "Y",
         "AJAX_OPTION_HISTORY" => "N",
+        "CACHE_TYPE" => "A",
+        "CACHE_TIME" => "36000000",
+        "CACHE_FILTER" => "N",
+        "CACHE_GROUPS" => "Y",
+        "USE_MAIN_ELEMENT_SECTION" => "Y",
+        "SET_LAST_MODIFIED" => "N",
+        "SET_TITLE" => "N",
+        "ADD_SECTIONS_CHAIN" => "Y",
+        "ADD_ELEMENT_CHAIN" => "Y",
+        "USE_ELEMENT_COUNTER" => "Y",
+        "USE_SALE_BESTSELLERS" => "Y",
+        "COMPARE_POSITION_FIXED" => "Y",
+        "COMPARE_POSITION" => "top left",
+        "USE_FILTER" => "Y",
+        "FILTER_NAME" => "arCatalogFilter",
+        "FILTER_FIELD_CODE" => array(
+            0 => "",
+            1 => "",
+        ),
+        "FILTER_PROPERTY_CODE" => array(
+            0 => "",
+            1 => "",
+        ),
+        "FILTER_PRICE_CODE" => array(
+            0 => PRICE_CODE,
+        ),
+        "FILTER_OFFERS_FIELD_CODE" => array(
+            0 => "PREVIEW_PICTURE",
+            1 => "DETAIL_PICTURE",
+            2 => "",
+        ),
+        "FILTER_OFFERS_PROPERTY_CODE" => array(
+            0 => "",
+            1 => "",
+        ),
+        "USE_COMMON_SETTINGS_BASKET_POPUP" => "N",
+        "TOP_ADD_TO_BASKET_ACTION" => "ADD",
+        "SECTION_ADD_TO_BASKET_ACTION" => "ADD",
+        "DETAIL_ADD_TO_BASKET_ACTION" => array("BUY"),
+        "DETAIL_SHOW_BASIS_PRICE" => "Y",
+        "FILTER_VIEW_MODE" => "VERTICAL",
+        "USE_REVIEW" => "Y",
+        "MESSAGES_PER_PAGE" => "10",
+        "USE_CAPTCHA" => "Y",
+        "REVIEW_AJAX_POST" => "Y",
+        "PATH_TO_SMILE" => "/bitrix/images/forum/smile/",
+        "FORUM_ID" => "1",
+        "URL_TEMPLATES_READ" => "",
+        "SHOW_LINK_TO_FORUM" => "Y",
+        "POST_FIRST_MESSAGE" => "N",
+        "USE_COMPARE" => "Y",
+        "PRICE_CODE" => array(
+            0 => PRICE_CODE,
+        ),
+        "USE_PRICE_COUNT" => "N",
+        "SHOW_PRICE_COUNT" => "1",
+        "PRICE_VAT_INCLUDE" => "Y",
+        "PRICE_VAT_SHOW_VALUE" => "N",
+        "PRODUCT_PROPERTIES" => array(
+        ),
+        "USE_PRODUCT_QUANTITY" => "Y",
+        "CONVERT_CURRENCY" => "Y",
+        "CURRENCY_ID" => CURRENCY_ID,
+        "OFFERS_CART_PROPERTIES" => array(
+            0 => "COLOR_REF",
+            1 => "SIZES_SHOES",
+            2 => "SIZES_CLOTHES",
+        ),
+        "SHOW_TOP_ELEMENTS" => "N",
+        "SECTION_COUNT_ELEMENTS" => "N",
+        "SECTION_TOP_DEPTH" => "1",
+        "SECTIONS_VIEW_MODE" => "TEXT",
+        "SECTIONS_SHOW_PARENT_NAME" => "Y",
+        "PAGE_ELEMENT_COUNT" => $pageElemCount,
+        "LINE_ELEMENT_COUNT" => $elemsInRow,
+        "ELEMENT_SORT_FIELD" => (isset($_GET["sort_by"]) ? $_GET["sort_by"] : "sort"),
+        "ELEMENT_SORT_ORDER" => (isset($_GET["sort_by"]) ? $_GET["sort_order"] : "asc"),
+        "ELEMENT_SORT_FIELD2" => "PROPERTY_CML2_ARTICLE",
+        "ELEMENT_SORT_ORDER2" => "asc",
+        "LIST_PROPERTY_CODE" => array("is_main"),
+        "INCLUDE_SUBSECTIONS" => "Y",
+        "LIST_META_KEYWORDS" => "UF_KEYWORDS",
+        "LIST_META_DESCRIPTION" => "UF_META_DESCRIPTION",
+        "LIST_BROWSER_TITLE" => "UF_BROWSER_TITLE",
+        "LIST_OFFERS_FIELD_CODE" => array(
+            0 => "NAME",
+            1 => "PREVIEW_PICTURE",
+            2 => "CODE",
+        ),
+        "LIST_OFFERS_PROPERTY_CODE" => array("RAZMER", "TSVET", "CML2_ARTICLE", "STATUS", "PRICE_FROM"),
+        "LIST_OFFERS_LIMIT" => "0",
+        "SECTION_BACKGROUND_IMAGE" => "-",
+        "DETAIL_DETAIL_PICTURE_MODE" => "IMG",
+        "DETAIL_ADD_DETAIL_TO_SLIDER" => "N",
+        "DETAIL_DISPLAY_PREVIEW_TEXT_MODE" => "E",
+        "DETAIL_PROPERTY_CODE" => array("*"),
+        "DETAIL_META_KEYWORDS" => "KEYWORDS",
+        "DETAIL_META_DESCRIPTION" => "META_DESCRIPTION",
+        "DETAIL_BROWSER_TITLE" => "",
+        "DETAIL_SET_CANONICAL_URL" => "N",
+        "DETAIL_CHECK_SECTION_ID_VARIABLE" => "N",
+        "SHOW_DEACTIVATED" => "N",
+        "DETAIL_OFFERS_FIELD_CODE" => array(
+            0 => "NAME",
+            1 => "DETAIL_PICTURE",
+            2 => "CODE",
+            3 => "DETAIL_TEXT"
+        ),
+        "DETAIL_OFFERS_PROPERTY_CODE" => array("*"),
+        "DETAIL_BACKGROUND_IMAGE" => "-",
+        "DETAIL_STRICT_SECTION_CHECK" => "Y",
+        "LINK_IBLOCK_TYPE" => "catalog",
+        "LINK_IBLOCK_ID" => IBLOCK_CATALOG_CATALOGSKU,
+        "LINK_PROPERTY_SID" => "",
+        "LINK_ELEMENTS_URL" => "offer-#ELEMENT_CODE#/",
+        "USE_ALSO_BUY" => "Y",
+        "ALSO_BUY_ELEMENT_COUNT" => "3",
+        "ALSO_BUY_MIN_BUYES" => "2",
+        "DETAIL_SET_VIEWED_IN_COMPONENT" => "N",
+        "DISABLE_INIT_JS_IN_COMPONENT" => "N",
+        "USE_GIFTS_DETAIL" => "Y",
+        "USE_GIFTS_MAIN_PR_SECTION_LIST" => "Y",
+        "USE_GIFTS_SECTION" => "Y",
+        "GIFTS_DETAIL_BLOCK_TITLE" => "Выберите один из подарков",
+        "GIFTS_DETAIL_HIDE_BLOCK_TITLE" => "N",
+        "GIFTS_DETAIL_PAGE_ELEMENT_COUNT" => "3",
+        "GIFTS_DETAIL_TEXT_LABEL_GIFT" => "Подарок",
+        "GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE" => "Выберите один из товаров, чтобы получить подарок",
+        "GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE" => "N",
+        "GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT" => "3",
+        "GIFTS_MESS_BTN_BUY" => "Выбрать",
+        "GIFTS_SECTION_LIST_BLOCK_TITLE" => "Подарки к товарам этого раздела",
+        "GIFTS_SECTION_LIST_HIDE_BLOCK_TITLE" => "N",
+        "GIFTS_SECTION_LIST_PAGE_ELEMENT_COUNT" => "3",
+        "GIFTS_SECTION_LIST_TEXT_LABEL_GIFT" => "Подарок",
+        "GIFTS_SHOW_DISCOUNT_PERCENT" => "Y",
+        "GIFTS_SHOW_IMAGE" => "Y",
+        "GIFTS_SHOW_NAME" => "Y",
+        "GIFTS_SHOW_OLD_PRICE" => "Y",
+        "USE_STORE" => "Y",
+        "STORES" => array(STORE_ID),
+        "USE_MIN_AMOUNT" => "N",
+        "USER_FIELDS" => array(""),
+        "FIELDS" => array("ADDRESS", "PHONE"),
+        "SHOW_EMPTY_STORE" => "Y",
+        "SHOW_GENERAL_STORE_INFORMATION" => "N",
+        "STORE_PATH" => "/store/#store_id#",
+        "MAIN_TITLE" => "Наличие на складах",
+        "USE_BIG_DATA" => "Y",
+        "BIG_DATA_RCM_TYPE" => "bestsell",
+        "OFFERS_SORT_FIELD" => "sort",
+        "OFFERS_SORT_ORDER" => "asc",
+        "OFFERS_SORT_FIELD2" => "id",
+        "OFFERS_SORT_ORDER2" => "desc",
+        "PAGER_TEMPLATE" => $pagerTmp,
+        "DISPLAY_TOP_PAGER" => "N",
+        "DISPLAY_BOTTOM_PAGER" => "Y",
+        "PAGER_TITLE" => "Товары",
+        "PAGER_SHOW_ALWAYS" => "N",
+        "PAGER_DESC_NUMBERING" => "N",
+        "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000000",
+        "PAGER_SHOW_ALL" => "N",
+        "PAGER_BASE_LINK_ENABLE" => "Y",
+        "PAGER_BASE_LINK" => "",
+        "PAGER_PARAMS_NAME" => "arrPager",
+        "SET_STATUS_404" => "N",
+        "SHOW_404" => "Y",
+        "MESSAGE_404" => "",
+        "ADD_PICT_PROP" => "-",
+        "LABEL_PROP" => "NEWPRODUCT",
+        "PRODUCT_DISPLAY_MODE" => "Y",
+        "OFFER_ADD_PICT_PROP" => "MORE_PHOTO",
+        "OFFER_TREE_PROPS" => array("RAZMER", "TSVET", "CML2_ARTICLE", "STATUS"),
+        "DETAIL_DISPLAY_NAME" => "Y",
+        "SHOW_DISCOUNT_PERCENT" => "Y",
+        "SHOW_OLD_PRICE" => "Y",
+        "DETAIL_SHOW_MAX_QUANTITY" => "N",
+        "MESS_BTN_BUY" => "Купить",
+        "MESS_BTN_ADD_TO_BASKET" => "В корзину",
+        "MESS_BTN_COMPARE" => "Сравнение",
+        "MESS_BTN_DETAIL" => "Подробнее",
+        "MESS_NOT_AVAILABLE" => "Нет в наличии",
+        "TOP_VIEW_MODE" => "SECTION",
+        "DETAIL_USE_VOTE_RATING" => "Y",
+        "DETAIL_VOTE_DISPLAY_AS_RATING" => "rating",
+        "DETAIL_USE_COMMENTS" => "Y",
+        "DETAIL_BLOG_USE" => "Y",
+        "DETAIL_VK_USE" => "N",
+        "DETAIL_FB_USE" => "Y",
+        "DETAIL_FB_APP_ID" => "",
+        "DETAIL_BRAND_USE" => "N",
+        "SIDEBAR_SECTION_SHOW" => "Y",
+        "SIDEBAR_DETAIL_SHOW" => "N",
+        "SIDEBAR_PATH" => "/examples/index_inc.php",
         "AJAX_OPTION_ADDITIONAL" => "",
-        "ITEMS_IN_ROW" => (DEVICE_TYPE == "DESKTOP" ? 3 : 1),
-    ]
+        "SEF_URL_TEMPLATES" => [
+            "sections" => "",
+            "section" => "#SECTION_CODE_PATH#/",
+            "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
+            "compare" => "/compare/"
+        ],
+        "SECTIONS_ITEMS_IN_ROW" => $itemsInRow,
+        "SECTION_ITEMS_IN_ROW" => $itemsInRowInner,
+        "SECTIONS_IMAGE_SIZE" => $arImageSize,
+        "ELEMENT_IMAGE_SIZE" => $arImageSize,
+        "DETAIL_IMAGE_SIZE" => $arDetailSize,
+        "DEVICE_TYPE" => DEVICE_TYPE,
+        "INSTANT_RELOAD" => true
+    ),
+    false
 );
-//end
-?>
 
-<?require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');?>
+require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');
