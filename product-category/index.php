@@ -32,7 +32,7 @@ $APPLICATION->SetTitle(
 //подготовка парметров компонента
 if (DEVICE_TYPE == "DESKTOP") {
     $itemsInRow = 5;
-    $itemsInRowInner = 4;
+    $itemsInRowInner = 6;
     $elemsInRow = 4;
     $pageElemCount = 12;
     $pagerTmp = ".default";
