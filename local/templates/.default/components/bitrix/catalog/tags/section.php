@@ -109,10 +109,9 @@ $pregCheck = array();
 preg_match('/PAGEN_(.*?)=(\d+)/i', $APPLICATION->GetCurUri(), $pregCheck);
 $currentPage = (( intval($pregCheck[2]) > 0 ) ? false : true);
 
-if(!$arResult["VARIABLES"]["SMART_FILTER_PATH"] && $currentPage)
-{
-    if (strlen($arSection["DESCRIPTION"]) > 0) 
-        echo '<div class="catalog_section-content">'.$arSection["DESCRIPTION"].'</div>';
+    if (strlen($arParams["DESCRIPTION"]) > 0) 
+	{
+        echo '<div class="catalog_section-content">'.$arParams["DESCRIPTION"].'</div>';
 }
 
 echo '</div>';
@@ -154,7 +153,7 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
         ['HIDE_ICONS' => 'Y']
     );
 }?>
-
+222
 <section class="section<?if ($hasChildSections) :?> relative<?endif?>">
     <div class="container">
         <div class="aside-wrap">
@@ -221,70 +220,7 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
                     ["HIDE_ICONS" => "Y"]
                 );
                 //end
-?>
 
-<?
-if(!empty($arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"])) { 
-$GLOBALS['tagFilter'] = array("ID"=> $arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"]);
-$APPLICATION->IncludeComponent(
-	"bitrix:news.list",
-	"tags_list",
-	Array(
-		"ACTIVE_DATE_FORMAT" => "d.m.Y",
-		"ADD_SECTIONS_CHAIN" => "N",
-		"AJAX_MODE" => "N",
-		"AJAX_OPTION_ADDITIONAL" => "",
-		"AJAX_OPTION_HISTORY" => "N",
-		"AJAX_OPTION_JUMP" => "N",
-		"AJAX_OPTION_STYLE" => "N",
-		"CACHE_FILTER" => "N",
-		"CACHE_GROUPS" => "Y",
-		"CACHE_TIME" => "36000000",
-		"CACHE_TYPE" => "A",
-		"CHECK_DATES" => "Y",
-		"DETAIL_URL" => "#SITE_DIR#/product-category/".$arResult["VARIABLES"]["SECTION_CODE_PATH"]."/#ELEMENT_CODE#/",
-		"DISPLAY_BOTTOM_PAGER" => "N",
-		"DISPLAY_DATE" => "N",
-		"DISPLAY_NAME" => "N",
-		"DISPLAY_PICTURE" => "N",
-		"DISPLAY_PREVIEW_TEXT" => "N",
-		"DISPLAY_TOP_PAGER" => "N",
-		"FIELD_CODE" => array("", ""),
-		"FILTER_NAME" => "tagFilter",
-		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
-		"IBLOCK_ID" => IBLOCK_CATALOG_TAGS,
-		"IBLOCK_TYPE" => "catalog",
-		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
-		"INCLUDE_SUBSECTIONS" => "N",
-		"MESSAGE_404" => "",
-		"NEWS_COUNT" => "20",
-		"PAGER_BASE_LINK_ENABLE" => "N",
-		"PAGER_DESC_NUMBERING" => "N",
-		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-		"PAGER_SHOW_ALL" => "N",
-		"PAGER_SHOW_ALWAYS" => "N",
-		"PAGER_TEMPLATE" => ".default",
-		"PAGER_TITLE" => "Новости",
-		"PARENT_SECTION" => "",
-		"PARENT_SECTION_CODE" => "",
-		"PREVIEW_TRUNCATE_LEN" => "",
-		"PROPERTY_CODE" => array("", ""),
-		"SET_BROWSER_TITLE" => "N",
-		"SET_LAST_MODIFIED" => "N",
-		"SET_META_DESCRIPTION" => "N",
-		"SET_META_KEYWORDS" => "N",
-		"SET_STATUS_404" => "N",
-		"SET_TITLE" => "Y",
-		"SHOW_404" => "N",
-		"SORT_BY1" => "ACTIVE_FROM",
-		"SORT_BY2" => "SORT",
-		"SORT_ORDER1" => "DESC",
-		"SORT_ORDER2" => "ASC",
-		"STRICT_SECTION_CHECK" => "N"
-	)
-);
-															} ?>
-<?
                 //сортировка и внешний вид
                 $tmp = "catalog_controls";
                 if ($arParams["DEVICE_TYPE"] != "DESKTOP") {
