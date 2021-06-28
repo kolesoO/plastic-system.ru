@@ -225,6 +225,10 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
 
 <?
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+if(!empty($arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"])) { 
+>>>>>>> Stashed changes
 =======
 if(!empty($arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"])) { 
 >>>>>>> Stashed changes
@@ -286,7 +290,12 @@ $APPLICATION->IncludeComponent(
 		"STRICT_SECTION_CHECK" => "N"
 	)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 );?>
+=======
+);
+															} ?>
+>>>>>>> Stashed changes
 =======
 );
 															} ?>

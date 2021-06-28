@@ -8,7 +8,11 @@ $IPROPERTY  = $ipropValues->getValues();
 //подготовка парметров компонента
 if (DEVICE_TYPE == "DESKTOP") {
     $itemsInRow = 5;
+<<<<<<< Updated upstream
     $itemsInRowInner = 4;
+=======
+    $itemsInRowInner = 6;
+>>>>>>> Stashed changes
     $elemsInRow = 4;
     $pageElemCount = 12;
     $pagerTmp = ".default";
