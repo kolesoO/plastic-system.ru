@@ -31,7 +31,6 @@ if ($arOffer) {
 
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
 $arIPropValues = $rsIProps->getValues();
-var_dump($arIPropValues);
 
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
     $APPLICATION->SetPageProperty(
