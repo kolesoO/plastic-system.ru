@@ -31,41 +31,28 @@ if ($arOffer) {
 
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
 $arIPropValues = $rsIProps->getValues();
+var_dump($arIPropValues);
 
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
     $APPLICATION->SetPageProperty(
         "title",
-        MultiSite::valueOrDefault(
-            $arResult['PROPERTIES']["META_MT_" . strtoupper(SITE_ID)]['VALUE'],
-            $arIPropValues["ELEMENT_META_TITLE"]
-        )
+        $arIPropValues["ELEMENT_META_TITLE"]
     );
 }
 if ($arIPropValues["ELEMENT_META_KEYWORDS"]) {
     $APPLICATION->SetPageProperty(
         "keywords",
-        MultiSite::valueOrDefault(
-            $arResult['PROPERTIES']["META_KW_" . strtoupper(SITE_ID)]['VALUE'],
-            $arIPropValues["ELEMENT_META_KEYWORDS"]
-        )
+        $arIPropValues["ELEMENT_META_KEYWORDS"]
     );
 }
 if ($arIPropValues["ELEMENT_META_DESCRIPTION"]) {
     $APPLICATION->SetPageProperty(
         "description",
-        MultiSite::valueOrDefault(
-            $arResult['PROPERTIES']["META_DS_" . strtoupper(SITE_ID)]['VALUE'],
-            $arIPropValues["ELEMENT_META_DESCRIPTION"]
-        )
+        $arIPropValues["ELEMENT_META_DESCRIPTION"]
     );
 }
 if ($arIPropValues["ELEMENT_PAGE_TITLE"]) {
-    $APPLICATION->SetTitle(
-        MultiSite::valueOrDefault(
-            $arResult['PROPERTIES']["META_T_" . strtoupper(SITE_ID)]['VALUE'],
-            $arIPropValues["ELEMENT_PAGE_TITLE"]
-        )
-    );
+    $APPLICATION->SetTitle($arIPropValues["ELEMENT_PAGE_TITLE"]);
 }
 //end
 

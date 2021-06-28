@@ -166,7 +166,11 @@ $componentElementParams = array(
     "OFFER_CODE_SELECTED" => (strlen($arResult["VARIABLES"]["SKU_CODE"]) > 0 ? str_replace(\kDevelop\Help\Tools::getOfferPrefixInUrl(), "", $arResult["VARIABLES"]["SKU_CODE"]) : ""),
 
     "IMAGE_SIZE" => $arParams["DETAIL_IMAGE_SIZE"],
-    "DEVICE_TYPE" => $arParams["DEVICE_TYPE"]
+    "DEVICE_TYPE" => $arParams["DEVICE_TYPE"],
+
+    'SET_BROWSER_TITLE' => 'N',
+    'SET_META_KEYWORDS' => 'N',
+    'SET_META_DESCRIPTION' => 'N',
 );
 
 if (isset($arParams['USER_CONSENT']))
