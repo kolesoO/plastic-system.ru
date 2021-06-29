@@ -153,7 +153,6 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
         ['HIDE_ICONS' => 'Y']
     );
 }?>
-222
 <section class="section<?if ($hasChildSections) :?> relative<?endif?>">
     <div class="container">
         <div class="aside-wrap">
@@ -194,32 +193,7 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
                 </div>
             <?endif?>
             <div class="aside-content">
-                <?//подразделы
-                $APPLICATION->IncludeComponent(
-                    "bitrix:catalog.section.list",
-                    "",
-                    [
-                        "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
-                        "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-                        "SECTION_ID" => $arSection["ID"],
-                        "SECTION_CODE" => $arSection["CODE"],
-                        "CACHE_TYPE" => $arParams["CACHE_TYPE"],
-                        "CACHE_TIME" => $arParams["CACHE_TIME"],
-                        "CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
-                        "COUNT_ELEMENTS" => $arParams["SECTION_COUNT_ELEMENTS"],
-                        "TOP_DEPTH" => $arParams["SECTION_TOP_DEPTH"],
-                        "SECTION_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["section"],
-                        "VIEW_MODE" => $arParams["SECTIONS_VIEW_MODE"],
-                        "SHOW_PARENT_NAME" => $arParams["SECTIONS_SHOW_PARENT_NAME"],
-                        "HIDE_SECTION_NAME" => (isset($arParams["SECTIONS_HIDE_SECTION_NAME"]) ? $arParams["SECTIONS_HIDE_SECTION_NAME"] : "N"),
-                        "ADD_SECTIONS_CHAIN" => (isset($arParams["ADD_SECTIONS_CHAIN"]) ? $arParams["ADD_SECTIONS_CHAIN"] : ''),
-                        "ITEMS_IN_ROW" => $arParams["SECTION_ITEMS_IN_ROW"],
-                        "IMAGE_SIZE" => $arParams["SECTIONS_IMAGE_SIZE"]
-                    ],
-                    $component,
-                    ["HIDE_ICONS" => "Y"]
-                );
-                //end
+                <?
 
                 //сортировка и внешний вид
                 $tmp = "catalog_controls";

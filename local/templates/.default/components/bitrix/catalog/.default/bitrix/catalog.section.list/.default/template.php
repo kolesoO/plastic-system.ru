@@ -1,7 +1,7 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
 
 <?if ($arResult["SECTION_COUNT"] > 0) :?>
-    <div class="table_list sections" items-count="<?=$arParams["ITEMS_IN_ROW"]?>">
+    <div class="table_list sections section_items" items-count="<?=$arParams["ITEMS_IN_ROW"]?>">
         <?foreach ($arResult["SECTIONS"] as $arSection) :
             $this->AddEditAction(
                 $arSection['ID'],
