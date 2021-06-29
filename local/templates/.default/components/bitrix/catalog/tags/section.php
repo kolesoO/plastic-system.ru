@@ -69,6 +69,8 @@ elseif ($obCache->StartDataCache())
         "arPrice" => $arPrice
     ]);
 }
+$APPLICATION->AddChainItem($arSection["NAME"], "/product-category/".$arSection["CODE"]."/");
+
 if (!isset($arSection))
     $arSection = [];
 
