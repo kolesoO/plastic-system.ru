@@ -21,38 +21,38 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
 $arOffer["CAN_BUY"] = $arOffer["CAN_BUY"] && $arPrice["PRICE"] > 0;
 
 //seo fields
-if ($arOffer) {
-    $seoIblockId = $arParams["LINK_IBLOCK_ID"];
-    $seoItemId = $arOffer["ID"];
-} else {
-    $seoIblockId = $arParams["IBLOCK_ID"];
-    $seoItemId = $arResult["ID"];
-}
-
-$rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
-$arIPropValues = $rsIProps->getValues();
-
-if ($arIPropValues["ELEMENT_META_TITLE"]) {
-    $APPLICATION->SetPageProperty(
-        "title",
-        $arIPropValues["ELEMENT_META_TITLE"]
-    );
-}
-if ($arIPropValues["ELEMENT_META_KEYWORDS"]) {
-    $APPLICATION->SetPageProperty(
-        "keywords",
-        $arIPropValues["ELEMENT_META_KEYWORDS"]
-    );
-}
-if ($arIPropValues["ELEMENT_META_DESCRIPTION"]) {
-    $APPLICATION->SetPageProperty(
-        "description",
-        $arIPropValues["ELEMENT_META_DESCRIPTION"]
-    );
-}
-if ($arIPropValues["ELEMENT_PAGE_TITLE"]) {
-    $APPLICATION->SetTitle($arIPropValues["ELEMENT_PAGE_TITLE"]);
-}
+//if ($arOffer) {
+//    $seoIblockId = $arParams["LINK_IBLOCK_ID"];
+//    $seoItemId = $arOffer["ID"];
+//} else {
+//    $seoIblockId = $arParams["IBLOCK_ID"];
+//    $seoItemId = $arResult["ID"];
+//}
+//
+//$rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
+//$arIPropValues = $rsIProps->getValues();
+//
+//if ($arIPropValues["ELEMENT_META_TITLE"]) {
+//    $APPLICATION->SetPageProperty(
+//        "title",
+//        $arIPropValues["ELEMENT_META_TITLE"]
+//    );
+//}
+//if ($arIPropValues["ELEMENT_META_KEYWORDS"]) {
+//    $APPLICATION->SetPageProperty(
+//        "keywords",
+//        $arIPropValues["ELEMENT_META_KEYWORDS"]
+//    );
+//}
+//if ($arIPropValues["ELEMENT_META_DESCRIPTION"]) {
+//    $APPLICATION->SetPageProperty(
+//        "description",
+//        $arIPropValues["ELEMENT_META_DESCRIPTION"]
+//    );
+//}
+//if ($arIPropValues["ELEMENT_PAGE_TITLE"]) {
+//    $APPLICATION->SetTitle($arIPropValues["ELEMENT_PAGE_TITLE"]);
+//}
 //end
 
 if (!empty($templateData['TEMPLATE_LIBRARY']))
