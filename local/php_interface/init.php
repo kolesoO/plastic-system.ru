@@ -1,7 +1,6 @@
 <?
 use Bitrix\Main;
 use kDevelop\Help\Tools;
-use kDevelop\MetaTemplates\CurrentStoreTemplate;
 use kDevelop\Service\Catalog;
 use kDevelop\Service\Order;
 use kDevelop\Settings\Store;
@@ -53,5 +52,3 @@ if (strpos($APPLICATION->GetCurDir(), "/bitrix/admin") === false) {
         $rsManager->addEventHandler("iblock", "OnBeforeIBlockSectionUpdate", [Catalog::class, "transformElementFields"], false, 100);
     }
 }
-
-$rsManager->addEventHandler('iblock', 'OnTemplateGetFunctionClass', [CurrentStoreTemplate::class, 'eventHandler'], false, 400);

@@ -17,6 +17,25 @@ class CurrentStoreTemplate extends FunctionBase
     /** @var array|null */
     private static $cache = null;
 
+    public static function calculateForce(string $value)
+    {
+        if (!preg_match('/\{' . self::TEMPLATE . '\s([a-zA-Z0-9_]+)\}/', $value, $matches)) {
+            return $value;
+        }
+
+        if (!$matches[1]) {
+            return $value;
+        }
+
+        $instance = new self();
+
+        return str_replace(
+            $matches[0],
+            $instance->calculate([$matches[1]]),
+            $value
+        );
+    }
+
     /**
      * @return EventResult|void
      */

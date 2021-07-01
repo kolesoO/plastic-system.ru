@@ -2,6 +2,7 @@
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
+use kDevelop\MetaTemplates\CurrentStoreTemplate;
 use kDevelop\Service\MultiSite;
 
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
@@ -468,16 +469,28 @@ $APPLICATION->IncludeComponent(
 //seo fields
 $rsIProps = new \Bitrix\Iblock\InheritedProperty\SectionValues($arParams["IBLOCK_ID"], $sectionId);
 $arIPropValues = $rsIProps->getValues();
+
 if ($arIPropValues["SECTION_META_TITLE"]) {
-    $APPLICATION->SetPageProperty("title", $arIPropValues["SECTION_META_TITLE"]);
+    $APPLICATION->SetPageProperty(
+        "title",
+        CurrentStoreTemplate::calculateForce($arIPropValues["SECTION_META_TITLE"])
+    );
 }
 if ($arIPropValues["SECTION_META_KEYWORDS"]) {
-    $APPLICATION->SetPageProperty("keywords", $arIPropValues["SECTION_META_KEYWORDS"]);
+    $APPLICATION->SetPageProperty(
+        "keywords",
+        CurrentStoreTemplate::calculateForce($arIPropValues["SECTION_META_KEYWORDS"])
+    );
 }
 if ($arIPropValues["SECTION_META_DESCRIPTION"]) {
-    $APPLICATION->SetPageProperty("description", $arIPropValues["SECTION_META_DESCRIPTION"]);
+    $APPLICATION->SetPageProperty(
+        "description",
+        CurrentStoreTemplate::calculateForce($arIPropValues["SECTION_META_DESCRIPTION"])
+    );
 }
 if ($arIPropValues["SECTION_PAGE_TITLE"]) {
-    $APPLICATION->SetTitle($arIPropValues["SECTION_PAGE_TITLE"]);
+    $APPLICATION->SetTitle(
+        CurrentStoreTemplate::calculateForce($arIPropValues["SECTION_PAGE_TITLE"])
+    );
 }
 //end
