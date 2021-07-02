@@ -27,27 +27,38 @@ global $CACHE_MANAGER;
 
 $obCache = new CPHPCache();
 
-#Получаем свойства UF текущего раздела
-$arResult["SECTION"]["UF_PROP"] = CIBlockSection::GetList(array("SORT"=>"ASC"),array("IBLOCK_ID"=>$arParams["IBLOCK_ID"],"ID"=>$arResult["VARIABLES"]["SECTION_ID"]),false,array("UF_*","ID"))->Fetch();
-$arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"] = MultiSite::valueOrDefault(
-    $arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW_" . strtoupper(SITE_ID)],
-    $arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"]
-);
-
 //даныне по текущему раделу
 $arSectionFilter = [
     "IBLOCK_ID" => $arParams["IBLOCK_ID"],
     "CODE" => $arResult["VARIABLES"]["SECTION_CODE"]
 ];
-if ($obCache->InitCache($arParams["CACHE_TIME"], serialize($arSectionFilter), "/iblock/catalog"))
+$cacheKey = serialize(array_merge($arSectionFilter, ['SITE_ID' => SITE_ID]));
+
+if ($obCache->InitCache($arParams["CACHE_TIME"], $cacheKey, "/iblock/catalog"))
 {
     extract($obCache->GetVars(), EXTR_OVERWRITE);
 }
 elseif ($obCache->StartDataCache())
 {
-    $arSection = \CIBlockSection::GetList([],$arSectionFilter)->fetch();
+    $arSection = \CIBlockSection::GetList(
+            [],
+            $arSectionFilter,
+        false,
+        ['ID', 'CODE', 'DETAIL_PICTURE', 'DESCRIPTION', 'UF_*']
+    )->fetch();
+
     if ($arSection)
     {
+        $arSection["UF_DESCR_BELOW"] = MultiSite::valueOrDefault(
+            $arSection["UF_DESCR_BELOW_" . strtoupper(SITE_ID)],
+            $arSection["UF_DESCR_BELOW"]
+        );
+
+        $arSection['DESCRIPTION'] = MultiSite::valueOrDefault(
+            $arSection["UF_DESCR_" . strtoupper(SITE_ID)],
+            $arSection["DESCRIPTION"]
+        );
+
         $rsChildSections = \CIBlockSection::GetList(
             [],
             [
@@ -60,6 +71,7 @@ elseif ($obCache->StartDataCache())
         );
         $hasChildSections = $rsChildSections->SelectedRowsCount() > 0;
         $picturePath = \CFile::GetPath($arSection["DETAIL_PICTURE"]);
+
         if(defined("BX_COMP_MANAGED_CACHE"))
         {
             $CACHE_MANAGER->StartTagCache("/iblock/catalog");
@@ -69,7 +81,9 @@ elseif ($obCache->StartDataCache())
     }
 
     if (\Bitrix\Main\Loader::includeModule('catalog'))
+    {
         $arPrice = \CCatalogGroup::GetList([],["NAME" => $arParams["PRICE_CODE"][0]])->fetch();
+    }
 
     //$obCache->EndDataCache(compact($arSection, $picturePath, $hasChildSections, $arPrice));
     $obCache->EndDataCache([
@@ -79,6 +93,7 @@ elseif ($obCache->StartDataCache())
         "arPrice" => $arPrice
     ]);
 }
+
 if (!isset($arSection))
     $arSection = [];
 
@@ -238,8 +253,8 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
 ?>
 
 <?
-if(!empty($arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"])) {
-$GLOBALS['tagFilter'] = array("ID"=> $arResult["SECTION"]["UF_PROP"]["UF_TAGS_LIST"]);
+if(!empty($arSection["UF_TAGS_LIST"])) {
+$GLOBALS['tagFilter'] = array("ID"=> $arSection["UF_TAGS_LIST"]);
 $APPLICATION->IncludeComponent(
 	"bitrix:news.list",
 	"tags_list",
@@ -457,8 +472,8 @@ $APPLICATION->IncludeComponent(
                 </div>
 
                 <?#Описание под списком элементов:
-                if($arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"])
-                    echo '<div class="aside-content__description">'.$arResult["SECTION"]["UF_PROP"]["UF_DESCR_BELOW"].'</div>';
+                if($arSection["UF_DESCR_BELOW"])
+                    echo '<div class="aside-content__description">'.$arSection["UF_DESCR_BELOW"].'</div>';
                 ?>
             </div>
         </div>
