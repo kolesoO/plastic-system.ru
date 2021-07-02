@@ -13,7 +13,7 @@ class MultiSite
 
     public static function valueOrDefault(?string $value, ?string $default): ?string
     {
-        if (!$value) {
+        if (is_null($value)) {
             return $default;
         }
 

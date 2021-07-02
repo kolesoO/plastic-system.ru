@@ -54,6 +54,10 @@ elseif ($obCache->StartDataCache())
             $arSection["UF_DESCR_BELOW"]
         );
 
+        if (array_key_exists("UF_DESCR_" . strtoupper(SITE_ID), $arSection)) {
+            $arSection["UF_DESCR_" . strtoupper(SITE_ID)] = (string) $arSection["UF_DESCR_" . strtoupper(SITE_ID)];
+        }
+
         $arSection['DESCRIPTION'] = MultiSite::valueOrDefault(
             $arSection["UF_DESCR_" . strtoupper(SITE_ID)],
             $arSection["DESCRIPTION"]
