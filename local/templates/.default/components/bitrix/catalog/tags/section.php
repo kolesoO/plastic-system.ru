@@ -70,7 +70,7 @@ elseif ($obCache->StartDataCache())
     ]);
 }
 $APPLICATION->AddChainItem($arSection["NAME"], "/product-category/".$arSection["CODE"]."/");
-
+$APPLICATION->AddChainItem($arParams["TAG_NAME"], "");
 if (!isset($arSection))
     $arSection = [];
 
@@ -362,6 +362,7 @@ if ($arParams["DEVICE_TYPE"] == "MOBILE")
         </div>
     </div>
 </section>
+
 
 <?
 //seo fields
