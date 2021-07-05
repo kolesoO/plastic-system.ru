@@ -1,7 +1,7 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
 
 <?if ($arResult["SECTION_COUNT"] > 0) :?>
-    <div class="table_list sections" items-count="<?=$arParams["ITEMS_IN_ROW"]?>">
+    <div class="table_list sections section_items" items-count="<?=$arParams["ITEMS_IN_ROW"]?>">
         <?foreach ($arResult["SECTIONS"] as $arSection) :
             $this->AddEditAction(
                 $arSection['ID'],
@@ -21,8 +21,8 @@
                 </div>
                 <div class="table_list-title"><?=$arSection["NAME"]?></div>
                 <?
-                if($arSection["UF_PROP"]["UF_SHORT_DESCRIPTION"])
-                    echo '<div class="table-list__description">'.$arSection["UF_PROP"]["UF_SHORT_DESCRIPTION"].'</div>';
+                if($arSection["UF_SHORT_DESCR"])
+                    echo '<div class="table-list__description">'.$arSection["UF_SHORT_DESCR"].'</div>';
                 ?>
             </a>
         <?endforeach?>

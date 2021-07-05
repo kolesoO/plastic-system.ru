@@ -1,6 +1,9 @@
 <? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
+use Bitrix\Iblock\InheritedProperty\ElementValues;
 use Bitrix\Main\Loader;
+use kDevelop\MetaTemplates\CurrentStoreTemplate;
+use kDevelop\Service\MultiSite;
 
 /**
  * @var array $templateData
@@ -12,6 +15,7 @@ use Bitrix\Main\Loader;
 global $APPLICATION;
 
 $arOffer = $arResult["OFFERS"][$arResult["OFFER_ID_SELECTED"]];
+
 if (!$arOffer) {
     $arOffer = $arResult;
 }
@@ -19,26 +23,31 @@ $arPrice = $arOffer["ITEM_PRICES"][$arOffer["ITEM_PRICE_SELECTED"]];
 $arOffer["CAN_BUY"] = $arOffer["CAN_BUY"] && $arPrice["PRICE"] > 0;
 
 //seo fields
-if ($arOffer) {
-    $seoIblockId = $arParams["LINK_IBLOCK_ID"];
-    $seoItemId = $arOffer["ID"];
-} else {
-    $seoIblockId = $arParams["IBLOCK_ID"];
-    $seoItemId = $arResult["ID"];
-}
-$rsIProps = new \Bitrix\Iblock\InheritedProperty\ElementValues($seoIblockId, $seoItemId);
+$rsIProps = new ElementValues($arParams["IBLOCK_ID"], $arResult["ID"]);
 $arIPropValues = $rsIProps->getValues();
+
 if ($arIPropValues["ELEMENT_META_TITLE"]) {
-    $APPLICATION->SetPageProperty("title", $arIPropValues["ELEMENT_META_TITLE"]);
+    $APPLICATION->SetPageProperty(
+        "title",
+        CurrentStoreTemplate::calculateForce($arIPropValues["ELEMENT_META_TITLE"])
+    );
 }
 if ($arIPropValues["ELEMENT_META_KEYWORDS"]) {
-    $APPLICATION->SetPageProperty("keywords", $arIPropValues["ELEMENT_META_KEYWORDS"]);
+    $APPLICATION->SetPageProperty(
+        "keywords",
+        CurrentStoreTemplate::calculateForce($arIPropValues["ELEMENT_META_KEYWORDS"])
+    );
 }
 if ($arIPropValues["ELEMENT_META_DESCRIPTION"]) {
-    $APPLICATION->SetPageProperty("description", $arIPropValues["ELEMENT_META_DESCRIPTION"]);
+    $APPLICATION->SetPageProperty(
+        "description",
+        CurrentStoreTemplate::calculateForce($arIPropValues["ELEMENT_META_DESCRIPTION"])
+    );
 }
 if ($arIPropValues["ELEMENT_PAGE_TITLE"]) {
-    $APPLICATION->SetTitle($arIPropValues["ELEMENT_PAGE_TITLE"]);
+    $APPLICATION->SetTitle(
+        CurrentStoreTemplate::calculateForce($arIPropValues["ELEMENT_PAGE_TITLE"])
+    );
 }
 //end
 

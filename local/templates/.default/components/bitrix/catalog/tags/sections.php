@@ -1,8 +1,4 @@
-<?
-
-use kDevelop\Service\MultiSite;
-
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 /** @var array $arParams */
 /** @var array $arResult */
@@ -37,11 +33,7 @@ $APPLICATION->IncludeComponent(
 		"HIDE_SECTION_NAME" => (isset($arParams["SECTIONS_HIDE_SECTION_NAME"]) ? $arParams["SECTIONS_HIDE_SECTION_NAME"] : "N"),
 		"ADD_SECTIONS_CHAIN" => (isset($arParams["ADD_SECTIONS_CHAIN"]) ? $arParams["ADD_SECTIONS_CHAIN"] : ''),
         "ITEMS_IN_ROW" => $arParams["SECTIONS_ITEMS_IN_ROW"],
-        "IMAGE_SIZE" => $arParams["SECTIONS_IMAGE_SIZE"],
-        "SECTION_USER_FIELDS" => array_merge(
-            MultiSite::getStringOptions('UF_DESCR_BELOW'),
-            MultiSite::getStringOptions('UF_SHORT_DESCR')
-        ),
+        "IMAGE_SIZE" => $arParams["SECTIONS_IMAGE_SIZE"]
 	),
     $component,
     array("HIDE_ICONS" => "Y")

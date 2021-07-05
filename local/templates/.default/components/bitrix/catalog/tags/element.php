@@ -36,9 +36,6 @@ $componentElementParams = array(
     'CACHE_TIME' => $arParams['CACHE_TIME'],
     'CACHE_GROUPS' => $arParams['CACHE_GROUPS'],
     'SET_TITLE' => $arParams["SET_TITLE"],
-    'SET_BROWSER_TITLE' => 'N',
-    'SET_META_KEYWORDS' => 'N',
-    'SET_META_DESCRIPTION' => 'N',
     'SET_LAST_MODIFIED' => $arParams['SET_LAST_MODIFIED'],
     'MESSAGE_404' => $arParams['~MESSAGE_404'],
     'SET_STATUS_404' => $arParams['SET_STATUS_404'],
@@ -169,7 +166,7 @@ $componentElementParams = array(
     "OFFER_CODE_SELECTED" => (strlen($arResult["VARIABLES"]["SKU_CODE"]) > 0 ? str_replace(\kDevelop\Help\Tools::getOfferPrefixInUrl(), "", $arResult["VARIABLES"]["SKU_CODE"]) : ""),
 
     "IMAGE_SIZE" => $arParams["DETAIL_IMAGE_SIZE"],
-    "DEVICE_TYPE" => $arParams["DEVICE_TYPE"],
+    "DEVICE_TYPE" => $arParams["DEVICE_TYPE"]
 );
 
 if (isset($arParams['USER_CONSENT']))

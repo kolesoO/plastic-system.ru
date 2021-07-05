@@ -1,8 +1,5 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
-
-use kDevelop\Service\MultiSite;
-
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -14,7 +11,6 @@ use kDevelop\Service\MultiSite;
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-
 $this->setFrameMode(true);
 
 $arResult["SECTION_COUNT"] = count($arResult["SECTIONS"]);
@@ -37,14 +33,11 @@ if (is_array($arParams["IMAGE_SIZE"])) {
     //end
 }
 
-foreach ($arResult["SECTIONS"] as $key => $section) {
-    $arResult["SECTIONS"][$key]["UF_SHORT_DESCR"] = MultiSite::valueOrDefault(
-        $section['UF_SHORT_DESCR_' . strtoupper(SITE_ID)],
-        $section['UF_SHORT_DESCR']
-    );
-}
-
 $cp = $this->__component;
 if (is_object($cp)) {
     $cp->SetResultCacheKeys(["SECTION_COUNT"]);
 }
+
+#Получаем свойства разделов UF
+foreach($arResult["SECTIONS"] as $key => $arSection)
+    $arResult["SECTIONS"][$key]["UF_PROP"] = CIBlockSection::GetList(array("SORT"=>"ASC"),array("IBLOCK_ID"=>$arSection["IBLOCK_ID"],"ID"=>$arSection["ID"]),false,array("UF_*","ID"))->Fetch();

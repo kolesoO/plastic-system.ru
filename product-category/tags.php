@@ -1,38 +1,15 @@
+<?require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');?>
 <?
-define('CUSTOM_HEADER', 'Y');
+use kDevelop\MetaTemplates\CurrentStoreTemplate;
 
-$url = explode('?', $_SERVER['REQUEST_URI']);
-$url = explode('/', trim($url[0], '/'));
-if (count($url) == 3) {
-	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues(IBLOCK_CATALOG_TAGS,$cTag["ID"]);
+$IPROPERTY  = $ipropValues->getValues();
 
-	$arFilter = array('IBLOCK_ID' => IBLOCK_CATALOG_CATALOG, 'CODE' => $url[1]);
-	$rsSections = CIBlockSection::GetList([], $arFilter, false, ['UF_TAGS_LIST']);
-	$tagListId = [];
-	while ($arSection = $rsSections->Fetch()) {
-		$tagListId = $arSection['UF_TAGS_LIST'];
-	}
-	if (count($tagListId)) {
-		$res = CIBlockElement::GetList([], ['IBLOCK_ID' => IBLOCK_CATALOG_TAGS, 'ID' => $tagListId, 'CODE' => $url[2]], false, false, ['*', 'PROPERTY_*', "PROPERTY_TITLE"]);
-		if($ob = $res->GetNextElement()) {
-			$cTag = $ob->GetFields();
-			$cTag['PROPS'] = $ob->GetProperties();
-			include 'tags.php';
-			die;
-		}
-	}
-}
-
-require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
-
-$APPLICATION->SetTitle(
-    $APPLICATION->GetDirProperty('h1')
-);
-
+//echo $GLOBAL['SEO'];
 //подготовка парметров компонента
 if (DEVICE_TYPE == "DESKTOP") {
     $itemsInRow = 5;
-    $itemsInRowInner = 6;
+    $itemsInRowInner = 4;
     $elemsInRow = 4;
     $pageElemCount = 12;
     $pagerTmp = ".default";
@@ -51,13 +28,15 @@ $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
 $arDetailSize = ["WIDTH" => 557, "HEIGHT" => 366];
 //end
 
-$GLOBALS["arCatalogFilter"] = ["!OFFERS" => null];
+$GLOBALS["arCatalogFilter"] = ["ID" => $cTag["PROPS"]["911"]["VALUE"]];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog",
-    "",
+    "tags",
     Array(
         "TEMPLATE_THEME" => "blue",
         "IBLOCK_TYPE" => "catalog",
+		"DESCRIPTION" => $cTag["PREVIEW_TEXT"],
+		"TAG_NAME" => $cTag["NAME"],
         "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
         "HIDE_NOT_AVAILABLE" => "N",
         "BASKET_URL" => "/personal/cart/",
@@ -272,7 +251,7 @@ $APPLICATION->IncludeComponent(
         "AJAX_OPTION_ADDITIONAL" => "",
         "SEF_URL_TEMPLATES" => [
             "sections" => "",
-            "section" => "#SECTION_CODE_PATH#/",
+			"section" => "#SECTION_CODE_PATH#/".$cTag["CODE"]."/",
             "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
             "compare" => "/compare/"
         ],
@@ -287,4 +266,33 @@ $APPLICATION->IncludeComponent(
     false
 );
 
-require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');
+
+
+if($IPROPERTY["ELEMENT_META_TITLE"]){
+ $APPLICATION->SetPageProperty(
+        "title",
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_META_TITLE"])
+    );
+	}
+
+	if($IPROPERTY["ELEMENT_META_KEYWORDS"]){
+		  $APPLICATION->SetPageProperty(
+        "keywords",
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_META_KEYWORDS"])
+    );
+	}
+
+	if($IPROPERTY["ELEMENT_META_DESCRIPTION"]){
+		 $APPLICATION->SetPageProperty(
+        "description",
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_META_DESCRIPTION"])
+    );
+		}
+
+	if($IPROPERTY["ELEMENT_PAGE_TITLE"]){
+		   $APPLICATION->SetTitle(
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_PAGE_TITLE"])
+    );
+	}
+?>
+<?require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');
