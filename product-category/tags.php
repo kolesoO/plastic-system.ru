@@ -1,5 +1,6 @@
 <?require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');?>
 <?
+use kDevelop\MetaTemplates\CurrentStoreTemplate;
 
 $ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues(IBLOCK_CATALOG_TAGS,$cTag["ID"]);
 $IPROPERTY  = $ipropValues->getValues();
@@ -35,6 +36,7 @@ $APPLICATION->IncludeComponent(
         "TEMPLATE_THEME" => "blue",
         "IBLOCK_TYPE" => "catalog",
 		"DESCRIPTION" => $cTag["PREVIEW_TEXT"],
+		"TAG_NAME" => $cTag["NAME"],
         "IBLOCK_ID" => IBLOCK_CATALOG_CATALOG,
         "HIDE_NOT_AVAILABLE" => "N",
         "BASKET_URL" => "/personal/cart/",
@@ -265,20 +267,32 @@ $APPLICATION->IncludeComponent(
 );
 
 
+
 if($IPROPERTY["ELEMENT_META_TITLE"]){
-		$APPLICATION->SetPageProperty("title", $IPROPERTY["ELEMENT_META_TITLE"]);
+ $APPLICATION->SetPageProperty(
+        "title",
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_META_TITLE"])
+    );
 	}
 
 	if($IPROPERTY["ELEMENT_META_KEYWORDS"]){
-		$APPLICATION->SetPageProperty("keywords", $IPROPERTY["ELEMENT_META_KEYWORDS"]);
+		  $APPLICATION->SetPageProperty(
+        "keywords",
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_META_KEYWORDS"])
+    );
 	}
 
 	if($IPROPERTY["ELEMENT_META_DESCRIPTION"]){
-		$APPLICATION->SetPageProperty("description", strip_tags($IPROPERTY["ELEMENT_META_DESCRIPTION"]));
-	}
+		 $APPLICATION->SetPageProperty(
+        "description",
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_META_DESCRIPTION"])
+    );
+		}
 
 	if($IPROPERTY["ELEMENT_PAGE_TITLE"]){
-		$APPLICATION->SetTitle($IPROPERTY["ELEMENT_PAGE_TITLE"]);
+		   $APPLICATION->SetTitle(
+        CurrentStoreTemplate::calculateForce($IPROPERTY["ELEMENT_PAGE_TITLE"])
+    );
 	}
 ?>
 <?require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');
