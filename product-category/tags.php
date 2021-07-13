@@ -28,7 +28,7 @@ $arImageSize = ["WIDTH" => 175, "HEIGHT" => 116];
 $arDetailSize = ["WIDTH" => 557, "HEIGHT" => 366];
 //end
 
-$GLOBALS["arCatalogFilter"] = ["ID" => $cTag["PROPS"]["911"]["VALUE"]];
+$GLOBALS["arCatalogFilter"] = ["ID" => $cTag["PROPS"]["913"]["VALUE"]];
 $APPLICATION->IncludeComponent(
     "bitrix:catalog",
     "tags",
